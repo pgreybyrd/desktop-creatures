@@ -10,10 +10,10 @@
 - [x] Gliding behavior
 
 ## Version 0.2 - Eagle Interaction
-- [ ] Click eagle
-- [ ] Drag eagle
-- [ ] Release eagle
-- [ ] Resume flight
+- [x] Click eagle
+- [x] Drag eagle
+- [x] Release eagle
+- [x] Resume flight
 
 ## Version 0.3 - Creature States
 - [ ] Flying

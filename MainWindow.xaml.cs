@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Forms = System.Windows.Forms;
+using System.Windows.Input;
 
 namespace Desktop_Creatures;
 
@@ -23,7 +24,9 @@ public partial class MainWindow : Window
     private double _speedX = 2;
     private double _speedY = 1;
 
-    private int _directionChangeCounter = 0;
+    private bool _isDragging = false;
+    private System.Windows.Point _dragOffset;
+
 
     private readonly double _eagleWidth = 29;
     private readonly double _eagleHeight = 13;
@@ -65,10 +68,17 @@ public partial class MainWindow : Window
 
         _timer.Tick += Update;
         _timer.Start();
+
+        MouseLeftButtonDown += OnMouseLeftButtonDown;
+        MouseMove += OnMouseMove;
+        MouseLeftButtonUp += OnMouseLeftButtonUp;
     }
 
     private void Update(object? sender, EventArgs e)
     {
+        if (_isDragging)
+            return;
+
         var screen = Forms.Screen.FromPoint(new System.Drawing.Point((int)_x, (int)_y));
         var area = screen.WorkingArea;
 
@@ -142,5 +152,43 @@ public partial class MainWindow : Window
                 _flapTicksRemaining = _random.Next(25, 70);
             }
         }
+    }
+
+    private void OnMouseLeftButtonDown(
+    object sender,
+    System.Windows.Input.MouseButtonEventArgs e)
+    {
+        _isDragging = true;
+
+        _dragOffset = e.GetPosition(this);
+
+        CaptureMouse();
+    }
+
+    private void OnMouseMove(
+    object sender,
+    System.Windows.Input.MouseEventArgs e)
+    {
+        if (!_isDragging)
+            return;
+
+        var mousePosition = System.Windows.Forms.Control.MousePosition;
+
+        _x = mousePosition.X - _dragOffset.X;
+        _y = mousePosition.Y - _dragOffset.Y;
+
+        Left = _x;
+        Top = _y;
+    }
+
+    private void OnMouseLeftButtonUp(
+    object sender,
+    System.Windows.Input.MouseButtonEventArgs e)
+    {
+        _isDragging = false;
+
+        ReleaseMouseCapture();
+
+        PickNewTarget();
     }
 }
