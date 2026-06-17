@@ -9,13 +9,13 @@
         Topmost="True"
 
         ShowInTaskbar="False"
-        Width="29"
-        Height="13">
+        Width="32"
+        Height="32">
     <Grid>
 
         <Image x:Name="Eagle"
-               Width="29"
-               Height="13"
+               Width="32"
+               Height="32"
                Source="/assets/eagle/fly_0.png"
                RenderTransformOrigin="0.5,0.5"
                Stretch="Fill"

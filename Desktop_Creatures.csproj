@@ -12,6 +12,16 @@
   <ItemGroup>
     <None Remove="assets\eagle.png" />
     <None Remove="assets\eagle\eagle.png" />
+    <None Remove="assets\eagle\glide_0.png" />
+    <None Remove="assets\eagle\perch_0.png" />
+    <None Remove="assets\eagle\perch_1.png" />
+    <None Remove="assets\eagle\perch_left.png" />
+    <None Remove="assets\eagle\perch_right.png" />
+    <None Remove="assets\eagle\ruffle_0.png" />
+    <None Remove="assets\eagle\ruffle_1.png" />
+    <None Remove="assets\eagle\ruffle_2.png" />
+    <None Remove="assets\eagle\ruffle_3.png" />
+    <None Remove="assets\eagle\sleep_0.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +30,16 @@
     <Resource Include="assets\eagle\fly_1.png" />
     <Resource Include="assets\eagle\fly_2.png" />
     <Resource Include="assets\eagle\fly_3.png" />
+    <Resource Include="assets\eagle\glide_0.png" />
+    <Resource Include="assets\eagle\perch_0.png" />
+    <Resource Include="assets\eagle\perch_1.png" />
+    <Resource Include="assets\eagle\perch_left.png" />
+    <Resource Include="assets\eagle\perch_right.png" />
+    <Resource Include="assets\eagle\ruffle_0.png" />
+    <Resource Include="assets\eagle\ruffle_1.png" />
+    <Resource Include="assets\eagle\ruffle_2.png" />
+    <Resource Include="assets\eagle\ruffle_3.png" />
+    <Resource Include="assets\eagle\sleep_0.png" />
   </ItemGroup>
 
 </Project>
