@@ -1,4 +1,5 @@
-﻿using Desktop_Creatures.World;
+﻿using Desktop_Creatures.Config;
+using Desktop_Creatures.World;
 using System;
 using System.Windows.Media.Imaging;
 using Forms = System.Windows.Forms;
@@ -20,7 +21,6 @@ namespace Desktop_Creatures.Creatures
         public double Y { get; private set; }
         public double SpeedX { get; private set; }
         public EagleState State { get; private set; } = EagleState.Flying;
-        /***** V 0.2.5 *****/
         public enum DestinationType
         {
             Flying,
@@ -30,12 +30,7 @@ namespace Desktop_Creatures.Creatures
 
         private DestinationType _targetType;
 
-        private readonly List<PointOfInterest> _pointsOfInterest = new()
-        {
-            new("Sky Perch", new Point(2600, -600), PointOfInterestType.Rest),
-            new("Nest", new Point(2700, -300), PointOfInterestType.Home),
-            new("Moon", new Point(2900, -850), PointOfInterestType.Magic),
-        };
+        private readonly List<PointOfInterest> _pointsOfInterest;
 
         private bool _isGliding = false;
         private int _flightModeTicksRemaining = 0;
@@ -55,36 +50,38 @@ namespace Desktop_Creatures.Creatures
 
         private readonly BitmapImage[] _flyFrames =
         {
-        Load("Assets/Eagle/fly_0.png"),
-        Load("Assets/Eagle/fly_1.png"),
-        Load("Assets/Eagle/fly_2.png"),
-        Load("Assets/Eagle/fly_3.png"),
+        Load("Assets/Creatures/Eagle/fly_0.png"),
+        Load("Assets/Creatures/Eagle/fly_1.png"),
+        Load("Assets/Creatures/Eagle/fly_2.png"),
+        Load("Assets/Creatures/Eagle/fly_3.png"),
     };
 
         private readonly BitmapImage[] _perchFrames =
         {
-        Load("Assets/Eagle/perch_left.png"),
-        Load("Assets/Eagle/perch_right.png"),
+        Load("Assets/Creatures/Eagle/perch_left.png"),
+        Load("Assets/Creatures/Eagle/perch_right.png"),
     };
 
         private readonly BitmapImage[] _ruffleFrames =
         {
-        Load("Assets/Eagle/ruffle_0.png"),
-        Load("Assets/Eagle/ruffle_1.png"),
-        Load("Assets/Eagle/ruffle_2.png"),
-        Load("Assets/Eagle/ruffle_3.png"),
+        Load("Assets/Creatures/Eagle/ruffle_0.png"),
+        Load("Assets/Creatures/Eagle/ruffle_1.png"),
+        Load("Assets/Creatures/Eagle/ruffle_2.png"),
+        Load("Assets/Creatures/Eagle/ruffle_3.png"),
     };
 
         private readonly BitmapImage _sleepFrame =
-            Load("Assets/Eagle/sleep_0.png");
+            Load("Assets/Creatures/Eagle/sleep_0.png");
 
         private readonly BitmapImage _glideFrame =
-            Load("Assets/Eagle/glide_0.png");
+            Load("Assets/Creatures/Eagle/glide_0.png");
 
-        public Eagle(double startX, double startY)
+        public Eagle(double startX, double startY, List<PointOfInterest> pointsOfInterest)
         {
             X = startX;
             Y = startY;
+            _pointsOfInterest = pointsOfInterest;
+
             CurrentFrame = _flyFrames[0];
             PickNewTarget();
         }
@@ -133,7 +130,11 @@ namespace Desktop_Creatures.Creatures
 
             if (distance < ArrivalDistance)
             {
-                StartPerching();
+                if (_targetType == DestinationType.Perching)
+                    StartPerching();
+                else
+                    PickNewTarget();
+
                 return;
             }
 
@@ -191,7 +192,10 @@ namespace Desktop_Creatures.Creatures
         private void StartPerching()
         {
             State = EagleState.Perching;
-            _stateTicksRemaining = _random.Next(120, 420);
+
+            // 5-12 seconds at 60 FPS
+            _stateTicksRemaining = _random.Next(300, 720);
+
             SpeedX = 0;
             CurrentFrame = _perchFrames[_random.Next(_perchFrames.Length)];
         }
@@ -258,11 +262,49 @@ namespace Desktop_Creatures.Creatures
 
         private void PickNewTarget()
         {
-            var screen = Forms.Screen.AllScreens[1];
+            // 35% chance to pick a perch anchor if one exists
+            if (_random.NextDouble() < 0.35 && TryPickPerchTarget())
+                return;
+
+            PickRandomFlyingTarget();
+        }
+
+        private bool TryPickPerchTarget()
+        {
+            var perchTargets = _pointsOfInterest
+                .SelectMany(poi => poi.AnchorPoints
+                    .Where(anchor => anchor.Type == AnchorPointType.Perch)
+                    .Select(anchor => poi.GetAnchorPosition(anchor)))
+                .ToList();
+
+            if (perchTargets.Count == 0)
+                return false;
+
+            var target = perchTargets[_random.Next(perchTargets.Count)];
+
+            _targetX = target.X;
+            _targetY = target.Y;
+            _targetType = DestinationType.Perching;
+
+            return true;
+        }
+
+        private void PickRandomFlyingTarget()
+        {
+            var settings = SettingsLoader.Load();
+
+            var monitorIndex = Math.Clamp(
+                settings.WorkingMonitor,
+                0,
+                Forms.Screen.AllScreens.Length - 1
+            );
+
+            var screen = Forms.Screen.AllScreens[monitorIndex];
             var area = screen.WorkingArea;
 
             _targetX = _random.Next(area.Left, area.Right - 32);
             _targetY = _random.Next(area.Top, area.Bottom - 32);
+            _targetType = DestinationType.Flying;
         }
 
         private static BitmapImage Load(string path)

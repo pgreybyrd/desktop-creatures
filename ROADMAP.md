@@ -65,6 +65,16 @@ The desktop becomes a living ecosystem.
 - [ ] Logs
 - [ ] Seasonal decorations
 
+### Placement & Editing
+
+- [ ] Tiny placement menu
+- [ ] Spawn POIs from menu
+- [ ] Drag trees, nests, rocks, ponds, and burrows
+- [ ] Save POI positions
+- [ ] Load POI positions on startup
+- [ ] Delete POIs
+- [ ] Lock/unlock edit mode
+
 ---
 
 ## Version 0.5 - Wildlife Simulation
@@ -197,6 +207,14 @@ Desktop Creatures + Dynamic Wallpaper
 - [ ] Nest building
 - [ ] Habitat maintenance
 - [ ] Long-term ecosystem growth
+
+### Usability
+
+- [ ] Always-on-top toggle
+- [ ] Click-through mode
+- [ ] Edit mode toggle
+- [ ] Placement menu
+- [ ] Draggable POIs in edit mode
 
 ---
 

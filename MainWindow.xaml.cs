@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Desktop_Creatures.Creatures;
+using Desktop_Creatures.World;
+using System;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Forms = System.Windows.Forms;
-using System.Windows.Input;
-using Desktop_Creatures.Creatures;
+using Desktop_Creatures.Config;
 
 namespace Desktop_Creatures;
 
@@ -24,13 +26,46 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
 
-        // Pick monitor: 0 = primary, 1 = second, etc.
-        var screen = Forms.Screen.AllScreens[3];
+        var settings = SettingsLoader.Load();
 
-        _x = screen.WorkingArea.Left + 200;
-        _y = screen.WorkingArea.Top + 200;
+        var monitorIndex = Math.Clamp(
+            settings.WorkingMonitor,
+            0,
+            Forms.Screen.AllScreens.Length - 1
+        );
 
-        _eagle = new Eagle(_x, _y);
+        var screen = Forms.Screen.AllScreens[monitorIndex];
+
+        Topmost = settings.AlwaysOnTop;
+
+        _x = screen.WorkingArea.Left + 100;
+        _y = screen.WorkingArea.Top + 300;
+
+        var treeWindow = new TreeWindow
+        {
+            Left = _x + 200,
+            Top = _y + 400
+        };
+
+        treeWindow.Show();
+
+        var treePoi = new PointOfInterest(
+            "Tree",
+            new System.Windows.Point(treeWindow.Left, treeWindow.Top),
+            PointOfInterestType.Rest
+        );
+
+        treePoi.AnchorPoints.Add(
+            new AnchorPoint(
+                "Upper Branch",
+                AnchorPointType.Perch,
+                new System.Windows.Point(35, 16)
+            )
+        );
+
+        var pointsOfInterest = new List<PointOfInterest> { treePoi };
+
+        _eagle = new Eagle(_x, _y, pointsOfInterest);
 
         Left = _x;
         Top = _y;

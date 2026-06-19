@@ -1,12 +1,11 @@
 ﻿namespace Desktop_Creatures.World;
 
-public enum PointOfInterestType
+public enum AnchorPointType
 {
-    Rest,
+    Perch,
     Home,
     Food,
     Water,
-    Decoration,
     Magic,
-    Breed
+    Rest
 }

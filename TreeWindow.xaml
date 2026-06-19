@@ -1,0 +1,18 @@
+﻿<Window x:Class="Desktop_Creatures.TreeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="NoResize"
+        Topmost="True"
+        ShowInTaskbar="False"
+        Width="81"
+        Height="152">
+
+    <Image Source="Assets/World/Trees/tree_0.png"
+           Width="81"
+           Height="152"
+           Stretch="Fill"
+           RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+</Window>

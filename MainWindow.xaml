@@ -16,7 +16,7 @@
         <Image x:Name="Eagle"
                Width="32"
                Height="32"
-               Source="/assets/eagle/fly_0.png"
+               Source="/assets/Creatures/Eagle/fly_0.png"
                RenderTransformOrigin="0.5,0.5"
                Stretch="Fill"
                RenderOptions.BitmapScalingMode="NearestNeighbor">
