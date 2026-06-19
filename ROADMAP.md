@@ -18,14 +18,26 @@
 - [x] Perching
 - [x] Looking left/right
 - [x] Feather ruffling
-- [ ] Sleeping
+- [ ] ~~Sleeping~~
 - [x] Perch duration randomness
 - [ ] Explore all monitors
 - [ ] Prefer specific monitor types
 
-## Version 0.2.5 - Eagle Behavior
+## Version 0.2.1
 
-- [ ] Perch destinations
+- [x] Perch destinations
+
+## Version 0.2.2
+
+- [ ] Multiple POIs
+
+## Version 0.2.3
+
+- [ ] Nest/Home Behavior
+
+## Version 0.2.4
+
+- [ ] Sleeping
 
 ---
 
