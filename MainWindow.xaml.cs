@@ -7,12 +7,13 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Forms = System.Windows.Forms;
 using Desktop_Creatures.Config;
+using System.Runtime.CompilerServices;
 
 namespace Desktop_Creatures;
 
 public partial class MainWindow : Window
 {
-    private Eagle _eagle;
+    //private Eagle _eagle;
 
     private readonly DispatcherTimer _timer;
 
@@ -22,21 +23,23 @@ public partial class MainWindow : Window
     private bool _isDragging = false;
     private System.Windows.Point _dragOffset;
 
+    //private readonly List<Creature> _creatures = new();
+    //private List<CreatureWindow> _creatureWindows;
+    private Creature _activeCreature;
+
+    public int moniterIndex = 0;
+
     public MainWindow()
     {
         InitializeComponent();
 
-        var settings = SettingsLoader.Load();
+        //var settings = SettingsLoader.Load();
 
-        var monitorIndex = Math.Clamp(
-            settings.WorkingMonitor,
-            0,
-            Forms.Screen.AllScreens.Length - 1
-        );
+        LoadSettings();
 
-        var screen = Forms.Screen.AllScreens[monitorIndex];
+        var screen = Forms.Screen.AllScreens[moniterIndex];
 
-        Topmost = settings.AlwaysOnTop;
+        //Topmost = settings.AlwaysOnTop;
 
         _x = screen.WorkingArea.Left + 100;
         _y = screen.WorkingArea.Top + 300;
@@ -49,7 +52,7 @@ public partial class MainWindow : Window
 
         var treeWindow_1 = new TreeWindow("Assets/World/Trees/tree_1.png")
         {
-            Left = _x + 1600,
+            Left = _x + 400,
             Top = _y + 300
         };
 
@@ -84,12 +87,22 @@ public partial class MainWindow : Window
 
         var pointsOfInterest = new List<PointOfInterest> { treePoi_0, treePoi_1 };
 
-        _eagle = new Eagle(_x, _y, pointsOfInterest);
+        //_creatures.Add(new Eagle(_x, _y, pointsOfInterest)); 
+
+        //_eagle
+        var creatureSettings = CreatureSettingsLoader.Load();
+
+        var eagleSettings = creatureSettings.GetValueOrDefault(
+            "eagle",
+            new CreatureSettings()
+        );
+
+        _activeCreature = new Eagle(_x, _y, pointsOfInterest, eagleSettings);
 
         Left = _x;
         Top = _y;
 
-        Eagle.Source = _eagle.CurrentFrame;
+        Eagle.Source = _activeCreature.CurrentFrame;
 
         _timer = new DispatcherTimer
         {
@@ -104,18 +117,37 @@ public partial class MainWindow : Window
         MouseLeftButtonUp += OnMouseLeftButtonUp;
     }
 
+    private AppSettings LoadSettings()
+    {
+        var settings = SettingsLoader.Load();
+
+        moniterIndex = Math.Clamp(
+            settings.WorkingMonitor,
+            0,
+            Forms.Screen.AllScreens.Length - 1
+        );
+
+        Topmost = settings.AlwaysOnTop;
+
+        return settings;
+    }
+
     private void Update(object? sender, EventArgs e)
     {
         if (_isDragging)
             return;
 
-        _eagle.Update();
+        _activeCreature.Update();
+        //foreach (var creature in _creatures)
+        //{
+        //    creature.Update();
+        //}
 
-        _x = _eagle.X;
-        _y = _eagle.Y;
+        _x = _activeCreature.X;
+        _y = _activeCreature.Y;
 
-        Eagle.Source = _eagle.CurrentFrame;
-        FlipTransform.ScaleX = _eagle.SpeedX >= 0 ? 1 : -1;
+        Eagle.Source = _activeCreature.CurrentFrame;
+        FlipTransform.ScaleX = _activeCreature.SpeedX >= 0 ? 1 : -1;
 
         Left = _x;
         Top = _y;
@@ -144,7 +176,7 @@ public partial class MainWindow : Window
         _x = mousePosition.X - _dragOffset.X;
         _y = mousePosition.Y - _dragOffset.Y;
 
-        _eagle.DragTo(_x, _y);
+        _activeCreature.DragTo(_x, _y);
 
         Left = _x;
         Top = _y;
@@ -156,6 +188,6 @@ public partial class MainWindow : Window
     {
         _isDragging = false;
         ReleaseMouseCapture();
-        _eagle.Release();
+        _activeCreature.Release();
     }
 }

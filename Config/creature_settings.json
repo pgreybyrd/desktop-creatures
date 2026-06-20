@@ -1,0 +1,18 @@
+{
+  "eagle": {
+    "flySpeed": 2.5,
+    "glideSpeed": 3.5,
+    "perchChance": 0.35,
+    "minPerchTicks": 300,
+    "maxPerchTicks": 720,
+    "arrivalDistance": 10
+  },
+  "tinyBird": {
+    "flySpeed": 1.8,
+    "glideSpeed": 2.2,
+    "perchChance": 0.55,
+    "minPerchTicks": 180,
+    "maxPerchTicks": 500,
+    "arrivalDistance": 8
+  }
+}
