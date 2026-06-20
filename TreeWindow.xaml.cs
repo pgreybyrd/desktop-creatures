@@ -19,9 +19,13 @@ namespace Desktop_Creatures
     /// </summary>
     public partial class TreeWindow : Window
     {
-        public TreeWindow()
+        public TreeWindow(string imagePath)
         {
             InitializeComponent();
+
+            TreeImage.Source = new BitmapImage(
+            new Uri($"pack://application:,,,/{imagePath}")
+        );
         }
     }
 }

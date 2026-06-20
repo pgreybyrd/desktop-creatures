@@ -41,21 +41,40 @@ public partial class MainWindow : Window
         _x = screen.WorkingArea.Left + 100;
         _y = screen.WorkingArea.Top + 300;
 
-        var treeWindow = new TreeWindow
+        var treeWindow_0 = new TreeWindow("Assets/World/Trees/tree_0.png")
         {
-            Left = _x + 200,
-            Top = _y + 400
+            Left = _x + 0,
+            Top = _y + 600
         };
 
-        treeWindow.Show();
+        var treeWindow_1 = new TreeWindow("Assets/World/Trees/tree_1.png")
+        {
+            Left = _x + 1600,
+            Top = _y + 300
+        };
 
-        var treePoi = new PointOfInterest(
-            "Tree",
-            new System.Windows.Point(treeWindow.Left, treeWindow.Top),
+        treeWindow_0.Show();
+        treeWindow_1.Show();
+
+        var treePoi_0 = new PointOfInterest(
+            "Tree_0",
+            new System.Windows.Point(treeWindow_0.Left, treeWindow_0.Top),
+            PointOfInterestType.Rest
+        );
+        var treePoi_1 = new PointOfInterest(
+            "Tree_1",
+            new System.Windows.Point(treeWindow_1.Left, treeWindow_1.Top),
             PointOfInterestType.Rest
         );
 
-        treePoi.AnchorPoints.Add(
+        treePoi_0.AnchorPoints.Add(
+            new AnchorPoint(
+                "Upper Branch",
+                AnchorPointType.Perch,
+                new System.Windows.Point(35, 16)
+            )
+        );
+        treePoi_1.AnchorPoints.Add(
             new AnchorPoint(
                 "Upper Branch",
                 AnchorPointType.Perch,
@@ -63,7 +82,7 @@ public partial class MainWindow : Window
             )
         );
 
-        var pointsOfInterest = new List<PointOfInterest> { treePoi };
+        var pointsOfInterest = new List<PointOfInterest> { treePoi_0, treePoi_1 };
 
         _eagle = new Eagle(_x, _y, pointsOfInterest);
 

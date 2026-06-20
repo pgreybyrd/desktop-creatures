@@ -7,12 +7,12 @@
         ResizeMode="NoResize"
         Topmost="True"
         ShowInTaskbar="False"
-        Width="81"
-        Height="152">
+        Width="160"
+        Height="160">
 
-    <Image Source="Assets/World/Trees/tree_0.png"
-           Width="81"
-           Height="152"
-           Stretch="Fill"
+    <Image x:Name="TreeImage"
+           Width="160"
+           Height="160"
+           Stretch="None"
            RenderOptions.BitmapScalingMode="NearestNeighbor"/>
 </Window>

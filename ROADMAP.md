@@ -29,7 +29,7 @@
 
 ## Version 0.2.2
 
-- [ ] Multiple POIs
+- [x] Multiple POIs
 
 ## Version 0.2.3
 
