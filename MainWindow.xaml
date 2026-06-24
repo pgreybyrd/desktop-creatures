@@ -9,21 +9,27 @@
         Topmost="True"
 
         ShowInTaskbar="False"
-        Width="32"
-        Height="32">
+        Width="128"
+        Height="128">
     <Grid>
+        
+        <StackPanel Margin="12">
+            <Button Content="Spawn Rat"
+                    Click="SpawnRat_Click"
+                    Margin="0,0,0,8"/>
 
-        <Image x:Name="Eagle"
-               Width="32"
-               Height="32"
-               Source="/assets/Creatures/Eagle/fly_0.png"
-               RenderTransformOrigin="0.5,0.5"
-               Stretch="Fill"
-               RenderOptions.BitmapScalingMode="NearestNeighbor">
-            <Image.RenderTransform>
-                <ScaleTransform x:Name="FlipTransform"/>
-            </Image.RenderTransform>
-        </Image>
+            <Button Content="Spawn Eagle"
+                    Click="SpawnEagle_Click"
+                    Margin="0,0,0,8"/>
+
+            <Button Content="Exit"
+                    Click="Exit_Click"
+                    Margin="0,0,0,8"/>
+            <ToggleButton x:Name="AlwaysOnTopToggle"
+              Content="Always On Top"
+              Checked="AlwaysOnTopToggle_Checked"
+              Unchecked="AlwaysOnTopToggle_Unchecked"/>
+        </StackPanel>
 
     </Grid>
 </Window>

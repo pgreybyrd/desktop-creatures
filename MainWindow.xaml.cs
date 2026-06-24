@@ -28,11 +28,15 @@ public partial class MainWindow : Window
 
     public int moniterIndex = 0;
 
+    private Rectangle _workingArea;
+    private Dictionary<string, CreatureSettings> _creatureSettings = new();
+    private List<PointOfInterest> _pointsOfInterest = new();
+
     public MainWindow()
     {
         InitializeComponent();
 
-        var workingArea = LoadSettings();
+        _workingArea = LoadSettings();
 
         var screen = Forms.Screen.AllScreens[moniterIndex];
 
@@ -84,31 +88,7 @@ public partial class MainWindow : Window
 
         var pointsOfInterest = new List<PointOfInterest> { treePoi_0, treePoi_1 };
 
-        //_creatures.Add(new Eagle(_x, _y, pointsOfInterest)); 
-
-        //_eagle
-        var creatureSettings = CreatureSettingsLoader.Load();
-
-        var eagleSettings = creatureSettings.GetValueOrDefault(
-            "eagle",
-            new CreatureSettings()
-        );
-        var ratSettings = creatureSettings.GetValueOrDefault(
-            "rat",
-            new CreatureSettings()
-        );
-
-        var eagle = new Eagle(_x, _y, pointsOfInterest, eagleSettings, workingArea);
-        Eagle.Source = eagle.CurrentFrame;
-        var eagleWindow = new CreatureWindow(eagle);
-        eagleWindow.Show();
-
-        var rat = new Rat(_x + 200, _y + 1540, pointsOfInterest, ratSettings, workingArea);
-        var ratWindow = new CreatureWindow(rat);
-        ratWindow.Show();
-
-        _creatureWindows.Add(eagleWindow);
-        _creatureWindows.Add(ratWindow);
+        _creatureSettings = CreatureSettingsLoader.Load();
 
         Left = _x;
         Top = _y;
@@ -153,6 +133,80 @@ public partial class MainWindow : Window
         {
             creatureWindow.UpdateCreature();
         }
+    }
+    private void SpawnRat()
+    {
+        var ratSettings = _creatureSettings.GetValueOrDefault(
+            "rat",
+            new CreatureSettings());
+
+        var rat = new Rat(
+            _workingArea.Left + 200,
+            _workingArea.Top + 1540,
+            _pointsOfInterest,
+            ratSettings,
+            _workingArea);
+
+        var ratWindow = new CreatureWindow(rat)
+        {
+            Topmost = AlwaysOnTopToggle.IsChecked == true
+        };
+        ratWindow.Show();
+
+        _creatureWindows.Add(ratWindow);
+    }
+
+    private void SpawnEagle()
+    {
+        var eagleSettings = _creatureSettings.GetValueOrDefault(
+            "eagle",
+            new CreatureSettings());
+
+        var eagle = new Eagle(
+            _workingArea.Left + 100,
+            _workingArea.Top + 300,
+            _pointsOfInterest,
+            eagleSettings,
+            _workingArea);
+
+        var eagleWindow = new CreatureWindow(eagle)
+        {
+            Topmost = AlwaysOnTopToggle.IsChecked == true
+        };
+        eagleWindow.Show();
+
+        _creatureWindows.Add(eagleWindow);
+    }
+
+    private void SpawnRat_Click(object sender, RoutedEventArgs e)
+    {
+        SpawnRat();
+    }
+
+    private void SpawnEagle_Click(object sender, RoutedEventArgs e)
+    {
+        SpawnEagle();
+    }
+
+    private void Exit_Click(object sender, RoutedEventArgs e)
+    {
+        System.Windows.Application.Current.Shutdown();
+    }
+
+    private void SetCreaturesTopmost(bool isTopmost)
+    {
+        foreach (var creatureWindow in _creatureWindows)
+            creatureWindow.Topmost = isTopmost;
+    }
+
+    private void AlwaysOnTopToggle_Checked(object sender, RoutedEventArgs e)
+    {
+        SetCreaturesTopmost(true);
+    }
+
+    private void AlwaysOnTopToggle_Unchecked(object sender, RoutedEventArgs e)
+    {
+        SetCreaturesTopmost(false);
     }
 
     private void OnMouseLeftButtonDown(

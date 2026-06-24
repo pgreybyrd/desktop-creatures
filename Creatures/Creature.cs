@@ -109,11 +109,17 @@ public abstract class Creature
 
     protected void SetAction(CreatureAction action, string animationName)
     {
+        if (!Animations.TryGetValue(animationName, out var frames))
+        {
+            throw new InvalidOperationException(
+                $"Animation '{animationName}' was not loaded. " +
+                $"Loaded animations: {string.Join(", ", Animations.Keys)}");
+        }
+
         CurrentAction = action;
-        CurrentFrames = Animations[animationName];
+        CurrentFrames = frames;
         CurrentFrameIndex = 0;
         AnimationTick = 0;
-
         CurrentFrame = CurrentFrames[CurrentFrameIndex];
     }
 
