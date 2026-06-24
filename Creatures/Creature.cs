@@ -59,10 +59,20 @@ public abstract class Creature
             Animations["Walk"] = LoadFrames(assetFolder, "walk", Settings.Walk.WalkFrameCount);
 
         if (Settings.Run is not null)
-            Animations["Run"] = LoadFrames(assetFolder, "run", Settings.Run.RunFrameCount); 
+            Animations["Run"] = LoadFrames(assetFolder, "run", Settings.Run.RunFrameCount);
 
         if (Settings.Idle is not null)
-            Animations["Idle"] = LoadFrames(assetFolder, "idle", Settings.Idle.IdleFrameCount);
+        {
+            foreach (var animation in Settings.Idle.Animations)
+            {
+                Animations[animation.Name] =
+                    LoadFrames(
+                        assetFolder,
+                        animation.Name,
+                        animation.FrameCount);
+            }
+        }
+        //Animations["Idle"] = LoadFrames(assetFolder, "idle", Settings.Idle.IdleFrameCount);
 
         if (Settings.Swim is not null)
             Animations["Swim"] = LoadFrames(assetFolder, "swim", Settings.Swim.SwimFrameCount);
@@ -103,21 +113,30 @@ public abstract class Creature
         CurrentFrames = Animations[animationName];
         CurrentFrameIndex = 0;
         AnimationTick = 0;
+
+        CurrentFrame = CurrentFrames[CurrentFrameIndex];
     }
 
     protected void AdvanceAnimation(int frameTicks)
     {
-        if (CurrentFrames.Length <= 1) 
+        if (CurrentFrames.Length == 0)
             return;
+
+        if (CurrentFrames.Length == 1)
+        {
+            CurrentFrame = CurrentFrames[0];
+            return;
+        }
 
         AnimationTick++;
+
+        if (AnimationTick >= frameTicks)
+        {
+            AnimationTick = 0;
+            CurrentFrameIndex = (CurrentFrameIndex + 1) % CurrentFrames.Length;
+        }
+
         CurrentFrame = CurrentFrames[CurrentFrameIndex];
-
-        if (AnimationTick < frameTicks)
-            return;
-
-        AnimationTick = 0;
-        CurrentFrameIndex = (CurrentFrameIndex + 1) % CurrentFrames.Length;
     }
 
     public abstract void Update();

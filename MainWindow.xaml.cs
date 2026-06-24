@@ -121,9 +121,9 @@ public partial class MainWindow : Window
         _timer.Tick += Update;
         _timer.Start();
 
-        MouseLeftButtonDown += OnMouseLeftButtonDown;
-        MouseMove += OnMouseMove;
-        MouseLeftButtonUp += OnMouseLeftButtonUp;
+        //MouseLeftButtonDown += OnMouseLeftButtonDown;
+        //MouseMove += OnMouseMove;
+        //MouseLeftButtonUp += OnMouseLeftButtonUp;
     }
 
     private Rectangle LoadSettings()

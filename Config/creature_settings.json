@@ -48,8 +48,8 @@
         "walkSpeed": 1.5,
         "minWalkTicks": 100,
         "maxWalkTicks": 300,
-        "walkFrameCount": 2,
-        "walkFrameTicks": 6
+        "walkFrameCount": 6,
+        "walkFrameTicks": 10
       },
       "run": {
         "runSpeed": 2.5,
@@ -59,10 +59,44 @@
         "runFrameTicks": 2
       },
       "idle": {
-        "idleChance": 0.2,
-        "minIdleTicks": 60,
-        "maxIdleTicks": 180,
-        "idleFrameCount": 6
+        "idleChance": 0.8,
+        "minIdleTicks": 150,
+        "maxIdleTicks": 200,
+        "idleFrameTicks": 40,
+        "animations": [
+        {
+            "name": "idle_look_left",
+            "frameCount": 5
+        },
+        {
+            "name": "idle_look_right",
+            "frameCount": 12
+        },
+        {
+            "name": "idle_look_front",
+            "frameCount": 4
+        },
+        {
+            "name": "idle_look_up",
+            "frameCount": 6
+        },
+        {
+            "name": "idle_sit_front",
+            "frameCount": 8
+        },
+        {
+            "name": "idle_sit_back",
+            "frameCount": 6
+        }
+        ]
+      },
+      "sleep": {
+        "sleepFrameCount": 2,
+        "sleepFrameTicks": 40
+      },
+      "eat": {
+        "eatFrameCount": 1,
+        "eatFrameTicks": 10
       }
     }
 }

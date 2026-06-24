@@ -13,8 +13,6 @@ public class CreatureSettings
     public SwimSettings? Swim { get; set; }
     public PerchSettings? Perch { get; set; }
     public SleepSettings? Sleep { get; set; }
-
-
 }
 public class FlightSettings
 {
@@ -66,10 +64,19 @@ public class RunSettings
 }
 public class IdleSettings
 {
+    public double IdleChance { get; set; } = 0.5;
     public int MinIdleTicks { get; set; } = 60;
     public int MaxIdleTicks { get; set; } = 180;
     public int IdleFrameCount { get; set; } = 1;
+    public int IdleFrameTicks { get; set; } = 60;
+    public List<AnimationDefinition> Animations { get; set; } = new();
 }
+public class AnimationDefinition
+{
+    public string Name { get; set; } = "";
+    public int FrameCount { get; set; } = 1;
+}
+
 public class SwimSettings
 {
     public double SwimSpeed { get; set; } = 1.5;

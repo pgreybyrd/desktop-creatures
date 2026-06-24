@@ -1,6 +1,7 @@
 ﻿using Desktop_Creatures.Config;
 using Desktop_Creatures.World;
 using System.Diagnostics;
+using System.Windows.Media.Animation;
 
 namespace Desktop_Creatures.Creatures
 {
@@ -61,15 +62,55 @@ namespace Desktop_Creatures.Creatures
 
         public override void Update()
         {
-            if (_stateTicksRemaining > 0)
+            switch (CurrentAction)
             {
-                _stateTicksRemaining--;
-                MoveTowardsTarget();
+                case CreatureAction.Running:
+                    UpdateRunning();
+                    break;
+
+                case CreatureAction.Idle:
+                    UpdateIdle();
+                    break;
             }
-            else
-            {
+
+            UpdateAnimation();
+        }
+
+        private void UpdateRunning()
+        {
+            MoveTowardsTarget();
+
+            _stateTicksRemaining--;
+
+            if (_stateTicksRemaining <= 0)
+                StartIdle();
+        }
+
+        private void StartIdle()
+        {
+            var animation = Idle.Animations[
+                _random.Next(Idle.Animations.Count)
+            ];
+
+            SetAction(
+                CreatureAction.Idle,
+                animation.Name);
+
+            SpeedX = 0;
+
+            _stateTicksRemaining = _random.Next(
+                Idle.MinIdleTicks,
+                Idle.MaxIdleTicks);
+        }
+
+        private void UpdateIdle()
+        {
+            _stateTicksRemaining--;
+
+            AdvanceAnimation(Idle.IdleFrameTicks);
+
+            if (_stateTicksRemaining <= 0)
                 PickNewTarget();
-            }
         }
 
         private void MoveTowardsTarget()
@@ -81,7 +122,8 @@ namespace Desktop_Creatures.Creatures
 
             if (distance < Run.ArrivalDistance)
             {
-                PickNewTarget();
+                StartIdle();
+                //PickNewTarget();
                 return;
             }
 
@@ -90,8 +132,15 @@ namespace Desktop_Creatures.Creatures
 
             X += SpeedX;
             Y += speedY;
+        }
 
-            AdvanceAnimation(Run.RunFrameTicks);
+        private void UpdateAnimation()
+        {
+            if (CurrentAction == CreatureAction.Running)
+                AdvanceAnimation(Run.RunFrameTicks);
+
+            else if (CurrentAction == CreatureAction.Idle)
+                AdvanceAnimation(Idle.IdleFrameTicks);
         }
 
         public override void PickNewTarget()
