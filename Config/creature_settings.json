@@ -1,5 +1,6 @@
 {
     "eagle": {
+      "spriteFacesRight": true,
       "spriteWidth": 32,
       "spriteHeight": 32,
 
@@ -22,6 +23,7 @@
         "maxTakeoffFlapTicks": 300,
 
         "flyFrameCount": 4,
+        "flyingFrameTicks": 8,
         "glideFrameCount": 1,
         "ruffleChance": 0.25
       },
@@ -35,6 +37,32 @@
 
       "sleep": {
         "sleepFrameCount": 1
+      }
+    },
+
+    "rat":{
+      "spriteFacesRight": false,
+      "spriteWidth": 32,
+      "spriteHeight": 32,
+      "walk": {
+        "walkSpeed": 1.5,
+        "minWalkTicks": 100,
+        "maxWalkTicks": 300,
+        "walkFrameCount": 2,
+        "walkFrameTicks": 6
+      },
+      "run": {
+        "runSpeed": 2.5,
+        "minRunTicks": 100,
+        "maxRunTicks": 300,
+        "runFrameCount": 6,
+        "runFrameTicks": 2
+      },
+      "idle": {
+        "idleChance": 0.2,
+        "minIdleTicks": 60,
+        "maxIdleTicks": 180,
+        "idleFrameCount": 6
       }
     }
 }

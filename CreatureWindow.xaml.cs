@@ -1,0 +1,82 @@
+﻿using Desktop_Creatures.Creatures;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Media.Imaging;
+
+namespace Desktop_Creatures;
+
+public partial class CreatureWindow : Window
+{
+    private readonly Creature _creature;
+
+    private bool _isDragging;
+    private System.Windows.Point _dragOffset;
+
+    public Creature GetCreature() => _creature;
+
+    public CreatureWindow(Creature creature)
+    {
+        InitializeComponent();
+
+        MouseLeftButtonDown += OnMouseLeftButtonDown;
+        MouseMove += OnMouseMove;
+        MouseLeftButtonUp += OnMouseLeftButtonUp;
+
+        _creature = creature;
+
+        CreatureImage.Source = _creature.CurrentFrame;
+
+        Left = _creature.X;
+        Top = _creature.Y;
+    }
+
+    public void UpdateCreature()
+    {
+        bool movingRight = _creature.SpeedX >= 0;
+
+        FlipTransform.ScaleX = _creature.SpriteFacesRight == movingRight
+            ? 1
+            : -1;
+
+        _creature.Update();
+
+        if (CreatureImage.Source != _creature.CurrentFrame)
+            CreatureImage.Source = _creature.CurrentFrame;
+
+        //FlipTransform.ScaleX = _creature.SpeedX >= 0 ? -1 : 1;
+
+        Left = _creature.X;
+        Top = _creature.Y;
+    }
+
+    private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        _isDragging = true;
+        _dragOffset = e.GetPosition(this);
+        CaptureMouse();
+    }
+
+    private void OnMouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+    {
+        if (!_isDragging)
+            return;
+
+        var mousePosition = System.Windows.Forms.Control.MousePosition;
+
+        double x = mousePosition.X - _dragOffset.X;
+        double y = mousePosition.Y - _dragOffset.Y;
+
+        _creature.DragTo(x, y);
+
+        Left = x;
+        Top = y;
+    }
+
+    private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+    {
+        _isDragging = false;
+        ReleaseMouseCapture();
+        _creature.Release();
+    }
+
+}

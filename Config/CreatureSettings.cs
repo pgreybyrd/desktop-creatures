@@ -4,9 +4,12 @@ public class CreatureSettings
 {
     public int SpriteWidth { get; set; } = 32;
     public int SpriteHeight { get; set; } = 32;
+    public bool SpriteFacesRight { get; set; } = true;
 
     public FlightSettings? Flight { get; set; }
     public WalkSettings? Walk { get; set; }
+    public RunSettings? Run { get; set; }
+    public IdleSettings? Idle { get; set; }
     public SwimSettings? Swim { get; set; }
     public PerchSettings? Perch { get; set; }
     public SleepSettings? Sleep { get; set; }
@@ -46,7 +49,26 @@ public class WalkSettings
     public double WalkSpeed { get; set; } = 1.0;
     public int MinWalkTicks { get; set; } = 100;
     public int MaxWalkTicks { get; set; } = 300;
-    public int WalkFrameCount { get; set; } = 4;
+    public int WalkFrameCount { get; set; } = 2;
+    public int WalkingFrameTicks { get; set; } = 8;
+    public int ArrivalDistance { get; set; } = 5;
+    public int WalkFrameTicks { get; set; } = 8;
+}
+public class RunSettings
+{
+    public double RunSpeed { get; set; } = 3.0;
+    public int MinRunTicks { get; set; } = 80;
+    public int MaxRunTicks { get; set; } = 200;
+    public int RunFrameCount { get; set; } = 4;
+    public int RunningFrameTicks { get; set; } = 6; 
+    public int ArrivalDistance { get; set; } = 5;
+    public int RunFrameTicks { get; set; } = 6;
+}
+public class IdleSettings
+{
+    public int MinIdleTicks { get; set; } = 60;
+    public int MaxIdleTicks { get; set; } = 180;
+    public int IdleFrameCount { get; set; } = 1;
 }
 public class SwimSettings
 {

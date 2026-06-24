@@ -13,7 +13,8 @@ public enum CreatureAction
     Swimming,
     Perching,
     Sleeping,
-    Eating
+    Eating,
+    Running
 }
 public abstract class Creature
 {
@@ -22,6 +23,8 @@ public abstract class Creature
     public double SpeedX { get; protected set; }
 
     protected CreatureSettings Settings { get; }
+    public bool SpriteFacesRight => Settings.SpriteFacesRight;
+
     protected Dictionary<string, BitmapImage[]> Animations { get; } = new();
 
     public CreatureAction CurrentAction { get; protected set; }
@@ -54,6 +57,12 @@ public abstract class Creature
 
         if (Settings.Walk is not null)
             Animations["Walk"] = LoadFrames(assetFolder, "walk", Settings.Walk.WalkFrameCount);
+
+        if (Settings.Run is not null)
+            Animations["Run"] = LoadFrames(assetFolder, "run", Settings.Run.RunFrameCount); 
+
+        if (Settings.Idle is not null)
+            Animations["Idle"] = LoadFrames(assetFolder, "idle", Settings.Idle.IdleFrameCount);
 
         if (Settings.Swim is not null)
             Animations["Swim"] = LoadFrames(assetFolder, "swim", Settings.Swim.SwimFrameCount);

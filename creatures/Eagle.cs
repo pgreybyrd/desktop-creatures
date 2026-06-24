@@ -220,7 +220,6 @@ namespace Desktop_Creatures.Creatures
 
         private void UpdateAnimation()
         {
-            Debug.WriteLine("Updating animation for action: " + CurrentAction);
             if (CurrentAction == CreatureAction.Flying)
             {
                 AdvanceAnimation(Flight.FlyingFrameTicks);

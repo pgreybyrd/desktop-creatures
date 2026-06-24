@@ -23,8 +23,7 @@ public partial class MainWindow : Window
     private bool _isDragging = false;
     private System.Windows.Point _dragOffset;
 
-    //private readonly List<Creature> _creatures = new();
-    //private List<CreatureWindow> _creatureWindows;
+    private readonly List<CreatureWindow> _creatureWindows = new();
     private Creature _activeCreature;
 
     public int moniterIndex = 0;
@@ -94,9 +93,22 @@ public partial class MainWindow : Window
             "eagle",
             new CreatureSettings()
         );
+        var ratSettings = creatureSettings.GetValueOrDefault(
+            "rat",
+            new CreatureSettings()
+        );
 
-        _activeCreature = new Eagle(_x, _y, pointsOfInterest, eagleSettings, workingArea);
-        Eagle.Source = _activeCreature.CurrentFrame;
+        var eagle = new Eagle(_x, _y, pointsOfInterest, eagleSettings, workingArea);
+        Eagle.Source = eagle.CurrentFrame;
+        var eagleWindow = new CreatureWindow(eagle);
+        eagleWindow.Show();
+
+        var rat = new Rat(_x + 200, _y + 1540, pointsOfInterest, ratSettings, workingArea);
+        var ratWindow = new CreatureWindow(rat);
+        ratWindow.Show();
+
+        _creatureWindows.Add(eagleWindow);
+        _creatureWindows.Add(ratWindow);
 
         Left = _x;
         Top = _y;
@@ -137,23 +149,10 @@ public partial class MainWindow : Window
         if (_isDragging)
             return;
 
-        if (Eagle.Source != _activeCreature.CurrentFrame)
-            Eagle.Source = _activeCreature.CurrentFrame;
-
-        _activeCreature.Update();
-        //foreach (var creature in _creatures)
-        //{
-        //    creature.Update();
-        //}
-
-        _x = _activeCreature.X;
-        _y = _activeCreature.Y;
-
-        
-        FlipTransform.ScaleX = _activeCreature.SpeedX >= 0 ? 1 : -1;
-
-        Left = _x;
-        Top = _y;
+        foreach (var creatureWindow in _creatureWindows)
+        {
+            creatureWindow.UpdateCreature();
+        }
     }
 
     private void OnMouseLeftButtonDown(
@@ -178,6 +177,15 @@ public partial class MainWindow : Window
 
         _x = mousePosition.X - _dragOffset.X;
         _y = mousePosition.Y - _dragOffset.Y;
+
+        foreach (var creatureWindow in _creatureWindows)
+        {
+            if (creatureWindow.IsMouseOver)
+            {
+                //_activeCreature = creatureWindow.getCreature();
+                break;
+            }
+        }   
 
         _activeCreature.DragTo(_x, _y);
 
