@@ -26,6 +26,8 @@ namespace Desktop_Creatures.Creatures
 
         private readonly CreatureSettings _settings;
 
+        private readonly Rectangle _workingArea;
+
         private bool _isGliding = false;
         private int _flightModeTicksRemaining = 0;
 
@@ -49,10 +51,12 @@ namespace Desktop_Creatures.Creatures
             double startX,
             double startY,
             List<PointOfInterest> pointsOfInterest,
-            CreatureSettings settings)
+            CreatureSettings settings,
+            Rectangle workingArea)
             : base(settings)
         {
             _settings = settings;
+            _workingArea = workingArea;
 
             X = startX;
             Y = startY;
@@ -265,19 +269,14 @@ namespace Desktop_Creatures.Creatures
 
         private void PickRandomFlyingTarget()
         {
-            var settings = SettingsLoader.Load();
+            _targetX = _random.Next(
+                _workingArea.Left, 
+                _workingArea.Right - Settings.SpriteWidth);
 
-            var monitorIndex = Math.Clamp(
-                settings.WorkingMonitor,
-                0,
-                Forms.Screen.AllScreens.Length - 1
-            );
+            _targetY = _random.Next(
+                _workingArea.Top, 
+                _workingArea.Bottom - Settings.SpriteHeight);
 
-            var screen = Forms.Screen.AllScreens[monitorIndex];
-            var area = screen.WorkingArea;
-
-            _targetX = _random.Next(area.Left, area.Right - _settings.SpriteWidth);
-            _targetY = _random.Next(area.Top, area.Bottom - _settings.SpriteHeight);
             _targetType = DestinationType.Flying;
         }
     }

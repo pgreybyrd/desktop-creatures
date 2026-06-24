@@ -33,9 +33,7 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
 
-        //var settings = SettingsLoader.Load();
-
-        LoadSettings();
+        var workingArea = LoadSettings();
 
         var screen = Forms.Screen.AllScreens[moniterIndex];
 
@@ -97,13 +95,11 @@ public partial class MainWindow : Window
             new CreatureSettings()
         );
 
-        _activeCreature = new Eagle(_x, _y, pointsOfInterest, eagleSettings);
-        //_activeCreature.LoadAssets();
+        _activeCreature = new Eagle(_x, _y, pointsOfInterest, eagleSettings, workingArea);
+        Eagle.Source = _activeCreature.CurrentFrame;
 
         Left = _x;
         Top = _y;
-
-        //Eagle.Source = _activeCreature.CurrentFrame;
 
         _timer = new DispatcherTimer
         {
@@ -118,7 +114,7 @@ public partial class MainWindow : Window
         MouseLeftButtonUp += OnMouseLeftButtonUp;
     }
 
-    private AppSettings LoadSettings()
+    private Rectangle LoadSettings()
     {
         var settings = SettingsLoader.Load();
 
@@ -128,15 +124,21 @@ public partial class MainWindow : Window
             Forms.Screen.AllScreens.Length - 1
         );
 
+        var screen = Forms.Screen.AllScreens[moniterIndex];
+        var area = screen.WorkingArea;
+
         Topmost = settings.AlwaysOnTop;
 
-        return settings;
+        return area;
     }
 
     private void Update(object? sender, EventArgs e)
     {
         if (_isDragging)
             return;
+
+        if (Eagle.Source != _activeCreature.CurrentFrame)
+            Eagle.Source = _activeCreature.CurrentFrame;
 
         _activeCreature.Update();
         //foreach (var creature in _creatures)
@@ -147,7 +149,7 @@ public partial class MainWindow : Window
         _x = _activeCreature.X;
         _y = _activeCreature.Y;
 
-        Eagle.Source = _activeCreature.CurrentFrame;
+        
         FlipTransform.ScaleX = _activeCreature.SpeedX >= 0 ? 1 : -1;
 
         Left = _x;

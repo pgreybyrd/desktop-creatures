@@ -66,9 +66,16 @@ public abstract class Creature
     }
     protected static BitmapImage LoadImage(string path)
     {
-        return new BitmapImage(
-            new Uri($"pack://application:,,,/{path}")
-        );
+        var image = new BitmapImage();
+
+        image.BeginInit();
+        image.UriSource = new Uri($"pack://application:,,,/{path}");
+        image.CacheOption = BitmapCacheOption.OnLoad;
+        image.EndInit();
+
+        image.Freeze();
+
+        return image;
     }
 
     protected static BitmapImage[] LoadFrames(
@@ -91,15 +98,11 @@ public abstract class Creature
 
     protected void AdvanceAnimation(int frameTicks)
     {
-        if (CurrentFrames.Length <= 1) { 
-            Debug.WriteLine($"Animation '{CurrentAction}' has only one frame, skipping animation advance.");
+        if (CurrentFrames.Length <= 1) 
             return;
-        }
+
         AnimationTick++;
         CurrentFrame = CurrentFrames[CurrentFrameIndex];
-        Debug.WriteLine($"Advancing animation '{CurrentAction}': " +
-            $"Tick {AnimationTick}/{frameTicks}, " +
-            $"Frame {CurrentFrameIndex}/{CurrentFrames.Length}");
 
         if (AnimationTick < frameTicks)
             return;
