@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Desktop_Creatures.Creatures
 {
-    public class TinyBird : Bird
+    public class Rat
     {
     }
 }

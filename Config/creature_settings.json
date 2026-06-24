@@ -1,18 +1,40 @@
 {
-  "eagle": {
-    "flySpeed": 2.5,
-    "glideSpeed": 3.5,
-    "perchChance": 0.35,
-    "minPerchTicks": 300,
-    "maxPerchTicks": 720,
-    "arrivalDistance": 10
-  },
-  "tinyBird": {
-    "flySpeed": 1.8,
-    "glideSpeed": 2.2,
-    "perchChance": 0.55,
-    "minPerchTicks": 180,
-    "maxPerchTicks": 500,
-    "arrivalDistance": 8
-  }
+    "eagle": {
+      "spriteWidth": 32,
+      "spriteHeight": 32,
+
+      "flight": {
+        "flySpeed": 2.5,
+        "glideSpeed": 3.5,
+        "minDownwardGlideDy": 5,
+        "glideChance": 0.5,
+
+        "minGlideTicks": 200,
+        "maxGlideTicks": 500,
+
+        "minFlapTicks": 60,
+        "maxFlapTicks": 180,
+        "minUpwardFlapTicks": 90,
+        "maxUpwardFlapTicks": 240,
+        "minDownwardFlapTicks": 60,
+        "maxDownwardFlapTicks": 180,
+        "minTakeoffFlapTicks": 120,
+        "maxTakeoffFlapTicks": 300,
+
+        "flyFrameCount": 4,
+        "glideFrameCount": 1,
+        "ruffleChance": 0.25
+      },
+
+      "perch": {
+        "perchChance": 0.35,
+        "minPerchTicks": 300,
+        "maxPerchTicks": 720,
+        "perchFrameCount": 2
+      },
+
+      "sleep": {
+        "sleepFrameCount": 1
+      }
+    }
 }

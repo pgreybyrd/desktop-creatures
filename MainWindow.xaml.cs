@@ -98,11 +98,12 @@ public partial class MainWindow : Window
         );
 
         _activeCreature = new Eagle(_x, _y, pointsOfInterest, eagleSettings);
+        //_activeCreature.LoadAssets();
 
         Left = _x;
         Top = _y;
 
-        Eagle.Source = _activeCreature.CurrentFrame;
+        //Eagle.Source = _activeCreature.CurrentFrame;
 
         _timer = new DispatcherTimer
         {

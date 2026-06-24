@@ -7,5 +7,7 @@ public enum AnchorPointType
     Food,
     Water,
     Magic,
-    Rest
+    Rest,
+    Ground,
+    Sleep
 }

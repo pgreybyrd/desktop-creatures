@@ -16,7 +16,10 @@ public static class CreatureSettingsLoader
 
         return JsonSerializer.Deserialize<Dictionary<string, CreatureSettings>>(
             json,
-            new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            }
         ) ?? new();
     }
 }

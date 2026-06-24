@@ -1,18 +1,18 @@
 ﻿using Desktop_Creatures.Config;
 using Desktop_Creatures.World;
-using System;
+using System.Diagnostics;
 using System.Windows.Media.Imaging;
 using Forms = System.Windows.Forms;
+using Desktop_Creatures.Utilities;
 
 namespace Desktop_Creatures.Creatures
 {
 
 
-    public class Eagle : Bird
+    public class Eagle : Creature
     {
         private readonly Random _random = new();
 
-        public BirdState State { get; private set; } = BirdState.Flying;
         public enum DestinationType
         {
             Flying,
@@ -33,84 +33,77 @@ namespace Desktop_Creatures.Creatures
         private double _targetY;
 
         private double _speed;
-
         private int _stateTicksRemaining;
 
-        private int _frameIndex;
-        private int _animationTick;
+        private FlightSettings Flight =>
+        Settings.Flight
+        ?? throw new InvalidOperationException(
+            "Eagle requires FlightSettings.");
 
-        private readonly BitmapImage[] _flyFrames =
-        {
-        Load("Assets/Creatures/Eagle/fly_0.png"),
-        Load("Assets/Creatures/Eagle/fly_1.png"),
-        Load("Assets/Creatures/Eagle/fly_2.png"),
-        Load("Assets/Creatures/Eagle/fly_3.png"),
-    };
-
-        private readonly BitmapImage[] _perchFrames =
-        {
-        Load("Assets/Creatures/Eagle/perch_left.png"),
-        Load("Assets/Creatures/Eagle/perch_right.png"),
-    };
-
-        private readonly BitmapImage[] _ruffleFrames =
-        {
-        Load("Assets/Creatures/Eagle/ruffle_0.png"),
-        Load("Assets/Creatures/Eagle/ruffle_1.png"),
-        Load("Assets/Creatures/Eagle/ruffle_2.png"),
-        Load("Assets/Creatures/Eagle/ruffle_3.png"),
-    };
-
-        private readonly BitmapImage _sleepFrame =
-            Load("Assets/Creatures/Eagle/sleep_0.png");
-
-        private readonly BitmapImage _glideFrame =
-            Load("Assets/Creatures/Eagle/glide_0.png");
+        private PerchSettings Perch =>
+            Settings.Perch
+            ?? throw new InvalidOperationException(
+                "Eagle requires PerchSettings.");
 
         public Eagle(
             double startX,
             double startY,
             List<PointOfInterest> pointsOfInterest,
             CreatureSettings settings)
+            : base(settings)
         {
+            _settings = settings;
+
             X = startX;
             Y = startY;
             _pointsOfInterest = pointsOfInterest;
-            _settings = settings;
 
-            CurrentFrame = _flyFrames[0];
+            LoadAssets("Assets/Creatures/Eagle");
+
+            SetAction(CreatureAction.Flying, "Fly");
             PickNewTarget();
         }
 
+        //public override CreatureKind Kind => CreatureKind.Bird;
+
         public override void Update()
         {
-            if (State == BirdState.Flying)
-                UpdateFlying();
-            else if (State == BirdState.Perching)
-                UpdatePerching();
-            else if (State == BirdState.Sleeping)
-                UpdateSleeping();
+            switch (CurrentAction)
+            {
+                case CreatureAction.Flying:
+                case CreatureAction.Gliding:
+                    UpdateFlight();
+                    break;
+
+                case CreatureAction.Perching:
+                    UpdatePerch();
+                    break;
+
+                case CreatureAction.Sleeping:
+                    UpdateSleep();
+                    break;
+            }
 
             UpdateAnimation();
         }
 
-        public virtual void DragTo(double x, double y)
+        private void UpdateSleep()
         {
-            X = x;
-            Y = y;
+            throw new NotImplementedException();
         }
 
-        public virtual void Release()
+        public override void Release()
         {
-            State = BirdState.Flying;
+            SetAction(CreatureAction.Flying, "Fly");
 
             _isGliding = false;
-            _flightModeTicksRemaining = _random.Next(60, 140);
+            
+            _flightModeTicksRemaining = _random.Next(Flight.MinFlapTicks, Flight.MaxFlapTicks);
 
             PickNewTarget();
         }
 
-        private void UpdateFlying()
+        private void UpdateFlight()
         {
             double dx = _targetX - X;
             double dy = _targetY - Y;
@@ -124,7 +117,7 @@ namespace Desktop_Creatures.Creatures
 
             double distance = Math.Sqrt(dx * dx + dy * dy);
 
-            if (distance < _settings.ArrivalDistance)
+            if (distance < Flight.ArrivalDistance)
             {
                 if (_targetType == DestinationType.Perching)
                     StartPerching();
@@ -134,7 +127,9 @@ namespace Desktop_Creatures.Creatures
                 return;
             }
 
-            _speed = _isGliding ? _settings.GlideSpeed : _settings.FlySpeed;
+            _speed = _isGliding
+                    ? Flight.GlideSpeed
+                    : Flight.FlySpeed;
 
             SpeedX = dx / distance * _speed;
             double speedY = dy / distance * _speed;
@@ -145,54 +140,54 @@ namespace Desktop_Creatures.Creatures
 
         private void ChooseFlightMode(double dy)
         {
-            if (dy > _settings.MinDownwardGlideDy)
+            if (dy > Flight.MinDownwardGlideDy)
             {
                 // Flying downward
 
-                if (_random.NextDouble() < _settings.GlideChance)
+                if (_random.NextDouble() < Flight.GlideChance)
                 {
+                    SetAction(CreatureAction.Gliding, "Glide");
                     _isGliding = true;
-
+                    
                     // Glide for 2-5 seconds
                     _flightModeTicksRemaining =
-                        _random.Next(_settings.MinGlideTicks, _settings.MaxGlideTicks);
+                        _random.Next(Flight.MinGlideTicks, Flight.MaxGlideTicks);
                 }
                 else
                 {
-                    _isGliding = false;
+                    SetAction(CreatureAction.Flying, "Fly");
+                    _isGliding = false;            
 
                     // Flap for 1-3 seconds
                     _flightModeTicksRemaining =
-                        _random.Next(_settings.MinFlapTicks, _settings.MaxFlapTicks);
+                        _random.Next(Flight.MinFlapTicks, Flight.MaxFlapTicks);
                 }
             }
             else
             {
                 // Going upward or level
+                SetAction(CreatureAction.Flying, "Fly");
 
                 _isGliding = false;
-
+                
                 // Must flap
                 _flightModeTicksRemaining =
-                    _random.Next(_settings.MinUpwardFlapTicks, _settings.MaxUpwardFlapTicks);
+                    _random.Next(Flight.MinUpwardFlapTicks, Flight.MaxUpwardFlapTicks);
             }
         }
 
         private void StartPerching()
         {
-            State = BirdState.Perching;
+            SetAction(CreatureAction.Perching, "Perch");
 
-            // 5-12 seconds at 60 FPS
             _stateTicksRemaining = _random.Next(
-                _settings.MinPerchTicks,
-                _settings.MaxPerchTicks
-);
+                Perch.MinPerchTicks,
+                Perch.MaxPerchTicks);
 
             SpeedX = 0;
-            CurrentFrame = _perchFrames[_random.Next(_perchFrames.Length)];
         }
 
-        private void UpdatePerching()
+        private void UpdatePerch()
         {
             _stateTicksRemaining--;
 
@@ -203,59 +198,46 @@ namespace Desktop_Creatures.Creatures
         }
         private void StartFlyingFromPerch()
         {
-            State = BirdState.Flying;
+            SetAction(CreatureAction.Flying, "Fly");
 
             _isGliding = false;
-            _flightModeTicksRemaining = _random.Next(_settings.MinTakeoffFlapTicks, _settings.MaxTakeoffFlapTicks);
+            _flightModeTicksRemaining = _random.Next(Flight.MinTakeoffFlapTicks, Flight.MaxTakeoffFlapTicks);
 
-            _animationTick = 0;
-            _frameIndex = 0;
-            CurrentFrame = _flyFrames[0];
+            AnimationTick = 0;
+            CurrentFrameIndex = 0;
 
             PickNewTarget();
         }
 
         private void UpdateSleeping()
         {
-            CurrentFrame = _sleepFrame;
+            //CurrentFrame = _sleepFrame;
         }
 
         private void UpdateAnimation()
         {
-            _animationTick++;
-
-            if (State == BirdState.Flying)
+            Debug.WriteLine("Updating animation for action: " + CurrentAction);
+            if (CurrentAction == CreatureAction.Flying)
             {
-                if (_isGliding)
-                {
-                    CurrentFrame = _glideFrame;
-                }
-                else if (_animationTick >= _settings.FlyingFrameTicks)
-                {
-                    _animationTick = 0;
-                    _frameIndex = (_frameIndex + 1) % _flyFrames.Length;
-                    CurrentFrame = _flyFrames[_frameIndex];
-                }
+                AdvanceAnimation(Flight.FlyingFrameTicks);
             }
-            else if (State == BirdState.Perching)
+            else if (CurrentAction == CreatureAction.Gliding)
             {
-                if (_animationTick >= _settings.PerchFrameTicks)
-                {
-                    _animationTick = 0;
-
-                    // Mostly look around, sometimes ruffle.
-                    if (_random.NextDouble() < _settings.RuffleChance)
-                        CurrentFrame = _ruffleFrames[_random.Next(_ruffleFrames.Length)];
-                    else
-                        CurrentFrame = _perchFrames[_random.Next(_perchFrames.Length)];
-                }
+                // probably no animation yet, unless glide has multiple frames
+                AdvanceAnimation(Flight.FlyingFrameTicks);
+            }
+            else if (CurrentAction == CreatureAction.Perching)
+            {
+                AdvanceAnimation(Perch.PerchFrameTicks);
             }
         }
 
         private void PickNewTarget()
         {
+            SetAction(CreatureAction.Flying, "Fly");
+
             // 35% chance to pick a perch anchor if one exists
-            if (_random.NextDouble() < _settings.PerchChance && TryPickPerchTarget())
+            if (_random.NextDouble() < Perch.PerchChance && TryPickPerchTarget())
                 return;
 
             PickRandomFlyingTarget();
@@ -297,11 +279,6 @@ namespace Desktop_Creatures.Creatures
             _targetX = _random.Next(area.Left, area.Right - _settings.SpriteWidth);
             _targetY = _random.Next(area.Top, area.Bottom - _settings.SpriteHeight);
             _targetType = DestinationType.Flying;
-        }
-
-        private static BitmapImage Load(string path)
-        {
-            return new BitmapImage(new Uri($"pack://application:,,,/{path}"));
         }
     }
 }
