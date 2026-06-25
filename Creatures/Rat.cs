@@ -1,5 +1,6 @@
 ﻿using Desktop_Creatures.Config;
 using Desktop_Creatures.World;
+using Desktop_Creatures.World.Surfaces;
 using System.Diagnostics;
 using System.Windows.Media.Animation;
 
@@ -23,6 +24,11 @@ namespace Desktop_Creatures.Creatures
         private double _speed;
         private int _stateTicksRemaining;
 
+        private double _fallSpeed = 0;
+
+        private SurfaceManager _surfaceManager;
+        private Surface? _currentSurface;
+
         private WalkSettings Walk =>
             Settings.Walk
             ?? throw new InvalidOperationException(
@@ -31,30 +37,45 @@ namespace Desktop_Creatures.Creatures
         private IdleSettings Idle =>
             Settings.Idle
             ?? throw new InvalidOperationException(
-                "Rat requires PerchSettings.");
-
+                "Rat requires IdleSettings.");
 
         private RunSettings Run =>
             Settings.Run
             ?? throw new InvalidOperationException(
-                "Rat requires PerchSettings.");
+                "Rat requires RunSettings.");
+
+        private FallSettings Fall =>
+            Settings.Fall
+            ?? throw new InvalidOperationException(
+                "Rat requires FallSettings.");
 
         public Rat(
             double startX,
             double startY,
             List<PointOfInterest> pointsOfInterest,
             CreatureSettings settings,
-            Rectangle workingArea)
+            Rectangle workingArea,
+            SurfaceManager surfaceManager)
             : base(settings)
         {
             _settings = settings;
             _workingArea = workingArea;
-
-            X = startX;
-            Y = startY;
+            _surfaceManager = surfaceManager;
             _pointsOfInterest = pointsOfInterest;
 
             LoadAssets("Assets/Creatures/Rat");
+
+            X = startX;
+            Y = startY;
+
+            _currentSurface = _surfaceManager.FindSurfaceBelow(
+                X,
+                Y,
+                Settings.SpriteWidth,
+                Settings.SpriteHeight);
+
+            if (_currentSurface is not null)
+                Y = _currentSurface.Top - Settings.SpriteHeight;
 
             SetAction(CreatureAction.Running, "Run");
             PickNewTarget();
@@ -70,6 +91,9 @@ namespace Desktop_Creatures.Creatures
 
                 case CreatureAction.Idle:
                     UpdateIdle();
+                    break;
+                case CreatureAction.Falling:
+                    UpdateFalling();
                     break;
             }
 
@@ -113,6 +137,43 @@ namespace Desktop_Creatures.Creatures
                 PickNewTarget();
         }
 
+        private void StartFalling()
+        {
+            SetAction(CreatureAction.Falling, "Fall");
+            SpeedX = 0;
+            _fallSpeed = 0;
+        }
+        private void UpdateFalling()
+        {
+            double previousFeetY = Y + Settings.SpriteHeight;
+
+            _fallSpeed = Math.Min(
+                _fallSpeed + Fall.Gravity,
+                Fall.MaxFallSpeed);
+
+            Y += _fallSpeed;
+
+            double currentFeetY = Y + Settings.SpriteHeight;
+
+            var surface = _surfaceManager.Surfaces
+                .Where(s =>
+                    X + Settings.SpriteWidth / 2.0 >= s.Left &&
+                    X + Settings.SpriteWidth / 2.0 <= s.Right &&
+                    previousFeetY <= s.Top &&
+                    currentFeetY >= s.Top)
+                .OrderBy(s => s.Top)
+                .FirstOrDefault();
+
+            if (surface is null)
+                return;
+
+            _currentSurface = surface;
+            Y = surface.Top - Settings.SpriteHeight;
+            _fallSpeed = 0;
+
+            StartIdle();
+        }
+
         private void MoveTowardsTarget()
         {
             double dx = _targetX - X;
@@ -141,33 +202,33 @@ namespace Desktop_Creatures.Creatures
 
             else if (CurrentAction == CreatureAction.Idle)
                 AdvanceAnimation(Idle.IdleFrameTicks);
+
+            else if (CurrentAction == CreatureAction.Falling)
+                AdvanceAnimation(Fall.FallFrameTicks);
         }
 
         public override void PickNewTarget()
         {
-            /*
-            // Randomly choose a point of interest to walk to
-            var poi = _pointsOfInterest[_random.Next(_pointsOfInterest.Count)];
-            _targetX = poi.Position.X;
-            _targetY = poi.Position.Y;
-            // Randomly choose a speed for walking
-            _speed = Run.RunSpeed;
-            // Set the number of ticks to walk before picking a new target
-            _stateTicksRemaining = _random.Next(Run.MinRunTicks, Run.MaxRunTicks);
-
-            SetAction(CreatureAction.Running, "Run");
-            */
+            if (_currentSurface is null)
+                return;
 
             _targetX = _random.Next(
-                _workingArea.Left,
-                _workingArea.Right - Settings.SpriteWidth);
+                _currentSurface.Left,
+                _currentSurface.Right - Settings.SpriteWidth);
 
-            _targetY = Y; // flat little rat runway
+            _targetY = _currentSurface.Top - Settings.SpriteHeight;
 
             _speed = Run.RunSpeed;
-            _stateTicksRemaining = _random.Next(Run.MinRunTicks, Run.MaxRunTicks);
+            _stateTicksRemaining = _random.Next(
+                Run.MinRunTicks,
+                Run.MaxRunTicks);
 
             SetAction(CreatureAction.Running, "Run");
         }
+        public override void Release()
+        {
+            StartFalling();
+        }
+
     }   
 }

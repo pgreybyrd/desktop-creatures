@@ -24,6 +24,7 @@
     <None Remove="Assets\Creatures\Eagle\perch_left.png" />
     <None Remove="Assets\Creatures\Eagle\perch_right.png" />
     <None Remove="Assets\Creatures\Eagle\ruffle_0.png" />
+    <None Remove="Assets\Creatures\Rat\fall_0.png" />
     <None Remove="Assets\Creatures\Rat\idle_look_front_1.png" />
     <None Remove="Assets\Creatures\Rat\idle_look_front_2.png" />
     <None Remove="Assets\Creatures\Rat\idle_look_front_3.png" />
@@ -88,6 +89,7 @@
     <Resource Include="Assets\Creatures\Eagle\ruffle_2.png" />
     <Resource Include="Assets\Creatures\Eagle\ruffle_3.png" />
     <Resource Include="Assets\Creatures\Eagle\sleep_0.png" />
+    <Resource Include="Assets\Creatures\Rat\fall_0.png" />
     <Resource Include="Assets\Creatures\Rat\hop_0.png" />
     <Resource Include="Assets\Creatures\Rat\idle_look_front_1.png" />
     <Resource Include="Assets\Creatures\Rat\idle_look_front_2.png" />

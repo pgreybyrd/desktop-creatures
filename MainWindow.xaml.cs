@@ -1,13 +1,14 @@
-﻿using Desktop_Creatures.Creatures;
+﻿using Desktop_Creatures.Config;
+using Desktop_Creatures.Creatures;
 using Desktop_Creatures.World;
+using Desktop_Creatures.World.Surfaces;
 using System;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Forms = System.Windows.Forms;
-using Desktop_Creatures.Config;
-using System.Runtime.CompilerServices;
 
 namespace Desktop_Creatures;
 
@@ -32,19 +33,21 @@ public partial class MainWindow : Window
     private Dictionary<string, CreatureSettings> _creatureSettings = new();
     private List<PointOfInterest> _pointsOfInterest = new();
 
+    private readonly SurfaceManager _surfaceManager = new();
+
     public MainWindow()
     {
         InitializeComponent();
 
         _workingArea = LoadSettings();
+        _surfaceManager.Refresh(_workingArea);
 
         var screen = Forms.Screen.AllScreens[moniterIndex];
-
-        //Topmost = settings.AlwaysOnTop;
 
         _x = screen.WorkingArea.Left + 100;
         _y = screen.WorkingArea.Top + 300;
 
+        /*
         var treeWindow_0 = new TreeWindow("Assets/World/Trees/tree_0.png")
         {
             Left = _x + 0,
@@ -87,6 +90,7 @@ public partial class MainWindow : Window
         );
 
         var pointsOfInterest = new List<PointOfInterest> { treePoi_0, treePoi_1 };
+        */
 
         _creatureSettings = CreatureSettingsLoader.Load();
 
@@ -142,10 +146,11 @@ public partial class MainWindow : Window
 
         var rat = new Rat(
             _workingArea.Left + 200,
-            _workingArea.Top + 1540,
+            _workingArea.Top + 100,
             _pointsOfInterest,
             ratSettings,
-            _workingArea);
+            _workingArea,
+            _surfaceManager);
 
         var ratWindow = new CreatureWindow(rat)
         {

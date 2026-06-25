@@ -1,4 +1,5 @@
 ﻿using Desktop_Creatures.Config;
+using Desktop_Creatures.World.Surfaces;
 using System.Diagnostics;
 using System.Windows.Media.Imaging;
 
@@ -14,7 +15,8 @@ public enum CreatureAction
     Perching,
     Sleeping,
     Eating,
-    Running
+    Running,
+    Falling
 }
 public abstract class Creature
 {
@@ -24,6 +26,9 @@ public abstract class Creature
 
     protected CreatureSettings Settings { get; }
     public bool SpriteFacesRight => Settings.SpriteFacesRight;
+    public int SpriteWidth => Settings.SpriteWidth;
+    public int SpriteHeight => Settings.SpriteHeight;
+    public double LandingTolerance => Settings.LandingTolerance;
 
     protected Dictionary<string, BitmapImage[]> Animations { get; } = new();
 
@@ -82,6 +87,9 @@ public abstract class Creature
 
         if (Settings.Sleep is not null)
             Animations["Sleep"] = LoadFrames(assetFolder, "sleep", Settings.Sleep.SleepFrameCount);
+
+        if (Settings.Fall is not null)
+            Animations["Fall"] = LoadFrames(assetFolder, "fall", Settings.Fall.FallFrameCount);
     }
     protected static BitmapImage LoadImage(string path)
     {
@@ -143,6 +151,18 @@ public abstract class Creature
         }
 
         CurrentFrame = CurrentFrames[CurrentFrameIndex];
+    }
+
+    public bool IsStandingOn(Surface surface)
+    {
+        return
+            Math.Abs(
+                (Y + Settings.SpriteHeight) - surface.Top)
+                < LandingTolerance
+            &&
+            X >= surface.Left
+            &&
+            X <= surface.Right;
     }
 
     public abstract void Update();

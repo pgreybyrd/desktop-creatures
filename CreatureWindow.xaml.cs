@@ -24,6 +24,11 @@ public partial class CreatureWindow : Window
 
         _creature = creature;
 
+        Width = _creature.SpriteWidth;
+        Height = _creature.SpriteHeight;
+
+        CreatureImage.Width = _creature.SpriteWidth;
+        CreatureImage.Height = _creature.SpriteHeight;
         CreatureImage.Source = _creature.CurrentFrame;
 
         Left = _creature.X;
@@ -32,13 +37,13 @@ public partial class CreatureWindow : Window
 
     public void UpdateCreature()
     {
+        _creature.Update();
+
         bool movingRight = _creature.SpeedX >= 0;
 
         FlipTransform.ScaleX = _creature.SpriteFacesRight == movingRight
             ? 1
             : -1;
-
-        _creature.Update();
 
         if (CreatureImage.Source != _creature.CurrentFrame)
             CreatureImage.Source = _creature.CurrentFrame;

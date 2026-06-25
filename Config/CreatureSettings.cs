@@ -5,6 +5,7 @@ public class CreatureSettings
     public int SpriteWidth { get; set; } = 32;
     public int SpriteHeight { get; set; } = 32;
     public bool SpriteFacesRight { get; set; } = true;
+    public double LandingTolerance { get; set; } = 5.0;
 
     public FlightSettings? Flight { get; set; }
     public WalkSettings? Walk { get; set; }
@@ -13,6 +14,7 @@ public class CreatureSettings
     public SwimSettings? Swim { get; set; }
     public PerchSettings? Perch { get; set; }
     public SleepSettings? Sleep { get; set; }
+    public FallSettings? Fall { get; set; }
 }
 public class FlightSettings
 {
@@ -98,4 +100,11 @@ public class SleepSettings
     public int MinSleepTicks { get; set; } = 600;
     public int MaxSleepTicks { get; set; } = 1200;
     public int SleepFrameCount { get; set; } = 1;
+}
+public class FallSettings
+{
+    public double Gravity { get; set; } = 0.4;
+    public double MaxFallSpeed { get; set; } = 8;
+    public int FallFrameCount { get; set; } = 1;
+    public int FallFrameTicks { get; set; } = 5;
 }

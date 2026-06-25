@@ -97,6 +97,12 @@
       "eat": {
         "eatFrameCount": 1,
         "eatFrameTicks": 10
+      },
+      "fall": {
+        "gravity": 0.2,
+        "maxFallSpeed": 10,
+        "fallFrameCount": 1,
+        "fallFrameTicks": 5
       }
     }
 }
