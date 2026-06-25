@@ -102,6 +102,18 @@ namespace Desktop_Creatures.Creatures
 
         private void UpdateRunning()
         {
+            if (!IsStillOnSurface())
+            {
+                StartFalling();
+                return;
+            }
+
+            if (!TargetStillOnCurrentSurface())
+            {
+                PickNewTarget();
+                return;
+            }
+
             MoveTowardsTarget();
 
             _stateTicksRemaining--;
@@ -129,6 +141,12 @@ namespace Desktop_Creatures.Creatures
 
         private void UpdateIdle()
         {
+            if (!IsStillOnSurface())
+            {
+                StartFalling();
+                return;
+            }
+
             _stateTicksRemaining--;
 
             AdvanceAnimation(Idle.IdleFrameTicks);
@@ -193,6 +211,14 @@ namespace Desktop_Creatures.Creatures
 
             X += SpeedX;
             Y += speedY;
+
+            if (_currentSurface is not null)
+            {
+                X = Math.Clamp(
+                    X,
+                    _currentSurface.Left,
+                    _currentSurface.Right - Settings.SpriteWidth);
+            }
         }
 
         private void UpdateAnimation()
@@ -212,19 +238,69 @@ namespace Desktop_Creatures.Creatures
             if (_currentSurface is null)
                 return;
 
-            _targetX = _random.Next(
-                _currentSurface.Left,
-                _currentSurface.Right - Settings.SpriteWidth);
+            int minX = _currentSurface.Left;
+            int maxX = _currentSurface.Right - Settings.SpriteWidth;
 
+            if (maxX <= minX)
+            {
+                StartIdle();
+                return;
+            }
+
+            _targetX = _random.Next(minX, maxX);
             _targetY = _currentSurface.Top - Settings.SpriteHeight;
 
             _speed = Run.RunSpeed;
+
             _stateTicksRemaining = _random.Next(
                 Run.MinRunTicks,
                 Run.MaxRunTicks);
 
+            Debug.WriteLine(
+                $"Surface L={_currentSurface.Left} R={_currentSurface.Right} T={_currentSurface.Top} " +
+                $"Rat X={X} Y={Y} TargetX={_targetX} TargetY={_targetY}");
+
             SetAction(CreatureAction.Running, "Run");
         }
+
+        private bool CurrentSurfaceStillExists()
+        {
+            if (_currentSurface is null)
+                return false;
+
+            return _surfaceManager.Surfaces.Any(s =>
+                s.Left == _currentSurface.Left &&
+                s.Right == _currentSurface.Right &&
+                s.Top == _currentSurface.Top);
+        }
+
+        private bool IsStillOnSurface()
+        {
+            var surface = _surfaceManager.FindSurfaceAtFeet(
+                X,
+                Y,
+                Settings.SpriteWidth,
+                Settings.SpriteHeight,
+                LandingTolerance);
+
+            if (surface is null)
+                return false;
+
+            _currentSurface = surface;
+            return true;
+        }
+
+        private bool TargetStillOnCurrentSurface()
+        {
+            if (_currentSurface is null)
+                return false;
+
+            return
+                _targetX >= _currentSurface.Left &&
+                _targetX <= _currentSurface.Right - Settings.SpriteWidth &&
+                Math.Abs(_targetY - (_currentSurface.Top - Settings.SpriteHeight)) <= LandingTolerance;
+        }
+
         public override void Release()
         {
             StartFalling();

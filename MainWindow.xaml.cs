@@ -14,8 +14,6 @@ namespace Desktop_Creatures;
 
 public partial class MainWindow : Window
 {
-    //private Eagle _eagle;
-
     private readonly DispatcherTimer _timer;
 
     private double _x;
@@ -132,6 +130,8 @@ public partial class MainWindow : Window
     {
         if (_isDragging)
             return;
+
+        _surfaceManager.Update();
 
         foreach (var creatureWindow in _creatureWindows)
         {
