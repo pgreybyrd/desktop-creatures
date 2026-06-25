@@ -9,17 +9,20 @@ namespace Desktop_Creatures.World.Surfaces
 
         public IReadOnlyList<Surface> Surfaces => _surfaces;
 
-        public void Refresh(Rectangle workingArea)
+        public void Refresh()
         {
             _surfaces.Clear();
 
-            // fallback ground
-            _surfaces.Add(new Surface(
-                new Rectangle(
-                    workingArea.Left,
-                    workingArea.Bottom - 1,
-                    workingArea.Width,
-                    1)));
+            foreach (var screen in Screen.AllScreens)
+            {
+                _surfaces.Add(
+                    new Surface(
+                        new Rectangle(
+                            screen.WorkingArea.Left,
+                            screen.WorkingArea.Bottom - 1,
+                            screen.WorkingArea.Width,
+                            1)));
+            }
         }
 
         public Surface? FindSurfaceBelow(

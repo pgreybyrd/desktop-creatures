@@ -40,7 +40,7 @@ public partial class MainWindow : Window
         InitializeComponent();
 
         _workingArea = LoadSettings();
-        _surfaceManager.Refresh(_workingArea);
+        _surfaceManager.Refresh();
 
         var screen = Forms.Screen.AllScreens[moniterIndex];
 
