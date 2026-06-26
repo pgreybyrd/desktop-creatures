@@ -11,12 +11,15 @@ public class SurfaceManager
 
     public IReadOnlyList<Surface> Surfaces => _surfaces;
 
+    public Surface? MenuSurface { get; private set; }
+
     public void Refresh()
     {
         _surfaces.Clear();
 
         AddMonitorGroundSurfaces();
         AddWindowSurfaces();
+        AddMenuSurface();
     }
 
     public void Update()
@@ -33,6 +36,19 @@ public class SurfaceManager
     public void AddTemporarySurface(Rectangle bounds)
     {
         _surfaces.Add(new Surface(bounds));
+    }
+
+    //private Surface? _menuSurface;
+
+    public void SetMenuSurface(Rectangle bounds)
+    {
+        MenuSurface = new Surface(bounds);
+    }
+
+    private void AddMenuSurface()
+    {
+        if (MenuSurface is not null)
+            _surfaces.Add(MenuSurface);
     }
 
     public Surface? FindSurfaceBelow(

@@ -101,16 +101,9 @@ public partial class MainWindow : Window
         MinimizeImage.Source = _minimizeNormal;
         XImage.Source = _xNormal;
 
-        //var screen = Forms.Screen.AllScreens[moniterIndex];
         var screen = Forms.Screen.PrimaryScreen!;
 
-        _x = screen.WorkingArea.Left + 100;
-        _y = screen.WorkingArea.Top + 300;
-
         _creatureSettings = CreatureSettingsLoader.Load();
-
-        Left = _x;
-        Top = _y;
 
         _timer = new DispatcherTimer
         {
@@ -120,15 +113,15 @@ public partial class MainWindow : Window
         _timer.Tick += Update;
         _timer.Start();
 
-        _surfaceManager.AddTemporarySurface(
-            new Rectangle(
-                (int)Left,
-                (int)Top,
-                (int)Width,
-                1));
 
-        SpawnRat();
-        SetCreaturesTopmost(_creaturesAlwaysOnTop);
+        ContentRendered += (_, _) =>
+        {
+            UpdateMenuSurface();
+            _surfaceManager.Refresh();
+
+            SpawnRat();
+            SetCreaturesTopmost(_creaturesAlwaysOnTop);
+        };
     }
 
     private Rectangle LoadSettings()
@@ -171,6 +164,12 @@ public partial class MainWindow : Window
 
     private void SpawnRat()
     {
+        //UpdateMenuSurface();
+        //_surfaceManager.Refresh();
+
+        var menuSurface = _surfaceManager.MenuSurface
+            ?? throw new InvalidOperationException("Menu surface was not set.");
+
         int ratCount = _creatureWindows.Count(w =>
         w.GetCreature() is Rat);
 
@@ -186,12 +185,30 @@ public partial class MainWindow : Window
             "rat",
             new CreatureSettings());
 
-        var screen = Forms.Screen.PrimaryScreen!;
-        var area = screen.WorkingArea;
+        // var screen = Forms.Screen.PrimaryScreen!;
+        //var area = screen.WorkingArea;
+
+        /* var rat = new Rat(
+             menuSurface.Left,
+             menuSurface.Top - 32,
+             _pointsOfInterest,
+             ratSettings,
+             new Rectangle((int)Left, (int)Top, (int)Width, (int)Height),
+             _surfaceManager);
+
+         System.Windows.MessageBox.Show(
+             $"Rat spawning at X={rat.X}, Y={rat.Y}\n" +
+             $"Menu title at X={ _surfaceManager.MenuSurface.Left}, Y ={ _surfaceManager.MenuSurface.Top}\n");
+
+         rat.PlaceOnSurface(_surfaceManager.MenuSurface);*/
+        double spawnX = menuSurface.Left +
+     (menuSurface.Right - menuSurface.Left - ratSettings.SpriteWidth) / 2.0;
+
+        double spawnY = menuSurface.Top - ratSettings.SpriteHeight;
 
         var rat = new Rat(
-            Left + 120,
-            Top - ratSettings.SpriteHeight,
+            spawnX,
+            spawnY,
             _pointsOfInterest,
             ratSettings,
             new Rectangle((int)Left, (int)Top, (int)Width, (int)Height),
@@ -208,6 +225,7 @@ public partial class MainWindow : Window
 
         _creatureWindows.Add(ratWindow);
     }
+
 
     private void ClearRats()
     {
@@ -267,6 +285,20 @@ public partial class MainWindow : Window
         _creatureWindows.Add(eagleWindow);
     }
 
+    private void UpdateMenuSurface()
+    {
+        int surfaceX = (int)(Left + 111);
+        int surfaceY = (int)(Top + 42);
+        int surfaceWidth = 151;
+
+        _surfaceManager.SetMenuSurface(
+            new Rectangle(
+                surfaceX,
+                surfaceY,
+                surfaceWidth,
+                1));
+    }
+
     private void SpawnRat_Click(object sender, RoutedEventArgs e)
     {
         SpawnRat();
@@ -308,7 +340,12 @@ private void AlwaysOnTopToggle_Click(object sender, RoutedEventArgs e)
     private void DragArea_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         if (e.ButtonState == MouseButtonState.Pressed)
+        {
             DragMove();
+            UpdateMenuSurface();
+            //System.Windows.MessageBox.Show($"Menu title at X={_surfaceManager.MenuSurface.Left}, Y ={_surfaceManager.MenuSurface.Top}\n");
+            _surfaceManager.Refresh();
+        }
     }
 
     private BitmapImage LoadUiImage(string path)

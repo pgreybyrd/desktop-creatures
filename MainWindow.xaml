@@ -22,6 +22,7 @@
             <Image Source="Assets/UI/menu_background.png"
                    Width="368"
                    Height="233"/>
+            
 
             <Border x:Name="DragArea"
                     Canvas.Left="109"

@@ -9,6 +9,7 @@ public class Surface
     public int Right => Bounds.Right;
     public int Top => Bounds.Top;
     public int Bottom => Bounds.Bottom;
+    public int Width => Bounds.Width;
 
     public bool IsWindow { get; }
     public bool IsBranch { get; }

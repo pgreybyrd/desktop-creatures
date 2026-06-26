@@ -81,6 +81,14 @@ namespace Desktop_Creatures.Creatures
             PickNewTarget();
         }
 
+        public void PlaceOnSurface(Surface surface)
+        {
+            _currentSurface = surface;
+
+            X = surface.Left + (surface.Width - SpriteWidth) / 2.0;
+            Y = surface.Top - SpriteHeight;
+        }
+
         public override void Update()
         {
             switch (CurrentAction)
