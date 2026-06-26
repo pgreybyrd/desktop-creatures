@@ -1,6 +1,6 @@
 {
 	"workingMonitor": 3,
-	"alwaysOnTop": true,
+	"alwaysOnTop": false,
 	"clickThrough": true,
 	"editMode": false
 }

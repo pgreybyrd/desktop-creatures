@@ -303,6 +303,7 @@ namespace Desktop_Creatures.Creatures
 
         public override void Release()
         {
+            _surfaceManager.Refresh();
             StartFalling();
         }
 

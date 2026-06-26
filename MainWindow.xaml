@@ -2,34 +2,180 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
+        Title="Desktop Creatures"
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"
-        ResizeMode="NoResize"
-        Topmost="True"
-
-        ShowInTaskbar="False"
-        Width="128"
-        Height="128">
-    <Grid>
         
-        <StackPanel Margin="12">
-            <Button Content="Spawn Rat"
-                    Click="SpawnRat_Click"
-                    Margin="0,0,0,8"/>
+        SizeToContent="WidthAndHeight"
+        ResizeMode="NoResize"
+        ShowInTaskbar="True"
+        Topmost="False"
+        WindowStartupLocation="CenterScreen"
+        
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="True"
+        RenderOptions.BitmapScalingMode="NearestNeighbor">
+    <Grid>
+        <Canvas Width="368" Height="233">
 
-            <Button Content="Spawn Eagle"
-                    Click="SpawnEagle_Click"
-                    Margin="0,0,0,8"/>
+            <Image Source="Assets/UI/menu_background.png"
+                   Width="368"
+                   Height="233"/>
 
-            <Button Content="Exit"
-                    Click="Exit_Click"
-                    Margin="0,0,0,8"/>
+            <Border x:Name="DragArea"
+                    Canvas.Left="109"
+                    Canvas.Top="10"
+                    Width="150"
+                    Height="75"
+                    Background="#01000000"
+                    MouseLeftButtonDown="DragArea_MouseLeftButtonDown" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+            <Button x:Name="SpawnEagleButton1"
+                    Canvas.Left="10"
+                    Canvas.Top="10"
+                    Width="99"
+                    Height="135"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Opacity="0"
+                    Click="SpawnEagle_Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+            <Button x:Name="SpawnEagleButton2"
+                    Canvas.Left="259"
+                    Canvas.Top="10"
+                    Width="99"
+                    Height="135"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Opacity="0"
+                    Click="SpawnEagle_Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+            <Image x:Name="SpawnRatImage"
+                   Source="Assets/UI/button_spawn_rat.png"
+                   Canvas.Left="114"
+                   Canvas.Top="85"
+                   Width="139"
+                   Height="33"/>
+
+            <Button x:Name="SpawnRatButton"
+                    Canvas.Left="114"
+                    Canvas.Top="85"
+                    Width="139"
+                    Height="33"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Opacity="0"
+                    Click="SpawnRat_Click" 
+                    MouseEnter="SpawnRat_MouseEnter"
+                    MouseLeave="SpawnRat_MouseLeave"
+                    PreviewMouseDown="SpawnRat_MouseDown"
+                    PreviewMouseUp="SpawnRat_MouseUp"/>
+
+            <Image x:Name="ClearRatsImage"
+                   Source="Assets/UI/button_clear_rats.png"
+                   Canvas.Left="114"
+                   Canvas.Top="123"
+                   Width="139"
+                   Height="33"/>
+
+            <Button x:Name="ClearRatsButton"
+                    Canvas.Left="114"
+                    Canvas.Top="123"
+                    Width="139"
+                    Height="33"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Opacity="0"
+                    Click="ClearRats_Click"
+                    MouseEnter="ClearRats_MouseEnter"
+                    MouseLeave="ClearRats_MouseLeave"
+                    PreviewMouseDown="ClearRats_MouseDown"
+                    PreviewMouseUp="ClearRats_MouseUp"/>
+
+            <Image x:Name="AlwaysOnTopToggleImage"
+                   Source="Assets/UI/button_always_on_top.png"
+                   Canvas.Left="114"
+                   Canvas.Top="161"
+                   Width="139"
+                   Height="33"/>
+
             <ToggleButton x:Name="AlwaysOnTopToggle"
-              Content="Always On Top"
-              Checked="AlwaysOnTopToggle_Checked"
-              Unchecked="AlwaysOnTopToggle_Unchecked"/>
-        </StackPanel>
+                          Canvas.Left="114"
+                          Canvas.Top="161"
+                          Width="139"
+                          Height="33"
+                          Background="Transparent"
+                          BorderThickness="0"
+                          Opacity="0"
+                          Click="AlwaysOnTopToggle_Click"
+                          MouseEnter="AlwaysOnTop_MouseEnter"
+                          MouseLeave="AlwaysOnTop_MouseLeave"
+                          PreviewMouseDown="AlwaysOnTop_MouseDown"
+                          PreviewMouseUp="AlwaysOnTop_MouseUp"/>
 
+            <Image x:Name="ExitImage"
+                   Source="Assets/UI/button_exit.png"
+                   Canvas.Left="114"
+                   Canvas.Top="199"
+                   Width="139"
+                   Height="33"/>
+
+            <Button x:Name="ExitButton"
+                    Canvas.Left="114"
+                    Canvas.Top="199"
+                    Width="139"
+                    Height="33"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Opacity="0"
+                    Click="Exit_Click"
+                    MouseEnter="Exit_MouseEnter"
+                    MouseLeave="Exit_MouseLeave"
+                    PreviewMouseDown="Exit_MouseDown"
+                    PreviewMouseUp="Exit_MouseUp"/>
+
+            <Image x:Name="MinimizeImage"
+                   Source="Assets/UI/button_minimize.png"
+                   Canvas.Left="238"
+                   Canvas.Top="46"
+                   Width="8"
+                   Height="8" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+            <Button x:Name="MinimizeButton"
+                    Canvas.Left="238"
+                    Canvas.Top="45"
+                    Width="8"
+                    Height="9"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Opacity="0"
+                    Click="Minimize_Click" 
+                    MouseEnter="Minimize_MouseEnter"
+                    MouseLeave="Minimize_MouseLeave"
+                    PreviewMouseDown="Minimize_MouseDown"
+                    PreviewMouseUp="Minimize_MouseUp"/>
+
+            <Image x:Name="XImage"
+                   Source="Assets/UI/button_X.png"
+                   Canvas.Left="244"
+                   Canvas.Top="45"
+                   Width="8"
+                   Height="8" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+            <Button x:Name="XButton"
+                    Canvas.Left="246"
+                    Canvas.Top="45"
+                    Width="8"
+                    Height="9"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Opacity="0"
+                    Click="Exit_Click"
+                    MouseEnter="X_MouseEnter"
+                    MouseLeave="X_MouseLeave"
+                    PreviewMouseDown="X_MouseDown"
+                    PreviewMouseUp="X_MouseUp"/>
+        </Canvas>
     </Grid>
 </Window>

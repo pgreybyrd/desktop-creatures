@@ -7,7 +7,7 @@ namespace Desktop_Creatures.World.Surfaces;
 public class SurfaceManager
 {
     private readonly List<Surface> _surfaces = new();
-    private int _ticksUntilRefresh = 0;
+    private int _ticksUntilRefresh = 180;
 
     public IReadOnlyList<Surface> Surfaces => _surfaces;
 
@@ -28,6 +28,11 @@ public class SurfaceManager
 
         Refresh();
         _ticksUntilRefresh = 30; // every ~0.5 sec at 60 FPS
+    }
+
+    public void AddTemporarySurface(Rectangle bounds)
+    {
+        _surfaces.Add(new Surface(bounds));
     }
 
     public Surface? FindSurfaceBelow(
