@@ -1,5 +1,9 @@
 ﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Text;
+using System.Windows;
+using System.Windows.Forms;
+using System.Windows.Interop;
 using Forms = System.Windows.Forms;
 
 namespace Desktop_Creatures.World.Surfaces;
@@ -33,6 +37,7 @@ public class SurfaceManager
         _ticksUntilRefresh = 30; // every ~0.5 sec at 60 FPS
     }
 
+
     public void AddTemporarySurface(Rectangle bounds)
     {
         _surfaces.Add(new Surface(bounds));
@@ -43,6 +48,7 @@ public class SurfaceManager
     public void SetMenuSurface(Rectangle bounds)
     {
         MenuSurface = new Surface(bounds);
+        MenuSurface.Kind = "Menu Surface";
     }
 
     private void AddMenuSurface()
@@ -94,15 +100,20 @@ public class SurfaceManager
         {
             var area = screen.Bounds;
 
+            //System.Windows.MessageBox.Show(
+                //$"SCREEN Bounds L={area.Left} T={area.Top} R={area.Right} B={area.Bottom} W={area.Width} H={area.Height}");
             Debug.WriteLine(
                 $"SCREEN Bounds L={area.Left} T={area.Top} R={area.Right} B={area.Bottom} W={area.Width} H={area.Height}");
 
+            var dipArea = ToDipRectangle(screen.WorkingArea);
+
             _surfaces.Add(new Surface(
                 new Rectangle(
-                    area.Left,
-                    area.Bottom - 1,
-                    area.Width,
-                    1)));
+                    dipArea.Left,
+                    dipArea.Bottom - 1,
+                    dipArea.Width,
+                    1),
+                "MonitorGround"));
         }
     }
 
@@ -153,16 +164,69 @@ public class SurfaceManager
             if (width < 100 || height < 80)
                 return true;
 
+            string title = GetWindowTitle(hWnd);
+
+            if (string.IsNullOrWhiteSpace(title))
+                return true;
+
+            var pixelRect = new Rectangle(
+                rect.Left,
+                rect.Top,
+                width,
+                height);
+
+            var dipRect = ToDipRectangle(pixelRect);
+
             _surfaces.Add(new Surface(
                 new Rectangle(
-                    rect.Left,
-                    rect.Top,
-                    width,
-                    1)));
+                    dipRect.Left,
+                    dipRect.Top,
+                    dipRect.Width,
+                    1),
+                $"Window: {title}"));
 
             return true;
         }, IntPtr.Zero);
     }
+
+    private static Rectangle ToDipRectangle(Rectangle pixelRect)
+    {
+        var source = PresentationSource.FromVisual(System.Windows.Application.Current.MainWindow);
+
+        if (source?.CompositionTarget is null)
+            return pixelRect;
+
+        var transform = source.CompositionTarget.TransformFromDevice;
+
+        var topLeft = transform.Transform(
+            new System.Windows.Point(pixelRect.Left, pixelRect.Top));
+
+        var bottomRight = transform.Transform(
+            new System.Windows.Point(pixelRect.Right, pixelRect.Bottom));
+
+        return new Rectangle(
+            (int)Math.Round(topLeft.X),
+            (int)Math.Round(topLeft.Y),
+            (int)Math.Round(bottomRight.X - topLeft.X),
+            (int)Math.Round(bottomRight.Y - topLeft.Y));
+    }
+
+    private static string GetWindowTitle(IntPtr hWnd)
+    {
+        int length = GetWindowTextLength(hWnd);
+        if (length == 0)
+            return "";
+
+        var builder = new StringBuilder(length + 1);
+        GetWindowText(hWnd, builder, builder.Capacity);
+        return builder.ToString();
+    }
+
+    [DllImport("user32.dll", SetLastError = true)]
+    private static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    private static extern int GetWindowTextLength(IntPtr hWnd);
 
     [DllImport("user32.dll")]
     private static extern uint GetWindowThreadProcessId(

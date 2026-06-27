@@ -2,5 +2,7 @@
 	"workingMonitor": 3,
 	"alwaysOnTop": false,
 	"clickThrough": true,
-	"editMode": false
+	"editMode": false,
+	"spawnLimit": 20,
+	"scale": 1
 }

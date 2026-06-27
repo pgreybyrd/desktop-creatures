@@ -1,6 +1,7 @@
 ﻿using Desktop_Creatures.Creatures;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 
 namespace Desktop_Creatures;
@@ -34,9 +35,11 @@ public partial class CreatureWindow : Window
         Left = _creature.X;
         Top = _creature.Y;
     }
-
     public void UpdateCreature()
     {
+        if (_isDragging)
+            return;
+
         _creature.Update();
 
         bool movingRight = _creature.SpeedX >= 0;
@@ -47,8 +50,6 @@ public partial class CreatureWindow : Window
 
         if (CreatureImage.Source != _creature.CurrentFrame)
             CreatureImage.Source = _creature.CurrentFrame;
-
-        //FlipTransform.ScaleX = _creature.SpeedX >= 0 ? -1 : 1;
 
         Left = _creature.X;
         Top = _creature.Y;
@@ -66,10 +67,18 @@ public partial class CreatureWindow : Window
         if (!_isDragging)
             return;
 
-        var mousePosition = System.Windows.Forms.Control.MousePosition;
+        var source = PresentationSource.FromVisual(this);
 
-        double x = mousePosition.X - _dragOffset.X;
-        double y = mousePosition.Y - _dragOffset.Y;
+        if (source?.CompositionTarget is null)
+            return;
+
+        var mousePixels = System.Windows.Forms.Control.MousePosition;
+
+        var mouseDip = source.CompositionTarget.TransformFromDevice.Transform(
+            new System.Windows.Point(mousePixels.X, mousePixels.Y));
+
+        double x = mouseDip.X - _dragOffset.X;
+        double y = mouseDip.Y - _dragOffset.Y;
 
         _creature.DragTo(x, y);
 

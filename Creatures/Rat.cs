@@ -193,6 +193,13 @@ namespace Desktop_Creatures.Creatures
             if (surface is null)
                 return;
 
+            Debug.WriteLine(
+                $"Rat landed on {surface.Kind}: " +
+                $"L={surface.Left}, T={surface.Top}, R={surface.Right}, B={surface.Bottom}");
+            System.Windows.MessageBox.Show(
+                $"Rat landed on {surface.Kind}: " +
+                $"L={surface.Left}, T={surface.Top}, R={surface.Right}, B={surface.Bottom}");
+
             _currentSurface = surface;
             Y = surface.Top - Settings.SpriteHeight;
             _fallSpeed = 0;

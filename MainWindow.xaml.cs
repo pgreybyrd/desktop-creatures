@@ -162,6 +162,8 @@ public partial class MainWindow : Window
         DragMove();
     }
 
+
+
     private void SpawnRat()
     {
         //UpdateMenuSurface();
@@ -201,8 +203,11 @@ public partial class MainWindow : Window
              $"Menu title at X={ _surfaceManager.MenuSurface.Left}, Y ={ _surfaceManager.MenuSurface.Top}\n");
 
          rat.PlaceOnSurface(_surfaceManager.MenuSurface);*/
-        double spawnX = menuSurface.Left +
-     (menuSurface.Right - menuSurface.Left - ratSettings.SpriteWidth) / 2.0;
+
+
+
+        double spawnX = menuSurface.Left + 
+            (menuSurface.Right - menuSurface.Left - ratSettings.SpriteWidth) / 2.0;
 
         double spawnY = menuSurface.Top - ratSettings.SpriteHeight;
 
@@ -218,6 +223,7 @@ public partial class MainWindow : Window
         {
             Topmost = _creaturesAlwaysOnTop
         };
+
         //System.Windows.MessageBox.Show(
             //$"Rat spawning at X={rat.X}, Y={rat.Y}\n" +
             //$"Primary screen: L={area.Left}, T={area.Top}, R={area.Right}, B={area.Bottom}");

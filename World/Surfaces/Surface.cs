@@ -11,12 +11,15 @@ public class Surface
     public int Bottom => Bounds.Bottom;
     public int Width => Bounds.Width;
 
+    public string Kind { get; set;  }
+
     public bool IsWindow { get; }
     public bool IsBranch { get; }
     public bool IsGround { get; }
 
-    public Surface(Rectangle bounds)
-    { 
-        Bounds = bounds; 
+    public Surface(Rectangle bounds, string kind = "Unknown")
+    {
+        Bounds = bounds;
+        Kind = kind;
     }
 }
