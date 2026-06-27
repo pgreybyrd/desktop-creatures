@@ -75,7 +75,8 @@ namespace Desktop_Creatures.Creatures
                 Settings.SpriteHeight);
 
             if (_currentSurface is not null)
-                Y = _currentSurface.Top - Settings.SpriteHeight;
+                Y = _currentSurface.Top - GetCurrentFootY();
+            //Y = _currentSurface.Top - Settings.SpriteHeight;
 
             SetAction(CreatureAction.Running, "Run");
             PickNewTarget();
@@ -86,7 +87,8 @@ namespace Desktop_Creatures.Creatures
             _currentSurface = surface;
 
             X = surface.Left + (surface.Width - SpriteWidth) / 2.0;
-            Y = surface.Top - SpriteHeight;
+            Y = surface.Top - GetCurrentFootY();
+            //Y = surface.Top - SpriteHeight;
         }
 
         public override void Update()
@@ -171,7 +173,8 @@ namespace Desktop_Creatures.Creatures
         }
         private void UpdateFalling()
         {
-            double previousFeetY = Y + Settings.SpriteHeight;
+            //double previousFeetY = Y + Settings.SpriteHeight;
+            double previousFeetY = Y + GetCurrentFootY();
 
             _fallSpeed = Math.Min(
                 _fallSpeed + Fall.Gravity,
@@ -179,7 +182,8 @@ namespace Desktop_Creatures.Creatures
 
             Y += _fallSpeed;
 
-            double currentFeetY = Y + Settings.SpriteHeight;
+            //double currentFeetY = Y + Settings.SpriteHeight;
+            double currentFeetY = Y + GetCurrentFootY();
 
             var surface = _surfaceManager.Surfaces
                 .Where(s =>
@@ -193,15 +197,18 @@ namespace Desktop_Creatures.Creatures
             if (surface is null)
                 return;
 
+            /*
             Debug.WriteLine(
                 $"Rat landed on {surface.Kind}: " +
                 $"L={surface.Left}, T={surface.Top}, R={surface.Right}, B={surface.Bottom}");
             System.Windows.MessageBox.Show(
                 $"Rat landed on {surface.Kind}: " +
                 $"L={surface.Left}, T={surface.Top}, R={surface.Right}, B={surface.Bottom}");
+            */
 
             _currentSurface = surface;
-            Y = surface.Top - Settings.SpriteHeight;
+            //Y = surface.Top - Settings.SpriteHeight;
+            Y = surface.Top - GetCurrentFootY();
             _fallSpeed = 0;
 
             StartIdle();
@@ -263,7 +270,8 @@ namespace Desktop_Creatures.Creatures
             }
 
             _targetX = _random.Next(minX, maxX);
-            _targetY = _currentSurface.Top - Settings.SpriteHeight;
+            //_targetY = _currentSurface.Top - Settings.SpriteHeight;
+            _targetY = _currentSurface.Top - GetCurrentFootY();
 
             _speed = Run.RunSpeed;
 
@@ -271,31 +279,26 @@ namespace Desktop_Creatures.Creatures
                 Run.MinRunTicks,
                 Run.MaxRunTicks);
 
-            Debug.WriteLine(
-                $"Surface L={_currentSurface.Left} R={_currentSurface.Right} T={_currentSurface.Top} " +
-                $"Rat X={X} Y={Y} TargetX={_targetX} TargetY={_targetY}");
+            //Debug.WriteLine(
+               //$"Surface L={_currentSurface.Left} R={_currentSurface.Right} T={_currentSurface.Top} " +
+               //$"Rat X={X} Y={Y} TargetX={_targetX} TargetY={_targetY}");
 
             SetAction(CreatureAction.Running, "Run");
         }
 
-        private bool CurrentSurfaceStillExists()
-        {
-            if (_currentSurface is null)
-                return false;
-
-            return _surfaceManager.Surfaces.Any(s =>
-                s.Left == _currentSurface.Left &&
-                s.Right == _currentSurface.Right &&
-                s.Top == _currentSurface.Top);
-        }
-
         private bool IsStillOnSurface()
         {
-            var surface = _surfaceManager.FindSurfaceAtFeet(
+            /*var surface = _surfaceManager.FindSurfaceAtFeet(
                 X,
                 Y,
                 Settings.SpriteWidth,
                 Settings.SpriteHeight,
+                LandingTolerance);*/
+            var surface = _surfaceManager.FindSurfaceAtFeet(
+                X,
+                Y,
+                Settings.SpriteWidth,
+                GetCurrentFootY(),
                 LandingTolerance);
 
             if (surface is null)
@@ -313,7 +316,8 @@ namespace Desktop_Creatures.Creatures
             return
                 _targetX >= _currentSurface.Left &&
                 _targetX <= _currentSurface.Right - Settings.SpriteWidth &&
-                Math.Abs(_targetY - (_currentSurface.Top - Settings.SpriteHeight)) <= LandingTolerance;
+                //Math.Abs(_targetY - (_currentSurface.Top - Settings.SpriteHeight)) <= LandingTolerance;
+                Math.Abs(_targetY - (_currentSurface.Top - GetCurrentFootY())) <= LandingTolerance;
         }
 
         public override void Release()
@@ -322,5 +326,15 @@ namespace Desktop_Creatures.Creatures
             StartFalling();
         }
 
+        protected virtual int GetCurrentFootY()
+        {
+            return CurrentAction switch
+            {
+                CreatureAction.Running => SpriteHeight - 5,
+                CreatureAction.Idle => SpriteHeight - 5,
+                CreatureAction.Falling => SpriteHeight - 5,
+                _ => SpriteHeight
+            };
+        }
     }   
 }

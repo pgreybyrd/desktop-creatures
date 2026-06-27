@@ -1,4 +1,37 @@
 # Desktop Creatures Roadmap
+Current Release:
+Desktop Rat Alpha v0.1.0
+
+## Desktop Creatures Alpha v0.1.0 ✅
+
+The first public release!
+
+### Features
+
+- [x] Pixel art forest menu
+- [x] Spawn multiple rats
+- [x] Drag and drop rats
+- [x] Rats walk across desktop windows
+- [x] Gravity and falling
+- [x] Multi-monitor support
+- [x] Menu is part of the world
+- [x] Custom button artwork
+- [x] Always-on-top toggle
+- [x] Clear rats
+- [x] Taskbar support
+- [x] Feet-based landing
+
+## Version 0.2
+
+- [ ] Jump between windows
+- [ ] Better hidden-window detection
+- [ ] Performance optimization (single render window)
+- [ ] Creature framework
+- [ ] Creature personalities
+
+## Prototype History
+
+### Flying Eagle Prototype
 
 ## Version 0.1 - Flying Eagle ✅
 

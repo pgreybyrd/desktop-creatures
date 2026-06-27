@@ -32,7 +32,7 @@
                     Background="#01000000"
                     MouseLeftButtonDown="DragArea_MouseLeftButtonDown" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-            <Button x:Name="SpawnEagleButton1"
+            <!--<Button x:Name="SpawnEagleButton1"
                     Canvas.Left="10"
                     Canvas.Top="10"
                     Width="99"
@@ -50,7 +50,7 @@
                     Background="Transparent"
                     BorderThickness="0"
                     Opacity="0"
-                    Click="SpawnEagle_Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    Click="SpawnEagle_Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>-->
 
             <Image x:Name="SpawnRatImage"
                    Source="Assets/UI/button_spawn_rat.png"

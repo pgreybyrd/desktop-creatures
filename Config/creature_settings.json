@@ -104,6 +104,16 @@
         "fallFrameCount": 1,
         "fallFrameTicks": 5,
         "landingTolerance": 12
+      },
+      "footOffsets": {
+        "run": [
+            { "x": 16, "y": 29 },
+            { "x": 16, "y": 27 },
+            { "x": 16, "y": 30 }
+            ],
+        "idle_look_left": [
+            { "x": 16, "y": 28 }
+            ]
       }
     }
 }

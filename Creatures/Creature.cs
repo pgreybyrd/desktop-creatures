@@ -30,6 +30,8 @@ public abstract class Creature
     public int SpriteHeight => Settings.SpriteHeight;
     public double LandingTolerance => Settings.LandingTolerance;
 
+    protected virtual int FootOffsetY => SpriteHeight;
+
     protected Dictionary<string, BitmapImage[]> Animations { get; } = new();
 
     public CreatureAction CurrentAction { get; protected set; }
