@@ -3,6 +3,18 @@ using Point = System.Windows.Point;
 
 namespace Desktop_Creatures.World;
 
+public enum AnchorPointType
+{
+    Perch,
+    Home,
+    Food,
+    Water,
+    Magic,
+    Rest,
+    Ground,
+    Sleep
+}
+
 public class AnchorPoint
 {
     public string Name { get; set; }
