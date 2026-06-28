@@ -1,6 +1,7 @@
 ﻿using Desktop_Creatures.Behaviors;
 using Desktop_Creatures.Config;
 using Desktop_Creatures.Needs;
+using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World.Surfaces;
 using System.Diagnostics;
 using System.Windows.Media.Imaging;
@@ -27,6 +28,7 @@ public abstract class Creature
     public double SpeedX { get; protected set; }
 
     protected CreatureSettings Settings { get; }
+
     public bool SpriteFacesRight => Settings.SpriteFacesRight;
     public int SpriteWidth => Settings.SpriteWidth;
     public int SpriteHeight => Settings.SpriteHeight;
@@ -40,7 +42,7 @@ public abstract class Creature
 
     public Personality Personality { get; } = new();
 
-    public NeedManager Needs { get; }
+    public NeedManager Needs { get; } = new();
 
     public BehaviorController BehaviorController { get; } = new();
 
@@ -54,11 +56,11 @@ public abstract class Creature
         Settings = settings;
     }
 
-    protected bool CanFly => Settings.Flight is not null;
-    protected bool CanWalk => Settings.Walk is not null;
-    protected bool CanSwim => Settings.Swim is not null;
-    protected bool CanPerch => Settings.Perch is not null;
-    protected bool CanSleep => Settings.Sleep is not null;
+    //protected bool CanFly => Settings.Flight is not null;
+    //protected bool CanWalk => Settings.Walk is not null;
+    //protected bool CanSwim => Settings.Swim is not null;
+    //protected bool CanPerch => Settings.Perch is not null;
+    //protected bool CanSleep => Settings.Sleep is not null;
 
     public void LoadAssets(string assetFolder)
     {
@@ -100,6 +102,9 @@ public abstract class Creature
 
         if (Settings.Fall is not null)
             Animations["Fall"] = LoadFrames(assetFolder, "fall", Settings.Fall.FallFrameCount);
+
+        if (Settings.Eat is not null)
+            Animations["Eat"] = LoadFrames(assetFolder, "eat", Settings.Eat.EatFrameCount);
     }
     protected static BitmapImage LoadImage(string path)
     {
@@ -127,6 +132,9 @@ public abstract class Creature
 
     protected void SetAction(CreatureAction action, string animationName)
     {
+        Logger.LogDebug(
+    $"SetAction: {CurrentAction} -> {action} ({animationName})");
+
         if (!Animations.TryGetValue(animationName, out var frames))
         {
             throw new InvalidOperationException(

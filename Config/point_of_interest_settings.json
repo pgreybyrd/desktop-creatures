@@ -1,0 +1,8 @@
+{
+    "rat_bowl": {
+      "assetPath": "Assets/World/Food/bowl_full.png",
+      "emptyAssetPath": "Assets/World/Food/bowl_empty.png",
+      "width": 13,
+      "height": 8
+    }
+}

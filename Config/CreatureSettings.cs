@@ -15,6 +15,7 @@ public class CreatureSettings
     public PerchSettings? Perch { get; set; }
     public SleepSettings? Sleep { get; set; }
     public FallSettings? Fall { get; set; }
+    public EatSettings? Eat { get; set; }
 }
 public class FlightSettings
 {
@@ -107,4 +108,9 @@ public class FallSettings
     public double MaxFallSpeed { get; set; } = 8;
     public int FallFrameCount { get; set; } = 1;
     public int FallFrameTicks { get; set; } = 5;
+}
+public class EatSettings
+{
+    public int EatFrameCount { get; set; } = 5;
+    public int EatFrameTicks { get; } = 5;
 }

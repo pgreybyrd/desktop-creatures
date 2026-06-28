@@ -59,7 +59,7 @@ namespace Desktop_Creatures.Utilities
                 lock (_logLock)
                 {
                     RotateLogFileIfNeeded(_errorLogFile);
-                    string errorMessage = $"[{DateTime.Now}] Error: {(string.IsNullOrEmpty(customMessage) ? "" : customMessage + ": ")}{ex.Message}{Environment.NewLine}Stack Trace: {ex.StackTrace}{Environment.NewLine}";
+                    string errorMessage = $"[{DateTime.Now:HH:mm:ss.fff}] Error: {(string.IsNullOrEmpty(customMessage) ? "" : customMessage + ": ")}{ex.Message}{Environment.NewLine}Stack Trace: {ex.StackTrace}{Environment.NewLine}";
                     File.AppendAllText(_errorLogFile, errorMessage + Environment.NewLine);
                 }
             }

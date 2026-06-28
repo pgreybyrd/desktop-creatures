@@ -95,8 +95,8 @@
         "sleepFrameTicks": 40
       },
       "eat": {
-        "eatFrameCount": 1,
-        "eatFrameTicks": 10
+        "eatFrameCount": 14,
+        "eatFrameTicks": 70
       },
       "fall": {
         "gravity": 0.2,

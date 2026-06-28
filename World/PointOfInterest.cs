@@ -1,4 +1,5 @@
 ﻿using Point = System.Windows.Point;
+using Desktop_Creatures.Config;
 
 namespace Desktop_Creatures.World;
 
@@ -18,10 +19,8 @@ public class PointOfInterest
     public string Name { get; set; }
     public Point Position { get; set; }
     public PointOfInterestType Type { get; set; }
-    public string AssetPath { get; set; }
-    public string? EmptyAssetPath { get; set; }
-    public int Width { get; set; }
-    public int Height { get; set; }
+    public PointOfInterestSettings Settings { get; }
+
     public bool IsAvailable { get; set; }
     public List<AnchorPoint> AnchorPoints { get; set; } = new();
 
@@ -29,18 +28,13 @@ public class PointOfInterest
         string name, 
         Point position, 
         PointOfInterestType type, 
-        string assetPath)
+        PointOfInterestSettings settings)
     {
         Name = name;
         Position = position;
         Type = type;
-        AssetPath = assetPath;
-
-        Width = 16;
-        Height = 16;
-
-        EmptyAssetPath = null;
         IsAvailable = true;
+        Settings = settings;
     }
 
     public void AddAnchor(AnchorPoint point)

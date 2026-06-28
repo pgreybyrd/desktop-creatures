@@ -21,15 +21,13 @@ namespace Desktop_Creatures.Needs
     }
     public class NeedManager
     {
-        public float Hunger = 0.8f;
+        public float Hunger = 0.0f;
+        public bool IsHungry => Hunger >= 0.7f;
+        public float HungerRate = 0.0005f;
+
         //public float Energy = 0.8f;
         //public float Curiosit = 0.8f;
         //public Personality Personality { get; set; }
-
-        public NeedManager()
-        {
-            //Personality = personality;
-        }
 
 
         public void Update()
@@ -39,7 +37,14 @@ namespace Desktop_Creatures.Needs
             energy -= baseEnergyDrain * Personality.Laziness;
             curiosity += baseCuriosityRate * Personality.Curiosity;
             */
-            Hunger += 0.01f;
+
+            //Hunger = Math.Min(1.0f, Hunger + HungerRate);
+            Hunger = Math.Clamp(Hunger + HungerRate, 0f, 1f);
+        }
+
+        public void Eat()
+        {
+            Hunger = 0f;
         }
 
         public Need GetHighestNeed()

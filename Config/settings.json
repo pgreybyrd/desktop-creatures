@@ -1,6 +1,6 @@
 {
 	"workingMonitor": 3,
-	"alwaysOnTop": false,
+	"alwaysOnTop": true,
 	"clickThrough": true,
 	"editMode": false,
 	"spawnLimit": 20,

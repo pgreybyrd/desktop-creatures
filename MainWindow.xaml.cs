@@ -1,5 +1,6 @@
 ﻿using Desktop_Creatures.Config;
 using Desktop_Creatures.Creatures;
+using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
 using System;
@@ -54,6 +55,8 @@ public partial class MainWindow : Window
 
     private Rectangle _workingArea;
     private Dictionary<string, CreatureSettings> _creatureSettings = new();
+    private Dictionary<string, PointOfInterestSettings> _pointOfInterestSettings = new();
+
     private List<PointOfInterest> _pointsOfInterest = new();
     private PointOfInterestManager _pointOfInterestManager;
 
@@ -106,15 +109,6 @@ public partial class MainWindow : Window
         _pointOfInterestManager = new PointOfInterestManager();
 
         
-        var bowl = new PointOfInterest(
-            "Rat Bowl",
-            new Point(900, 900),
-            PointOfInterestType.Food,
-            "Assets/World/Food/bowl_full.png");
-        bowl.EmptyAssetPath = "Assets/World/Food/bowl_empty.png";
-
-        _pointOfInterestManager.Add(bowl);
-        
         /*
         var tree = new PointOfInterest(
             "Oak",
@@ -130,6 +124,29 @@ public partial class MainWindow : Window
         var screen = Forms.Screen.PrimaryScreen!;
 
         _creatureSettings = CreatureSettingsLoader.Load();
+
+        _pointOfInterestSettings = PointOfInterestSettingsLoader.Load();
+
+        if (!_pointOfInterestSettings.TryGetValue("rat_bowl", out var bowlSettings))
+        {
+            System.Windows.MessageBox.Show("rat_bowl settings not found!");
+            return;
+        }
+
+        var bowl = new PointOfInterest(
+            "Rat Bowl",
+            new Point(900, 900),
+            PointOfInterestType.Food,
+            bowlSettings);
+
+        _pointOfInterestManager.Add(bowl);
+        Logger.LogDebug("=== Loaded POIs ===");
+
+        foreach (var poi in _pointOfInterestManager.Points)
+        {
+            Logger.LogDebug(
+                $"{poi.Name} ({poi.Type}) @ ({poi.Position.X}, {poi.Position.Y})");
+        }
 
         _timer = new DispatcherTimer
         {
@@ -341,6 +358,7 @@ public partial class MainWindow : Window
 private void AlwaysOnTopToggle_Click(object sender, RoutedEventArgs e)
 {
     _creaturesAlwaysOnTop = !_creaturesAlwaysOnTop;
+    Topmost = _creaturesAlwaysOnTop;
 
     SetCreaturesTopmost(_creaturesAlwaysOnTop);
 
