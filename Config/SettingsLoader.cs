@@ -7,7 +7,7 @@ public static class SettingsLoader
 {
     public static AppSettings Load()
     {
-        const string path = "Config/settings.json";
+        const string path = "Config/app_settings.json";
 
         if (!File.Exists(path))
             return new AppSettings();
@@ -21,6 +21,27 @@ public static class SettingsLoader
                 PropertyNameCaseInsensitive = true
             }
         ) ?? new AppSettings();
+    }
+}
+
+public static class DebugSettingsLoader
+{
+    public static DebugSettings Load()
+    {
+        const string path = "Config/debug_settings.json";
+
+        if (!File.Exists(path))
+            return new DebugSettings();
+
+        string json = File.ReadAllText(path);
+
+        return JsonSerializer.Deserialize<DebugSettings>(
+            json,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            }
+        ) ?? new DebugSettings();
     }
 }
 

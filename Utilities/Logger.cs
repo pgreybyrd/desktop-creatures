@@ -1,10 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Desktop_Creatures.Config;
 using System.Diagnostics;
 using System.IO;
 
 namespace Desktop_Creatures.Utilities
 {
+    public enum DebugCategory
+    {
+        Behavior,
+        Surface,
+        Animation,
+        PointOfInterest,
+        Needs,
+        Movement,
+        Physics,
+        Window,
+        AssetLoading,
+        Configuration,
+        Path,
+        Collision,
+        Spawning,
+        Input,
+        Performance
+    }
+
     /// <summary>
     /// Provides static methods for logging errors and debugging information to files within the application's current directory.
     /// </summary>
@@ -27,7 +45,7 @@ namespace Desktop_Creatures.Utilities
         // Default to Error if not specified
         public static LogLevel CurrentLogLevel { get; private set; } = LogLevel.Debug;
 
-        public static bool DebugEnabled { get; set; } = true;
+        private static DebugSettings _settings = new();
 
         public enum LogLevel
         {
@@ -46,6 +64,11 @@ namespace Desktop_Creatures.Utilities
             InitializeDebugLog();
         }
 
+        public static void Initialize(DebugSettings settings)
+        {
+            _settings = settings;
+        }
+
         /// <summary>
         /// Logs an exception as an error.
         /// </summary>
@@ -61,7 +84,9 @@ namespace Desktop_Creatures.Utilities
                 lock (_logLock)
                 {
                     RotateLogFileIfNeeded(_errorLogFile);
-                    string errorMessage = $"[{DateTime.Now:HH:mm:ss.fff}] Error: {(string.IsNullOrEmpty(customMessage) ? "" : customMessage + ": ")}{ex.Message}{Environment.NewLine}Stack Trace: {ex.StackTrace}{Environment.NewLine}";
+                    string errorMessage = 
+                        $"[{DateTime.Now:HH:mm:ss.fff}] Error: {(string.IsNullOrEmpty(customMessage) ? "" : customMessage + ": ")}" +
+                        $"{ex.Message}{Environment.NewLine}Stack Trace: {ex.StackTrace}{Environment.NewLine}";
                     File.AppendAllText(_errorLogFile, errorMessage + Environment.NewLine);
                 }
             }
@@ -69,7 +94,7 @@ namespace Desktop_Creatures.Utilities
             {
                 // If logging fails, consider writing to the console or another fall-back mechanism
                 Console.WriteLine($"Failed to log error: {logEx.Message}");
-                //Debug.WriteLine($"Failed to log error: {logEx.Message}");
+                Debug.WriteLine($"Failed to log error: {logEx.Message}");
             }
         }
 
@@ -77,9 +102,35 @@ namespace Desktop_Creatures.Utilities
         /// Logs a debug message.
         /// </summary>
         /// <param name="message">The message to log.</param>
-        public static void LogDebug(string message)
+        public static void LogDebug(
+            DebugCategory category,
+            string message)
         {
-            if (!DebugEnabled)
+            if (!_settings.Enabled)
+                return;
+
+            bool enabled = category switch
+            {
+                DebugCategory.Behavior => _settings.Behavior,
+                DebugCategory.Surface => _settings.Surface,
+                DebugCategory.Animation => _settings.Animation,
+                DebugCategory.PointOfInterest => _settings.PointOfInterest,
+                DebugCategory.Needs => _settings.Needs,
+                DebugCategory.Movement => _settings.Movement,
+                DebugCategory.Physics => _settings.Physics,
+                DebugCategory.Window => _settings.Window,
+                DebugCategory.AssetLoading => _settings.AssetLoading,
+                DebugCategory.Configuration => _settings.Configuration,
+                DebugCategory.Path => _settings.Path,
+                DebugCategory.Collision => _settings.Collision,
+                DebugCategory.Spawning => _settings.Spawning,
+                DebugCategory.Input => _settings.Input,
+                DebugCategory.Performance => _settings.Performance,
+
+                _ => false
+            };
+
+            if (!enabled)
                 return;
 
             // Check logging level requirement
@@ -90,7 +141,8 @@ namespace Desktop_Creatures.Utilities
                 lock (_logLock)
                 {
                     RotateLogFileIfNeeded(_debugLogFile);
-                    File.AppendAllText(_debugLogFile, $"{DateTime.Now}: {message}{Environment.NewLine}");
+                    File.AppendAllText(_debugLogFile,
+                        $"[{DateTime.Now:HH:mm:ss.fff}] {message}{Environment.NewLine}");
                 }
             }
             catch (Exception logEx)
@@ -115,14 +167,15 @@ namespace Desktop_Creatures.Utilities
                 lock (_logLock)
                 {
                     RotateLogFileIfNeeded(_warningLogFile);
-                    File.AppendAllText(_warningLogFile, $"{DateTime.Now}: {message}{Environment.NewLine}");
+                    File.AppendAllText(_warningLogFile,
+                        $"[{DateTime.Now:HH:mm:ss.fff}] {message}{Environment.NewLine}");
                 }
             }
             catch (Exception logEx)
             {
                 // If logging fails, consider writing to the console or another fall-back mechanism
                 Console.WriteLine($"Failed to log debug message: {logEx.Message}");
-                //Debug.WriteLine($"Failed to log debug message: {logEx.Message}");
+                Debug.WriteLine($"Failed to log debug message: {logEx.Message}");
             }
         }
 
@@ -160,28 +213,8 @@ namespace Desktop_Creatures.Utilities
         /// </summary>
         private static void InitializeDebugLog()
         {
-            string startMessage = $"{Environment.NewLine}Debug Log started on {DateTime.Now}{Environment.NewLine}";
+            string startMessage = $"{Environment.NewLine}Debug Log started on {DateTime.Now:HH:mm:ss.fff}{Environment.NewLine}";
             File.AppendAllText(_debugLogFile, startMessage);
         }
-
-        public static void LoadLoggingLevelFromConfig(string configPath)
-        {
-            try
-            {
-                string jsonString = File.ReadAllText(configPath);
-                var config = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, string>>(jsonString);
-                if (config != null && config.TryGetValue("LoggingLevel", out string logLevelStr))
-                {
-                    CurrentLogLevel = Enum.TryParse(logLevelStr, out LogLevel logLevel) ? logLevel : LogLevel.Error;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to load logging configuration: {ex.Message}");
-                // Default to LogLevel.Error if loading fails
-                CurrentLogLevel = LogLevel.Error;
-            }
-        }
-
     }
 }

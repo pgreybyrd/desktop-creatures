@@ -399,17 +399,19 @@
     <None Remove="Assets\World\Trees\tree_1.png" />
     <None Remove="Config\creature_settings.json" />
     <None Remove="Config\point_of_interest_settings.json" />
-    <None Remove="Config\settings.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Config\debug_settings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Config\creature_settings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Config\point_of_interest_settings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Config\settings.json">
+    <Content Include="Config\app_settings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

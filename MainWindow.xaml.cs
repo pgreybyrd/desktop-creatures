@@ -69,6 +69,7 @@ public partial class MainWindow : Window
         InitializeComponent();
 
         _workingArea = LoadSettings();
+
         _surfaceManager.Refresh();
 
         _spawnRatNormal = LoadUiImage("Assets/UI/button_spawn_rat.png");
@@ -123,9 +124,7 @@ public partial class MainWindow : Window
 
         var screen = Forms.Screen.PrimaryScreen!;
 
-        _creatureSettings = CreatureSettingsLoader.Load();
 
-        _pointOfInterestSettings = PointOfInterestSettingsLoader.Load();
 
         if (!_pointOfInterestSettings.TryGetValue("rat_bowl", out var bowlSettings))
         {
@@ -175,6 +174,12 @@ public partial class MainWindow : Window
 
     private Rectangle LoadSettings()
     {
+        _creatureSettings = CreatureSettingsLoader.Load();
+        _pointOfInterestSettings = PointOfInterestSettingsLoader.Load();
+
+        var debugSettings = DebugSettingsLoader.Load();
+        Logger.Initialize(debugSettings);
+
         var settings = SettingsLoader.Load();
 
         moniterIndex = Math.Clamp(
@@ -187,7 +192,6 @@ public partial class MainWindow : Window
         var area = screen.WorkingArea;
 
         Topmost = settings.AlwaysOnTop;
-        Logger.DebugEnabled = settings.DebugMode;
 
         return area;
     }
