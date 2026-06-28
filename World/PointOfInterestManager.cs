@@ -27,18 +27,18 @@ namespace Desktop_Creatures.World
             Point position,
             PointOfInterestType type)
         {
-            Logger.LogDebug(
-                $"Searching for nearest {type}. POIs: {Points.Count}");
+            //Logger.LogDebug(
+            //    $"Searching for nearest {type}. POIs: {Points.Count}");
 
             var result = Points
                 .Where(p => p.Type == type && p.IsAvailable)
                 .OrderBy(p => Distance(position, p.Position))
                 .FirstOrDefault();
 
-            Logger.LogDebug(
-                result is null
-                    ? $"No {type} POI found."
-                    : $"Nearest {type}: {result.Name}");
+            //Logger.LogDebug(
+            //    result is null
+            //        ? $"No {type} POI found."
+            //        : $"Nearest {type}: {result.Name}");
 
             return result;
         }

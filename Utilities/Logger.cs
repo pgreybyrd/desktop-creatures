@@ -27,6 +27,8 @@ namespace Desktop_Creatures.Utilities
         // Default to Error if not specified
         public static LogLevel CurrentLogLevel { get; private set; } = LogLevel.Debug;
 
+        public static bool DebugEnabled { get; set; } = true;
+
         public enum LogLevel
         {
             None = 0,
@@ -77,6 +79,9 @@ namespace Desktop_Creatures.Utilities
         /// <param name="message">The message to log.</param>
         public static void LogDebug(string message)
         {
+            if (!DebugEnabled)
+                return;
+
             // Check logging level requirement
             //if (CurrentLogLevel < LogLevel.Debug) return;
 

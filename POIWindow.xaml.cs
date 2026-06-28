@@ -44,10 +44,10 @@ public partial class POIWindow : Window
 
         _poi.Position = new System.Windows.Point(Left, Top);
 
-        Logger.LogDebug(
-            $"Bowl window moved to ({Left:F1}, {Top:F1})");
+        //Logger.LogDebug(
+        //    $"Bowl window moved to ({Left:F1}, {Top:F1})");
 
-        Logger.LogDebug(
-            $"POI says ({_poi.Position.X:F1}, {_poi.Position.Y:F1})");
+        //Logger.LogDebug(
+        //    $"POI says ({_poi.Position.X:F1}, {_poi.Position.Y:F1})");
     }
 }

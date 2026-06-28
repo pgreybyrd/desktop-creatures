@@ -132,8 +132,8 @@ public abstract class Creature
 
     protected void SetAction(CreatureAction action, string animationName)
     {
-        Logger.LogDebug(
-    $"SetAction: {CurrentAction} -> {action} ({animationName})");
+       // Logger.LogDebug(
+    //$"SetAction: {CurrentAction} -> {action} ({animationName})");
 
         if (!Animations.TryGetValue(animationName, out var frames))
         {

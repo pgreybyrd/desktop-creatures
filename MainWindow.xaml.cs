@@ -140,13 +140,13 @@ public partial class MainWindow : Window
             bowlSettings);
 
         _pointOfInterestManager.Add(bowl);
-        Logger.LogDebug("=== Loaded POIs ===");
+        //Logger.LogDebug("=== Loaded POIs ===");
 
-        foreach (var poi in _pointOfInterestManager.Points)
-        {
-            Logger.LogDebug(
-                $"{poi.Name} ({poi.Type}) @ ({poi.Position.X}, {poi.Position.Y})");
-        }
+        //foreach (var poi in _pointOfInterestManager.Points)
+        //{
+        //    Logger.LogDebug(
+        //        $"{poi.Name} ({poi.Type}) @ ({poi.Position.X}, {poi.Position.Y})");
+        //}
 
         _timer = new DispatcherTimer
         {
@@ -187,6 +187,7 @@ public partial class MainWindow : Window
         var area = screen.WorkingArea;
 
         Topmost = settings.AlwaysOnTop;
+        Logger.DebugEnabled = settings.DebugMode;
 
         return area;
     }

@@ -6,4 +6,5 @@ public class AppSettings
     public bool AlwaysOnTop { get; set; } = true;
     public bool ClickThrough { get; set; } = true;
     public bool EditMode { get; set; } = false;
+    public bool DebugMode { get; set; } = false;
 }

@@ -81,7 +81,7 @@ namespace Desktop_Creatures.Creatures
             _pointsOfInterest = pointsOfInterest;
             _pointOfInterestManager = pointOfInterestManager;
 
-            var variants = new[] { "Chocolate", "GreyHooded", "Albino"};
+            var variants = new[] { "Chocolate", "GreyHooded", "Albino", "Rainbow"};
             var variant = variants[_random.Next(variants.Length)];
 
             LoadAssets($"Assets/Creatures/Rat/{variant}");
@@ -117,8 +117,8 @@ namespace Desktop_Creatures.Creatures
         public override void Update()
         {
             //Logger.LogDebug("Rat.Update started");
-            Logger.LogDebug(
-    $"Current action = {CurrentAction}");
+            //Logger.LogDebug(
+   // $"Current action = {CurrentAction}");
 
             Needs.Update();
 
@@ -150,8 +150,8 @@ namespace Desktop_Creatures.Creatures
 
         private void UpdateEating()
         {
-            Logger.LogDebug(
-    $"UpdateEating() ticks={_eatingTicksRemaining}");
+            //Logger.LogDebug(
+    //$"UpdateEating() ticks={_eatingTicksRemaining}");
 
             _eatingTicksRemaining--;
             AdvanceAnimation(Eat.EatFrameTicks);
@@ -161,11 +161,11 @@ namespace Desktop_Creatures.Creatures
             {
                 Needs.Eat();
 
-                Logger.LogDebug(
-                    $"[{GetType().Name}] Finished eating.");
+                //Logger.LogDebug(
+                    //$"[{GetType().Name}] Finished eating.");
 
-                Logger.LogDebug(
-                    $"[{GetType().Name}] Hunger reset to {Needs.Hunger:F2}");
+                //Logger.LogDebug(
+                    //$"[{GetType().Name}] Hunger reset to {Needs.Hunger:F2}");
 
                 _eatingPoi = null;
                 _targetPoi = null;
@@ -183,7 +183,7 @@ namespace Desktop_Creatures.Creatures
                 _foodSearchCooldownTicks <= 0 &&
                 _eatCooldownTicks <= 0)
             {
-                Logger.LogDebug($"[{GetType().Name}] Hungry. Searching for food...");
+               // Logger.LogDebug($"[{GetType().Name}] Hungry. Searching for food...");
 
                 _targetPoi = _pointOfInterestManager.FindNearest(
                     new Point(X, Y),
@@ -191,8 +191,8 @@ namespace Desktop_Creatures.Creatures
 
                 if (_targetPoi is not null && !PoiIsReachableOnCurrentSurface(_targetPoi))
                 {
-                    Logger.LogDebug(
-                        $"[{GetType().Name}] Food found but not reachable on current surface: {_targetPoi.Name}");
+                    //Logger.LogDebug(
+                        //$"[{GetType().Name}] Food found but not reachable on current surface: {_targetPoi.Name}");
 
                     _targetPoi = null;
                     _foodSearchCooldownTicks = 120; // about 2 seconds at 60fps
@@ -205,7 +205,7 @@ namespace Desktop_Creatures.Creatures
                     _targetY = _currentSurface.Top - GetCurrentFootY();
                     _speed = Run.RunSpeed;
 
-                    Logger.LogDebug($"[{GetType().Name}] Heading toward {_targetPoi.Name}");
+                   // Logger.LogDebug($"[{GetType().Name}] Heading toward {_targetPoi.Name}");
                     SetAction(CreatureAction.Running, "Run");
                 }
             }
@@ -310,36 +310,36 @@ namespace Desktop_Creatures.Creatures
 
             double distance = Math.Sqrt(dx * dx + dy * dy);
 
-            Logger.LogDebug(
-                $"[{GetType().Name}] " +
-                $"Rat=({X:F1}, {Y:F1}) " +
-                $"Target=({_targetX:F1}, {_targetY:F1}) " +
-                $"Distance={distance:F1}");
+            //Logger.LogDebug(
+            //    $"[{GetType().Name}] " +
+            //    $"Rat=({X:F1}, {Y:F1}) " +
+            //    $"Target=({_targetX:F1}, {_targetY:F1}) " +
+            //    $"Distance={distance:F1}");
 
             if (distance < Run.ArrivalDistance)
             {
                 if (_targetPoi?.Type == PointOfInterestType.Food)
                 {
-                    Logger.LogDebug(
-                        $"[{GetType().Name}] Arrived at {_targetPoi?.Name}");
-                    Logger.LogDebug(
-                        $"[{GetType().Name}] Eating.");
+                    //Logger.LogDebug(
+                    //    $"[{GetType().Name}] Arrived at {_targetPoi?.Name}");
+                    //Logger.LogDebug(
+                    //    $"[{GetType().Name}] Eating.");
 
-                    Logger.LogDebug(
-                        $"[{GetType().Name}] " +
-                        $"Bowl actual position = ({_targetPoi.Position.X:F1}, {_targetPoi.Position.Y:F1})");
+                    //Logger.LogDebug(
+                    //    $"[{GetType().Name}] " +
+                    //    $"Bowl actual position = ({_targetPoi.Position.X:F1}, {_targetPoi.Position.Y:F1})");
 
-                    Logger.LogDebug(
-                        $"[{GetType().Name}] " +
-                        $"Rat position = ({X:F1}, {Y:F1})");
+                    //Logger.LogDebug(
+                    //    $"[{GetType().Name}] " +
+                    //    $"Rat position = ({X:F1}, {Y:F1})");
 
-                    Logger.LogDebug(
-                        $"[{GetType().Name}] " +
-                        $"Target position = ({_targetX:F1}, {_targetY:F1})");
+                    //Logger.LogDebug(
+                    //    $"[{GetType().Name}] " +
+                    //    $"Target position = ({_targetX:F1}, {_targetY:F1})");
 
-                    Logger.LogDebug(
-                        $"[{GetType().Name}] " +
-                        $"Arrival distance = {distance:F1}");
+                    //Logger.LogDebug(
+                    //    $"[{GetType().Name}] " +
+                    //    $"Arrival distance = {distance:F1}");
 
                     StartEating(_targetPoi);
                     return;
@@ -404,7 +404,7 @@ namespace Desktop_Creatures.Creatures
                 Run.MinRunTicks,
                 Run.MaxRunTicks);
 
-            Logger.LogDebug($"[{GetType().Name}] Ate. Wandering away from food.");
+           // Logger.LogDebug($"[{GetType().Name}] Ate. Wandering away from food.");
 
             SetAction(CreatureAction.Running, "Run");
         }
@@ -511,13 +511,13 @@ namespace Desktop_Creatures.Creatures
 
         private void StartEating(PointOfInterest poi)
         {
-            Logger.LogDebug("StartEating()");
+            //Logger.LogDebug("StartEating()");
 
-            Logger.LogDebug(
-                $"Animation keys: {string.Join(", ", Animations.Keys)}");
+            //Logger.LogDebug(
+            //    $"Animation keys: {string.Join(", ", Animations.Keys)}");
 
-            Logger.LogDebug(
-                $"Eat frame count: {Animations["Eat"].Length}");
+            //Logger.LogDebug(
+            //    $"Eat frame count: {Animations["Eat"].Length}");
 
             _eatingPoi = poi;
             _eatingTicksRemaining = 180;
