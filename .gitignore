@@ -15,3 +15,7 @@ obj/
 .idea/
 _ReSharper*/
 *.DotSettings.user
+
+# Misc
+directories.txt
+Assets/artwork.aseprite

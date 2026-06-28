@@ -13,6 +13,7 @@ namespace Desktop_Creatures.Creatures
         //private DestinationType _targetType;
 
         private readonly List<PointOfInterest> _pointsOfInterest;
+        private PointOfInterestManager _pointOfInterestManager;
 
         private readonly CreatureSettings _settings;
 
@@ -53,6 +54,7 @@ namespace Desktop_Creatures.Creatures
             double startX,
             double startY,
             List<PointOfInterest> pointsOfInterest,
+            PointOfInterestManager pointOfInterestManager,
             CreatureSettings settings,
             Rectangle workingArea,
             SurfaceManager surfaceManager)
@@ -62,6 +64,7 @@ namespace Desktop_Creatures.Creatures
             _workingArea = workingArea;
             _surfaceManager = surfaceManager;
             _pointsOfInterest = pointsOfInterest;
+            _pointOfInterestManager = pointOfInterestManager;
 
             LoadAssets("Assets/Creatures/Rat");
 

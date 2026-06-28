@@ -6,7 +6,8 @@
         Background="Transparent"
         ResizeMode="NoResize"
         Topmost="True"
-        ShowInTaskbar="False">
+        ShowInTaskbar="False"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown">
 
     <Image x:Name="PoiImage"
            Stretch="None"

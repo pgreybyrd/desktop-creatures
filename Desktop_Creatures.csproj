@@ -93,6 +93,7 @@
     <None Remove="Assets\UI\button_X.png" />
     <None Remove="Assets\UI\menu_background.png" />
     <None Remove="Assets\UI\menu_title.png" />
+    <None Remove="Assets\World\Food\bowl_empty.png" />
     <None Remove="Assets\World\Trees\tree_0.png" />
     <None Remove="Assets\World\Trees\tree_1.png" />
   </ItemGroup>
@@ -196,8 +197,16 @@
     <Resource Include="Assets\UI\button_X.png" />
     <Resource Include="Assets\UI\menu_background.png" />
     <Resource Include="Assets\UI\menu_title.png" />
+    <Resource Include="Assets\World\Food\bowl_empty.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\World\Food\bowl_full.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\World\Trees\tree_0.png" />
-    <Resource Include="Assets\World\Trees\tree_1.png" />
+    <Resource Include="Assets\World\Trees\tree_1.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>

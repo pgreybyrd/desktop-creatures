@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Forms = System.Windows.Forms;
+using Point = System.Windows.Point;
 
 namespace Desktop_Creatures;
 
@@ -54,6 +55,7 @@ public partial class MainWindow : Window
     private Rectangle _workingArea;
     private Dictionary<string, CreatureSettings> _creatureSettings = new();
     private List<PointOfInterest> _pointsOfInterest = new();
+    private PointOfInterestManager _pointOfInterestManager;
 
     private readonly SurfaceManager _surfaceManager = new();
 
@@ -101,6 +103,30 @@ public partial class MainWindow : Window
         MinimizeImage.Source = _minimizeNormal;
         XImage.Source = _xNormal;
 
+        _pointOfInterestManager = new PointOfInterestManager();
+
+        
+        var bowl = new PointOfInterest(
+            "Rat Bowl",
+            new Point(900, 900),
+            PointOfInterestType.Food,
+            "Assets/World/Food/bowl_full.png");
+        bowl.EmptyAssetPath = "Assets/World/Food/bowl_empty.png";
+
+        _pointOfInterestManager.Add(bowl);
+        
+        /*
+        var tree = new PointOfInterest(
+            "Oak",
+            new Point(1000 ,1000),
+            PointOfInterestType.Rest,
+            "Assets/World/Trees/tree_1.png");
+
+        tree.AnchorPoints.Add(new AnchorPoint("perch", AnchorPointType.Perch, new Point(10, 10)));
+
+        _pointOfInterestManager.Add(tree);
+        */
+
         var screen = Forms.Screen.PrimaryScreen!;
 
         _creatureSettings = CreatureSettingsLoader.Load();
@@ -113,6 +139,12 @@ public partial class MainWindow : Window
         _timer.Tick += Update;
         _timer.Start();
 
+        
+        foreach (var point in _pointOfInterestManager.Points) {
+            var window = new POIWindow(point);
+            window.Show();
+        }
+        
 
         ContentRendered += (_, _) =>
         {
@@ -162,8 +194,6 @@ public partial class MainWindow : Window
         DragMove();
     }
 
-
-
     private void SpawnRat()
     {
         //UpdateMenuSurface();
@@ -187,25 +217,6 @@ public partial class MainWindow : Window
             "rat",
             new CreatureSettings());
 
-        // var screen = Forms.Screen.PrimaryScreen!;
-        //var area = screen.WorkingArea;
-
-        /* var rat = new Rat(
-             menuSurface.Left,
-             menuSurface.Top - 32,
-             _pointsOfInterest,
-             ratSettings,
-             new Rectangle((int)Left, (int)Top, (int)Width, (int)Height),
-             _surfaceManager);
-
-         System.Windows.MessageBox.Show(
-             $"Rat spawning at X={rat.X}, Y={rat.Y}\n" +
-             $"Menu title at X={ _surfaceManager.MenuSurface.Left}, Y ={ _surfaceManager.MenuSurface.Top}\n");
-
-         rat.PlaceOnSurface(_surfaceManager.MenuSurface);*/
-
-
-
         double spawnX = menuSurface.Left + 
             (menuSurface.Right - menuSurface.Left - ratSettings.SpriteWidth) / 2.0;
 
@@ -215,6 +226,7 @@ public partial class MainWindow : Window
             spawnX,
             spawnY,
             _pointsOfInterest,
+            _pointOfInterestManager,
             ratSettings,
             new Rectangle((int)Left, (int)Top, (int)Width, (int)Height),
             _surfaceManager);

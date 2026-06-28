@@ -1,4 +1,6 @@
-﻿using Desktop_Creatures.Config;
+﻿using Desktop_Creatures.Behaviors;
+using Desktop_Creatures.Config;
+using Desktop_Creatures.Needs;
 using Desktop_Creatures.World.Surfaces;
 using System.Diagnostics;
 using System.Windows.Media.Imaging;
@@ -35,6 +37,12 @@ public abstract class Creature
     protected Dictionary<string, BitmapImage[]> Animations { get; } = new();
 
     public CreatureAction CurrentAction { get; protected set; }
+
+    public Personality Personality { get; } = new();
+
+    public NeedManager Needs { get; }
+
+    public BehaviorController BehaviorController { get; } = new();
 
     protected BitmapImage[] CurrentFrames = [];
     public BitmapImage? CurrentFrame;// => CurrentFrames.Length > 0 ? CurrentFrames[CurrentFrameIndex] : null;
