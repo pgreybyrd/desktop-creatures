@@ -81,7 +81,12 @@ namespace Desktop_Creatures.Creatures
             _pointsOfInterest = pointsOfInterest;
             _pointOfInterestManager = pointOfInterestManager;
 
-            LoadAssets("Assets/Creatures/Rat");
+            var variants = new[] { "Chocolate", "GreyHooded", "Albino"};
+            var variant = variants[_random.Next(variants.Length)];
+
+            LoadAssets($"Assets/Creatures/Rat/{variant}");
+
+            //LoadAssets("Assets/Creatures/Rat");
 
             X = startX;
             Y = startY;
