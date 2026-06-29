@@ -75,7 +75,6 @@ namespace Desktop_Creatures.Creatures
             SurfaceManager surfaceManager)
             : base(settings)
         {
-            //_settings = settings;
             _workingArea = workingArea;
             _surfaceManager = surfaceManager;
             _pointsOfInterest = pointsOfInterest;
@@ -85,8 +84,6 @@ namespace Desktop_Creatures.Creatures
             var variant = variants[_random.Next(variants.Length)];
 
             LoadAssets($"Assets/Creatures/Rat/{variant}");
-
-            //LoadAssets("Assets/Creatures/Rat");
 
             X = startX;
             Y = startY;
@@ -99,7 +96,6 @@ namespace Desktop_Creatures.Creatures
 
             if (_currentSurface is not null)
                 Y = _currentSurface.Top - GetCurrentFootY();
-            //Y = _currentSurface.Top - Settings.SpriteHeight;
 
             SetAction(CreatureAction.Running, "Run");
             PickNewTarget();
@@ -111,17 +107,10 @@ namespace Desktop_Creatures.Creatures
 
             X = surface.Left + (surface.Width - SpriteWidth) / 2.0;
             Y = surface.Top - GetCurrentFootY();
-            //Y = surface.Top - SpriteHeight;
         }
 
-        public override void Update()
+        protected override void UpdateState()
         {
-            //Logger.LogDebug("Rat.Update started");
-            //Logger.LogDebug(
-   // $"Current action = {CurrentAction}");
-
-            Needs.Update();
-
             if (_eatCooldownTicks > 0)
                 _eatCooldownTicks--;
 
@@ -310,11 +299,12 @@ namespace Desktop_Creatures.Creatures
 
             double distance = Math.Sqrt(dx * dx + dy * dy);
 
-            //Logger.LogDebug(
-            //    $"[{GetType().Name}] " +
-            //    $"Rat=({X:F1}, {Y:F1}) " +
-            //    $"Target=({_targetX:F1}, {_targetY:F1}) " +
-            //    $"Distance={distance:F1}");
+            Logger.LogDebug(
+                DebugCategory.Movement,
+                $"[{GetType().Name}] " +
+                $"Rat=({X:F1}, {Y:F1}) " +
+                $"Target=({_targetX:F1}, {_targetY:F1}) " +
+                $"Distance={distance:F1}");
 
             if (distance < Run.ArrivalDistance)
             {
@@ -343,12 +333,14 @@ namespace Desktop_Creatures.Creatures
 
                     StartEating(_targetPoi);
                     return;
+                    
+                    //Needs.Eat();
+
+                    //Logger.LogDebug(
+                        //DebugCategory.Needs,
+                        //$"[{GetType().Name}] Hunger reset to {Needs.Hunger:F2}");
+
                     /*
-                    Needs.Eat();
-
-                    Logger.LogDebug(
-                        $"[{GetType().Name}] Hunger reset to {Needs.Hunger:F2}");
-
                     _targetPoi = null;
                     _eatCooldownTicks = EatCooldownDurationTicks;
 
@@ -404,12 +396,14 @@ namespace Desktop_Creatures.Creatures
                 Run.MinRunTicks,
                 Run.MaxRunTicks);
 
-           // Logger.LogDebug($"[{GetType().Name}] Ate. Wandering away from food.");
+           Logger.LogDebug(
+               DebugCategory.Behavior,
+               $"[{GetType().Name}] Ate. Wandering away from food.");
 
             SetAction(CreatureAction.Running, "Run");
         }
 
-        private void UpdateAnimation()
+        protected override void UpdateAnimation()
         {
             if (CurrentAction == CreatureAction.Running)
                 AdvanceAnimation(Run.RunFrameTicks);

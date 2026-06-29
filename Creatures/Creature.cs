@@ -19,7 +19,9 @@ public enum CreatureAction
     Sleeping,
     Eating,
     Running,
-    Falling
+    Falling,
+    Chasing,
+    Carrying
 }
 public abstract class Creature
 {
@@ -56,12 +58,6 @@ public abstract class Creature
         Settings = settings;
     }
 
-    //protected bool CanFly => Settings.Flight is not null;
-    //protected bool CanWalk => Settings.Walk is not null;
-    //protected bool CanSwim => Settings.Swim is not null;
-    //protected bool CanPerch => Settings.Perch is not null;
-    //protected bool CanSleep => Settings.Sleep is not null;
-
     public void LoadAssets(string assetFolder)
     {
         if (Settings.Flight is not null)
@@ -89,7 +85,6 @@ public abstract class Creature
                         animation.FrameCount);
             }
         }
-        //Animations["Idle"] = LoadFrames(assetFolder, "idle", Settings.Idle.IdleFrameCount);
 
         if (Settings.Swim is not null)
             Animations["Swim"] = LoadFrames(assetFolder, "swim", Settings.Swim.SwimFrameCount);
@@ -119,7 +114,6 @@ public abstract class Creature
 
         return image;
     }
-
     protected static BitmapImage[] LoadFrames(
         string assetFolder,
         string animationName,
@@ -132,8 +126,9 @@ public abstract class Creature
 
     protected void SetAction(CreatureAction action, string animationName)
     {
-       // Logger.LogDebug(
-    //$"SetAction: {CurrentAction} -> {action} ({animationName})");
+        Logger.LogDebug(
+            DebugCategory.Animation,
+            $"SetAction: {CurrentAction} -> {action} ({animationName})");
 
         if (!Animations.TryGetValue(animationName, out var frames))
         {
@@ -183,7 +178,23 @@ public abstract class Creature
             X <= surface.Right;
     }
 
-    public abstract void Update();
+    public void Update()
+    {
+        UpdateNeeds();
+        UpdateState();
+        UpdateAnimation();
+    }
+
+    protected virtual void UpdateNeeds()
+    {
+        Needs.Update();
+    }
+
+    protected abstract void UpdateState();
+
+    protected virtual void UpdateAnimation()
+    {
+    }
 
     public virtual void DragTo(double x, double y)
     {

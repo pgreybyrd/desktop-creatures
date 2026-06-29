@@ -70,7 +70,7 @@ namespace Desktop_Creatures.Creatures
 
         //public override CreatureKind Kind => CreatureKind.Bird;
 
-        public override void Update()
+        protected override void UpdateState()
         {
             switch (CurrentAction)
             {
