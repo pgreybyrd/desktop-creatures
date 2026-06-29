@@ -134,27 +134,17 @@ namespace Desktop_Creatures.Creatures
                     break;
             }
 
-            UpdateAnimation();
+            //UpdateAnimation();
         }
 
         private void UpdateEating()
         {
-            //Logger.LogDebug(
-    //$"UpdateEating() ticks={_eatingTicksRemaining}");
-
             _eatingTicksRemaining--;
             AdvanceAnimation(Eat.EatFrameTicks);
-            //SetAction(CreatureAction.Eating, "Eat");
 
             if (_eatingTicksRemaining <= 0)
             {
                 Needs.Eat();
-
-                //Logger.LogDebug(
-                    //$"[{GetType().Name}] Finished eating.");
-
-                //Logger.LogDebug(
-                    //$"[{GetType().Name}] Hunger reset to {Needs.Hunger:F2}");
 
                 _eatingPoi = null;
                 _targetPoi = null;
@@ -167,22 +157,29 @@ namespace Desktop_Creatures.Creatures
 
         private void UpdateRunning()
         {
+            TryFindFood();
+
+            if (!ValidateSurface())
+                return;
+
+            MoveTowardsTarget();
+
+            UpdateRunningTimer();
+        }
+
+        private void TryFindFood()
+        {
             if (Needs.IsHungry &&
                 _targetPoi is null &&
                 _foodSearchCooldownTicks <= 0 &&
                 _eatCooldownTicks <= 0)
             {
-               // Logger.LogDebug($"[{GetType().Name}] Hungry. Searching for food...");
-
                 _targetPoi = _pointOfInterestManager.FindNearest(
                     new Point(X, Y),
                     PointOfInterestType.Food);
 
                 if (_targetPoi is not null && !PoiIsReachableOnCurrentSurface(_targetPoi))
                 {
-                    //Logger.LogDebug(
-                        //$"[{GetType().Name}] Food found but not reachable on current surface: {_targetPoi.Name}");
-
                     _targetPoi = null;
                     _foodSearchCooldownTicks = 120; // about 2 seconds at 60fps
                     return;
@@ -194,25 +191,30 @@ namespace Desktop_Creatures.Creatures
                     _targetY = _currentSurface.Top - GetCurrentFootY();
                     _speed = Run.RunSpeed;
 
-                   // Logger.LogDebug($"[{GetType().Name}] Heading toward {_targetPoi.Name}");
                     SetAction(CreatureAction.Running, "Run");
                 }
             }
+        }
 
+        private bool ValidateSurface()
+        {
             if (!IsStillOnSurface())
             {
                 StartFalling();
-                return;
+                return false;
             }
 
             if (_targetPoi is null && !TargetStillOnCurrentSurface())
             {
                 PickNewTarget();
-                return;
+                return false;
             }
 
-            MoveTowardsTarget();
+            return true;
+        }
 
+        private void UpdateRunningTimer()
+        {
             if (CurrentAction != CreatureAction.Running)
                 return;
 
@@ -310,43 +312,8 @@ namespace Desktop_Creatures.Creatures
             {
                 if (_targetPoi?.Type == PointOfInterestType.Food)
                 {
-                    //Logger.LogDebug(
-                    //    $"[{GetType().Name}] Arrived at {_targetPoi?.Name}");
-                    //Logger.LogDebug(
-                    //    $"[{GetType().Name}] Eating.");
-
-                    //Logger.LogDebug(
-                    //    $"[{GetType().Name}] " +
-                    //    $"Bowl actual position = ({_targetPoi.Position.X:F1}, {_targetPoi.Position.Y:F1})");
-
-                    //Logger.LogDebug(
-                    //    $"[{GetType().Name}] " +
-                    //    $"Rat position = ({X:F1}, {Y:F1})");
-
-                    //Logger.LogDebug(
-                    //    $"[{GetType().Name}] " +
-                    //    $"Target position = ({_targetX:F1}, {_targetY:F1})");
-
-                    //Logger.LogDebug(
-                    //    $"[{GetType().Name}] " +
-                    //    $"Arrival distance = {distance:F1}");
-
                     StartEating(_targetPoi);
                     return;
-                    
-                    //Needs.Eat();
-
-                    //Logger.LogDebug(
-                        //DebugCategory.Needs,
-                        //$"[{GetType().Name}] Hunger reset to {Needs.Hunger:F2}");
-
-                    /*
-                    _targetPoi = null;
-                    _eatCooldownTicks = EatCooldownDurationTicks;
-
-                    PickPostEatWanderTarget();
-                    return;
-                    */
                 }
 
                 StartIdle();
