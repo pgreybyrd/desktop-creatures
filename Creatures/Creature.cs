@@ -217,6 +217,16 @@ public abstract class Creature
         AnimationTick = 0;
     }
 
+    protected virtual void UpdateTimers()
+    {
+    }
+
+    protected static void TickDown(ref int timer)
+    {
+        if (timer > 0)
+            timer--;
+    }
+
     public bool IsStandingOn(Surface surface)
     {
         return
@@ -231,6 +241,7 @@ public abstract class Creature
 
     public void Update()
     {
+        UpdateTimers();
         UpdateNeeds();
         UpdateState();
         UpdateAnimation();

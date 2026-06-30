@@ -122,11 +122,13 @@ namespace Desktop_Creatures.Creatures
 
         protected override void UpdateState()
         {
+            /*
             if (_eatCooldownTicks > 0)
                 _eatCooldownTicks--;
 
             if (_foodSearchCooldownTicks > 0)
                 _foodSearchCooldownTicks--;
+            */
 
             switch (CurrentAction)
             {
@@ -185,6 +187,11 @@ namespace Desktop_Creatures.Creatures
 
                 PickPostEatWanderTarget();
             }
+        }
+        protected override void UpdateTimers()
+        {
+            TickDown(ref _eatCooldownTicks);
+            TickDown(ref _foodSearchCooldownTicks);
         }
 
         private void UpdateRunning()
