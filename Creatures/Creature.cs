@@ -4,6 +4,7 @@ using Desktop_Creatures.Needs;
 using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World.Surfaces;
 using System.Diagnostics;
+using System.Windows.Documents;
 using System.Windows.Media.Imaging;
 
 namespace Desktop_Creatures.Creatures;
@@ -63,6 +64,60 @@ public abstract class Creature
     protected BitmapImage[] CurrentFrames = [];
     protected int CurrentFrameIndex;
     protected int AnimationTick;
+
+    protected void AdvanceAnimation(int frameTicks)
+    {
+        if (CurrentFrames.Length <= 1)
+            return;
+
+        //Logger.LogDebug(
+        //    DebugCategory.Animation,
+        //    $"AdvanceAnimation: Action={CurrentAction}, FrameIndex={CurrentFrameIndex}, FrameTicks={frameTicks}");
+
+        AnimationTick++;
+
+        if (AnimationTick < frameTicks)
+            return;
+
+        AnimationTick = 0;
+        CurrentFrameIndex = (CurrentFrameIndex + 1) % CurrentFrames.Length;
+    }
+    #endregion
+
+    #region Fields
+
+    #endregion
+
+    #region Properties
+
+    #endregion
+
+    #region Constructor
+
+    #endregion
+
+    #region Update
+
+    #endregion
+
+    #region Movement
+
+    #endregion
+
+    #region Animation
+
+    #endregion
+
+    #region Needs
+
+    #endregion
+
+    #region Behavior
+
+    #endregion
+
+    #region Helper Methods
+
     #endregion
 
     protected Creature(CreatureSettings settings)
@@ -154,31 +209,12 @@ public abstract class Creature
 
         CurrentAction = action;
         CurrentFrames = frames;
-        CurrentFrameIndex++;
+        CurrentFrameIndex = 0;
 
         if (CurrentFrameIndex >= CurrentFrames.Length)
             CurrentFrameIndex = 0;
 
         AnimationTick = 0;
-        //CurrentFrame = CurrentFrames[CurrentFrameIndex];
-    }
-
-    protected void AdvanceAnimation(int frameTicks)
-    {
-        if (CurrentFrames.Length <= 1)
-            return;
-
-        Logger.LogDebug(
-            DebugCategory.Animation,
-            $"AdvanceAnimation: Action={CurrentAction}, FrameIndex={CurrentFrameIndex}, FrameTicks={frameTicks}");
-
-        AnimationTick++;
-
-        if (AnimationTick < frameTicks)
-            return;
-
-        AnimationTick = 0;
-        CurrentFrameIndex = (CurrentFrameIndex + 1) % CurrentFrames.Length;
     }
 
     public bool IsStandingOn(Surface surface)
@@ -209,6 +245,37 @@ public abstract class Creature
 
     protected virtual void UpdateAnimation()
     {
+        int? frameTicks = CurrentAction switch
+        {
+            CreatureAction.Running when Settings.Run is not null
+                => Settings.Run.RunFrameTicks,
+
+            CreatureAction.Idle when Settings.Idle is not null
+                => Settings.Idle.IdleFrameTicks,
+
+            CreatureAction.Falling when Settings.Fall is not null
+                => Settings.Fall.FallFrameTicks,
+
+            CreatureAction.Flying when Settings.Flight is not null
+                => Settings.Flight.FlyingFrameTicks,
+
+            CreatureAction.Gliding when Settings.Flight is not null
+                => Settings.Flight.FlyingFrameTicks,
+
+            CreatureAction.Perching when Settings.Perch is not null
+                => Settings.Perch.PerchFrameTicks,
+
+            CreatureAction.Eating when Settings.Eat is not null
+                => Settings.Eat.EatFrameTicks,
+
+            CreatureAction.Sleeping when Settings.Sleep is not null
+                => Settings.Sleep.SleepFrameTicks,
+
+            _ => null
+        };
+
+        if (frameTicks is not null)
+            AdvanceAnimation(frameTicks.Value);
     }
 
     public virtual void DragTo(double x, double y)

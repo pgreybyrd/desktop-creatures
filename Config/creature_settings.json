@@ -99,7 +99,8 @@
       },
       "eat": {
         "eatFrameCount": 14,
-        "eatFrameTicks": 70
+        "eatFrameTicks": 4,
+        "eatingTicksRemaining": 100
       },
       "fall": {
         "gravity": 0.2,

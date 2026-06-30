@@ -1,4 +1,6 @@
-﻿namespace Desktop_Creatures.Config;
+﻿using System.ComponentModel;
+
+namespace Desktop_Creatures.Config;
 
 public class CreatureSettings
 {
@@ -102,6 +104,7 @@ public class SleepSettings
     public int MinSleepTicks { get; set; } = 600;
     public int MaxSleepTicks { get; set; } = 1200;
     public int SleepFrameCount { get; set; } = 1;
+    public int SleepFrameTicks { get; set; }
 }
 public class FallSettings
 {
@@ -113,5 +116,6 @@ public class FallSettings
 public class EatSettings
 {
     public int EatFrameCount { get; set; } = 5;
-    public int EatFrameTicks { get; } = 5;
+    public int EatFrameTicks { get; set; } = 5;
+    public int EatingTicksRemaining { get; set; } = 50;
 }

@@ -144,6 +144,7 @@ namespace Desktop_Creatures.Creatures
                     UpdateEating();
                     break;
             }
+            //UpdateAnimation();
         }
         /*
          * protected override void UpdateState()
@@ -172,7 +173,6 @@ namespace Desktop_Creatures.Creatures
         private void UpdateEating()
         {
             _eatingTicksRemaining--;
-            AdvanceAnimation(Eat.EatFrameTicks);
 
             if (_eatingTicksRemaining <= 0)
             {
@@ -410,17 +410,6 @@ namespace Desktop_Creatures.Creatures
             SetAction(CreatureAction.Running, "Run");
         }
 
-        protected override void UpdateAnimation()
-        {
-            if (CurrentAction == CreatureAction.Running)
-                AdvanceAnimation(Run.RunFrameTicks);
-
-            else if (CurrentAction == CreatureAction.Idle)
-                AdvanceAnimation(Idle.IdleFrameTicks);
-
-            else if (CurrentAction == CreatureAction.Falling)
-                AdvanceAnimation(Fall.FallFrameTicks);
-        }
 
         public override void PickNewTarget()
         {
@@ -512,13 +501,19 @@ namespace Desktop_Creatures.Creatures
 
         private void StartEating(PointOfInterest poi)
         {
-            Logger.LogDebug(DebugCategory.Behavior,
+            Logger.LogDebug(DebugCategory.Animation,
                 "StartEating()" +
-                $"Animation keys: {string.Join(", ", Animations.Keys)}" +
-                $"Eat frame count: {Animations["Eat"].Length}");
+                $"Animation keys: {string.Join(", ", Animations.Keys)}\n" +
+                $"Eat frame count: {Animations["Eat"].Length},\n" +
+                $"Eat frame ticks: {Eat.EatFrameTicks}");
 
             _eatingPoi = poi;
-            _eatingTicksRemaining = 180;
+            _eatingTicksRemaining = Eat.EatingTicksRemaining;
+
+            Logger.LogDebug(
+                DebugCategory.Behavior,
+                $"EatingTicksRemaining loaded as: {_eatingTicksRemaining}");
+
             SpeedX = 0;
             _stateTicksRemaining = 0;
             SetAction(CreatureAction.Eating, "Eat");

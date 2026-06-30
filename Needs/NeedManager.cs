@@ -23,7 +23,7 @@ namespace Desktop_Creatures.Needs
     {
         public float Hunger = 0.0f;
         public bool IsHungry => Hunger >= 0.7f;
-        public float HungerRate = 0.0005f;
+        public float HungerRate = 0.05f;
 
         //public float Energy = 0.8f;
         //public float Curiosit = 0.8f;
