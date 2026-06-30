@@ -42,20 +42,28 @@ public abstract class Creature
 
     protected virtual int FootOffsetY => SpriteHeight;
 
-    protected Dictionary<string, BitmapImage[]> Animations { get; } = new();
+
 
     public CreatureAction CurrentAction { get; protected set; }
 
-    public Personality Personality { get; } = new();
+    protected Personality Personality { get; } = new();
 
-    public NeedManager Needs { get; } = new();
+    protected NeedManager Needs { get; } = new();
 
-    public BehaviorController BehaviorController { get; } = new();
+    protected BehaviorController BehaviorController { get; } = new();
+
+    #region Animation
+    protected Dictionary<string, BitmapImage[]> Animations { get; } = new();
+
+    public BitmapImage? CurrentFrame => 
+        CurrentFrames.Length > 0 
+        ? CurrentFrames[CurrentFrameIndex] 
+        : null;
 
     protected BitmapImage[] CurrentFrames = [];
-    public BitmapImage? CurrentFrame;// => CurrentFrames.Length > 0 ? CurrentFrames[CurrentFrameIndex] : null;
     protected int CurrentFrameIndex;
     protected int AnimationTick;
+    #endregion
 
     protected Creature(CreatureSettings settings)
     {
@@ -146,36 +154,31 @@ public abstract class Creature
 
         CurrentAction = action;
         CurrentFrames = frames;
-        CurrentFrameIndex = 0;
+        CurrentFrameIndex++;
+
+        if (CurrentFrameIndex >= CurrentFrames.Length)
+            CurrentFrameIndex = 0;
+
         AnimationTick = 0;
-        CurrentFrame = CurrentFrames[CurrentFrameIndex];
+        //CurrentFrame = CurrentFrames[CurrentFrameIndex];
     }
 
     protected void AdvanceAnimation(int frameTicks)
     {
-        if (CurrentFrames.Length == 0)
+        if (CurrentFrames.Length <= 1)
             return;
 
-        if (CurrentFrames.Length == 1)
-        {
-            CurrentFrame = CurrentFrames[0];
-            return;
-        }
-
-        //possibly spammy - use temporarily
         Logger.LogDebug(
             DebugCategory.Animation,
             $"AdvanceAnimation: Action={CurrentAction}, FrameIndex={CurrentFrameIndex}, FrameTicks={frameTicks}");
 
         AnimationTick++;
 
-        if (AnimationTick >= frameTicks)
-        {
-            AnimationTick = 0;
-            CurrentFrameIndex = (CurrentFrameIndex + 1) % CurrentFrames.Length;
-        }
+        if (AnimationTick < frameTicks)
+            return;
 
-        CurrentFrame = CurrentFrames[CurrentFrameIndex];
+        AnimationTick = 0;
+        CurrentFrameIndex = (CurrentFrameIndex + 1) % CurrentFrames.Length;
     }
 
     public bool IsStandingOn(Surface surface)
