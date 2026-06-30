@@ -10,7 +10,7 @@ namespace Desktop_Creatures.Creatures
 {
     public class Rat : Creature
     {
-        private readonly Random _random = new();
+        
 
         //private DestinationType _targetType;
 
@@ -81,7 +81,7 @@ namespace Desktop_Creatures.Creatures
             _pointOfInterestManager = pointOfInterestManager;
 
             var variants = new[] { "Chocolate", "GreyHooded", "Albino", "Rainbow", "Black", "Cinnamon"};
-            var variant = variants[_random.Next(variants.Length)];
+            var variant = variants[Random.Next(variants.Length)];
             /*
             int roll = _random.Next(100);
 
@@ -259,7 +259,7 @@ namespace Desktop_Creatures.Creatures
         private void StartIdle()
         {
             var animation = Idle.Animations[
-                _random.Next(Idle.Animations.Count)
+                Random.Next(Idle.Animations.Count)
             ];
 
             SetAction(
@@ -272,7 +272,7 @@ namespace Desktop_Creatures.Creatures
 
             SpeedX = 0;
 
-            _stateTicksRemaining = _random.Next(
+            _stateTicksRemaining = Random.Next(
                 Idle.MinIdleTicks,
                 Idle.MaxIdleTicks);
         }
@@ -392,14 +392,14 @@ namespace Desktop_Creatures.Creatures
                 return;
             }
 
-            double direction = _random.Next(0, 2) == 0 ? -1 : 1;
+            double direction = Random.Next(0, 2) == 0 ? -1 : 1;
             double desiredX = X + direction * PostEatWanderDistance;
 
             _targetX = Math.Clamp(desiredX, minX, maxX);
             _targetY = _currentSurface.Top - GetCurrentFootY();
             _speed = Run.RunSpeed;
 
-            _stateTicksRemaining = _random.Next(
+            _stateTicksRemaining = Random.Next(
                 Run.MinRunTicks,
                 Run.MaxRunTicks);
 
@@ -436,12 +436,12 @@ namespace Desktop_Creatures.Creatures
                 return;
             }
 
-            _targetX = _random.Next(minX, maxX);
+            _targetX = Random.Next(minX, maxX);
             _targetY = _currentSurface.Top - GetCurrentFootY();
 
             _speed = Run.RunSpeed;
 
-            _stateTicksRemaining = _random.Next(
+            _stateTicksRemaining = Random.Next(
                 Run.MinRunTicks,
                 Run.MaxRunTicks);
 

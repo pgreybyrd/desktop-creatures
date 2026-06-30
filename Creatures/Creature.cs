@@ -25,6 +25,8 @@ public enum CreatureAction
 }
 public abstract class Creature
 {
+    protected readonly Random Random = new();
+
     public double X { get; protected set; }
     public double Y { get; protected set; }
     public double SpeedX { get; protected set; }
