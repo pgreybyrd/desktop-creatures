@@ -45,7 +45,7 @@
       "spriteFacesRight": false,
       "spriteWidth": 32,
       "spriteHeight": 32,
-      "scale": 2,
+      "scale": 6,
 
       "walk": {
         "walkSpeed": 1.5,

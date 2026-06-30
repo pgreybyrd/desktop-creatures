@@ -3,10 +3,9 @@ using Desktop_Creatures.Creatures;
 using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
-using System;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Forms = System.Windows.Forms;
@@ -63,6 +62,8 @@ public partial class MainWindow : Window
     private readonly SurfaceManager _surfaceManager = new();
 
     private const int MaxRats = 20;
+
+    private int Scale = 1;
 
     public MainWindow()
     {
@@ -192,6 +193,14 @@ public partial class MainWindow : Window
         var area = screen.WorkingArea;
 
         Topmost = settings.AlwaysOnTop;
+
+        //SCALE
+        Scale = settings.Scale;
+
+        MainCanvas.LayoutTransform = new ScaleTransform(Scale, Scale);
+
+        Width = MainCanvas.Width * Scale;
+        Height = MainCanvas.Height * Scale;
 
         return area;
     }
@@ -329,9 +338,9 @@ public partial class MainWindow : Window
 
     private void UpdateMenuSurface()
     {
-        int surfaceX = (int)(Left + 111);
-        int surfaceY = (int)(Top + 42);
-        int surfaceWidth = 151;
+        int surfaceX = (int)(Left + 111 * Scale);
+        int surfaceY = (int)(Top + 42 * Scale);
+        int surfaceWidth = 151 * Scale;
 
         _surfaceManager.SetMenuSurface(
             new Rectangle(

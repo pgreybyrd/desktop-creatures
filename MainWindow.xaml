@@ -17,7 +17,10 @@
         UseLayoutRounding="True"
         RenderOptions.BitmapScalingMode="NearestNeighbor">
     <Grid>
-        <Canvas Width="368" Height="233">
+        <Canvas x:Name="MainCanvas"
+                Width="368" 
+                Height="233"
+                RenderOptions.BitmapScalingMode="NearestNeighbor">
 
             <Image Source="Assets/UI/menu_background.png"
                    Width="368"
