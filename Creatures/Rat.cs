@@ -80,8 +80,19 @@ namespace Desktop_Creatures.Creatures
             _pointsOfInterest = pointsOfInterest;
             _pointOfInterestManager = pointOfInterestManager;
 
-            var variants = new[] { "Chocolate", "GreyHooded", "Albino", "Rainbow"};
+            var variants = new[] { "Chocolate", "GreyHooded", "Albino", "Rainbow", "Black", "Cinnamon"};
             var variant = variants[_random.Next(variants.Length)];
+            /*
+            int roll = _random.Next(100);
+
+            string variant =
+                roll < 30 ? "GreyHooded" : // 30%
+                roll < 55 ? "Black" : // 25%
+                roll < 75 ? "Chocolate" : // 20%
+                roll < 90 ? "Albino" : // 15%
+                roll < 99 ? "Cinnamon" : // 9%
+                              "Rainbow";   // 1%
+            */
 
             LoadAssets($"Assets/Creatures/Rat/{variant}");
 
@@ -133,9 +144,30 @@ namespace Desktop_Creatures.Creatures
                     UpdateEating();
                     break;
             }
-
-            //UpdateAnimation();
         }
+        /*
+         * protected override void UpdateState()
+            {
+                switch (CurrentAction)
+                {
+                    case CreatureAction.Idle:
+                        UpdateIdle();
+                        break;
+
+                    case CreatureAction.Running:
+                        UpdateRunning();
+                        break;
+
+                    case CreatureAction.Eating:
+                        UpdateEating();
+                        break;
+
+                    case CreatureAction.Falling:
+                        UpdateFalling();
+                        break;
+                }
+            }
+        */
 
         private void UpdateEating()
         {

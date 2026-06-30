@@ -134,7 +134,7 @@ public partial class MainWindow : Window
 
         var bowl = new PointOfInterest(
             "Rat Bowl",
-            new Point(900, 900),
+            new Point(960, 460),
             PointOfInterestType.Food,
             bowlSettings);
 
@@ -295,6 +295,8 @@ public partial class MainWindow : Window
     private void ClearRats_Click(object sender, RoutedEventArgs e)
     {
         ClearRats();
+        //TEMP
+        ClearEagles();
     }
     private void ClearEagles_Click(object sender, RoutedEventArgs e)
     {
