@@ -31,9 +31,11 @@ public abstract class Creature
 
     protected CreatureSettings Settings { get; }
 
+    public int Scale => Settings.Scale;
+
     public bool SpriteFacesRight => Settings.SpriteFacesRight;
-    public int SpriteWidth => Settings.SpriteWidth;
-    public int SpriteHeight => Settings.SpriteHeight;
+    public int SpriteWidth => Settings.SpriteWidth * Settings.Scale;
+    public int SpriteHeight => Settings.SpriteHeight * Settings.Scale;
     public double LandingTolerance => Settings.LandingTolerance;
 
     protected virtual int FootOffsetY => SpriteHeight;
@@ -128,7 +130,7 @@ public abstract class Creature
     {
         Logger.LogDebug(
             DebugCategory.Animation,
-            $"SetAction: {CurrentAction} -> {action} ({animationName})");
+            $"SetAction: {action} ({animationName}) frame size = {CurrentFrame?.PixelWidth}x{CurrentFrame?.PixelHeight}");
 
         if (!Animations.TryGetValue(animationName, out var frames))
         {
@@ -136,6 +138,9 @@ public abstract class Creature
                 $"Animation '{animationName}' was not loaded. " +
                 $"Loaded animations: {string.Join(", ", Animations.Keys)}");
         }
+        Logger.LogDebug(
+            DebugCategory.Animation,
+            $"SetAction: {CurrentAction} -> {action} ({animationName}), Frames={frames.Length}");
 
         CurrentAction = action;
         CurrentFrames = frames;
@@ -154,6 +159,11 @@ public abstract class Creature
             CurrentFrame = CurrentFrames[0];
             return;
         }
+
+        //possibly spammy - use temporarily
+        Logger.LogDebug(
+            DebugCategory.Animation,
+            $"AdvanceAnimation: Action={CurrentAction}, FrameIndex={CurrentFrameIndex}, FrameTicks={frameTicks}");
 
         AnimationTick++;
 

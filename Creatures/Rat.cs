@@ -1,9 +1,9 @@
 ﻿using Desktop_Creatures.Config;
+using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
 using System.Diagnostics;
-using Desktop_Creatures.Utilities;
-
+using System.Windows.Media.Animation;
 using Point = System.Windows.Point;
 
 namespace Desktop_Creatures.Creatures
@@ -266,6 +266,10 @@ namespace Desktop_Creatures.Creatures
                 CreatureAction.Idle,
                 animation.Name);
 
+            Logger.LogDebug(
+                DebugCategory.Animation,
+                $"StartIdle selected animation={animation.Name}");
+
             SpeedX = 0;
 
             _stateTicksRemaining = _random.Next(
@@ -283,7 +287,7 @@ namespace Desktop_Creatures.Creatures
 
             _stateTicksRemaining--;
 
-            AdvanceAnimation(Idle.IdleFrameTicks);
+            //AdvanceAnimation(Idle.IdleFrameTicks);
 
             if (_stateTicksRemaining <= 0)
                 PickNewTarget();
@@ -291,6 +295,10 @@ namespace Desktop_Creatures.Creatures
 
         private void StartFalling()
         {
+            Logger.LogDebug(
+                DebugCategory.Animation,
+                $"StartFalling");
+
             SetAction(CreatureAction.Falling, "Fall");
             SpeedX = 0;
             _fallSpeed = 0;
@@ -352,8 +360,8 @@ namespace Desktop_Creatures.Creatures
                 return;
             }
 
-            SpeedX = dx / distance * _speed;
-            double speedY = dy / distance * _speed;
+            SpeedX = dx / distance * (_speed * Settings.Scale);
+            double speedY = dy / distance * (_speed * Settings.Scale);
 
             X += SpeedX;
             Y += speedY;
@@ -437,9 +445,9 @@ namespace Desktop_Creatures.Creatures
                 Run.MinRunTicks,
                 Run.MaxRunTicks);
 
-            //Debug.WriteLine(
-               //$"Surface L={_currentSurface.Left} R={_currentSurface.Right} T={_currentSurface.Top} " +
-               //$"Rat X={X} Y={Y} TargetX={_targetX} TargetY={_targetY}");
+            Logger.LogDebug(DebugCategory.Surface,
+                $"Surface L={_currentSurface.Left} R={_currentSurface.Right} T={_currentSurface.Top} " +
+                $"Rat X={X} Y={Y} TargetX={_targetX} TargetY={_targetY}");
 
             SetAction(CreatureAction.Running, "Run");
         }
@@ -481,9 +489,9 @@ namespace Desktop_Creatures.Creatures
         {
             return CurrentAction switch
             {
-                CreatureAction.Running => SpriteHeight - 5,
-                CreatureAction.Idle => SpriteHeight - 5,
-                CreatureAction.Falling => SpriteHeight - 5,
+                CreatureAction.Running => SpriteHeight - (5 * Settings.Scale),
+                CreatureAction.Idle => SpriteHeight - (5 * Settings.Scale),
+                CreatureAction.Falling => SpriteHeight - (5 * Settings.Scale),
                 _ => SpriteHeight
             };
         }
@@ -504,13 +512,10 @@ namespace Desktop_Creatures.Creatures
 
         private void StartEating(PointOfInterest poi)
         {
-            //Logger.LogDebug("StartEating()");
-
-            //Logger.LogDebug(
-            //    $"Animation keys: {string.Join(", ", Animations.Keys)}");
-
-            //Logger.LogDebug(
-            //    $"Eat frame count: {Animations["Eat"].Length}");
+            Logger.LogDebug(DebugCategory.Behavior,
+                "StartEating()" +
+                $"Animation keys: {string.Join(", ", Animations.Keys)}" +
+                $"Eat frame count: {Animations["Eat"].Length}");
 
             _eatingPoi = poi;
             _eatingTicksRemaining = 180;

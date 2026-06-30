@@ -5,6 +5,7 @@ public class CreatureSettings
     public int SpriteWidth { get; set; } = 32;
     public int SpriteHeight { get; set; } = 32;
     public bool SpriteFacesRight { get; set; } = true;
+    public int Scale { get; set; } = 1;
     public double LandingTolerance { get; set; } = 5.0;
 
     public FlightSettings? Flight { get; set; }

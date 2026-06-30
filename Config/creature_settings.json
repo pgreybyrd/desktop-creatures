@@ -3,10 +3,11 @@
       "spriteFacesRight": true,
       "spriteWidth": 32,
       "spriteHeight": 32,
+      "scale": 2,
 
       "flight": {
-        "flySpeed": 2.5,
-        "glideSpeed": 3.5,
+        "flySpeed": 1.5,
+        "glideSpeed": 2.5,
         "minDownwardGlideDy": 5,
         "glideChance": 0.5,
 
@@ -23,7 +24,7 @@
         "maxTakeoffFlapTicks": 300,
 
         "flyFrameCount": 4,
-        "flyingFrameTicks": 8,
+        "flyingFrameTicks": 7,
         "glideFrameCount": 1,
         "ruffleChance": 0.25
       },
@@ -44,6 +45,8 @@
       "spriteFacesRight": false,
       "spriteWidth": 32,
       "spriteHeight": 32,
+      "scale": 2,
+
       "walk": {
         "walkSpeed": 1.5,
         "minWalkTicks": 100,
@@ -52,7 +55,7 @@
         "walkFrameTicks": 10
       },
       "run": {
-        "runSpeed": 2.5,
+        "runSpeed": 1.5,
         "minRunTicks": 100,
         "maxRunTicks": 300,
         "runFrameCount": 6,
