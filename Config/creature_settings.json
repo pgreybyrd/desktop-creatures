@@ -103,8 +103,6 @@
         "eatingTicksRemaining": 100
       },
       "fall": {
-        "gravity": 0.2,
-        "maxFallSpeed": 10,
         "fallFrameCount": 1,
         "fallFrameTicks": 5,
         "landingTolerance": 12

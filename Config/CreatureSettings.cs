@@ -108,8 +108,8 @@ public class SleepSettings
 }
 public class FallSettings
 {
-    public double Gravity { get; set; } = 0.4;
-    public double MaxFallSpeed { get; set; } = 8;
+    public double Gravity { get; set; } = 0.5; //0.981;
+    public double MaxFallSpeed { get; set; } = 50;
     public int FallFrameCount { get; set; } = 1;
     public int FallFrameTicks { get; set; } = 5;
 }
