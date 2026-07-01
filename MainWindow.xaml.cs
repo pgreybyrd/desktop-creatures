@@ -329,7 +329,8 @@ public partial class MainWindow : Window
             _pointsOfInterest,
             eagleSettings,
             _pointOfInterestManager,
-            area);
+            area,
+            _surfaceManager);
 
         var eagleWindow = new CreatureWindow(eagle)
         {

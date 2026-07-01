@@ -1,5 +1,6 @@
 ﻿using Desktop_Creatures.Config;
 using Desktop_Creatures.World;
+using Desktop_Creatures.World.Surfaces;
 using System.Diagnostics;
 using System.Windows.Media.Imaging;
 using Forms = System.Windows.Forms;
@@ -53,8 +54,9 @@ namespace Desktop_Creatures.Creatures
             List<PointOfInterest> pointsOfInterest,
             CreatureSettings settings,
             PointOfInterestManager pointOfInterestManager,
-            Rectangle workingArea)
-            : base(settings, pointOfInterestManager)
+            Rectangle workingArea,
+            SurfaceManager surfaceManager)
+            : base(settings, pointOfInterestManager, surfaceManager)
         {
             _settings = settings;
             _workingArea = workingArea;
@@ -278,6 +280,11 @@ namespace Desktop_Creatures.Creatures
                 _workingArea.Bottom - Settings.SpriteHeight);
 
             _targetType = DestinationType.Flying;
+        }
+
+        protected override void PickPostEatTarget()
+        {
+            // Fly to a nearby perch.
         }
     }
 }

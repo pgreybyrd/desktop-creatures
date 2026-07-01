@@ -30,13 +30,17 @@ public abstract class Creature
     protected readonly Random Random = new();
 
     protected PointOfInterestManager PointOfInterestManager;
-
+    protected SurfaceManager SurfaceManager;
 
     public double X { get; protected set; }
     public double Y { get; protected set; }
     public double SpeedX { get; protected set; }
+
     protected double TargetX;
     protected double TargetY;
+
+    //protected int EatingTicksRemaining => Settings.Eat.EatingTicksRemaining;
+    protected int EatingTicksRemaining;
 
     protected CreatureSettings Settings { get; }
 
@@ -46,7 +50,7 @@ public abstract class Creature
     public int SpriteWidth => Settings.SpriteWidth * Settings.Scale;
     public int SpriteHeight => Settings.SpriteHeight * Settings.Scale;
     public double LandingTolerance => Settings.LandingTolerance;
-    
+    //protected int PostEatMoveDistance => Settings.Eat.LeaveFoodDistance;
 
     protected virtual int FootOffsetY => SpriteHeight;
 
@@ -61,6 +65,11 @@ public abstract class Creature
     protected NeedManager Needs { get; } = new();
 
     protected BehaviorController BehaviorController { get; } = new();
+
+    protected EatSettings Eat =>
+    Settings.Eat
+    ?? throw new InvalidOperationException(
+        "Creature requires EatSettings.");
 
     #region Animation
     protected Dictionary<string, BitmapImage[]> Animations { get; } = new();
@@ -129,10 +138,11 @@ public abstract class Creature
 
     #endregion
 
-    protected Creature(CreatureSettings settings, PointOfInterestManager pointOfInterestManager)
+    protected Creature(CreatureSettings settings, PointOfInterestManager pointOfInterestManager, SurfaceManager surfaceManager)
     {
         Settings = settings;
         PointOfInterestManager = pointOfInterestManager;
+        SurfaceManager = surfaceManager;
     }
 
     public void LoadAssets(string assetFolder)
@@ -367,5 +377,21 @@ public abstract class Creature
 
     public virtual void PickNewTarget()
     {
+    }
+
+    protected virtual void FinishEating()
+    {
+        Needs.Eat();
+
+        EatingPoi = null;
+        TargetPoi = null;
+
+        PickPostEatTarget();
+    }
+
+    protected virtual void PickPostEatTarget()
+    {
+        // Default:
+        // Move LeaveFoodDistance away.
     }
 }

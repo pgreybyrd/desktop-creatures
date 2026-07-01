@@ -10,22 +10,13 @@ namespace Desktop_Creatures.Creatures
 {
     public class Rat : Creature
     {
-
-
         private double _speed;
+
         private int _stateTicksRemaining;
 
         private double _fallSpeed = 0;
 
-        private SurfaceManager _surfaceManager;
-       
-
-        private int _foodSearchCooldownTicks = 0;
-        //private int _eatCooldownTicks = 0;
-        private const int EatCooldownDurationTicks = 300; // ~5 seconds at 60fps
-        private const int PostEatWanderDistance = 120;
-        private int _eatingTicksRemaining;
-        
+        private int _foodSearchCooldownTicks = 0;  
 
         #region Settings
         private WalkSettings Walk =>
@@ -47,11 +38,6 @@ namespace Desktop_Creatures.Creatures
             Settings.Fall
             ?? throw new InvalidOperationException(
                 "Rat requires FallSettings.");
-
-        private EatSettings Eat =>
-            Settings.Eat
-            ?? throw new InvalidOperationException(
-                "Rat requires EatSettings.");
         #endregion
 
         public Rat(
@@ -61,14 +47,12 @@ namespace Desktop_Creatures.Creatures
             PointOfInterestManager pointOfInterestManager,
             CreatureSettings settings,
             SurfaceManager surfaceManager)
-            : base(settings, pointOfInterestManager)
+            : base(settings, pointOfInterestManager, surfaceManager)
         {
-            _surfaceManager = surfaceManager;
-
             var variants = new[] { "Chocolate", "GreyHooded", "Albino", "Rainbow", "Black", "Cinnamon"};
             var variant = variants[Random.Next(variants.Length)];
             /*
-            int roll = _random.Next(100);
+            int roll = Random.Next(100);
 
             string variant =
                 roll < 30 ? "GreyHooded" : // 30%
@@ -78,13 +62,12 @@ namespace Desktop_Creatures.Creatures
                 roll < 99 ? "Cinnamon" : // 9%
                               "Rainbow";   // 1%
             */
-
             LoadAssets($"Assets/Creatures/Rat/{variant}");
 
             X = startX;
             Y = startY;
 
-            CurrentSurface = _surfaceManager.FindSurfaceBelow(
+            CurrentSurface = SurfaceManager.FindSurfaceBelow(
                 X,
                 Y,
                 Settings.SpriteWidth,
@@ -131,7 +114,7 @@ namespace Desktop_Creatures.Creatures
 
         protected override void UpdateTimers()
         {
-            //TickDown(ref _eatCooldownTicks);
+            TickDown(ref EatingTicksRemaining);
             TickDown(ref _foodSearchCooldownTicks);
         }
 
@@ -144,21 +127,24 @@ namespace Desktop_Creatures.Creatures
                 $"Eat frame ticks: {Eat.EatFrameTicks}");
 
             EatingPoi = poi;
-            _eatingTicksRemaining = Eat.EatingTicksRemaining;
+            EatingTicksRemaining = Eat.EatingTicksRemaining;
 
             Logger.LogDebug(
                 DebugCategory.Behavior,
-                $"EatingTicksRemaining loaded as: {_eatingTicksRemaining}");
+                $"EatingTicksRemaining loaded as: {Eat.EatingTicksRemaining}");
 
             SpeedX = 0;
             _stateTicksRemaining = 0;
+            
             SetAction(CreatureAction.Eating, "Eat");
         }
         private void UpdateEating()
         {
-            _eatingTicksRemaining--;
+            Logger.LogDebug(
+                DebugCategory.Behavior,
+                $"UpdateEating decrement timer to {EatingTicksRemaining}, FrameIndex={CurrentFrameIndex}");
 
-            if (_eatingTicksRemaining <= 0)
+            if (EatingTicksRemaining <= 0)
             {
                 Needs.Eat();
 
@@ -171,7 +157,7 @@ namespace Desktop_Creatures.Creatures
 
                 //_eatCooldownTicks = EatCooldownDurationTicks;
 
-                PickPostEatWanderTarget();
+                PickPostEatTarget();
             }
         }
 
@@ -250,7 +236,7 @@ namespace Desktop_Creatures.Creatures
 
             double currentFeetY = Y + GetCurrentFootY();
 
-            var surface = _surfaceManager.Surfaces
+            var surface = SurfaceManager.Surfaces
                 .Where(s =>
                     X + Settings.SpriteWidth / 2.0 >= s.Left &&
                     X + Settings.SpriteWidth / 2.0 <= s.Right &&
@@ -369,7 +355,7 @@ namespace Desktop_Creatures.Creatures
             }
         }
 
-        private void PickPostEatWanderTarget()
+        protected override void PickPostEatTarget()
         {
             if (CurrentSurface is null)
             {
@@ -387,7 +373,7 @@ namespace Desktop_Creatures.Creatures
             }
 
             double direction = Random.Next(0, 2) == 0 ? -1 : 1;
-            double desiredX = X + direction * PostEatWanderDistance;
+            double desiredX = X + direction * Eat.LeaveFoodDistance;
 
             TargetX = Math.Clamp(desiredX, minX, maxX);
             TargetY = CurrentSurface.Top - GetCurrentFootY();
@@ -425,7 +411,7 @@ namespace Desktop_Creatures.Creatures
 
         private bool IsStillOnSurface()
         {
-            var surface = _surfaceManager.FindSurfaceAtFeet(
+            var surface = SurfaceManager.FindSurfaceAtFeet(
                 X,
                 Y,
                 Settings.SpriteWidth,
@@ -447,7 +433,7 @@ namespace Desktop_Creatures.Creatures
 
         public override void Release()
         {
-            _surfaceManager.Refresh();
+            SurfaceManager.Refresh();
             StartFalling();
         }
 

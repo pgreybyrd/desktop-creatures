@@ -120,4 +120,5 @@ public class EatSettings
     public int EatFrameTicks { get; set; } = 5;
     public int EatingTicksRemaining { get; set; } = 50;
     public int FoodSearchCooldownTicks { get; set; } = 120; // about 2 seconds at 60fps
+    public int LeaveFoodDistance { get; set; } = 50;
 }
