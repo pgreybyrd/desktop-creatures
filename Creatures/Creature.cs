@@ -35,6 +35,7 @@ public abstract class Creature
     public double X { get; protected set; }
     public double Y { get; protected set; }
     public double SpeedX { get; protected set; }
+    protected double FallSpeed = 0;
 
     protected double TargetX;
     protected double TargetY;
@@ -209,6 +210,17 @@ public abstract class Creature
         return Enumerable.Range(0, frameCount)
             .Select(i => LoadImage($"{assetFolder}/{animationName}_{i}.png"))
             .ToArray();
+    }
+
+    protected void StartFalling()
+    {
+        Logger.LogDebug(
+            DebugCategory.Animation,
+            $"StartFalling");
+
+        SetAction(CreatureAction.Falling, "Fall");
+        SpeedX = 0;
+        FallSpeed = 0;
     }
 
     protected void SetAction(CreatureAction action, string animationName)

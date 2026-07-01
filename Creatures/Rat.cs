@@ -14,7 +14,7 @@ namespace Desktop_Creatures.Creatures
 
         private int _stateTicksRemaining;
 
-        private double _fallSpeed = 0;
+
 
         private int _foodSearchCooldownTicks = 0;  
 
@@ -101,9 +101,13 @@ namespace Desktop_Creatures.Creatures
 
         protected override void UpdateTimers()
         {
-            TickDown(ref EatingTicksRemaining);
+            if (CurrentAction == CreatureAction.Eating)
+                TickDown(ref EatingTicksRemaining);
+
+            if (CurrentAction is CreatureAction.Running or CreatureAction.Idle)
+                TickDown(ref _stateTicksRemaining);
+
             TickDown(ref _foodSearchCooldownTicks);
-            TickDown(ref _stateTicksRemaining);
         }
 
         private void StartEating(PointOfInterest poi)
@@ -196,26 +200,15 @@ namespace Desktop_Creatures.Creatures
             if (_stateTicksRemaining <= 0)
                 PickNewTarget();
         }
-
-        private void StartFalling()
-        {
-            Logger.LogDebug(
-                DebugCategory.Animation,
-                $"StartFalling");
-
-            SetAction(CreatureAction.Falling, "Fall");
-            SpeedX = 0;
-            _fallSpeed = 0;
-        }
         private void UpdateFalling()
         {
             double previousFeetY = Y + GetCurrentFootY();
 
-            _fallSpeed = Math.Min(
-                _fallSpeed + Fall.Gravity,
+            FallSpeed = Math.Min(
+                FallSpeed + Fall.Gravity,
                 Fall.MaxFallSpeed);
 
-            Y += _fallSpeed;
+            Y += FallSpeed;
 
             double currentFeetY = Y + GetCurrentFootY();
 
@@ -233,7 +226,7 @@ namespace Desktop_Creatures.Creatures
 
             CurrentSurface = surface;
             Y = surface.Top - GetCurrentFootY();
-            _fallSpeed = 0;
+            FallSpeed = 0;
 
             StartIdle();
         }
@@ -382,8 +375,6 @@ namespace Desktop_Creatures.Creatures
 
             SetAction(CreatureAction.Running, "Run");
         }
-
-
 
         private bool TargetStillOnCurrentSurface()
         {
