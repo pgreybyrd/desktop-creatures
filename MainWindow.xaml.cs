@@ -3,6 +3,7 @@ using Desktop_Creatures.Creatures;
 using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
+using System.Runtime;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -22,6 +23,8 @@ public partial class MainWindow : Window
 
     private bool _isDragging = false;
     private System.Windows.Point _dragOffset;
+
+    private AppSettings _settings = null!;
 
     private BitmapImage _spawnRatNormal = null!;
     private BitmapImage _spawnRatHover = null!;
@@ -137,7 +140,8 @@ public partial class MainWindow : Window
             "Rat Bowl",
             new Point(960, 460),
             PointOfInterestType.Food,
-            bowlSettings);
+            bowlSettings,
+            _settings);
 
         _pointOfInterestManager.Add(bowl);
         //Logger.LogDebug("=== Loaded POIs ===");
@@ -181,10 +185,10 @@ public partial class MainWindow : Window
         var debugSettings = DebugSettingsLoader.Load();
         Logger.Initialize(debugSettings);
 
-        var settings = SettingsLoader.Load();
+        _settings = SettingsLoader.Load();
 
         moniterIndex = Math.Clamp(
-            settings.WorkingMonitor,
+            _settings.WorkingMonitor,
             0,
             Forms.Screen.AllScreens.Length - 1
         );
@@ -192,10 +196,9 @@ public partial class MainWindow : Window
         var screen = Forms.Screen.AllScreens[moniterIndex];
         var area = screen.WorkingArea;
 
-        Topmost = settings.AlwaysOnTop;
+        Topmost = _settings.AlwaysOnTop;
 
-        //SCALE
-        Scale = settings.Scale;
+        Scale = _settings.Scale;
 
         MainCanvas.LayoutTransform = new ScaleTransform(Scale, Scale);
 

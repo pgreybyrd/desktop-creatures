@@ -2,6 +2,7 @@
 using Desktop_Creatures.Config;
 using Desktop_Creatures.Needs;
 using Desktop_Creatures.Utilities;
+using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
 using System.Diagnostics;
 using System.Windows.Documents;
@@ -247,6 +248,17 @@ public abstract class Creature
             x <= surface.Right - Settings.SpriteWidth &&
             Math.Abs(y - (surface.Top - GetCurrentFootY())) <= LandingTolerance;
     }
+
+    protected bool PoiIsOnSurface(PointOfInterest poi, Surface surface)
+    {
+        double poiBottomY = poi.Position.Y + poi.Settings.Height;
+
+        return
+            poi.Position.X >= surface.Left &&
+            poi.Position.X <= surface.Right &&
+            Math.Abs(poiBottomY - surface.Top) <= LandingTolerance;
+    }
+
     protected virtual int GetCurrentFootY()
     {
         return CurrentAction switch

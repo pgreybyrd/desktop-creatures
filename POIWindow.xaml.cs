@@ -18,8 +18,8 @@ public partial class POIWindow : Window
 
         _poi = poi;
 
-        Width = poi.Settings.Width;
-        Height = poi.Settings.Height;
+        Width = poi.Settings.Width * _poi.AppSettings.Scale;
+        Height = poi.Settings.Height * _poi.AppSettings.Scale;
         Topmost = true; // poi.AlwaysOnTop;
 
         PoiImage.Width = Width;

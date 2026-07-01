@@ -287,7 +287,7 @@ namespace Desktop_Creatures.Creatures
                     new Point(X, Y),
                     PointOfInterestType.Food);
 
-                if (_targetPoi is not null && !PoiIsReachableOnCurrentSurface(_targetPoi))
+                if (_targetPoi is not null && !PoiIsOnSameSurface(_targetPoi))
                 {
                     _targetPoi = null;
                     _foodSearchCooldownTicks = Eat.FoodSearchCooldownTicks;
@@ -470,18 +470,10 @@ namespace Desktop_Creatures.Creatures
             StartFalling();
         }
 
-        private bool PoiIsReachableOnCurrentSurface(PointOfInterest poi)
+        private bool PoiIsOnSameSurface(PointOfInterest poi)
         {
-            if (_currentSurface is null)
-                return false;
-
-            double poiFeetY = poi.Position.Y + poi.Settings.Height;
-            double surfaceY = _currentSurface.Top;
-
-            return
-                poi.Position.X >= _currentSurface.Left &&
-                poi.Position.X <= _currentSurface.Right &&
-                Math.Abs(poiFeetY - surfaceY) <= LandingTolerance;
+            return _currentSurface is not null &&
+                   PoiIsOnSurface(poi, _currentSurface);
         }
     }   
 }
