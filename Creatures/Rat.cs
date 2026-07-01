@@ -80,16 +80,6 @@ namespace Desktop_Creatures.Creatures
             PickNewTarget();
         }
 
-        /*
-        public void PlaceOnSurface(Surface surface)
-        {
-            _currentSurface = surface;
-
-            X = surface.Left + (surface.Width - SpriteWidth) / 2.0;
-            Y = surface.Top - GetCurrentFootY();
-        }
-        */
-
         protected override void UpdateState()
         {
             switch (CurrentAction)
@@ -106,9 +96,6 @@ namespace Desktop_Creatures.Creatures
                 case CreatureAction.Eating:
                     UpdateEating();
                     break;
-                case CreatureAction.Walking:
-                    UpdateWalking();
-                    break;
             }
         }
 
@@ -116,6 +103,7 @@ namespace Desktop_Creatures.Creatures
         {
             TickDown(ref EatingTicksRemaining);
             TickDown(ref _foodSearchCooldownTicks);
+            TickDown(ref _stateTicksRemaining);
         }
 
         private void StartEating(PointOfInterest poi)
@@ -161,11 +149,6 @@ namespace Desktop_Creatures.Creatures
             }
         }
 
-        private void UpdateWalking()
-        {
-
-        }
-
         private void UpdateRunning()
         {
             TryFindFood();
@@ -175,7 +158,11 @@ namespace Desktop_Creatures.Creatures
 
             MoveTowardsTarget();
 
-            UpdateRunningTimer();
+            if (CurrentAction != CreatureAction.Running)
+                return;
+
+            if (_stateTicksRemaining <= 0)
+                StartIdle();
         }
 
         private void StartIdle()
@@ -205,10 +192,6 @@ namespace Desktop_Creatures.Creatures
                 StartFalling();
                 return;
             }
-
-            _stateTicksRemaining--;
-
-            //AdvanceAnimation(Idle.IdleFrameTicks);
 
             if (_stateTicksRemaining <= 0)
                 PickNewTarget();
@@ -301,16 +284,7 @@ namespace Desktop_Creatures.Creatures
             return true;
         }
 
-        private void UpdateRunningTimer()
-        {
-            if (CurrentAction != CreatureAction.Running)
-                return;
 
-            _stateTicksRemaining--;
-
-            if (_stateTicksRemaining <= 0)
-                StartIdle();
-        }
 
 
 
@@ -409,21 +383,7 @@ namespace Desktop_Creatures.Creatures
             SetAction(CreatureAction.Running, "Run");
         }
 
-        private bool IsStillOnSurface()
-        {
-            var surface = SurfaceManager.FindSurfaceAtFeet(
-                X,
-                Y,
-                Settings.SpriteWidth,
-                GetCurrentFootY(),
-                LandingTolerance);
 
-            if (surface is null)
-                return false;
-
-            CurrentSurface = surface;
-            return true;
-        }
 
         private bool TargetStillOnCurrentSurface()
         {

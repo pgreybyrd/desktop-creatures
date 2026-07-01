@@ -304,6 +304,22 @@ public abstract class Creature
             Math.Abs(poiBottomY - surface.Top) <= LandingTolerance;
     }
 
+    protected bool IsStillOnSurface()
+    {
+        var surface = SurfaceManager.FindSurfaceAtFeet(
+            X,
+            Y,
+            Settings.SpriteWidth,
+            GetCurrentFootY(),
+            LandingTolerance);
+
+        if (surface is null)
+            return false;
+
+        CurrentSurface = surface;
+        return true;
+    }
+
     protected virtual int GetCurrentFootY()
     {
         return CurrentAction switch
