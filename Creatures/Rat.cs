@@ -10,17 +10,11 @@ namespace Desktop_Creatures.Creatures
 {
     public class Rat : Creature
     {
-        
-
-        //private DestinationType _targetType;
-
-        private readonly List<PointOfInterest> _pointsOfInterest;
+        //private readonly List<PointOfInterest> _pointsOfInterest;
         private PointOfInterestManager _pointOfInterestManager;
         private PointOfInterest? _targetPoi;
 
-        //private readonly CreatureSettings _settings;
-
-        private readonly Rectangle _workingArea;
+        //private readonly Rectangle _workingArea;
 
         private double _targetX;
         private double _targetY;
@@ -40,6 +34,7 @@ namespace Desktop_Creatures.Creatures
         private int _eatingTicksRemaining;
         private PointOfInterest? _eatingPoi;
 
+        #region Settings
         private WalkSettings Walk =>
             Settings.Walk
             ?? throw new InvalidOperationException(
@@ -64,6 +59,7 @@ namespace Desktop_Creatures.Creatures
             Settings.Eat
             ?? throw new InvalidOperationException(
                 "Rat requires EatSettings.");
+        #endregion
 
         public Rat(
             double startX,
@@ -71,13 +67,13 @@ namespace Desktop_Creatures.Creatures
             List<PointOfInterest> pointsOfInterest,
             PointOfInterestManager pointOfInterestManager,
             CreatureSettings settings,
-            Rectangle workingArea,
+            //Rectangle workingArea,
             SurfaceManager surfaceManager)
             : base(settings)
         {
-            _workingArea = workingArea;
+            //_workingArea = workingArea;
             _surfaceManager = surfaceManager;
-            _pointsOfInterest = pointsOfInterest;
+            //_pointsOfInterest = pointsOfInterest;
             _pointOfInterestManager = pointOfInterestManager;
 
             var variants = new[] { "Chocolate", "GreyHooded", "Albino", "Rainbow", "Black", "Cinnamon"};
@@ -112,6 +108,7 @@ namespace Desktop_Creatures.Creatures
             PickNewTarget();
         }
 
+        /*
         public void PlaceOnSurface(Surface surface)
         {
             _currentSurface = surface;
@@ -119,23 +116,15 @@ namespace Desktop_Creatures.Creatures
             X = surface.Left + (surface.Width - SpriteWidth) / 2.0;
             Y = surface.Top - GetCurrentFootY();
         }
+        */
 
         protected override void UpdateState()
         {
-            /*
-            if (_eatCooldownTicks > 0)
-                _eatCooldownTicks--;
-
-            if (_foodSearchCooldownTicks > 0)
-                _foodSearchCooldownTicks--;
-            */
-
             switch (CurrentAction)
             {
                 case CreatureAction.Running:
                     UpdateRunning();
                     break;
-
                 case CreatureAction.Idle:
                     UpdateIdle();
                     break;
@@ -145,33 +134,37 @@ namespace Desktop_Creatures.Creatures
                 case CreatureAction.Eating:
                     UpdateEating();
                     break;
+                case CreatureAction.Walking:
+                    UpdateWalking();
+                    break;
             }
-            //UpdateAnimation();
         }
-        /*
-         * protected override void UpdateState()
-            {
-                switch (CurrentAction)
-                {
-                    case CreatureAction.Idle:
-                        UpdateIdle();
-                        break;
 
-                    case CreatureAction.Running:
-                        UpdateRunning();
-                        break;
+        protected override void UpdateTimers()
+        {
+            TickDown(ref _eatCooldownTicks);
+            TickDown(ref _foodSearchCooldownTicks);
+        }
 
-                    case CreatureAction.Eating:
-                        UpdateEating();
-                        break;
+        private void StartEating(PointOfInterest poi)
+        {
+            Logger.LogDebug(DebugCategory.Animation,
+                "StartEating()" +
+                $"Animation keys: {string.Join(", ", Animations.Keys)}\n" +
+                $"Eat frame count: {Animations["Eat"].Length},\n" +
+                $"Eat frame ticks: {Eat.EatFrameTicks}");
 
-                    case CreatureAction.Falling:
-                        UpdateFalling();
-                        break;
-                }
-            }
-        */
+            _eatingPoi = poi;
+            _eatingTicksRemaining = Eat.EatingTicksRemaining;
 
+            Logger.LogDebug(
+                DebugCategory.Behavior,
+                $"EatingTicksRemaining loaded as: {_eatingTicksRemaining}");
+
+            SpeedX = 0;
+            _stateTicksRemaining = 0;
+            SetAction(CreatureAction.Eating, "Eat");
+        }
         private void UpdateEating()
         {
             _eatingTicksRemaining--;
@@ -188,10 +181,10 @@ namespace Desktop_Creatures.Creatures
                 PickPostEatWanderTarget();
             }
         }
-        protected override void UpdateTimers()
+
+        private void UpdateWalking()
         {
-            TickDown(ref _eatCooldownTicks);
-            TickDown(ref _foodSearchCooldownTicks);
+
         }
 
         private void UpdateRunning()
@@ -204,63 +197,6 @@ namespace Desktop_Creatures.Creatures
             MoveTowardsTarget();
 
             UpdateRunningTimer();
-        }
-
-        private void TryFindFood()
-        {
-            if (Needs.IsHungry &&
-                _targetPoi is null &&
-                _foodSearchCooldownTicks <= 0 &&
-                _eatCooldownTicks <= 0)
-            {
-                _targetPoi = _pointOfInterestManager.FindNearest(
-                    new Point(X, Y),
-                    PointOfInterestType.Food);
-
-                if (_targetPoi is not null && !PoiIsReachableOnCurrentSurface(_targetPoi))
-                {
-                    _targetPoi = null;
-                    _foodSearchCooldownTicks = 120; // about 2 seconds at 60fps
-                    return;
-                }
-
-                if (_targetPoi is not null && _currentSurface is not null)
-                {
-                    _targetX = _targetPoi.Position.X;
-                    _targetY = _currentSurface.Top - GetCurrentFootY();
-                    _speed = Run.RunSpeed;
-
-                    SetAction(CreatureAction.Running, "Run");
-                }
-            }
-        }
-
-        private bool ValidateSurface()
-        {
-            if (!IsStillOnSurface())
-            {
-                StartFalling();
-                return false;
-            }
-
-            if (_targetPoi is null && !TargetStillOnCurrentSurface())
-            {
-                PickNewTarget();
-                return false;
-            }
-
-            return true;
-        }
-
-        private void UpdateRunningTimer()
-        {
-            if (CurrentAction != CreatureAction.Running)
-                return;
-
-            _stateTicksRemaining--;
-
-            if (_stateTicksRemaining <= 0)
-                StartIdle();
         }
 
         private void StartIdle()
@@ -283,7 +219,6 @@ namespace Desktop_Creatures.Creatures
                 Idle.MinIdleTicks,
                 Idle.MaxIdleTicks);
         }
-
         private void UpdateIdle()
         {
             if (!IsStillOnSurface())
@@ -340,6 +275,65 @@ namespace Desktop_Creatures.Creatures
 
             StartIdle();
         }
+
+        private void TryFindFood()
+        {
+            if (Needs.IsHungry &&
+                _targetPoi is null &&
+                _foodSearchCooldownTicks <= 0 &&
+                _eatCooldownTicks <= 0)
+            {
+                _targetPoi = _pointOfInterestManager.FindNearest(
+                    new Point(X, Y),
+                    PointOfInterestType.Food);
+
+                if (_targetPoi is not null && !PoiIsReachableOnCurrentSurface(_targetPoi))
+                {
+                    _targetPoi = null;
+                    _foodSearchCooldownTicks = Eat.FoodSearchCooldownTicks;
+                    return;
+                }
+
+                if (_targetPoi is not null && _currentSurface is not null)
+                {
+                    _targetX = _targetPoi.Position.X;
+                    _targetY = _currentSurface.Top - GetCurrentFootY();
+                    _speed = Run.RunSpeed;
+
+                    SetAction(CreatureAction.Running, "Run");
+                }
+            }
+        }
+
+        private bool ValidateSurface()
+        {
+            if (!IsStillOnSurface())
+            {
+                StartFalling();
+                return false;
+            }
+
+            if (_targetPoi is null && !TargetStillOnCurrentSurface())
+            {
+                PickNewTarget();
+                return false;
+            }
+
+            return true;
+        }
+
+        private void UpdateRunningTimer()
+        {
+            if (CurrentAction != CreatureAction.Running)
+                return;
+
+            _stateTicksRemaining--;
+
+            if (_stateTicksRemaining <= 0)
+                StartIdle();
+        }
+
+
 
         private void MoveTowardsTarget()
         {
@@ -466,30 +460,14 @@ namespace Desktop_Creatures.Creatures
 
         private bool TargetStillOnCurrentSurface()
         {
-            if (_currentSurface is null)
-                return false;
-
-            return
-                _targetX >= _currentSurface.Left &&
-                _targetX <= _currentSurface.Right - Settings.SpriteWidth &&
-                Math.Abs(_targetY - (_currentSurface.Top - GetCurrentFootY())) <= LandingTolerance;
+            return _currentSurface is not null &&
+                   PositionFitsOnSurface(_targetX, _targetY, _currentSurface);
         }
 
         public override void Release()
         {
             _surfaceManager.Refresh();
             StartFalling();
-        }
-
-        protected virtual int GetCurrentFootY()
-        {
-            return CurrentAction switch
-            {
-                CreatureAction.Running => SpriteHeight - (5 * Settings.Scale),
-                CreatureAction.Idle => SpriteHeight - (5 * Settings.Scale),
-                CreatureAction.Falling => SpriteHeight - (5 * Settings.Scale),
-                _ => SpriteHeight
-            };
         }
 
         private bool PoiIsReachableOnCurrentSurface(PointOfInterest poi)
@@ -504,26 +482,6 @@ namespace Desktop_Creatures.Creatures
                 poi.Position.X >= _currentSurface.Left &&
                 poi.Position.X <= _currentSurface.Right &&
                 Math.Abs(poiFeetY - surfaceY) <= LandingTolerance;
-        }
-
-        private void StartEating(PointOfInterest poi)
-        {
-            Logger.LogDebug(DebugCategory.Animation,
-                "StartEating()" +
-                $"Animation keys: {string.Join(", ", Animations.Keys)}\n" +
-                $"Eat frame count: {Animations["Eat"].Length},\n" +
-                $"Eat frame ticks: {Eat.EatFrameTicks}");
-
-            _eatingPoi = poi;
-            _eatingTicksRemaining = Eat.EatingTicksRemaining;
-
-            Logger.LogDebug(
-                DebugCategory.Behavior,
-                $"EatingTicksRemaining loaded as: {_eatingTicksRemaining}");
-
-            SpeedX = 0;
-            _stateTicksRemaining = 0;
-            SetAction(CreatureAction.Eating, "Eat");
         }
     }   
 }

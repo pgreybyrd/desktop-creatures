@@ -46,6 +46,7 @@
       "spriteWidth": 32,
       "spriteHeight": 32,
       "scale": 6,
+      "footOffsetY": 5,
 
       "walk": {
         "walkSpeed": 1.5,
@@ -100,7 +101,8 @@
       "eat": {
         "eatFrameCount": 14,
         "eatFrameTicks": 4,
-        "eatingTicksRemaining": 100
+        "eatingTicksRemaining": 100,
+        "foodSearchCooldownTicks": 120
       },
       "fall": {
         "fallFrameCount": 1,

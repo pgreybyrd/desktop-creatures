@@ -231,12 +231,31 @@ public abstract class Creature
     {
         return
             Math.Abs(
-                (Y + Settings.SpriteHeight) - surface.Top)
-                < LandingTolerance
+                (Y + Settings.SpriteHeight) 
+                - surface.Top)
+            < LandingTolerance
             &&
             X >= surface.Left
             &&
             X <= surface.Right;
+    }
+
+    protected bool PositionFitsOnSurface(double x, double y, Surface surface)
+    {
+        return
+            x >= surface.Left &&
+            x <= surface.Right - Settings.SpriteWidth &&
+            Math.Abs(y - (surface.Top - GetCurrentFootY())) <= LandingTolerance;
+    }
+    protected virtual int GetCurrentFootY()
+    {
+        return CurrentAction switch
+        {
+            CreatureAction.Running => SpriteHeight - (Settings.FootOffsetY * Settings.Scale), //TODO use setting for offset!
+            CreatureAction.Idle => SpriteHeight - (Settings.FootOffsetY * Settings.Scale),
+            CreatureAction.Falling => SpriteHeight - (Settings.FootOffsetY * Settings.Scale),
+            _ => SpriteHeight
+        };
     }
 
     public void Update()

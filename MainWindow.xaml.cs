@@ -259,7 +259,7 @@ public partial class MainWindow : Window
             _pointsOfInterest,
             _pointOfInterestManager,
             ratSettings,
-            new Rectangle((int)Left, (int)Top, (int)Width, (int)Height),
+            //new Rectangle((int)Left, (int)Top, (int)Width, (int)Height),
             _surfaceManager);
 
         var ratWindow = new CreatureWindow(rat)

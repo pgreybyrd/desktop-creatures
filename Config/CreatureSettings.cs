@@ -8,6 +8,7 @@ public class CreatureSettings
     public int SpriteHeight { get; set; } = 32;
     public bool SpriteFacesRight { get; set; } = true;
     public int Scale { get; set; } = 1;
+    public int FootOffsetY { get; set; } = 0;
     public double LandingTolerance { get; set; } = 5.0;
 
     public FlightSettings? Flight { get; set; }
@@ -118,4 +119,5 @@ public class EatSettings
     public int EatFrameCount { get; set; } = 5;
     public int EatFrameTicks { get; set; } = 5;
     public int EatingTicksRemaining { get; set; } = 50;
+    public int FoodSearchCooldownTicks { get; set; } = 120; // about 2 seconds at 60fps
 }
