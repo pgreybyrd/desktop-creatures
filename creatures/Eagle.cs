@@ -52,8 +52,9 @@ namespace Desktop_Creatures.Creatures
             double startY,
             List<PointOfInterest> pointsOfInterest,
             CreatureSettings settings,
+            PointOfInterestManager pointOfInterestManager,
             Rectangle workingArea)
-            : base(settings)
+            : base(settings, pointOfInterestManager)
         {
             _settings = settings;
             _workingArea = workingArea;

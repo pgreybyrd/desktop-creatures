@@ -29,9 +29,14 @@ public abstract class Creature
 {
     protected readonly Random Random = new();
 
+    protected PointOfInterestManager PointOfInterestManager;
+
+
     public double X { get; protected set; }
     public double Y { get; protected set; }
     public double SpeedX { get; protected set; }
+    protected double TargetX;
+    protected double TargetY;
 
     protected CreatureSettings Settings { get; }
 
@@ -41,11 +46,13 @@ public abstract class Creature
     public int SpriteWidth => Settings.SpriteWidth * Settings.Scale;
     public int SpriteHeight => Settings.SpriteHeight * Settings.Scale;
     public double LandingTolerance => Settings.LandingTolerance;
+    
 
     protected virtual int FootOffsetY => SpriteHeight;
 
     protected PointOfInterest? TargetPoi;
     protected PointOfInterest? EatingPoi;
+    protected Surface? CurrentSurface;
 
     public CreatureAction CurrentAction { get; protected set; }
 
@@ -122,9 +129,10 @@ public abstract class Creature
 
     #endregion
 
-    protected Creature(CreatureSettings settings)
+    protected Creature(CreatureSettings settings, PointOfInterestManager pointOfInterestManager)
     {
         Settings = settings;
+        PointOfInterestManager = pointOfInterestManager;
     }
 
     public void LoadAssets(string assetFolder)
@@ -248,6 +256,32 @@ public abstract class Creature
             x >= surface.Left &&
             x <= surface.Right - Settings.SpriteWidth &&
             Math.Abs(y - (surface.Top - GetCurrentFootY())) <= LandingTolerance;
+    }
+
+    protected virtual bool TryPickTargetOnCurrentSurface()
+    {
+        if (CurrentSurface is null)
+            return false;
+
+        int minX = CurrentSurface.Left;
+        int maxX = CurrentSurface.Right - Settings.SpriteWidth;
+
+        if (maxX <= minX)
+            return false;
+
+        TargetX = Random.Next(minX, maxX);
+        TargetY = CurrentSurface.Top - GetCurrentFootY();
+
+        return true;
+    }
+    protected bool TryPickTargetPoi(PointOfInterestType type)
+    {
+        return false;
+    }
+    //OR
+    protected bool TryPickPerchTarget()
+    {
+        return false;
     }
 
     protected bool PoiIsOnSurface(PointOfInterest poi, Surface surface)

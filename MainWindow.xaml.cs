@@ -328,6 +328,7 @@ public partial class MainWindow : Window
             area.Top + 300,
             _pointsOfInterest,
             eagleSettings,
+            _pointOfInterestManager,
             area);
 
         var eagleWindow = new CreatureWindow(eagle)
