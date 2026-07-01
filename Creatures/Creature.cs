@@ -44,7 +44,8 @@ public abstract class Creature
 
     protected virtual int FootOffsetY => SpriteHeight;
 
-
+    protected PointOfInterest? TargetPoi;
+    protected PointOfInterest? EatingPoi;
 
     public CreatureAction CurrentAction { get; protected set; }
 

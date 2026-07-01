@@ -10,11 +10,7 @@ namespace Desktop_Creatures.Creatures
 {
     public class Rat : Creature
     {
-        //private readonly List<PointOfInterest> _pointsOfInterest;
         private PointOfInterestManager _pointOfInterestManager;
-        private PointOfInterest? _targetPoi;
-
-        //private readonly Rectangle _workingArea;
 
         private double _targetX;
         private double _targetY;
@@ -28,11 +24,11 @@ namespace Desktop_Creatures.Creatures
         private Surface? _currentSurface;
 
         private int _foodSearchCooldownTicks = 0;
-        private int _eatCooldownTicks = 0;
+        //private int _eatCooldownTicks = 0;
         private const int EatCooldownDurationTicks = 300; // ~5 seconds at 60fps
         private const int PostEatWanderDistance = 120;
         private int _eatingTicksRemaining;
-        private PointOfInterest? _eatingPoi;
+        
 
         #region Settings
         private WalkSettings Walk =>
@@ -142,7 +138,7 @@ namespace Desktop_Creatures.Creatures
 
         protected override void UpdateTimers()
         {
-            TickDown(ref _eatCooldownTicks);
+            //TickDown(ref _eatCooldownTicks);
             TickDown(ref _foodSearchCooldownTicks);
         }
 
@@ -154,7 +150,7 @@ namespace Desktop_Creatures.Creatures
                 $"Eat frame count: {Animations["Eat"].Length},\n" +
                 $"Eat frame ticks: {Eat.EatFrameTicks}");
 
-            _eatingPoi = poi;
+            EatingPoi = poi;
             _eatingTicksRemaining = Eat.EatingTicksRemaining;
 
             Logger.LogDebug(
@@ -173,10 +169,14 @@ namespace Desktop_Creatures.Creatures
             {
                 Needs.Eat();
 
-                _eatingPoi = null;
-                _targetPoi = null;
+                Logger.LogDebug(
+                    DebugCategory.Behavior,
+                    $"After Eat(): Hunger={Needs.Hunger:F2}, IsHungry={Needs.IsHungry}");
 
-                _eatCooldownTicks = EatCooldownDurationTicks;
+                EatingPoi = null;
+                TargetPoi = null;
+
+                //_eatCooldownTicks = EatCooldownDurationTicks;
 
                 PickPostEatWanderTarget();
             }
@@ -279,24 +279,24 @@ namespace Desktop_Creatures.Creatures
         private void TryFindFood()
         {
             if (Needs.IsHungry &&
-                _targetPoi is null &&
-                _foodSearchCooldownTicks <= 0 &&
-                _eatCooldownTicks <= 0)
+                TargetPoi is null &&
+                _foodSearchCooldownTicks <= 0)// &&
+                //_eatCooldownTicks <= 0)
             {
-                _targetPoi = _pointOfInterestManager.FindNearest(
+                TargetPoi = _pointOfInterestManager.FindNearest(
                     new Point(X, Y),
                     PointOfInterestType.Food);
 
-                if (_targetPoi is not null && !PoiIsOnSameSurface(_targetPoi))
+                if (TargetPoi is not null && !PoiIsOnSameSurface(TargetPoi))
                 {
-                    _targetPoi = null;
+                    TargetPoi = null;
                     _foodSearchCooldownTicks = Eat.FoodSearchCooldownTicks;
                     return;
                 }
 
-                if (_targetPoi is not null && _currentSurface is not null)
+                if (TargetPoi is not null && _currentSurface is not null)
                 {
-                    _targetX = _targetPoi.Position.X;
+                    _targetX = TargetPoi.Position.X;
                     _targetY = _currentSurface.Top - GetCurrentFootY();
                     _speed = Run.RunSpeed;
 
@@ -313,7 +313,7 @@ namespace Desktop_Creatures.Creatures
                 return false;
             }
 
-            if (_targetPoi is null && !TargetStillOnCurrentSurface())
+            if (TargetPoi is null && !TargetStillOnCurrentSurface())
             {
                 PickNewTarget();
                 return false;
@@ -351,9 +351,9 @@ namespace Desktop_Creatures.Creatures
 
             if (distance < Run.ArrivalDistance)
             {
-                if (_targetPoi?.Type == PointOfInterestType.Food)
+                if (TargetPoi?.Type == PointOfInterestType.Food)
                 {
-                    StartEating(_targetPoi);
+                    StartEating(TargetPoi);
                     return;
                 }
 
@@ -404,7 +404,8 @@ namespace Desktop_Creatures.Creatures
                 Run.MinRunTicks,
                 Run.MaxRunTicks);
 
-           Logger.LogDebug(
+
+            Logger.LogDebug(
                DebugCategory.Behavior,
                $"[{GetType().Name}] Ate. Wandering away from food.");
 

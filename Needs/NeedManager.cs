@@ -16,14 +16,22 @@ namespace Desktop_Creatures.Needs
 
     public class Need
     {
-        public NeedType type { get; set; }
         public float Value { get; set; }
+
+        public float Threshold { get; set; }
+
+        public float Rate { get; set; }
+
+        public bool IsSatisfied => Value < Threshold;
     }
+
     public class NeedManager
     {
         public float Hunger = 0.0f;
-        public bool IsHungry => Hunger >= 0.7f;
-        public float HungerRate = 0.05f;
+        public float HungerRate = 0.005f;
+        public float HungerThreshold = 0.75f;
+
+        public bool IsHungry => Hunger >= HungerThreshold;
 
         //public float Energy = 0.8f;
         //public float Curiosit = 0.8f;

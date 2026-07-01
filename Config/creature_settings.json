@@ -118,6 +118,20 @@
         "idle_look_left": [
             { "x": 16, "y": 28 }
             ]
-      }
+      },
+      "needs": {
+        "hunger": {
+            "threshold": 0.75,
+            "rate": 0.002
+        },
+        "energy": {
+            "threshold": 0.30,
+            "drainRate": 0.001
+        },
+        "curiosity": {
+            "threshold": 0.60,
+            "rate": 0.003
+        }
+    }
     }
 }
