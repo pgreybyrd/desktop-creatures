@@ -45,7 +45,7 @@
       "spriteFacesRight": false,
       "spriteWidth": 32,
       "spriteHeight": 32,
-      "scale": 6,
+      "scale": 2,
       "footOffsetY": 5,
 
       "walk": {
