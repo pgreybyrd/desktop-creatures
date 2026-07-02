@@ -2,12 +2,13 @@
 
 **Created by Paulina Grey**
 
+![Desktop Rats](Screenshots/DesktopCreatures2.gif)
+
 Desktop Rat is an experimental C# desktop companion built on a modular creature framework designed to support autonomous AI behaviors, reusable systems, and future creature types.
 
 Spawn tiny pixel-art rats, drag them around your desktop, and watch them explore your windows while making surprisingly independent life decisions.
 
 ---
-![Desktop Rats](Screenshots/DesktopCreatures2.gif)
 
 ## Software Engineering Highlights
 
