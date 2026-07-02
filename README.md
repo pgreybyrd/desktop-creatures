@@ -9,7 +9,7 @@ Spawn tiny pixel-art rats, drag them around your desktop, and watch them explore
 ---
 ![Desktop Rats](Screenshots/DesktopCreatures.gif)
 
-## Engineering Highlights
+## Software Engineering Highlights
 
 - Modular creature framework supporting multiple creature types
 - Autonomous AI behavior system with configurable state transitions
@@ -19,18 +19,27 @@ Spawn tiny pixel-art rats, drag them around your desktop, and watch them explore
 - Extensible architecture designed to minimize code duplication
 - Continuous refactoring to improve maintainability and future expansion
 
+## Technologies
+
+- C#
+- .NET
+- Windows Forms
+- Git
+- Aseprite
+
 ---
 
 ## Current Features
 
 - 🐀 Spawn multiple autonomous rats
-- 🪟 Rats navigate across desktop windows
-- 🖱️ Drag and reposition any rat
 - 🍎 Needs-driven behaviors including eating and wandering
 - 🎞️ Pixel-art animation system
-- 🌳 Pixel-art forest menu
+- 🪟 Rats navigate across desktop windows
+- 🖱️ Drag and reposition any rat
 - 🖥️ Multi-monitor support
+- 🌳 Pixel-art forest menu
 - ⚙️ Configurable global timing system
+- 🐀 Rats search for food and interact with world objects.
 
 ---
 
@@ -78,7 +87,7 @@ One of the primary goals of this project is creating reusable systems that allow
 
 Desktop Rat is an active alpha project.
 
-Current limitations include:
+Current known limitations include:
 
 - Some windows may still be detected as walkable even when partially obscured.
 - Extremely large numbers of creatures may reduce performance.
