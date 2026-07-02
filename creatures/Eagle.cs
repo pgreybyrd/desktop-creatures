@@ -1,5 +1,6 @@
 ﻿using Desktop_Creatures.Config;
 using Desktop_Creatures.World;
+using Desktop_Creatures.World.Surfaces;
 using System.Diagnostics;
 using System.Windows.Media.Imaging;
 using Forms = System.Windows.Forms;
@@ -52,8 +53,10 @@ namespace Desktop_Creatures.Creatures
             double startY,
             List<PointOfInterest> pointsOfInterest,
             CreatureSettings settings,
-            Rectangle workingArea)
-            : base(settings)
+            PointOfInterestManager pointOfInterestManager,
+            Rectangle workingArea,
+            SurfaceManager surfaceManager)
+            : base(settings, pointOfInterestManager, surfaceManager)
         {
             _settings = settings;
             _workingArea = workingArea;
@@ -70,7 +73,7 @@ namespace Desktop_Creatures.Creatures
 
         //public override CreatureKind Kind => CreatureKind.Bird;
 
-        public override void Update()
+        protected override void UpdateState()
         {
             switch (CurrentAction)
             {
@@ -135,8 +138,8 @@ namespace Desktop_Creatures.Creatures
                     ? Flight.GlideSpeed
                     : Flight.FlySpeed;
 
-            SpeedX = dx / distance * _speed;
-            double speedY = dy / distance * _speed;
+            SpeedX = dx / distance * (_speed * Settings.Scale);
+            double speedY = dy / distance * (_speed * Settings.Scale);
 
             X += SpeedX;
             Y += speedY;
@@ -277,6 +280,11 @@ namespace Desktop_Creatures.Creatures
                 _workingArea.Bottom - Settings.SpriteHeight);
 
             _targetType = DestinationType.Flying;
+        }
+
+        protected override void PickPostEatTarget()
+        {
+            // Fly to a nearby perch.
         }
     }
 }

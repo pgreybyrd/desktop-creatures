@@ -1,14 +1,16 @@
 ﻿using Desktop_Creatures.Config;
 using Desktop_Creatures.Creatures;
+using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
-using System;
-using System.Runtime.CompilerServices;
+using System.Runtime;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Forms = System.Windows.Forms;
+using Point = System.Windows.Point;
 
 namespace Desktop_Creatures;
 
@@ -21,6 +23,8 @@ public partial class MainWindow : Window
 
     private bool _isDragging = false;
     private System.Windows.Point _dragOffset;
+
+    private AppSettings _settings = null!;
 
     private BitmapImage _spawnRatNormal = null!;
     private BitmapImage _spawnRatHover = null!;
@@ -53,17 +57,23 @@ public partial class MainWindow : Window
 
     private Rectangle _workingArea;
     private Dictionary<string, CreatureSettings> _creatureSettings = new();
+    private Dictionary<string, PointOfInterestSettings> _pointOfInterestSettings = new();
+
     private List<PointOfInterest> _pointsOfInterest = new();
+    private PointOfInterestManager _pointOfInterestManager;
 
     private readonly SurfaceManager _surfaceManager = new();
 
     private const int MaxRats = 20;
+
+    private int Scale = 1;
 
     public MainWindow()
     {
         InitializeComponent();
 
         _workingArea = LoadSettings();
+
         _surfaceManager.Refresh();
 
         _spawnRatNormal = LoadUiImage("Assets/UI/button_spawn_rat.png");
@@ -101,9 +111,46 @@ public partial class MainWindow : Window
         MinimizeImage.Source = _minimizeNormal;
         XImage.Source = _xNormal;
 
+        _pointOfInterestManager = new PointOfInterestManager();
+
+        
+        /*
+        var tree = new PointOfInterest(
+            "Oak",
+            new Point(1000 ,1000),
+            PointOfInterestType.Rest,
+            "Assets/World/Trees/tree_1.png");
+
+        tree.AnchorPoints.Add(new AnchorPoint("perch", AnchorPointType.Perch, new Point(10, 10)));
+
+        _pointOfInterestManager.Add(tree);
+        */
+
         var screen = Forms.Screen.PrimaryScreen!;
 
-        _creatureSettings = CreatureSettingsLoader.Load();
+
+
+        if (!_pointOfInterestSettings.TryGetValue("rat_bowl", out var bowlSettings))
+        {
+            System.Windows.MessageBox.Show("rat_bowl settings not found!");
+            return;
+        }
+
+        var bowl = new PointOfInterest(
+            "Rat Bowl",
+            new Point(960, 460),
+            PointOfInterestType.Food,
+            bowlSettings,
+            _settings);
+
+        _pointOfInterestManager.Add(bowl);
+        //Logger.LogDebug("=== Loaded POIs ===");
+
+        //foreach (var poi in _pointOfInterestManager.Points)
+        //{
+        //    Logger.LogDebug(
+        //        $"{poi.Name} ({poi.Type}) @ ({poi.Position.X}, {poi.Position.Y})");
+        //}
 
         _timer = new DispatcherTimer
         {
@@ -113,6 +160,12 @@ public partial class MainWindow : Window
         _timer.Tick += Update;
         _timer.Start();
 
+        
+        foreach (var point in _pointOfInterestManager.Points) {
+            var window = new POIWindow(point);
+            window.Show();
+        }
+        
 
         ContentRendered += (_, _) =>
         {
@@ -126,10 +179,16 @@ public partial class MainWindow : Window
 
     private Rectangle LoadSettings()
     {
-        var settings = SettingsLoader.Load();
+        _creatureSettings = CreatureSettingsLoader.Load();
+        _pointOfInterestSettings = PointOfInterestSettingsLoader.Load();
+
+        var debugSettings = DebugSettingsLoader.Load();
+        Logger.Initialize(debugSettings);
+
+        _settings = SettingsLoader.Load();
 
         moniterIndex = Math.Clamp(
-            settings.WorkingMonitor,
+            _settings.WorkingMonitor,
             0,
             Forms.Screen.AllScreens.Length - 1
         );
@@ -137,7 +196,14 @@ public partial class MainWindow : Window
         var screen = Forms.Screen.AllScreens[moniterIndex];
         var area = screen.WorkingArea;
 
-        Topmost = settings.AlwaysOnTop;
+        Topmost = _settings.AlwaysOnTop;
+
+        Scale = _settings.Scale;
+
+        MainCanvas.LayoutTransform = new ScaleTransform(Scale, Scale);
+
+        Width = MainCanvas.Width * Scale;
+        Height = MainCanvas.Height * Scale;
 
         return area;
     }
@@ -162,8 +228,6 @@ public partial class MainWindow : Window
         DragMove();
     }
 
-
-
     private void SpawnRat()
     {
         //UpdateMenuSurface();
@@ -187,25 +251,6 @@ public partial class MainWindow : Window
             "rat",
             new CreatureSettings());
 
-        // var screen = Forms.Screen.PrimaryScreen!;
-        //var area = screen.WorkingArea;
-
-        /* var rat = new Rat(
-             menuSurface.Left,
-             menuSurface.Top - 32,
-             _pointsOfInterest,
-             ratSettings,
-             new Rectangle((int)Left, (int)Top, (int)Width, (int)Height),
-             _surfaceManager);
-
-         System.Windows.MessageBox.Show(
-             $"Rat spawning at X={rat.X}, Y={rat.Y}\n" +
-             $"Menu title at X={ _surfaceManager.MenuSurface.Left}, Y ={ _surfaceManager.MenuSurface.Top}\n");
-
-         rat.PlaceOnSurface(_surfaceManager.MenuSurface);*/
-
-
-
         double spawnX = menuSurface.Left + 
             (menuSurface.Right - menuSurface.Left - ratSettings.SpriteWidth) / 2.0;
 
@@ -215,8 +260,9 @@ public partial class MainWindow : Window
             spawnX,
             spawnY,
             _pointsOfInterest,
+            _pointOfInterestManager,
             ratSettings,
-            new Rectangle((int)Left, (int)Top, (int)Width, (int)Height),
+            //new Rectangle((int)Left, (int)Top, (int)Width, (int)Height),
             _surfaceManager);
 
         var ratWindow = new CreatureWindow(rat)
@@ -261,6 +307,8 @@ public partial class MainWindow : Window
     private void ClearRats_Click(object sender, RoutedEventArgs e)
     {
         ClearRats();
+        //TEMP
+        ClearEagles();
     }
     private void ClearEagles_Click(object sender, RoutedEventArgs e)
     {
@@ -280,7 +328,9 @@ public partial class MainWindow : Window
             area.Top + 300,
             _pointsOfInterest,
             eagleSettings,
-            area);
+            _pointOfInterestManager,
+            area,
+            _surfaceManager);
 
         var eagleWindow = new CreatureWindow(eagle)
         {
@@ -293,9 +343,9 @@ public partial class MainWindow : Window
 
     private void UpdateMenuSurface()
     {
-        int surfaceX = (int)(Left + 111);
-        int surfaceY = (int)(Top + 42);
-        int surfaceWidth = 151;
+        int surfaceX = (int)(Left + 111 * Scale);
+        int surfaceY = (int)(Top + 42 * Scale);
+        int surfaceWidth = 151 * Scale;
 
         _surfaceManager.SetMenuSurface(
             new Rectangle(
@@ -329,6 +379,7 @@ public partial class MainWindow : Window
 private void AlwaysOnTopToggle_Click(object sender, RoutedEventArgs e)
 {
     _creaturesAlwaysOnTop = !_creaturesAlwaysOnTop;
+    Topmost = _creaturesAlwaysOnTop;
 
     SetCreaturesTopmost(_creaturesAlwaysOnTop);
 

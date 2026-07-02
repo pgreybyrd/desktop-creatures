@@ -1,0 +1,19 @@
+{
+  "enabled": false,
+
+  "behavior": true,
+  "surface": false,
+  "animation": true,
+  "pointOfInterest": false,
+  "needs": false,
+  "movement": false,
+  "physics": false,
+  "window": false,
+  "assetLoading": false,
+  "configuration": false,
+  "path": false,
+  "collision": false,
+  "spawning": false,
+  "input": false,
+  "performance": false
+}

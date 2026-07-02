@@ -1,34 +1,24 @@
 ﻿using Desktop_Creatures.Config;
+using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
 using System.Diagnostics;
 using System.Windows.Media.Animation;
+using Point = System.Windows.Point;
 
 namespace Desktop_Creatures.Creatures
 {
     public class Rat : Creature
     {
-        private readonly Random _random = new();
-
-        //private DestinationType _targetType;
-
-        private readonly List<PointOfInterest> _pointsOfInterest;
-
-        private readonly CreatureSettings _settings;
-
-        private readonly Rectangle _workingArea;
-
-        private double _targetX;
-        private double _targetY;
-
         private double _speed;
+
         private int _stateTicksRemaining;
 
-        private double _fallSpeed = 0;
 
-        private SurfaceManager _surfaceManager;
-        private Surface? _currentSurface;
 
+        private int _foodSearchCooldownTicks = 0;  
+
+        #region Settings
         private WalkSettings Walk =>
             Settings.Walk
             ?? throw new InvalidOperationException(
@@ -48,85 +38,132 @@ namespace Desktop_Creatures.Creatures
             Settings.Fall
             ?? throw new InvalidOperationException(
                 "Rat requires FallSettings.");
+        #endregion
 
         public Rat(
             double startX,
             double startY,
             List<PointOfInterest> pointsOfInterest,
+            PointOfInterestManager pointOfInterestManager,
             CreatureSettings settings,
-            Rectangle workingArea,
             SurfaceManager surfaceManager)
-            : base(settings)
+            : base(settings, pointOfInterestManager, surfaceManager)
         {
-            _settings = settings;
-            _workingArea = workingArea;
-            _surfaceManager = surfaceManager;
-            _pointsOfInterest = pointsOfInterest;
+            var variants = new[] { "Chocolate", "GreyHooded", "Albino", "Rainbow", "Black", "Cinnamon"};
+            var variant = variants[Random.Next(variants.Length)];
+            /*
+            int roll = Random.Next(100);
 
-            LoadAssets("Assets/Creatures/Rat");
+            string variant =
+                roll < 30 ? "GreyHooded" : // 30%
+                roll < 55 ? "Black" : // 25%
+                roll < 75 ? "Chocolate" : // 20%
+                roll < 90 ? "Albino" : // 15%
+                roll < 99 ? "Cinnamon" : // 9%
+                              "Rainbow";   // 1%
+            */
+            LoadAssets($"Assets/Creatures/Rat/{variant}");
 
             X = startX;
             Y = startY;
 
-            _currentSurface = _surfaceManager.FindSurfaceBelow(
+            CurrentSurface = SurfaceManager.FindSurfaceBelow(
                 X,
                 Y,
                 Settings.SpriteWidth,
                 Settings.SpriteHeight);
 
-            if (_currentSurface is not null)
-                Y = _currentSurface.Top - GetCurrentFootY();
-            //Y = _currentSurface.Top - Settings.SpriteHeight;
+            if (CurrentSurface is not null)
+                Y = CurrentSurface.Top - GetCurrentFootY();
 
             SetAction(CreatureAction.Running, "Run");
             PickNewTarget();
         }
 
-        public void PlaceOnSurface(Surface surface)
-        {
-            _currentSurface = surface;
-
-            X = surface.Left + (surface.Width - SpriteWidth) / 2.0;
-            Y = surface.Top - GetCurrentFootY();
-            //Y = surface.Top - SpriteHeight;
-        }
-
-        public override void Update()
+        protected override void UpdateState()
         {
             switch (CurrentAction)
             {
                 case CreatureAction.Running:
                     UpdateRunning();
                     break;
-
                 case CreatureAction.Idle:
                     UpdateIdle();
                     break;
                 case CreatureAction.Falling:
                     UpdateFalling();
                     break;
+                case CreatureAction.Eating:
+                    UpdateEating();
+                    break;
             }
+        }
 
-            UpdateAnimation();
+        protected override void UpdateTimers()
+        {
+            if (CurrentAction == CreatureAction.Eating)
+                TickDown(ref EatingTicksRemaining);
+
+            if (CurrentAction is CreatureAction.Running or CreatureAction.Idle)
+                TickDown(ref _stateTicksRemaining);
+
+            TickDown(ref _foodSearchCooldownTicks);
+        }
+
+        private void StartEating(PointOfInterest poi)
+        {
+            Logger.LogDebug(DebugCategory.Animation,
+                "StartEating()" +
+                $"Animation keys: {string.Join(", ", Animations.Keys)}\n" +
+                $"Eat frame count: {Animations["Eat"].Length},\n" +
+                $"Eat frame ticks: {Eat.EatFrameTicks}");
+
+            EatingPoi = poi;
+            EatingTicksRemaining = Eat.EatingTicksRemaining;
+
+            Logger.LogDebug(
+                DebugCategory.Behavior,
+                $"EatingTicksRemaining loaded as: {Eat.EatingTicksRemaining}");
+
+            SpeedX = 0;
+            _stateTicksRemaining = 0;
+            
+            SetAction(CreatureAction.Eating, "Eat");
+        }
+        private void UpdateEating()
+        {
+            Logger.LogDebug(
+                DebugCategory.Behavior,
+                $"UpdateEating decrement timer to {EatingTicksRemaining}, FrameIndex={CurrentFrameIndex}");
+
+            if (EatingTicksRemaining <= 0)
+            {
+                Needs.Eat();
+
+                Logger.LogDebug(
+                    DebugCategory.Behavior,
+                    $"After Eat(): Hunger={Needs.Hunger:F2}, IsHungry={Needs.IsHungry}");
+
+                EatingPoi = null;
+                TargetPoi = null;
+
+                //_eatCooldownTicks = EatCooldownDurationTicks;
+
+                PickPostEatTarget();
+            }
         }
 
         private void UpdateRunning()
         {
-            if (!IsStillOnSurface())
-            {
-                StartFalling();
-                return;
-            }
+            TryFindFood();
 
-            if (!TargetStillOnCurrentSurface())
-            {
-                PickNewTarget();
+            if (!ValidateSurface())
                 return;
-            }
 
             MoveTowardsTarget();
 
-            _stateTicksRemaining--;
+            if (CurrentAction != CreatureAction.Running)
+                return;
 
             if (_stateTicksRemaining <= 0)
                 StartIdle();
@@ -135,20 +172,23 @@ namespace Desktop_Creatures.Creatures
         private void StartIdle()
         {
             var animation = Idle.Animations[
-                _random.Next(Idle.Animations.Count)
+                Random.Next(Idle.Animations.Count)
             ];
 
             SetAction(
                 CreatureAction.Idle,
                 animation.Name);
 
+            Logger.LogDebug(
+                DebugCategory.Animation,
+                $"StartIdle selected animation={animation.Name}");
+
             SpeedX = 0;
 
-            _stateTicksRemaining = _random.Next(
+            _stateTicksRemaining = Random.Next(
                 Idle.MinIdleTicks,
                 Idle.MaxIdleTicks);
         }
-
         private void UpdateIdle()
         {
             if (!IsStillOnSurface())
@@ -157,35 +197,22 @@ namespace Desktop_Creatures.Creatures
                 return;
             }
 
-            _stateTicksRemaining--;
-
-            AdvanceAnimation(Idle.IdleFrameTicks);
-
             if (_stateTicksRemaining <= 0)
                 PickNewTarget();
         }
-
-        private void StartFalling()
-        {
-            SetAction(CreatureAction.Falling, "Fall");
-            SpeedX = 0;
-            _fallSpeed = 0;
-        }
         private void UpdateFalling()
         {
-            //double previousFeetY = Y + Settings.SpriteHeight;
             double previousFeetY = Y + GetCurrentFootY();
 
-            _fallSpeed = Math.Min(
-                _fallSpeed + Fall.Gravity,
+            FallSpeed = Math.Min(
+                FallSpeed + Fall.Gravity,
                 Fall.MaxFallSpeed);
 
-            Y += _fallSpeed;
+            Y += FallSpeed;
 
-            //double currentFeetY = Y + Settings.SpriteHeight;
             double currentFeetY = Y + GetCurrentFootY();
 
-            var surface = _surfaceManager.Surfaces
+            var surface = SurfaceManager.Surfaces
                 .Where(s =>
                     X + Settings.SpriteWidth / 2.0 >= s.Left &&
                     X + Settings.SpriteWidth / 2.0 <= s.Right &&
@@ -197,71 +224,114 @@ namespace Desktop_Creatures.Creatures
             if (surface is null)
                 return;
 
-            /*
-            Debug.WriteLine(
-                $"Rat landed on {surface.Kind}: " +
-                $"L={surface.Left}, T={surface.Top}, R={surface.Right}, B={surface.Bottom}");
-            System.Windows.MessageBox.Show(
-                $"Rat landed on {surface.Kind}: " +
-                $"L={surface.Left}, T={surface.Top}, R={surface.Right}, B={surface.Bottom}");
-            */
-
-            _currentSurface = surface;
-            //Y = surface.Top - Settings.SpriteHeight;
+            CurrentSurface = surface;
             Y = surface.Top - GetCurrentFootY();
-            _fallSpeed = 0;
+            FallSpeed = 0;
 
             StartIdle();
         }
 
+        private void TryFindFood()
+        {
+            if (Needs.IsHungry &&
+                TargetPoi is null &&
+                _foodSearchCooldownTicks <= 0)// &&
+                //_eatCooldownTicks <= 0)
+            {
+                TargetPoi = PointOfInterestManager.FindNearest(
+                    new Point(X, Y),
+                    PointOfInterestType.Food);
+
+                if (TargetPoi is not null && !PoiIsOnSameSurface(TargetPoi))
+                {
+                    TargetPoi = null;
+                    _foodSearchCooldownTicks = Eat.FoodSearchCooldownTicks;
+                    return;
+                }
+
+                if (TargetPoi is not null && CurrentSurface is not null)
+                {
+                    TargetX = TargetPoi.Position.X;
+                    TargetY = CurrentSurface.Top - GetCurrentFootY();
+                    _speed = Run.RunSpeed;
+
+                    SetAction(CreatureAction.Running, "Run");
+                }
+            }
+        }
+
+        private bool ValidateSurface()
+        {
+            if (!IsStillOnSurface())
+            {
+                StartFalling();
+                return false;
+            }
+
+            if (TargetPoi is null && !TargetStillOnCurrentSurface())
+            {
+                PickNewTarget();
+                return false;
+            }
+
+            return true;
+        }
+
+
+
+
+
         private void MoveTowardsTarget()
         {
-            double dx = _targetX - X;
-            double dy = _targetY - Y;
+            double dx = TargetX - X;
+            double dy = TargetY - Y;
 
             double distance = Math.Sqrt(dx * dx + dy * dy);
 
+            Logger.LogDebug(
+                DebugCategory.Movement,
+                $"[{GetType().Name}] " +
+                $"Rat=({X:F1}, {Y:F1}) " +
+                $"Target=({TargetX:F1}, {TargetY:F1}) " +
+                $"Distance={distance:F1}");
+
             if (distance < Run.ArrivalDistance)
             {
+                if (TargetPoi?.Type == PointOfInterestType.Food)
+                {
+                    StartEating(TargetPoi);
+                    return;
+                }
+
                 StartIdle();
-                //PickNewTarget();
                 return;
             }
 
-            SpeedX = dx / distance * _speed;
-            double speedY = dy / distance * _speed;
+            SpeedX = dx / distance * (_speed * Settings.Scale);
+            double speedY = dy / distance * (_speed * Settings.Scale);
 
             X += SpeedX;
             Y += speedY;
 
-            if (_currentSurface is not null)
+            if (CurrentSurface is not null)
             {
                 X = Math.Clamp(
                     X,
-                    _currentSurface.Left,
-                    _currentSurface.Right - Settings.SpriteWidth);
+                    CurrentSurface.Left,
+                    CurrentSurface.Right - Settings.SpriteWidth);
             }
         }
 
-        private void UpdateAnimation()
+        protected override void PickPostEatTarget()
         {
-            if (CurrentAction == CreatureAction.Running)
-                AdvanceAnimation(Run.RunFrameTicks);
-
-            else if (CurrentAction == CreatureAction.Idle)
-                AdvanceAnimation(Idle.IdleFrameTicks);
-
-            else if (CurrentAction == CreatureAction.Falling)
-                AdvanceAnimation(Fall.FallFrameTicks);
-        }
-
-        public override void PickNewTarget()
-        {
-            if (_currentSurface is null)
+            if (CurrentSurface is null)
+            {
+                StartIdle();
                 return;
+            }
 
-            int minX = _currentSurface.Left;
-            int maxX = _currentSurface.Right - Settings.SpriteWidth;
+            int minX = CurrentSurface.Left;
+            int maxX = CurrentSurface.Right - Settings.SpriteWidth;
 
             if (maxX <= minX)
             {
@@ -269,72 +339,59 @@ namespace Desktop_Creatures.Creatures
                 return;
             }
 
-            _targetX = _random.Next(minX, maxX);
-            //_targetY = _currentSurface.Top - Settings.SpriteHeight;
-            _targetY = _currentSurface.Top - GetCurrentFootY();
+            double direction = Random.Next(0, 2) == 0 ? -1 : 1;
+            double desiredX = X + direction * Eat.LeaveFoodDistance;
 
+            TargetX = Math.Clamp(desiredX, minX, maxX);
+            TargetY = CurrentSurface.Top - GetCurrentFootY();
             _speed = Run.RunSpeed;
 
-            _stateTicksRemaining = _random.Next(
+            _stateTicksRemaining = Random.Next(
                 Run.MinRunTicks,
                 Run.MaxRunTicks);
 
-            //Debug.WriteLine(
-               //$"Surface L={_currentSurface.Left} R={_currentSurface.Right} T={_currentSurface.Top} " +
-               //$"Rat X={X} Y={Y} TargetX={_targetX} TargetY={_targetY}");
+
+            Logger.LogDebug(
+               DebugCategory.Behavior,
+               $"[{GetType().Name}] Ate. Wandering away from food.");
 
             SetAction(CreatureAction.Running, "Run");
         }
 
-        private bool IsStillOnSurface()
+
+        public override void PickNewTarget()
         {
-            /*var surface = _surfaceManager.FindSurfaceAtFeet(
-                X,
-                Y,
-                Settings.SpriteWidth,
-                Settings.SpriteHeight,
-                LandingTolerance);*/
-            var surface = _surfaceManager.FindSurfaceAtFeet(
-                X,
-                Y,
-                Settings.SpriteWidth,
-                GetCurrentFootY(),
-                LandingTolerance);
+            if (!TryPickTargetOnCurrentSurface())
+            {
+                StartIdle();
+                return;
+            }
 
-            if (surface is null)
-                return false;
+            _speed = Run.RunSpeed;
 
-            _currentSurface = surface;
-            return true;
+            _stateTicksRemaining = Random.Next(
+                Run.MinRunTicks,
+                Run.MaxRunTicks);
+
+            SetAction(CreatureAction.Running, "Run");
         }
 
         private bool TargetStillOnCurrentSurface()
         {
-            if (_currentSurface is null)
-                return false;
-
-            return
-                _targetX >= _currentSurface.Left &&
-                _targetX <= _currentSurface.Right - Settings.SpriteWidth &&
-                //Math.Abs(_targetY - (_currentSurface.Top - Settings.SpriteHeight)) <= LandingTolerance;
-                Math.Abs(_targetY - (_currentSurface.Top - GetCurrentFootY())) <= LandingTolerance;
+            return CurrentSurface is not null &&
+                   PositionFitsOnSurface(TargetX, TargetY, CurrentSurface);
         }
 
         public override void Release()
         {
-            _surfaceManager.Refresh();
+            SurfaceManager.Refresh();
             StartFalling();
         }
 
-        protected virtual int GetCurrentFootY()
+        private bool PoiIsOnSameSurface(PointOfInterest poi)
         {
-            return CurrentAction switch
-            {
-                CreatureAction.Running => SpriteHeight - 5,
-                CreatureAction.Idle => SpriteHeight - 5,
-                CreatureAction.Falling => SpriteHeight - 5,
-                _ => SpriteHeight
-            };
+            return CurrentSurface is not null &&
+                   PoiIsOnSurface(poi, CurrentSurface);
         }
     }   
 }

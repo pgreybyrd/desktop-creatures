@@ -3,10 +3,11 @@
       "spriteFacesRight": true,
       "spriteWidth": 32,
       "spriteHeight": 32,
+      "scale": 2,
 
       "flight": {
-        "flySpeed": 2.5,
-        "glideSpeed": 3.5,
+        "flySpeed": 1.5,
+        "glideSpeed": 2.5,
         "minDownwardGlideDy": 5,
         "glideChance": 0.5,
 
@@ -23,7 +24,7 @@
         "maxTakeoffFlapTicks": 300,
 
         "flyFrameCount": 4,
-        "flyingFrameTicks": 8,
+        "flyingFrameTicks": 7,
         "glideFrameCount": 1,
         "ruffleChance": 0.25
       },
@@ -44,6 +45,9 @@
       "spriteFacesRight": false,
       "spriteWidth": 32,
       "spriteHeight": 32,
+      "scale": 2,
+      "footOffsetY": 5,
+
       "walk": {
         "walkSpeed": 1.5,
         "minWalkTicks": 100,
@@ -52,7 +56,7 @@
         "walkFrameTicks": 10
       },
       "run": {
-        "runSpeed": 2.5,
+        "runSpeed": 1.5,
         "minRunTicks": 100,
         "maxRunTicks": 300,
         "runFrameCount": 6,
@@ -95,12 +99,13 @@
         "sleepFrameTicks": 40
       },
       "eat": {
-        "eatFrameCount": 1,
-        "eatFrameTicks": 10
+        "eatFrameCount": 14,
+        "eatFrameTicks": 4,
+        "eatingTicksRemaining": 100,
+        "foodSearchCooldownTicks": 120,
+        "leaveFoodDistance": 120
       },
       "fall": {
-        "gravity": 0.2,
-        "maxFallSpeed": 10,
         "fallFrameCount": 1,
         "fallFrameTicks": 5,
         "landingTolerance": 12
@@ -114,6 +119,20 @@
         "idle_look_left": [
             { "x": 16, "y": 28 }
             ]
-      }
+      },
+      "needs": {
+        "hunger": {
+            "threshold": 0.75,
+            "rate": 0.002
+        },
+        "energy": {
+            "threshold": 0.30,
+            "drainRate": 0.001
+        },
+        "curiosity": {
+            "threshold": 0.60,
+            "rate": 0.003
+        }
+    }
     }
 }

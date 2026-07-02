@@ -1,10 +1,14 @@
-﻿namespace Desktop_Creatures.Config;
+﻿using System.ComponentModel;
+
+namespace Desktop_Creatures.Config;
 
 public class CreatureSettings
 {
     public int SpriteWidth { get; set; } = 32;
     public int SpriteHeight { get; set; } = 32;
     public bool SpriteFacesRight { get; set; } = true;
+    public int Scale { get; set; } = 1;
+    public int FootOffsetY { get; set; } = 0;
     public double LandingTolerance { get; set; } = 5.0;
 
     public FlightSettings? Flight { get; set; }
@@ -15,6 +19,7 @@ public class CreatureSettings
     public PerchSettings? Perch { get; set; }
     public SleepSettings? Sleep { get; set; }
     public FallSettings? Fall { get; set; }
+    public EatSettings? Eat { get; set; }
 }
 public class FlightSettings
 {
@@ -100,11 +105,20 @@ public class SleepSettings
     public int MinSleepTicks { get; set; } = 600;
     public int MaxSleepTicks { get; set; } = 1200;
     public int SleepFrameCount { get; set; } = 1;
+    public int SleepFrameTicks { get; set; }
 }
 public class FallSettings
 {
-    public double Gravity { get; set; } = 0.4;
-    public double MaxFallSpeed { get; set; } = 8;
+    public double Gravity { get; set; } = 0.5; //0.981;
+    public double MaxFallSpeed { get; set; } = 50;
     public int FallFrameCount { get; set; } = 1;
     public int FallFrameTicks { get; set; } = 5;
+}
+public class EatSettings
+{
+    public int EatFrameCount { get; set; } = 5;
+    public int EatFrameTicks { get; set; } = 5;
+    public int EatingTicksRemaining { get; set; } = 50;
+    public int FoodSearchCooldownTicks { get; set; } = 120; // about 2 seconds at 60fps
+    public int LeaveFoodDistance { get; set; } = 50;
 }

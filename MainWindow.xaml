@@ -10,14 +10,17 @@
         SizeToContent="WidthAndHeight"
         ResizeMode="NoResize"
         ShowInTaskbar="True"
-        Topmost="False"
+        Topmost="True"
         WindowStartupLocation="CenterScreen"
         
         SnapsToDevicePixels="True"
         UseLayoutRounding="True"
         RenderOptions.BitmapScalingMode="NearestNeighbor">
     <Grid>
-        <Canvas Width="368" Height="233">
+        <Canvas x:Name="MainCanvas"
+                Width="368" 
+                Height="233"
+                RenderOptions.BitmapScalingMode="NearestNeighbor">
 
             <Image Source="Assets/UI/menu_background.png"
                    Width="368"
@@ -32,7 +35,7 @@
                     Background="#01000000"
                     MouseLeftButtonDown="DragArea_MouseLeftButtonDown" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-            <!--<Button x:Name="SpawnEagleButton1"
+            <Button x:Name="SpawnEagleButton1"
                     Canvas.Left="10"
                     Canvas.Top="10"
                     Width="99"
@@ -50,7 +53,7 @@
                     Background="Transparent"
                     BorderThickness="0"
                     Opacity="0"
-                    Click="SpawnEagle_Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>-->
+                    Click="SpawnEagle_Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
             <Image x:Name="SpawnRatImage"
                    Source="Assets/UI/button_spawn_rat.png"

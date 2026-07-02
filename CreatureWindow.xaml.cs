@@ -1,7 +1,10 @@
-﻿using Desktop_Creatures.Creatures;
+﻿using Desktop_Creatures.Config;
+using Desktop_Creatures.Creatures;
+using Desktop_Creatures.Utilities;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace Desktop_Creatures;
@@ -25,11 +28,18 @@ public partial class CreatureWindow : Window
 
         _creature = creature;
 
-        Width = _creature.SpriteWidth;
-        Height = _creature.SpriteHeight;
+        int scale = _creature.Scale;
+
+        //SizeToContent = SizeToContent.WidthAndHeight;
 
         CreatureImage.Width = _creature.SpriteWidth;
         CreatureImage.Height = _creature.SpriteHeight;
+
+        //CreatureImage.Stretch = Stretch.None;
+
+        Width = _creature.SpriteWidth;// * scale;
+        Height = _creature.SpriteHeight;// * scale;
+
         CreatureImage.Source = _creature.CurrentFrame;
 
         Left = _creature.X;
@@ -42,14 +52,25 @@ public partial class CreatureWindow : Window
 
         _creature.Update();
 
-        bool movingRight = _creature.SpeedX >= 0;
+        if (Math.Abs(_creature.SpeedX) > 0.01)
+        {
+            bool movingRight = _creature.SpeedX > 0;
 
-        FlipTransform.ScaleX = _creature.SpriteFacesRight == movingRight
-            ? 1
-            : -1;
+            FlipTransform.ScaleX = _creature.SpriteFacesRight == movingRight
+                ? 1
+                : -1;
+        }
 
         if (CreatureImage.Source != _creature.CurrentFrame)
             CreatureImage.Source = _creature.CurrentFrame;
+
+        Logger.LogDebug(
+            DebugCategory.Window,
+            $"Window: Action={_creature.CurrentAction}, " +
+            $"Sprite={_creature.SpriteWidth}x{_creature.SpriteHeight}, " +
+            $"Window={Width}x{Height}, " +
+            $"Image={CreatureImage.Width}x{CreatureImage.Height}, " +
+            $"CurrentFrame hash = {_creature.CurrentFrame.GetHashCode()}");
 
         Left = _creature.X;
         Top = _creature.Y;

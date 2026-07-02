@@ -46,7 +46,7 @@ The first public release!
 
 ---
 
-## Version 0.2 - Eagle Behavior
+~~## Version 0.2 - Eagle Behavior~~
 
 - [x] Perching
 - [x] Looking left/right
@@ -78,6 +78,7 @@ The first public release!
 
 - [ ] Creature base class
 - [ ] Eagle class
+- [ ] Rat class
 - [ ] Animation system
 - [ ] State system
 - [ ] Multiple creatures
