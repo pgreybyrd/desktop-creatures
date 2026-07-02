@@ -7,7 +7,7 @@ Desktop Rat is an experimental C# desktop companion built on a modular creature 
 Spawn tiny pixel-art rats, drag them around your desktop, and watch them explore your windows while making surprisingly independent life decisions.
 
 ---
-![Desktop Rats](screenshots/DesktopCreatures.gif)
+![Desktop Rats](Screenshots/DesktopCreatures.gif)
 
 ## Engineering Highlights
 
@@ -90,7 +90,17 @@ Feedback and bug reports are always appreciated!
 
 ## Screenshots
 
+### Multiple Rats
 
+![Multiple desktop rats](Screenshots/RATS1.png)
+
+### Forest Menu
+
+![Forest menu](Screenshots/RATS2.png)
+
+### Multi-Monitor Support
+
+![Desktop creatures across multiple monitors](Screenshots/RATS3.png)
 
 ---
 
