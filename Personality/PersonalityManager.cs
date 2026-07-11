@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Desktop_Creatures.Creatures
+namespace Desktop_Creatures.Personality
 {
-    public class Personality
+    public class PersonalityManager
     {
         public float Curiosity { get; init; } = 1.0f;
         public float Laziness { get; init; } = 1.0f;
@@ -15,5 +15,11 @@ namespace Desktop_Creatures.Creatures
         public float Mischief { get; init; } = 1.0f;
         public float Bravery { get; init; } = 1.0f;
         public float HomeAttachment { get; init; } = 1.0f;
+        public float Energy { get; init; } = 1.0f;
+        public float Friendliness { get; init; } = 1.0f;
+        public float Greed { get; init; } = 1.0f;
+        public float Playfulness { get; init; } = 1.0f;
+        public float Patience { get; init; } = 1.0f;
+        public float Confidence { get; init; } = 1.0f;
     }
 }

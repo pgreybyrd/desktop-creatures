@@ -4,6 +4,7 @@ using Desktop_Creatures.Needs;
 using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
+using Desktop_Creatures.Personality;
 using System.Diagnostics;
 using System.Windows.Documents;
 using System.Windows.Media.Imaging;
@@ -27,8 +28,10 @@ public enum CreatureAction
 }
 public abstract class Creature
 {
-    protected readonly Random Random = new();
+    protected string Name = string.Empty;
 
+    protected readonly Random Random = new();
+    private readonly PersonalityManager PersonalityManager = new();
     protected PointOfInterestManager PointOfInterestManager;
     protected SurfaceManager SurfaceManager;
 
@@ -60,9 +63,6 @@ public abstract class Creature
     protected Surface? CurrentSurface;
 
     public CreatureAction CurrentAction { get; protected set; }
-
-    protected Personality Personality { get; } = new();
-
     protected NeedManager Needs { get; } = new();
 
     protected BehaviorController BehaviorController { get; } = new();

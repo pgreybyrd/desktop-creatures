@@ -143,6 +143,13 @@ public partial class MainWindow : Window
             bowlSettings,
             _settings);
 
+        bowl.AddAnchor(new AnchorPoint(
+            "Eat Center",
+            AnchorPointType.Eat,
+            new Point(
+        bowlSettings.Width / 2.0,
+        bowlSettings.Height - 4)));
+
         _pointOfInterestManager.Add(bowl);
         //Logger.LogDebug("=== Loaded POIs ===");
 

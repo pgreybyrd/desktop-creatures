@@ -28,7 +28,7 @@ public partial class POIWindow : Window
         Left = poi.Position.X;
         Top = poi.Position.Y;
 
-        var path = poi.IsAvailable || poi.Settings.EmptyAssetPath is null
+        var path = poi.IsEnabled || poi.Settings.EmptyAssetPath is null
             ? poi.Settings.AssetPath
             : poi.Settings.EmptyAssetPath;
 

@@ -1,27 +1,33 @@
-﻿using System.Windows;
-using Point = System.Windows.Point;
+﻿using Point = System.Windows.Point;
 
 namespace Desktop_Creatures.World;
 
 public enum AnchorPointType
 {
+    Stand,
+    Eat,
+    Drink,
     Perch,
-    Home,
-    Food,
-    Water,
-    Magic,
+    Sleep,
     Rest,
-    Ground,
-    Sleep
+    Enter,
+    Exit,
+    Observe,
+    Play
 }
 
 public class AnchorPoint
 {
-    public string Name { get; set; }
-    public AnchorPointType Type { get; set; }
-    public Point Offset { get; set; }
+    public string Name { get; }
+    public AnchorPointType Type { get; }
+    public Point Offset { get; }
 
-    public AnchorPoint(string name, AnchorPointType type, Point offset)
+    public bool IsAvailable { get; set; } = true;
+
+    public AnchorPoint(
+        string name,
+        AnchorPointType type,
+        Point offset)
     {
         Name = name;
         Type = type;

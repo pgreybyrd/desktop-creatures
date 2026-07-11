@@ -10,8 +10,12 @@ namespace Desktop_Creatures.Needs
     public enum NeedType
     {
         Hunger,
-        Energy,
-        Curiosity
+        Sleep,
+        Fun,
+        Comfort,
+        Social,
+        Exploration,
+        Safety
     }
 
     public class Need
