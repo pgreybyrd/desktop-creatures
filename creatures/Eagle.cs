@@ -90,8 +90,6 @@ namespace Desktop_Creatures.Creatures
                     UpdateSleep();
                     break;
             }
-
-            UpdateAnimation();
         }
 
         private void UpdateSleep()
@@ -221,7 +219,7 @@ namespace Desktop_Creatures.Creatures
             //CurrentFrame = _sleepFrame;
         }
 
-        private void UpdateAnimation()
+        protected override void UpdateAnimation()
         {
             if (CurrentAction == CreatureAction.Flying)
             {
@@ -238,7 +236,7 @@ namespace Desktop_Creatures.Creatures
             }
         }
 
-        private void PickNewTarget()
+        public override void PickNewTarget()
         {
             SetAction(CreatureAction.Flying, "Fly");
 
@@ -249,12 +247,12 @@ namespace Desktop_Creatures.Creatures
             PickRandomFlyingTarget();
         }
 
-        private bool TryPickPerchTarget()
+        protected override bool TryPickPerchTarget()
         {
             var perchTargets = _pointsOfInterest
                 .SelectMany(poi => poi.AnchorPoints
-                    .Where(anchor => anchor.Type == AnchorPointType.Perch)
-                    .Select(anchor => poi.GetAnchorPosition(anchor)))
+                    .Where(anchor => anchor.Type == WorldInteractionPointType.Perch)
+                    .Select(anchor => poi.GetWorldInteractionPointPosition(anchor)))
                 .ToList();
 
             if (perchTargets.Count == 0)

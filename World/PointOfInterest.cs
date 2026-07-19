@@ -25,7 +25,7 @@ public class PointOfInterest
     public AppSettings AppSettings { get; }
 
     public bool IsEnabled { get; set; }
-    public List<AnchorPoint> AnchorPoints { get; set; } = new();
+    public List<WorldInteractionPoint> AnchorPoints { get; set; } = new();
 
     public PointOfInterest(
         string name, 
@@ -39,14 +39,15 @@ public class PointOfInterest
         Type = type;
         Settings = settings;
         AppSettings = appSettings;
+        IsEnabled = true;
     }
 
-    public void AddAnchor(AnchorPoint point)
+    public void AddWorldInteractionPoint(WorldInteractionPoint point)
     { 
         AnchorPoints.Add(point); 
     }
 
-    public Point GetAnchorPosition(AnchorPoint anchor)
+    public Point GetWorldInteractionPointPosition(WorldInteractionPoint anchor)
     {
         double scale = AppSettings.Scale;
 
@@ -55,8 +56,8 @@ public class PointOfInterest
             Position.Y + anchor.Offset.Y * scale);
     }
 
-    public IEnumerable<AnchorPoint> GetAnchors(
-        AnchorPointType type,
+    public IEnumerable<WorldInteractionPoint> GetWorldInteractionPoints(
+        WorldInteractionPointType type,
         bool availableOnly = true)
     {
         return AnchorPoints.Where(anchor =>

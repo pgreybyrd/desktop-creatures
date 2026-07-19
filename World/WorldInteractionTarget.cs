@@ -2,19 +2,19 @@
 
 namespace Desktop_Creatures.World;
 
-public class AnchorTarget
+public class WorldInteractionTarget
 {
     public PointOfInterest PointOfInterest { get; }
-    public AnchorPoint Anchor { get; }
+    public WorldInteractionPoint InteractionPoint { get; }
     public Point Position { get; }
 
-    public AnchorTarget(
+    public WorldInteractionTarget(
         PointOfInterest pointOfInterest,
-        AnchorPoint anchor,
+        WorldInteractionPoint interactionPoint,
         Point position)
     {
         PointOfInterest = pointOfInterest;
-        Anchor = anchor;
+        InteractionPoint = interactionPoint;
         Position = position;
     }
 }

@@ -128,29 +128,6 @@ public partial class MainWindow : Window
 
         var screen = Forms.Screen.PrimaryScreen!;
 
-
-
-        if (!_pointOfInterestSettings.TryGetValue("rat_bowl", out var bowlSettings))
-        {
-            System.Windows.MessageBox.Show("rat_bowl settings not found!");
-            return;
-        }
-
-        var bowl = new PointOfInterest(
-            "Rat Bowl",
-            new Point(960, 460),
-            PointOfInterestType.Food,
-            bowlSettings,
-            _settings);
-
-        bowl.AddAnchor(new AnchorPoint(
-            "Eat Center",
-            AnchorPointType.Eat,
-            new Point(
-        bowlSettings.Width / 2.0,
-        bowlSettings.Height - 4)));
-
-        _pointOfInterestManager.Add(bowl);
         //Logger.LogDebug("=== Loaded POIs ===");
 
         //foreach (var poi in _pointOfInterestManager.Points)
@@ -165,23 +142,81 @@ public partial class MainWindow : Window
         };
 
         _timer.Tick += Update;
-        _timer.Start();
-
-        
-        foreach (var point in _pointOfInterestManager.Points) {
-            var window = new POIWindow(point);
-            window.Show();
-        }
-        
+        _timer.Start();       
 
         ContentRendered += (_, _) =>
         {
             UpdateMenuSurface();
+
             _surfaceManager.Refresh();
 
+            CreateFoodBowl();
+
             SpawnRat();
+
             SetCreaturesTopmost(_creaturesAlwaysOnTop);
         };
+    }
+
+    private void CreateFoodBowl()
+    {
+        if (!_pointOfInterestSettings.TryGetValue(
+            "rat_bowl",
+            out var bowlSettings))
+        {
+            System.Windows.MessageBox.Show("rat_bowl settings not found!");
+            return;
+        }
+
+        var menuSurface = _surfaceManager.MenuSurface
+            ?? throw new InvalidOperationException(
+                "Menu surface must exist before creating the bowl.");
+
+        double bowlWidth = bowlSettings.Width * Scale;
+        double bowlHeight = bowlSettings.Height * Scale;
+
+        double bowlX =
+            menuSurface.Left +
+            (menuSurface.Right - menuSurface.Left - bowlWidth) / 2.0;
+
+        double bowlY =
+            menuSurface.Top - bowlHeight;
+
+        var bowl = new PointOfInterest(
+            "Rat Bowl",
+            new Point(bowlX, bowlY),
+            PointOfInterestType.Food,
+            bowlSettings,
+            _settings);
+
+        bowl.AddWorldInteractionPoint(
+            new WorldInteractionPoint(
+                "Eat Center",
+                WorldInteractionPointType.Eat,
+                new Point(
+                    bowlSettings.Width / 2.0,
+                    bowlSettings.Height)));
+
+        _pointOfInterestManager.Add(bowl);
+
+        foreach (var point in bowl.AnchorPoints)
+        {
+            var worldPosition =
+                bowl.GetWorldInteractionPointPosition(point);
+
+            Logger.LogDebug(
+                DebugCategory.Behavior,
+                $"Bowl interaction: {point.Type} " +
+                $"world=({worldPosition.X:F1}, {worldPosition.Y:F1})");
+        }
+
+        Logger.LogDebug(
+            DebugCategory.Behavior,
+            $"Added bowl at ({bowl.Position.X:F1}, {bowl.Position.Y:F1}) " +
+            $"with {bowl.AnchorPoints.Count} interaction point(s).");
+
+        var bowlWindow = new POIWindow(bowl);
+        bowlWindow.Show();
     }
 
     private Rectangle LoadSettings()
@@ -266,9 +301,8 @@ public partial class MainWindow : Window
         var rat = new Rat(
             spawnX,
             spawnY,
-            _pointsOfInterest,
-            _pointOfInterestManager,
             ratSettings,
+            _pointOfInterestManager,
             //new Rectangle((int)Left, (int)Top, (int)Width, (int)Height),
             _surfaceManager);
 

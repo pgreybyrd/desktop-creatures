@@ -43,9 +43,9 @@ namespace Desktop_Creatures.World
             return result;
         }
 
-        public AnchorTarget? FindNearestAnchor(
+        public WorldInteractionTarget? FindNearestWorldInteractionPoint(
             Point creaturePosition,
-            AnchorPointType anchorType,
+            WorldInteractionPointType interactionType,
             PointOfInterestType? poiType = null)
         {
             return Points
@@ -53,11 +53,11 @@ namespace Desktop_Creatures.World
                     poi.IsEnabled &&
                     (!poiType.HasValue || poi.Type == poiType.Value))
                 .SelectMany(poi =>
-                    poi.GetAnchors(anchorType)
-                        .Select(anchor => new AnchorTarget(
+                    poi.GetWorldInteractionPoints(interactionType)
+                        .Select(interactionPoint => new WorldInteractionTarget(
                             poi,
-                            anchor,
-                            poi.GetAnchorPosition(anchor))))
+                            interactionPoint,
+                            poi.GetWorldInteractionPointPosition(interactionPoint))))
                 .OrderBy(target =>
                     Distance(creaturePosition, target.Position))
                 .FirstOrDefault();

@@ -1,13 +1,12 @@
-﻿using Desktop_Creatures.Behaviors;
+using Desktop_Creatures.Behaviors;
 using Desktop_Creatures.Config;
 using Desktop_Creatures.Needs;
+using Desktop_Creatures.Personality;
 using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
-using Desktop_Creatures.Personality;
-using System.Diagnostics;
-using System.Windows.Documents;
 using System.Windows.Media.Imaging;
+using Point = System.Windows.Point;
 
 namespace Desktop_Creatures.Creatures;
 
@@ -26,6 +25,7 @@ public enum CreatureAction
     Chasing,
     Carrying
 }
+
 public abstract class Creature
 {
     protected string Name = string.Empty;
@@ -42,8 +42,9 @@ public abstract class Creature
 
     protected double TargetX;
     protected double TargetY;
+    protected double MovementSpeed;
 
-    //protected int EatingTicksRemaining => Settings.Eat.EatingTicksRemaining;
+    protected int StateTicksRemaining;
     protected int EatingTicksRemaining;
 
     protected CreatureSettings Settings { get; }
@@ -54,7 +55,6 @@ public abstract class Creature
     public int SpriteWidth => Settings.SpriteWidth * Settings.Scale;
     public int SpriteHeight => Settings.SpriteHeight * Settings.Scale;
     public double LandingTolerance => Settings.LandingTolerance;
-    //protected int PostEatMoveDistance => Settings.Eat.LeaveFoodDistance;
 
     protected virtual int FootOffsetY => SpriteHeight;
 
@@ -68,82 +68,65 @@ public abstract class Creature
     protected BehaviorController BehaviorController { get; } = new();
 
     protected EatSettings Eat =>
-    Settings.Eat
-    ?? throw new InvalidOperationException(
-        "Creature requires EatSettings.");
+        Settings.Eat
+        ?? throw new InvalidOperationException(
+            "Creature requires EatSettings.");
 
-    #region Animation
+    protected WalkSettings Walk =>
+        Settings.Walk
+        ?? throw new InvalidOperationException(
+            "Creature requires WalkSettings.");
+
+    protected IdleSettings Idle =>
+        Settings.Idle
+        ?? throw new InvalidOperationException(
+            "Creature requires IdleSettings.");
+
+    protected RunSettings Run =>
+        Settings.Run
+        ?? throw new InvalidOperationException(
+            "Creature requires RunSettings.");
+
+    protected FallSettings Fall =>
+        Settings.Fall
+        ?? throw new InvalidOperationException(
+            "Creature requires FallSettings.");
+
     protected Dictionary<string, BitmapImage[]> Animations { get; } = new();
 
-    public BitmapImage? CurrentFrame => 
-        CurrentFrames.Length > 0 
-        ? CurrentFrames[CurrentFrameIndex] 
-        : null;
+    public BitmapImage? CurrentFrame =>
+        CurrentFrames.Length > 0
+            ? CurrentFrames[CurrentFrameIndex]
+            : null;
 
     protected BitmapImage[] CurrentFrames = [];
     protected int CurrentFrameIndex;
     protected int AnimationTick;
 
-    protected void AdvanceAnimation(int frameTicks)
-    {
-        if (CurrentFrames.Length <= 1)
-            return;
-
-        //Logger.LogDebug(
-        //    DebugCategory.Animation,
-        //    $"AdvanceAnimation: Action={CurrentAction}, FrameIndex={CurrentFrameIndex}, FrameTicks={frameTicks}");
-
-        AnimationTick++;
-
-        if (AnimationTick < frameTicks)
-            return;
-
-        AnimationTick = 0;
-        CurrentFrameIndex = (CurrentFrameIndex + 1) % CurrentFrames.Length;
-    }
-    #endregion
-
-    #region Fields
-
-    #endregion
-
-    #region Properties
-
-    #endregion
-
-    #region Constructor
-
-    #endregion
-
-    #region Update
-
-    #endregion
-
-    #region Movement
-
-    #endregion
-
-    #region Animation
-
-    #endregion
-
-    #region Needs
-
-    #endregion
-
-    #region Behavior
-
-    #endregion
-
-    #region Helper Methods
-
-    #endregion
-
-    protected Creature(CreatureSettings settings, PointOfInterestManager pointOfInterestManager, SurfaceManager surfaceManager)
+    protected Creature(
+        CreatureSettings settings,
+        PointOfInterestManager pointOfInterestManager,
+        SurfaceManager surfaceManager)
     {
         Settings = settings;
         PointOfInterestManager = pointOfInterestManager;
         SurfaceManager = surfaceManager;
+
+        ConfigureDefaultBehaviors();
+    }
+
+    private void ConfigureDefaultBehaviors()
+    {
+        if (Settings.Eat is null)
+            return;
+
+        BehaviorController.AddBehavior(new EatBehavior(
+            Needs,
+            Eat,
+            PointOfInterestManager,
+            () => new Point(X, Y),
+            CanSearchForFood,
+            TrySetFoodTarget));
     }
 
     public void LoadAssets(string assetFolder)
@@ -189,6 +172,7 @@ public abstract class Creature
         if (Settings.Eat is not null)
             Animations["Eat"] = LoadFrames(assetFolder, "eat", Settings.Eat.EatFrameCount);
     }
+
     protected static BitmapImage LoadImage(string path)
     {
         var image = new BitmapImage();
@@ -202,6 +186,7 @@ public abstract class Creature
 
         return image;
     }
+
     protected static BitmapImage[] LoadFrames(
         string assetFolder,
         string animationName,
@@ -212,11 +197,43 @@ public abstract class Creature
             .ToArray();
     }
 
+    protected void InitializeGroundCreature(double startX, double startY)
+    {
+        X = startX;
+        Y = startY;
+
+        CurrentSurface = SurfaceManager.FindSurfaceBelow(
+            X,
+            Y,
+            Settings.SpriteWidth,
+            Settings.SpriteHeight);
+
+        if (CurrentSurface is not null)
+            Y = CurrentSurface.Top - GetCurrentFootY();
+
+        SetAction(CreatureAction.Running, "Run");
+        PickNewTarget();
+    }
+
+    protected void AdvanceAnimation(int frameTicks)
+    {
+        if (CurrentFrames.Length <= 1)
+            return;
+
+        AnimationTick++;
+
+        if (AnimationTick < frameTicks)
+            return;
+
+        AnimationTick = 0;
+        CurrentFrameIndex = (CurrentFrameIndex + 1) % CurrentFrames.Length;
+    }
+
     protected void StartFalling()
     {
         Logger.LogDebug(
             DebugCategory.Animation,
-            $"StartFalling");
+            "StartFalling");
 
         SetAction(CreatureAction.Falling, "Fall");
         SpeedX = 0;
@@ -235,6 +252,7 @@ public abstract class Creature
                 $"Animation '{animationName}' was not loaded. " +
                 $"Loaded animations: {string.Join(", ", Animations.Keys)}");
         }
+
         Logger.LogDebug(
             DebugCategory.Animation,
             $"SetAction: {CurrentAction} -> {action} ({animationName}), Frames={frames.Length}");
@@ -251,6 +269,11 @@ public abstract class Creature
 
     protected virtual void UpdateTimers()
     {
+        if (CurrentAction == CreatureAction.Eating)
+            TickDown(ref EatingTicksRemaining);
+
+        if (CurrentAction is CreatureAction.Running or CreatureAction.Idle)
+            TickDown(ref StateTicksRemaining);
     }
 
     protected static void TickDown(ref int timer)
@@ -263,7 +286,7 @@ public abstract class Creature
     {
         return
             Math.Abs(
-                (Y + Settings.SpriteHeight) 
+                (Y + Settings.SpriteHeight)
                 - surface.Top)
             < LandingTolerance
             &&
@@ -296,12 +319,13 @@ public abstract class Creature
 
         return true;
     }
+
     protected bool TryPickTargetPoi(PointOfInterestType type)
     {
         return false;
     }
-    //OR
-    protected bool TryPickPerchTarget()
+
+    protected virtual bool TryPickPerchTarget()
     {
         return false;
     }
@@ -321,7 +345,7 @@ public abstract class Creature
         var surface = SurfaceManager.FindSurfaceAtFeet(
             X,
             Y,
-            Settings.SpriteWidth,
+            SpriteWidth,
             GetCurrentFootY(),
             LandingTolerance);
 
@@ -336,8 +360,9 @@ public abstract class Creature
     {
         return CurrentAction switch
         {
-            CreatureAction.Running => SpriteHeight - (Settings.FootOffsetY * Settings.Scale), //TODO use setting for offset!
+            CreatureAction.Running => SpriteHeight - (Settings.FootOffsetY * Settings.Scale),
             CreatureAction.Idle => SpriteHeight - (Settings.FootOffsetY * Settings.Scale),
+            CreatureAction.Eating => SpriteHeight - (Settings.FootOffsetY * Settings.Scale),
             CreatureAction.Falling => SpriteHeight - (Settings.FootOffsetY * Settings.Scale),
             _ => SpriteHeight
         };
@@ -347,6 +372,7 @@ public abstract class Creature
     {
         UpdateTimers();
         UpdateNeeds();
+        UpdateBehavior();
         UpdateState();
         UpdateAnimation();
     }
@@ -356,7 +382,29 @@ public abstract class Creature
         Needs.Update();
     }
 
-    protected abstract void UpdateState();
+    protected virtual void UpdateBehavior()
+    {
+        BehaviorController.Update();
+    }
+
+    protected virtual void UpdateState()
+    {
+        switch (CurrentAction)
+        {
+            case CreatureAction.Running:
+                UpdateRunning();
+                break;
+            case CreatureAction.Idle:
+                UpdateIdle();
+                break;
+            case CreatureAction.Falling:
+                UpdateFalling();
+                break;
+            case CreatureAction.Eating:
+                UpdateEating();
+                break;
+        }
+    }
 
     protected virtual void UpdateAnimation()
     {
@@ -393,6 +441,219 @@ public abstract class Creature
             AdvanceAnimation(frameTicks.Value);
     }
 
+    protected virtual bool CanSearchForFood()
+    {
+        return Settings.Run is not null &&
+               CurrentSurface is not null &&
+               TargetPoi is null &&
+               CurrentAction is CreatureAction.Running or CreatureAction.Idle;
+    }
+
+    protected virtual bool TrySetFoodTarget(WorldInteractionTarget target)
+    {
+        if (!CanSearchForFood())
+            return false;
+
+        Point? snappedPosition = SurfaceManager.SnapToSurface(
+            target.Position,
+            SpriteWidth,
+            GetCurrentFootY());
+
+        if (snappedPosition is null)
+            return false;
+
+        TargetPoi = target.PointOfInterest;
+        TargetX = snappedPosition.Value.X;
+        TargetY = snappedPosition.Value.Y;
+        MovementSpeed = Run.RunSpeed;
+
+        Logger.LogDebug(
+            DebugCategory.Behavior,
+            $"Trying food target: " +
+            $"interaction=({target.Position.X:F1}, {target.Position.Y:F1}), " +
+            $"snapped={snappedPosition}");
+
+        SetAction(CreatureAction.Running, "Run");
+
+        return true;
+    }
+
+    protected virtual void StartEating(PointOfInterest poi)
+    {
+        int eatFrameCount = Animations.TryGetValue("Eat", out var eatFrames)
+            ? eatFrames.Length
+            : 0;
+
+        Logger.LogDebug(
+            DebugCategory.Animation,
+            "StartEating()" +
+            $"Animation keys: {string.Join(", ", Animations.Keys)}\n" +
+            $"Eat frame count: {eatFrameCount},\n" +
+            $"Eat frame ticks: {Eat.EatFrameTicks}");
+
+        EatingPoi = poi;
+        EatingTicksRemaining = Eat.EatingTicksRemaining;
+
+        Logger.LogDebug(
+            DebugCategory.Behavior,
+            $"EatingTicksRemaining loaded as: {Eat.EatingTicksRemaining}");
+
+        SpeedX = 0;
+        StateTicksRemaining = 0;
+
+        SetAction(CreatureAction.Eating, "Eat");
+    }
+
+    protected virtual void UpdateEating()
+    {
+        Logger.LogDebug(
+            DebugCategory.Behavior,
+            $"UpdateEating decrement timer to {EatingTicksRemaining}, FrameIndex={CurrentFrameIndex}");
+
+        if (EatingTicksRemaining <= 0)
+            FinishEating();
+    }
+
+    protected virtual void UpdateRunning()
+    {
+        if (!ValidateSurface())
+            return;
+
+        MoveTowardsTarget();
+
+        if (CurrentAction != CreatureAction.Running)
+            return;
+
+        if (StateTicksRemaining <= 0)
+            StartIdle();
+    }
+
+    protected virtual void StartIdle()
+    {
+        var animation = Idle.Animations[
+            Random.Next(Idle.Animations.Count)
+        ];
+
+        SetAction(
+            CreatureAction.Idle,
+            animation.Name);
+
+        Logger.LogDebug(
+            DebugCategory.Animation,
+            $"StartIdle selected animation={animation.Name}");
+
+        SpeedX = 0;
+
+        StateTicksRemaining = Random.Next(
+            Idle.MinIdleTicks,
+            Idle.MaxIdleTicks);
+    }
+
+    protected virtual void UpdateIdle()
+    {
+        if (!IsStillOnSurface())
+        {
+            StartFalling();
+            return;
+        }
+
+        if (StateTicksRemaining <= 0)
+            PickNewTarget();
+    }
+
+    protected virtual void UpdateFalling()
+    {
+        double previousFeetY = Y + GetCurrentFootY();
+
+        FallSpeed = Math.Min(
+            FallSpeed + Fall.Gravity,
+            Fall.MaxFallSpeed);
+
+        Y += FallSpeed;
+
+        double currentFeetY = Y + GetCurrentFootY();
+
+        var surface = SurfaceManager.Surfaces
+            .Where(s =>
+                X + Settings.SpriteWidth / 2.0 >= s.Left &&
+                X + Settings.SpriteWidth / 2.0 <= s.Right &&
+                previousFeetY <= s.Top &&
+                currentFeetY >= s.Top)
+            .OrderBy(s => s.Top)
+            .FirstOrDefault();
+
+        if (surface is null)
+            return;
+
+        CurrentSurface = surface;
+        Y = surface.Top - GetCurrentFootY();
+        FallSpeed = 0;
+
+        StartIdle();
+    }
+
+    protected virtual bool ValidateSurface()
+    {
+        if (!IsStillOnSurface())
+        {
+            StartFalling();
+            return false;
+        }
+
+        if (TargetPoi is null && !TargetStillOnCurrentSurface())
+        {
+            PickNewTarget();
+            return false;
+        }
+
+        return true;
+    }
+
+    protected virtual void MoveTowardsTarget()
+    {
+        double dx = TargetX - X;
+        double dy = TargetY - Y;
+
+        double distance = Math.Sqrt(dx * dx + dy * dy);
+
+        Logger.LogDebug(
+            DebugCategory.Movement,
+            $"[{GetType().Name}] " +
+            $"Position=({X:F1}, {Y:F1}) " +
+            $"Target=({TargetX:F1}, {TargetY:F1}) " +
+            $"Distance={distance:F1}");
+
+        if (distance < Run.ArrivalDistance)
+        {
+            if (TargetPoi?.Type == PointOfInterestType.Food)
+            {
+                Logger.LogDebug(
+                    DebugCategory.Behavior,
+                    $"ARRIVED! distance={distance}");
+
+                StartEating(TargetPoi);
+                return;
+            }
+
+            StartIdle();
+            return;
+        }
+
+        SpeedX = dx / distance * (MovementSpeed * Settings.Scale);
+        double speedY = dy / distance * (MovementSpeed * Settings.Scale);
+
+        X += SpeedX;
+        Y += speedY;
+
+        if (CurrentSurface is not null)
+        {
+            X = Math.Clamp(
+                X,
+                CurrentSurface.Left,
+                CurrentSurface.Right - Settings.SpriteWidth);
+        }
+    }
+
     public virtual void DragTo(double x, double y)
     {
         X = x;
@@ -401,15 +662,34 @@ public abstract class Creature
 
     public virtual void Release()
     {
+        SurfaceManager.Refresh();
+        StartFalling();
     }
 
     public virtual void PickNewTarget()
     {
+        if (!TryPickTargetOnCurrentSurface())
+        {
+            StartIdle();
+            return;
+        }
+
+        MovementSpeed = Run.RunSpeed;
+
+        StateTicksRemaining = Random.Next(
+            Run.MinRunTicks,
+            Run.MaxRunTicks);
+
+        SetAction(CreatureAction.Running, "Run");
     }
 
     protected virtual void FinishEating()
     {
         Needs.Eat();
+
+        Logger.LogDebug(
+            DebugCategory.Behavior,
+            $"After Eat(): Hunger={Needs.Hunger:F2}, IsHungry={Needs.IsHungry}");
 
         EatingPoi = null;
         TargetPoi = null;
@@ -419,7 +699,48 @@ public abstract class Creature
 
     protected virtual void PickPostEatTarget()
     {
-        // Default:
-        // Move LeaveFoodDistance away.
+        if (CurrentSurface is null)
+        {
+            StartIdle();
+            return;
+        }
+
+        int minX = CurrentSurface.Left;
+        int maxX = CurrentSurface.Right - Settings.SpriteWidth;
+
+        if (maxX <= minX)
+        {
+            StartIdle();
+            return;
+        }
+
+        double direction = Random.Next(0, 2) == 0 ? -1 : 1;
+        double desiredX = X + direction * Eat.LeaveFoodDistance;
+
+        TargetX = Math.Clamp(desiredX, minX, maxX);
+        TargetY = CurrentSurface.Top - GetCurrentFootY();
+        MovementSpeed = Run.RunSpeed;
+
+        StateTicksRemaining = Random.Next(
+            Run.MinRunTicks,
+            Run.MaxRunTicks);
+
+        Logger.LogDebug(
+            DebugCategory.Behavior,
+            $"[{GetType().Name}] Ate. Wandering away from food.");
+
+        SetAction(CreatureAction.Running, "Run");
+    }
+
+    private bool TargetStillOnCurrentSurface()
+    {
+        return CurrentSurface is not null &&
+               PositionFitsOnSurface(TargetX, TargetY, CurrentSurface);
+    }
+
+    private bool PoiIsOnSameSurface(PointOfInterest poi)
+    {
+        return CurrentSurface is not null &&
+               PoiIsOnSurface(poi, CurrentSurface);
     }
 }

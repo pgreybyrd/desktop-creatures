@@ -1,5 +1,6 @@
 ﻿using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World;
+using Desktop_Creatures.World.Surfaces;
 using System;
 using System.Windows;
 using System.Windows.Input;
@@ -10,6 +11,7 @@ namespace Desktop_Creatures;
 public partial class POIWindow : Window
 {
     private readonly PointOfInterest _poi;
+    private readonly SurfaceManager _surfaceManager;
 
     //public POIWindow(string imagePath, double width, double height, bool alwaysOnTop)
     public POIWindow(PointOfInterest poi)
@@ -36,6 +38,27 @@ public partial class POIWindow : Window
             new Uri($"pack://application:,,,/{path}")
         );
     }
+
+    //public void SnapToSurface()
+    //{
+    //    System.Windows.Point requestedBottomCenter = new(
+    //        Left + ActualWidth / 2,
+    //        Top + ActualHeight);
+
+    //    WalkableSurface? surface =
+    //        _surfaceManager.FindNearestSurface(requestedBottomCenter);
+
+    //    if (surface is null)
+    //        return;
+
+    //    double visualOverlap = 4;
+
+    //    Top = surface.Y - ActualHeight + visualOverlap;
+
+    //    CurrentSurface = surface;
+
+    //    UpdateInteractionPoints();
+    //}
 
     private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {

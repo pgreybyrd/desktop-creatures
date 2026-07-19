@@ -2,7 +2,7 @@
 
 namespace Desktop_Creatures.World;
 
-public enum AnchorPointType
+public enum WorldInteractionPointType
 {
     Stand,
     Eat,
@@ -16,17 +16,17 @@ public enum AnchorPointType
     Play
 }
 
-public class AnchorPoint
+public class WorldInteractionPoint
 {
     public string Name { get; }
-    public AnchorPointType Type { get; }
+    public WorldInteractionPointType Type { get; }
     public Point Offset { get; }
 
     public bool IsAvailable { get; set; } = true;
 
-    public AnchorPoint(
+    public WorldInteractionPoint(
         string name,
-        AnchorPointType type,
+        WorldInteractionPointType type,
         Point offset)
     {
         Name = name;

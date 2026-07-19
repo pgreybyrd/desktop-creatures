@@ -2,9 +2,8 @@
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
-using System.Windows.Forms;
-using System.Windows.Interop;
 using Forms = System.Windows.Forms;
+using Point = System.Windows.Point;
 
 namespace Desktop_Creatures.World.Surfaces;
 
@@ -37,6 +36,39 @@ public class SurfaceManager
         _ticksUntilRefresh = 30; // every ~0.5 sec at 60 FPS
     }
 
+    public Point? SnapToSurface(
+    Point desiredFeetPosition,
+    int creatureWidth,
+    int footOffsetY)
+    {
+        double halfWidth = creatureWidth / 2.0;
+
+        Surface? surface = _surfaces
+            .Where(surface =>
+                desiredFeetPosition.X >= surface.Left &&
+                desiredFeetPosition.X <= surface.Right)
+            .OrderBy(surface =>
+                Math.Abs(surface.Top - desiredFeetPosition.Y))
+            .FirstOrDefault();
+
+        if (surface is null)
+            return null;
+
+        // Keep the entire creature inside the surface.
+        double left = surface.Left;
+        double right = surface.Right - creatureWidth;
+
+        double creatureX = desiredFeetPosition.X - halfWidth;
+
+        if (right >= left)
+            creatureX = Math.Clamp(creatureX, left, right);
+        else
+            creatureX = left;
+
+        double creatureY = surface.Top - footOffsetY;
+
+        return new Point(creatureX, creatureY);
+    }
 
     public void AddTemporarySurface(Rectangle bounds)
     {
