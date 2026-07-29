@@ -22,7 +22,7 @@
                 Height="233"
                 RenderOptions.BitmapScalingMode="NearestNeighbor">
 
-            <Image Source="Assets/UI/menu_background.png"
+            <Image Source="Assets/UI/MainMenu/menu_background.png"
                    Width="368"
                    Height="233"/>
             
@@ -56,7 +56,7 @@
                     Click="SpawnEagle_Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
             <Image x:Name="SpawnRatImage"
-                   Source="Assets/UI/button_spawn_rat.png"
+                   Source="Assets/UI/MainMenu/Buttons/button_spawn_rat.png"
                    Canvas.Left="114"
                    Canvas.Top="85"
                    Width="139"
@@ -73,11 +73,11 @@
                     Click="SpawnRat_Click" 
                     MouseEnter="SpawnRat_MouseEnter"
                     MouseLeave="SpawnRat_MouseLeave"
-                    PreviewMouseDown="SpawnRat_MouseDown"
+                    PreviewMouseDown="SpawnRat_MouseLeftButtonDown"
                     PreviewMouseUp="SpawnRat_MouseUp"/>
 
             <Image x:Name="ClearRatsImage"
-                   Source="Assets/UI/button_clear_rats.png"
+                   Source="Assets/UI/MainMenu/Buttons/button_clear_rats.png"
                    Canvas.Left="114"
                    Canvas.Top="123"
                    Width="139"
@@ -98,7 +98,7 @@
                     PreviewMouseUp="ClearRats_MouseUp"/>
 
             <Image x:Name="AlwaysOnTopToggleImage"
-                   Source="Assets/UI/button_always_on_top.png"
+                   Source="Assets/UI/MainMenu/Buttons/button_always_on_top_off.png"
                    Canvas.Left="114"
                    Canvas.Top="161"
                    Width="139"
@@ -119,7 +119,7 @@
                           PreviewMouseUp="AlwaysOnTop_MouseUp"/>
 
             <Image x:Name="ExitImage"
-                   Source="Assets/UI/button_exit.png"
+                   Source="Assets/UI/MainMenu/Buttons/button_exit.png"
                    Canvas.Left="114"
                    Canvas.Top="199"
                    Width="139"
@@ -140,7 +140,7 @@
                     PreviewMouseUp="Exit_MouseUp"/>
 
             <Image x:Name="MinimizeImage"
-                   Source="Assets/UI/button_minimize.png"
+                   Source="Assets/UI/MainMenu/Buttons/button_minimize.png"
                    Canvas.Left="238"
                    Canvas.Top="46"
                    Width="8"
@@ -161,7 +161,7 @@
                     PreviewMouseUp="Minimize_MouseUp"/>
 
             <Image x:Name="XImage"
-                   Source="Assets/UI/button_X.png"
+                   Source="Assets/UI/MainMenu/Buttons/button_X.png"
                    Canvas.Left="244"
                    Canvas.Top="45"
                    Width="8"

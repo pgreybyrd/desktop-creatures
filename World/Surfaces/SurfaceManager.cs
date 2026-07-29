@@ -37,9 +37,10 @@ public class SurfaceManager
     }
 
     public Point? SnapToSurface(
-    Point desiredFeetPosition,
-    int creatureWidth,
-    int footOffsetY)
+        Point desiredFeetPosition,
+        int creatureWidth,
+        int footOffsetY,
+        double maxSnapDistance)
     {
         double halfWidth = creatureWidth / 2.0;
 

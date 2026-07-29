@@ -28,7 +28,7 @@ public partial class CreatureWindow : Window
 
         _creature = creature;
 
-        int scale = _creature.Scale;
+        //int scale = _creature.Scale;
 
         //SizeToContent = SizeToContent.WidthAndHeight;
 

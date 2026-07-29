@@ -1,0 +1,32 @@
+﻿<Window x:Class="Desktop_Creatures.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Desktop Creatures Settings"
+        Width="360"
+        Height="280"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+
+    <Grid Margin="20">
+        <StackPanel>
+            <TextBlock Text="Settings"
+                       FontSize="24"
+                       FontWeight="Bold"
+                       Margin="0,0,0,20" />
+
+            <TextBlock Text="Creature Scale"
+                       FontSize="16"
+                       Margin="0,0,0,8" />
+
+            <ComboBox SelectedIndex="1">
+                <ComboBoxItem Content="1× — Tiny" />
+                <ComboBoxItem Content="2× — Normal" />
+                <ComboBoxItem Content="3× — Large" />
+                <ComboBoxItem Content="4× — Huge" />
+            </ComboBox>
+
+            <CheckBox Content="Always on top"
+                      Margin="0,20,0,0" />
+        </StackPanel>
+    </Grid>
+</Window>

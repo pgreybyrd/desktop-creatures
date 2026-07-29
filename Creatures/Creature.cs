@@ -50,6 +50,7 @@ public abstract class Creature
     protected CreatureSettings Settings { get; }
 
     public int Scale => Settings.Scale;
+    public int SizeTier { get; init; }
 
     public bool SpriteFacesRight => Settings.SpriteFacesRight;
     public int SpriteWidth => Settings.SpriteWidth * Settings.Scale;
@@ -457,7 +458,8 @@ public abstract class Creature
         Point? snappedPosition = SurfaceManager.SnapToSurface(
             target.Position,
             SpriteWidth,
-            GetCurrentFootY());
+            GetCurrentFootY(),
+            10);
 
         if (snappedPosition is null)
             return false;

@@ -1,4 +1,5 @@
-﻿using Desktop_Creatures.Config;
+﻿using Desktop_Creatures.Assets.UI;
+using Desktop_Creatures.Config;
 using Desktop_Creatures.Creatures;
 using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World;
@@ -10,6 +11,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Forms = System.Windows.Forms;
+using WpfMouseEventArgs = System.Windows.Input.MouseEventArgs;
+using WpfMouseButtonEventArgs = System.Windows.Input.MouseButtonEventArgs;
+using WpfMouseButtonState = System.Windows.Input.MouseButtonState;
 using Point = System.Windows.Point;
 
 namespace Desktop_Creatures;
@@ -25,33 +29,20 @@ public partial class MainWindow : Window
     private System.Windows.Point _dragOffset;
 
     private AppSettings _settings = null!;
+    private SettingsWindow? _settingsWindow;
 
-    private BitmapImage _spawnRatNormal = null!;
-    private BitmapImage _spawnRatHover = null!;
-    private BitmapImage _spawnRatPressed = null!;
-    private BitmapImage _clearRatsNormal = null!;
-    private BitmapImage _clearRatsHover = null!;
-    private BitmapImage _clearRatsPressed = null!;
-    private BitmapImage _alwaysOnTopOnNormal = null!;
-    private BitmapImage _alwaysOnTopOnHover = null!;
-    private BitmapImage _alwaysOnTopOnPressed = null!;
-    private BitmapImage _alwaysOnTopOffNormal = null!;
-    private BitmapImage _alwaysOnTopOffHover = null!;
-    private BitmapImage _alwaysOnTopOffPressed = null!;
-    private BitmapImage _exitNormal = null!;
-    private BitmapImage _exitHover = null!;
-    private BitmapImage _exitPressed = null!;
-    private BitmapImage _minimizeNormal = null!;
-    private BitmapImage _minimizeHover = null!;
-    private BitmapImage _minimizePressed = null!;
-    private BitmapImage _xNormal = null!;
-    private BitmapImage _xHover = null!;
-    private BitmapImage _xPressed = null!;
+    private UiButtonImages _spawnRatImages = null!;
+    private UiButtonImages _clearRatsImages = null!;
+    private UiButtonImages _alwaysOnTopOnImages = null!;
+    private UiButtonImages _alwaysOnTopOffImages = null!;
+    private UiButtonImages _exitImages = null!;
+    private UiButtonImages _minimizeImages = null!;
+    private UiButtonImages _closeImages = null!;
 
     private readonly List<CreatureWindow> _creatureWindows = new();
     private Creature _activeCreature;
 
-    public int moniterIndex = 0;
+    public int _moniterIndex = 0;
 
     private bool _creaturesAlwaysOnTop = true;
 
@@ -66,7 +57,7 @@ public partial class MainWindow : Window
 
     private const int MaxRats = 20;
 
-    private int Scale = 1;
+    private int _uiScale = 1;
 
     public MainWindow()
     {
@@ -76,65 +67,24 @@ public partial class MainWindow : Window
 
         _surfaceManager.Refresh();
 
-        _spawnRatNormal = LoadUiImage("Assets/UI/button_spawn_rat.png");
-        _spawnRatHover = LoadUiImage("Assets/UI/button_hover_spawn_rat.png");
-        _spawnRatPressed = LoadUiImage("Assets/UI/button_pressed_spawn_rat.png");
+        _spawnRatImages = LoadButtonImages("spawn_rat");
+        _clearRatsImages = LoadButtonImages("clear_rats");
+        _alwaysOnTopOnImages = LoadButtonImages("always_on_top_on");
+        _alwaysOnTopOffImages = LoadButtonImages("always_on_top_off");
+        _exitImages = LoadButtonImages("exit");
+        _minimizeImages = LoadButtonImages("minimize");
+        _closeImages = LoadButtonImages("X");
 
-        _clearRatsNormal = LoadUiImage("Assets/UI/button_clear_rats.png");
-        _clearRatsHover = LoadUiImage("Assets/UI/button_hover_clear_rats.png");
-        _clearRatsPressed = LoadUiImage("Assets/UI/button_pressed_clear_rats.png");
-
-        _alwaysOnTopOnNormal = LoadUiImage("Assets/UI/button_always_on_top_on.png");
-        _alwaysOnTopOnHover = LoadUiImage("Assets/UI/button_hover_always_on_top_on.png");
-        _alwaysOnTopOnPressed = LoadUiImage("Assets/UI/button_pressed_always_on_top_on.png");
-
-        _alwaysOnTopOffNormal = LoadUiImage("Assets/UI/button_always_on_top_off.png");
-        _alwaysOnTopOffHover = LoadUiImage("Assets/UI/button_hover_always_on_top_off.png");
-        _alwaysOnTopOffPressed = LoadUiImage("Assets/UI/button_pressed_always_on_top_off.png");
-
-        _exitNormal = LoadUiImage("Assets/UI/button_exit.png");
-        _exitHover = LoadUiImage("Assets/UI/button_hover_exit.png");
-        _exitPressed = LoadUiImage("Assets/UI/button_pressed_exit.png");
-
-        _minimizeNormal = LoadUiImage("Assets/UI/button_minimize.png");
-        _minimizeHover = LoadUiImage("Assets/UI/button_hover_minimize.png");
-        _minimizePressed = LoadUiImage("Assets/UI/button_pressed_minimize.png");
-
-        _xNormal = LoadUiImage("Assets/UI/button_X.png");
-        _xHover = LoadUiImage("Assets/UI/button_hover_X.png");
-        _xPressed = LoadUiImage("Assets/UI/button_pressed_X.png");
-
-        SpawnRatImage.Source = _spawnRatNormal;
-        ClearRatsImage.Source = _clearRatsNormal;
-        AlwaysOnTopToggleImage.Source = _alwaysOnTopOnNormal;
-        ExitImage.Source = _exitNormal;
-        MinimizeImage.Source = _minimizeNormal;
-        XImage.Source = _xNormal;
+        SpawnRatImage.Source = _spawnRatImages.Normal;
+        ClearRatsImage.Source = _clearRatsImages.Normal;
+        AlwaysOnTopToggleImage.Source = _alwaysOnTopOnImages.Normal;
+        ExitImage.Source = _exitImages.Normal;
+        MinimizeImage.Source = _minimizeImages.Normal;
+        XImage.Source = _closeImages.Normal;
 
         _pointOfInterestManager = new PointOfInterestManager();
 
-        
-        /*
-        var tree = new PointOfInterest(
-            "Oak",
-            new Point(1000 ,1000),
-            PointOfInterestType.Rest,
-            "Assets/World/Trees/tree_1.png");
-
-        tree.AnchorPoints.Add(new AnchorPoint("perch", AnchorPointType.Perch, new Point(10, 10)));
-
-        _pointOfInterestManager.Add(tree);
-        */
-
         var screen = Forms.Screen.PrimaryScreen!;
-
-        //Logger.LogDebug("=== Loaded POIs ===");
-
-        //foreach (var poi in _pointOfInterestManager.Points)
-        //{
-        //    Logger.LogDebug(
-        //        $"{poi.Name} ({poi.Type}) @ ({poi.Position.X}, {poi.Position.Y})");
-        //}
 
         _timer = new DispatcherTimer
         {
@@ -172,8 +122,8 @@ public partial class MainWindow : Window
             ?? throw new InvalidOperationException(
                 "Menu surface must exist before creating the bowl.");
 
-        double bowlWidth = bowlSettings.Width * Scale;
-        double bowlHeight = bowlSettings.Height * Scale;
+        double bowlWidth = bowlSettings.Width * _uiScale;
+        double bowlHeight = bowlSettings.Height * _uiScale;
 
         double bowlX =
             menuSurface.Left +
@@ -219,6 +169,14 @@ public partial class MainWindow : Window
         bowlWindow.Show();
     }
 
+    private static UiButtonImages LoadButtonImages(string buttonName)
+    {
+        return new UiButtonImages(
+            LoadUiImage($"Assets/UI/MainMenu/Buttons/button_{buttonName}.png"),
+            LoadUiImage($"Assets/UI/MainMenu/Buttons/button_hover_{buttonName}.png"),
+            LoadUiImage($"Assets/UI/MainMenu/Buttons/button_pressed_{buttonName}.png"));
+    }
+
     private Rectangle LoadSettings()
     {
         _creatureSettings = CreatureSettingsLoader.Load();
@@ -229,23 +187,24 @@ public partial class MainWindow : Window
 
         _settings = SettingsLoader.Load();
 
-        moniterIndex = Math.Clamp(
+        _moniterIndex = Math.Clamp(
             _settings.WorkingMonitor,
             0,
             Forms.Screen.AllScreens.Length - 1
         );
 
-        var screen = Forms.Screen.AllScreens[moniterIndex];
+        var screen = Forms.Screen.AllScreens[_moniterIndex];
         var area = screen.WorkingArea;
 
-        Topmost = _settings.AlwaysOnTop;
+        _creaturesAlwaysOnTop = _settings.AlwaysOnTop;
+        Topmost = false;
 
-        Scale = _settings.Scale;
+        _uiScale = _settings.Scale;
 
-        MainCanvas.LayoutTransform = new ScaleTransform(Scale, Scale);
+        MainCanvas.LayoutTransform = new ScaleTransform(_uiScale, _uiScale);
 
-        Width = MainCanvas.Width * Scale;
-        Height = MainCanvas.Height * Scale;
+        Width = MainCanvas.Width * _uiScale;
+        Height = MainCanvas.Height * _uiScale;
 
         return area;
     }
@@ -264,8 +223,8 @@ public partial class MainWindow : Window
     }
 
     private void TitleBar_MouseLeftButtonDown(
-    object sender,
-    MouseButtonEventArgs e)
+        object sender,
+        WpfMouseButtonEventArgs e)
     {
         DragMove();
     }
@@ -303,22 +262,18 @@ public partial class MainWindow : Window
             spawnY,
             ratSettings,
             _pointOfInterestManager,
-            //new Rectangle((int)Left, (int)Top, (int)Width, (int)Height),
             _surfaceManager);
 
         var ratWindow = new CreatureWindow(rat)
         {
+            Owner = this,
             Topmost = _creaturesAlwaysOnTop
         };
 
-        //System.Windows.MessageBox.Show(
-            //$"Rat spawning at X={rat.X}, Y={rat.Y}\n" +
-            //$"Primary screen: L={area.Left}, T={area.Top}, R={area.Right}, B={area.Bottom}");
         ratWindow.Show();
 
         _creatureWindows.Add(ratWindow);
     }
-
 
     private void ClearRats()
     {
@@ -375,8 +330,10 @@ public partial class MainWindow : Window
 
         var eagleWindow = new CreatureWindow(eagle)
         {
-           Topmost = _creaturesAlwaysOnTop
+            Owner = this,
+            Topmost = _creaturesAlwaysOnTop
         };
+
         eagleWindow.Show();
 
         _creatureWindows.Add(eagleWindow);
@@ -384,9 +341,9 @@ public partial class MainWindow : Window
 
     private void UpdateMenuSurface()
     {
-        int surfaceX = (int)(Left + 111 * Scale);
-        int surfaceY = (int)(Top + 42 * Scale);
-        int surfaceWidth = 151 * Scale;
+        int surfaceX = (int)(Left + 111 * _uiScale);
+        int surfaceY = (int)(Top + 42 * _uiScale);
+        int surfaceWidth = 151 * _uiScale;
 
         _surfaceManager.SetMenuSurface(
             new Rectangle(
@@ -417,159 +374,241 @@ public partial class MainWindow : Window
             creatureWindow.Topmost = isTopmost;
     }
 
-private void AlwaysOnTopToggle_Click(object sender, RoutedEventArgs e)
-{
-    _creaturesAlwaysOnTop = !_creaturesAlwaysOnTop;
-    Topmost = _creaturesAlwaysOnTop;
+    private void AlwaysOnTopToggle_Click(
+        object sender,
+        RoutedEventArgs e)
+    {
+        _creaturesAlwaysOnTop = !_creaturesAlwaysOnTop;
 
-    SetCreaturesTopmost(_creaturesAlwaysOnTop);
+        SetCreaturesTopmost(_creaturesAlwaysOnTop);
 
-    AlwaysOnTopToggleImage.Source =
-        _creaturesAlwaysOnTop
-            ? _alwaysOnTopOnHover
-            : _alwaysOnTopOffHover;
-}
+        AlwaysOnTopToggleImage.Source =
+            GetAlwaysOnTopImages().Hover;
+    }
+
+    private void SettingsButton_Click(
+        object sender,
+        RoutedEventArgs e)
+    {
+        if (_settingsWindow is not null)
+        {
+            _settingsWindow.Owner = this;//settings window will minimoze/close with main window
+
+            _settingsWindow.Activate();
+            return;
+        }
+
+        _settingsWindow = new SettingsWindow();
+
+        _settingsWindow.Closed += (_, _) =>
+        {
+            _settingsWindow = null;
+        };
+
+        _settingsWindow.Show();
+    }
 
     private void Minimize_Click(object sender, RoutedEventArgs e)
     {
         WindowState = WindowState.Minimized;
     }
 
-    private void DragArea_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    private void DragArea_MouseLeftButtonDown(
+        object sender, 
+        WpfMouseButtonEventArgs e)
     {
-        if (e.ButtonState == MouseButtonState.Pressed)
+        if (e.ButtonState == WpfMouseButtonState.Pressed)
         {
             DragMove();
             UpdateMenuSurface();
-            //System.Windows.MessageBox.Show($"Menu title at X={_surfaceManager.MenuSurface.Left}, Y ={_surfaceManager.MenuSurface.Top}\n");
             _surfaceManager.Refresh();
         }
     }
 
-    private BitmapImage LoadUiImage(string path)
+    private static BitmapImage LoadUiImage(string path)
     {
         var image = new BitmapImage();
+
         image.BeginInit();
-        image.UriSource = new Uri($"pack://application:,,,/{path}");
+        image.UriSource = new Uri(
+            $"pack://application:,,,/{path}",
+            UriKind.Absolute);
         image.CacheOption = BitmapCacheOption.OnLoad;
         image.EndInit();
+
         image.Freeze();
+
         return image;
     }
 
-    private void SpawnRat_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+    private void SpawnRat_MouseEnter(
+        object sender,
+        WpfMouseEventArgs e)
     {
-        SpawnRatImage.Source = _spawnRatHover;
-    }
-    private void SpawnRat_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
-    {
-        SpawnRatImage.Source = _spawnRatNormal;
-    }
-    private void SpawnRat_MouseDown(object sender, MouseButtonEventArgs e)
-    {
-        SpawnRatImage.Source = _spawnRatPressed;
-    }
-    private void SpawnRat_MouseUp(object sender, MouseButtonEventArgs e)
-    {
-        SpawnRatImage.Source = _spawnRatHover;
+        SpawnRatImage.Source = _spawnRatImages.Hover;
     }
 
-    private void ClearRats_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+    private void SpawnRat_MouseLeave(
+        object sender,
+       WpfMouseEventArgs e)
     {
-        ClearRatsImage.Source = _clearRatsHover;
-    }
-    private void ClearRats_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
-    {
-        ClearRatsImage.Source = _clearRatsNormal;
-    }
-    private void ClearRats_MouseDown(object sender, MouseButtonEventArgs e)
-    {
-        ClearRatsImage.Source = _clearRatsPressed;
-    }
-    private void ClearRats_MouseUp(object sender, MouseButtonEventArgs e)
-    {
-        ClearRatsImage.Source = _clearRatsHover;
+        SpawnRatImage.Source = _spawnRatImages.Normal;
     }
 
-    private void AlwaysOnTop_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+    private void SpawnRat_MouseLeftButtonDown(
+        object sender,
+        WpfMouseButtonEventArgs e)
     {
-        AlwaysOnTopToggleImage.Source =
-            _creaturesAlwaysOnTop
-                ? _alwaysOnTopOnHover
-                : _alwaysOnTopOffHover;
-    }
-    private void AlwaysOnTop_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
-    {
-        AlwaysOnTopToggleImage.Source =
-            _creaturesAlwaysOnTop
-                ? _alwaysOnTopOnNormal
-                : _alwaysOnTopOffNormal;
+        SpawnRatImage.Source = _spawnRatImages.Pressed;
     }
 
-    private void AlwaysOnTop_MouseDown(object sender, MouseButtonEventArgs e)
+    private void SpawnRat_MouseUp(
+        object sender,
+        WpfMouseButtonEventArgs e)
     {
-        AlwaysOnTopToggleImage.Source =
-            _creaturesAlwaysOnTop
-                ? _alwaysOnTopOnPressed
-                : _alwaysOnTopOffPressed;
+        SpawnRatImage.Source = _spawnRatImages.Hover;
     }
 
-    private void AlwaysOnTop_MouseUp(object sender, MouseButtonEventArgs e)
+    private void ClearRats_MouseEnter(
+        object sender, 
+        WpfMouseEventArgs e)
     {
-        AlwaysOnTopToggleImage.Source =
-            _creaturesAlwaysOnTop
-                ? _alwaysOnTopOnHover
-                : _alwaysOnTopOffHover;
+        ClearRatsImage.Source = _clearRatsImages.Hover;
+    }
+    private void ClearRats_MouseLeave
+        (object sender, 
+        WpfMouseEventArgs e)
+    {
+        ClearRatsImage.Source = _clearRatsImages.Normal;
+    }
+    private void ClearRats_MouseDown(
+        object sender,
+        WpfMouseButtonEventArgs e)
+    {
+        ClearRatsImage.Source = _clearRatsImages.Pressed;
+    }
+    private void ClearRats_MouseUp(
+        object sender,
+        WpfMouseButtonEventArgs e)
+    {
+        ClearRatsImage.Source = _clearRatsImages.Hover;
     }
 
-    private void Exit_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+    private void AlwaysOnTop_MouseEnter(
+        object sender,
+        WpfMouseEventArgs e)
     {
-        ExitImage.Source = _exitHover;
-    }
-    private void Exit_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
-    {
-        ExitImage.Source = _exitNormal;
-    }
-    private void Exit_MouseDown(object sender, MouseButtonEventArgs e)
-    {
-        ExitImage.Source = _exitPressed;
-    }
-    private void Exit_MouseUp(object sender, MouseButtonEventArgs e)
-    {
-        ExitImage.Source = _exitHover;
+        AlwaysOnTopToggleImage.Source = GetAlwaysOnTopImages().Hover;
     }
 
-    private void Minimize_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+    private void AlwaysOnTop_MouseLeave(
+        object sender,
+        WpfMouseEventArgs e)
     {
-        MinimizeImage.Source = _minimizeHover;
-    }
-    private void Minimize_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
-    {
-        MinimizeImage.Source = _minimizeNormal;
-    }
-    private void Minimize_MouseDown(object sender, MouseButtonEventArgs e)
-    {
-        MinimizeImage.Source = _minimizePressed;
-    }
-    private void Minimize_MouseUp(object sender, MouseButtonEventArgs e)
-    {
-        MinimizeImage.Source = _minimizeHover;
+        AlwaysOnTopToggleImage.Source = GetAlwaysOnTopImages().Normal;
     }
 
-    private void X_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+    private void AlwaysOnTop_MouseDown(
+        object sender,
+        WpfMouseButtonEventArgs e)
     {
-        XImage.Source = _xHover;
+        AlwaysOnTopToggleImage.Source = GetAlwaysOnTopImages().Pressed;
     }
-    private void X_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+
+    private void AlwaysOnTop_MouseUp(
+        object sender,
+        WpfMouseButtonEventArgs e)
     {
-        XImage.Source = _xNormal;
+        AlwaysOnTopToggleImage.Source = GetAlwaysOnTopImages().Hover;
     }
-    private void X_MouseDown(object sender, MouseButtonEventArgs e)
+
+    private void Exit_MouseEnter(
+        object sender,
+        WpfMouseEventArgs e)
     {
-        XImage.Source = _xPressed;
+        ExitImage.Source = _exitImages.Hover;
     }
-    private void X_MouseUp(object sender, MouseButtonEventArgs e)
+
+    private void Exit_MouseLeave(
+        object sender,
+        WpfMouseEventArgs e)
     {
-        XImage.Source = _xHover;
+        ExitImage.Source = _exitImages.Normal;
+    }
+
+    private void Exit_MouseDown(
+        object sender,
+        WpfMouseButtonEventArgs e)
+    {
+        ExitImage.Source = _exitImages.Pressed;
+    }
+
+    private void Exit_MouseUp(
+        object sender,
+        WpfMouseButtonEventArgs e)
+    {
+        ExitImage.Source = _exitImages.Hover;
+    }
+    private void Minimize_MouseEnter(
+        object sender,
+        WpfMouseEventArgs e)
+    {
+        MinimizeImage.Source = _minimizeImages.Hover;
+    }
+
+    private void Minimize_MouseLeave(
+        object sender,
+        WpfMouseEventArgs e)
+    {
+        MinimizeImage.Source = _minimizeImages.Normal;
+    }
+
+    private void Minimize_MouseDown(
+        object sender,
+        WpfMouseButtonEventArgs e)
+    {
+        MinimizeImage.Source = _minimizeImages.Pressed;
+    }
+
+    private void Minimize_MouseUp(
+        object sender,
+        WpfMouseButtonEventArgs e)
+    {
+        MinimizeImage.Source = _minimizeImages.Hover;
+    }
+
+    private void X_MouseEnter(
+        object sender,
+        WpfMouseEventArgs e)
+    {
+        XImage.Source = _closeImages.Hover;
+    }
+
+    private void X_MouseLeave(
+        object sender,
+        WpfMouseEventArgs e)
+    {
+        XImage.Source = _closeImages.Normal;
+    }
+
+    private void X_MouseDown(
+        object sender,
+        WpfMouseButtonEventArgs e)
+    {
+        XImage.Source = _closeImages.Pressed;
+    }
+
+    private void X_MouseUp(
+        object sender,
+        WpfMouseButtonEventArgs e)
+    {
+        XImage.Source = _closeImages.Hover;
+    }
+
+    private UiButtonImages GetAlwaysOnTopImages()
+    {
+        return _creaturesAlwaysOnTop
+            ? _alwaysOnTopOnImages
+            : _alwaysOnTopOffImages;
     }
 }

@@ -1009,30 +1009,78 @@
     <Resource Include="Assets\Creatures\Rat\Rainbow\walk_3.png" />
     <Resource Include="Assets\Creatures\Rat\Rainbow\walk_4.png" />
     <Resource Include="Assets\Creatures\Rat\Rainbow\walk_5.png" />
-    <Resource Include="Assets\UI\button_always_on_top.png" />
-    <Resource Include="Assets\UI\button_always_on_top_off.png" />
-    <Resource Include="Assets\UI\button_always_on_top_on.png" />
-    <Resource Include="Assets\UI\button_clear_rats.png" />
-    <Resource Include="Assets\UI\button_exit.png" />
-    <Resource Include="Assets\UI\button_hover_always_on_top_off.png" />
-    <Resource Include="Assets\UI\button_hover_always_on_top_on.png" />
-    <Resource Include="Assets\UI\button_hover_clear_rats.png" />
-    <Resource Include="Assets\UI\button_hover_exit.png" />
-    <Resource Include="Assets\UI\button_hover_minimize.png" />
-    <Resource Include="Assets\UI\button_hover_spawn_rat.png" />
-    <Resource Include="Assets\UI\button_hover_X.png" />
-    <Resource Include="Assets\UI\button_minimize.png" />
-    <Resource Include="Assets\UI\button_pressed_always_on_top_off.png" />
-    <Resource Include="Assets\UI\button_pressed_always_on_top_on.png" />
-    <Resource Include="Assets\UI\button_pressed_clear_rats.png" />
-    <Resource Include="Assets\UI\button_pressed_exit.png" />
-    <Resource Include="Assets\UI\button_pressed_minimize.png" />
-    <Resource Include="Assets\UI\button_pressed_spawn_rat.png" />
-    <Resource Include="Assets\UI\button_pressed_X.png" />
-    <Resource Include="Assets\UI\button_spawn_rat.png" />
-    <Resource Include="Assets\UI\button_X.png" />
-    <Resource Include="Assets\UI\menu_background.png" />
-    <Resource Include="Assets\UI\menu_title.png" />
+    <Resource Include="Assets\UI\MainMenu\Buttons\button_always_on_top.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\MainMenu\Buttons\button_always_on_top_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\MainMenu\Buttons\button_always_on_top_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\MainMenu\Buttons\button_clear_rats.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\MainMenu\Buttons\button_exit.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\MainMenu\Buttons\button_hover_always_on_top_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\MainMenu\Buttons\button_hover_always_on_top_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\MainMenu\Buttons\button_hover_clear_rats.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\MainMenu\Buttons\button_hover_exit.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\MainMenu\Buttons\button_hover_minimize.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\MainMenu\Buttons\button_hover_spawn_rat.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\MainMenu\Buttons\button_hover_X.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\MainMenu\Buttons\button_minimize.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\MainMenu\Buttons\button_pressed_always_on_top_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\MainMenu\Buttons\button_pressed_always_on_top_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\MainMenu\Buttons\button_pressed_clear_rats.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\MainMenu\Buttons\button_pressed_exit.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\MainMenu\Buttons\button_pressed_minimize.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\MainMenu\Buttons\button_pressed_spawn_rat.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\MainMenu\Buttons\button_pressed_X.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\MainMenu\Buttons\button_spawn_rat.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\MainMenu\Buttons\button_X.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\MainMenu\menu_background.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\MainMenu\menu_title.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\World\Food\bowl_empty.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
