@@ -536,6 +536,27 @@
     <None Remove="Assets\UI\button_pressed_X.png" />
     <None Remove="Assets\UI\button_spawn_rat.png" />
     <None Remove="Assets\UI\button_X.png" />
+    <None Remove="Assets\UI\FieldGuide\open.png" />
+    <None Remove="Assets\UI\FieldGuide\opening_0.png" />
+    <None Remove="Assets\UI\FieldGuide\opening_1.png" />
+    <None Remove="Assets\UI\FieldGuide\opening_2.png" />
+    <None Remove="Assets\UI\FieldGuide\red_0.png" />
+    <None Remove="Assets\UI\FieldGuide\red_1.png" />
+    <None Remove="Assets\UI\FieldGuide\red_10.png" />
+    <None Remove="Assets\UI\FieldGuide\red_11.png" />
+    <None Remove="Assets\UI\FieldGuide\red_2.png" />
+    <None Remove="Assets\UI\FieldGuide\red_3.png" />
+    <None Remove="Assets\UI\FieldGuide\red_4.png" />
+    <None Remove="Assets\UI\FieldGuide\red_5.png" />
+    <None Remove="Assets\UI\FieldGuide\red_6.png" />
+    <None Remove="Assets\UI\FieldGuide\red_7.png" />
+    <None Remove="Assets\UI\FieldGuide\red_8.png" />
+    <None Remove="Assets\UI\FieldGuide\red_9.png" />
+    <None Remove="Assets\UI\MainMenu\Buttons\button_hover_field_guide.png" />
+    <None Remove="Assets\UI\MainMenu\Buttons\button_hover_settings.png" />
+    <None Remove="Assets\UI\MainMenu\Buttons\button_pressed_field_guide.png" />
+    <None Remove="Assets\UI\MainMenu\Buttons\button_pressed_settings.png" />
+    <None Remove="Assets\UI\MainMenu\Buttons\button_settings.png" />
     <None Remove="Assets\UI\menu_background.png" />
     <None Remove="Assets\UI\menu_title.png" />
     <None Remove="Assets\World\Food\bowl_empty.png" />
@@ -1009,6 +1030,54 @@
     <Resource Include="Assets\Creatures\Rat\Rainbow\walk_3.png" />
     <Resource Include="Assets\Creatures\Rat\Rainbow\walk_4.png" />
     <Resource Include="Assets\Creatures\Rat\Rainbow\walk_5.png" />
+    <Resource Include="Assets\UI\FieldGuide\open.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\FieldGuide\opening_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\FieldGuide\opening_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\FieldGuide\opening_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\FieldGuide\red_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\FieldGuide\red_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\FieldGuide\red_10.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\FieldGuide\red_11.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\FieldGuide\red_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\FieldGuide\red_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\FieldGuide\red_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\FieldGuide\red_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\FieldGuide\red_6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\FieldGuide\red_7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\FieldGuide\red_8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\FieldGuide\red_9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\UI\MainMenu\Buttons\button_always_on_top.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -1024,6 +1093,9 @@
     <Resource Include="Assets\UI\MainMenu\Buttons\button_exit.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Assets\UI\MainMenu\Buttons\button_field_guide.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\UI\MainMenu\Buttons\button_hover_always_on_top_off.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -1036,7 +1108,13 @@
     <Resource Include="Assets\UI\MainMenu\Buttons\button_hover_exit.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Assets\UI\MainMenu\Buttons\button_hover_field_guide.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\UI\MainMenu\Buttons\button_hover_minimize.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\MainMenu\Buttons\button_hover_settings.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\UI\MainMenu\Buttons\button_hover_spawn_rat.png">
@@ -1060,13 +1138,22 @@
     <Resource Include="Assets\UI\MainMenu\Buttons\button_pressed_exit.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Assets\UI\MainMenu\Buttons\button_pressed_field_guide.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\UI\MainMenu\Buttons\button_pressed_minimize.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\MainMenu\Buttons\button_pressed_settings.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\UI\MainMenu\Buttons\button_pressed_spawn_rat.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\UI\MainMenu\Buttons\button_pressed_X.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\UI\MainMenu\Buttons\button_settings.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\UI\MainMenu\Buttons\button_spawn_rat.png">

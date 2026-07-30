@@ -4,9 +4,7 @@ using Desktop_Creatures.Creatures;
 using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
-using System.Runtime;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
@@ -31,7 +29,10 @@ public partial class MainWindow : Window
     private AppSettings _settings = null!;
     private SettingsWindow? _settingsWindow;
 
+    private FieldGuideMenu? _fieldGuideMenu;
+
     private UiButtonImages _spawnRatImages = null!;
+    private UiButtonImages _fieldGuideImages = null!;
     private UiButtonImages _clearRatsImages = null!;
     private UiButtonImages _alwaysOnTopOnImages = null!;
     private UiButtonImages _alwaysOnTopOffImages = null!;
@@ -45,6 +46,11 @@ public partial class MainWindow : Window
     public int _moniterIndex = 0;
 
     private bool _creaturesAlwaysOnTop = true;
+    //when settings are implemented
+    public bool EcosystemAlwaysOnTop { get; set; } = true;
+    public bool UiAlwaysOnTop { get; set; } = false;
+    private bool _ecosystemAlwaysOnTop = true;
+    private bool _uiAlwaysOnTop = false;
 
     private Rectangle _workingArea;
     private Dictionary<string, CreatureSettings> _creatureSettings = new();
@@ -67,7 +73,8 @@ public partial class MainWindow : Window
 
         _surfaceManager.Refresh();
 
-        _spawnRatImages = LoadButtonImages("spawn_rat");
+        //_spawnRatImages = LoadButtonImages("spawn_rat");
+        _fieldGuideImages = LoadButtonImages("field_guide");
         _clearRatsImages = LoadButtonImages("clear_rats");
         _alwaysOnTopOnImages = LoadButtonImages("always_on_top_on");
         _alwaysOnTopOffImages = LoadButtonImages("always_on_top_off");
@@ -75,9 +82,10 @@ public partial class MainWindow : Window
         _minimizeImages = LoadButtonImages("minimize");
         _closeImages = LoadButtonImages("X");
 
-        SpawnRatImage.Source = _spawnRatImages.Normal;
+        //SpawnRatImage.Source = _spawnRatImages.Normal;
+        FieldGuideImage.Source = _fieldGuideImages.Normal;
         ClearRatsImage.Source = _clearRatsImages.Normal;
-        AlwaysOnTopToggleImage.Source = _alwaysOnTopOnImages.Normal;
+        AlwaysOnTopToggleImage.Source = _alwaysOnTopOffImages.Normal;
         ExitImage.Source = _exitImages.Normal;
         MinimizeImage.Source = _minimizeImages.Normal;
         XImage.Source = _closeImages.Normal;
@@ -300,6 +308,32 @@ public partial class MainWindow : Window
             _creatureWindows.Remove(window);
         }
     }
+
+    private void FieldGuide_Click(
+        object sender,
+        RoutedEventArgs e)
+    {
+        if (_fieldGuideMenu is not null)
+        {
+            _fieldGuideMenu.Activate();
+            return;
+        }
+
+        _fieldGuideMenu = new FieldGuideMenu(
+            SpawnRat,
+            _uiScale)
+        {
+            Owner = this
+        };
+
+        _fieldGuideMenu.Closed += (_, _) =>
+        {
+            _fieldGuideMenu = null;
+        };
+
+        _fieldGuideMenu.Show();
+    }
+
     private void ClearRats_Click(object sender, RoutedEventArgs e)
     {
         ClearRats();
@@ -385,6 +419,25 @@ public partial class MainWindow : Window
         AlwaysOnTopToggleImage.Source =
             GetAlwaysOnTopImages().Hover;
     }
+    //private void EcosystemAlwaysOnTopToggle_Click(
+    //    object sender,
+    //    RoutedEventArgs e)
+    //{
+    //    _ecosystemAlwaysOnTop = !_ecosystemAlwaysOnTop;
+
+    //    SetCreaturesTopmost(_ecosystemAlwaysOnTop);
+
+    //    AlwaysOnTopToggleImage.Source =
+    //        GetEcosystemAlwaysOnTopImages().Hover;
+    //}
+    private void UiAlwaysOnTopToggle_Click(
+        object sender,
+        RoutedEventArgs e)
+    {
+        _uiAlwaysOnTop = !_uiAlwaysOnTop;
+
+        Topmost = _uiAlwaysOnTop;
+    }
 
     private void SettingsButton_Click(
         object sender,
@@ -441,32 +494,61 @@ public partial class MainWindow : Window
         return image;
     }
 
-    private void SpawnRat_MouseEnter(
+    //private void SpawnRat_MouseEnter(
+    //    object sender,
+    //    WpfMouseEventArgs e)
+    //{
+    //    SpawnRatImage.Source = _spawnRatImages.Hover;
+    //}
+
+    //private void SpawnRat_MouseLeave(
+    //    object sender,
+    //   WpfMouseEventArgs e)
+    //{
+    //    SpawnRatImage.Source = _spawnRatImages.Normal;
+    //}
+
+    //private void SpawnRat_MouseLeftButtonDown(
+    //    object sender,
+    //    WpfMouseButtonEventArgs e)
+    //{
+    //    SpawnRatImage.Source = _spawnRatImages.Pressed;
+    //}
+
+    //private void SpawnRat_MouseUp(
+    //    object sender,
+    //    WpfMouseButtonEventArgs e)
+    //{
+    //    SpawnRatImage.Source = _spawnRatImages.Hover;
+    //}
+
+    private void FieldGuide_MouseEnter(
         object sender,
         WpfMouseEventArgs e)
     {
-        SpawnRatImage.Source = _spawnRatImages.Hover;
+        FieldGuideImage.Source = _fieldGuideImages.Hover;
     }
 
-    private void SpawnRat_MouseLeave(
-        object sender,
+    private void FieldGuide_MouseLeave(
+       object sender,
        WpfMouseEventArgs e)
     {
-        SpawnRatImage.Source = _spawnRatImages.Normal;
+        FieldGuideImage.Source = _fieldGuideImages.Normal;
     }
 
-    private void SpawnRat_MouseLeftButtonDown(
+    private void FieldGuide_MouseLeftButtonDown(
         object sender,
         WpfMouseButtonEventArgs e)
     {
-        SpawnRatImage.Source = _spawnRatImages.Pressed;
+        FieldGuideImage.Source = _fieldGuideImages.Pressed;
+        FieldGuide_Click(sender, e);
     }
 
-    private void SpawnRat_MouseUp(
+    private void FieldGuide_MouseUp(
         object sender,
         WpfMouseButtonEventArgs e)
     {
-        SpawnRatImage.Source = _spawnRatImages.Hover;
+        FieldGuideImage.Source = _fieldGuideImages.Hover;
     }
 
     private void ClearRats_MouseEnter(

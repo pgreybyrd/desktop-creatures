@@ -55,14 +55,14 @@
                     Opacity="0"
                     Click="SpawnEagle_Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
-            <Image x:Name="SpawnRatImage"
-                   Source="Assets/UI/MainMenu/Buttons/button_spawn_rat.png"
+            <Image x:Name="FieldGuideImage"
+                   Source="Assets/UI/MainMenu/Buttons/button_field_guide.png"
                    Canvas.Left="114"
                    Canvas.Top="85"
                    Width="139"
                    Height="33"/>
 
-            <Button x:Name="SpawnRatButton"
+            <Button x:Name="FieldGuideButton"
                     Canvas.Left="114"
                     Canvas.Top="85"
                     Width="139"
@@ -70,11 +70,11 @@
                     Background="Transparent"
                     BorderThickness="0"
                     Opacity="0"
-                    Click="SpawnRat_Click" 
-                    MouseEnter="SpawnRat_MouseEnter"
-                    MouseLeave="SpawnRat_MouseLeave"
-                    PreviewMouseDown="SpawnRat_MouseLeftButtonDown"
-                    PreviewMouseUp="SpawnRat_MouseUp"/>
+                    Click="FieldGuide_Click" 
+                    MouseEnter="FieldGuide_MouseEnter"
+                    MouseLeave="FieldGuide_MouseLeave"
+                    PreviewMouseDown="FieldGuide_MouseLeftButtonDown"
+                    PreviewMouseUp="FieldGuide_MouseUp"/>
 
             <Image x:Name="ClearRatsImage"
                    Source="Assets/UI/MainMenu/Buttons/button_clear_rats.png"

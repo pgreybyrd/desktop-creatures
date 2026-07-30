@@ -1,0 +1,61 @@
+﻿<Window x:Class="Desktop_Creatures.FieldGuideMenu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        
+        Title="FieldGuideMenu"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+
+        SizeToContent="WidthAndHeight"
+        ResizeMode="NoResize"
+        ShowInTaskbar="True"
+        Topmost="True"
+        WindowStartupLocation="CenterScreen"
+
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="True"
+        RenderOptions.BitmapScalingMode="NearestNeighbor">
+    <Grid>
+        <Canvas x:Name="MainCanvas"
+                Width="201" 
+                Height="166"
+                RenderOptions.BitmapScalingMode="NearestNeighbor">
+
+            <Image x:Name="BookImage"
+                   Source="Assets/UI/FieldGuide/opening_0.png"
+                   Stretch="None"/>
+
+            <Border x:Name="BookDragArea"
+                    Canvas.Left="0"
+                    Canvas.Top="0"
+                    Width="201"
+                    Height="166"
+                    Background="Transparent"
+                    MouseLeftButtonDown="BookDragArea_MouseLeftButtonDown"/>
+
+            <Button x:Name="RightRedTabButton"
+                    Canvas.Left="181"
+                    Canvas.Top="40"
+                    Width="6"
+                    Height="7"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Padding="0"
+                    Cursor="Hand"
+                    Click="RightRedTab_Click"/>
+
+            <Button x:Name="LeftRedTabButton"
+                    Canvas.Left="14"
+                    Canvas.Top="40"
+                    Width="7"
+                    Height="7"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Padding="0"
+                    Cursor="Hand"
+                    Click="LeftRedTab_Click"/>
+
+        </Canvas>
+    </Grid>
+</Window>
