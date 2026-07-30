@@ -38,7 +38,7 @@ public partial class FieldGuideMenu : Window
         InitializeComponent();
 
         _spawnRat = spawnRat;
-        _uiScale = uiScale;
+        _uiScale = uiScale + 1;
 
         MainCanvas.LayoutTransform =
             new ScaleTransform(_uiScale, _uiScale);
