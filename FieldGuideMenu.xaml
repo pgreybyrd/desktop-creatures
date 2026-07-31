@@ -16,15 +16,69 @@
         SnapsToDevicePixels="True"
         UseLayoutRounding="True"
         RenderOptions.BitmapScalingMode="NearestNeighbor">
+
+    <Window.Resources>
+        <Style x:Key="InvisibleTabButton"
+           TargetType="Button">
+            <Setter Property="Background"
+                Value="Transparent"/>
+            <Setter Property="BorderThickness"
+                Value="0"/>
+            <Setter Property="Padding"
+                Value="0"/>
+            <Setter Property="Focusable"
+                Value="False"/>
+            <Setter Property="Cursor"
+                Value="Hand"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="Transparent"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Grid>
         <Canvas x:Name="MainCanvas"
                 Width="201" 
                 Height="166"
                 RenderOptions.BitmapScalingMode="NearestNeighbor">
 
-            <Image x:Name="BookImage"
-                   Source="Assets/UI/FieldGuide/opening_0.png"
-                   Stretch="None"/>
+            <Image x:Name="BookBaseImage"
+                   Canvas.Left="0"
+                   Canvas.Top="0"
+                   Width="201"
+                   Height="166"
+                   Stretch="None"
+                   IsHitTestVisible="False"/>
+
+            <Image x:Name="PageTurnImage"
+                   Canvas.Left="0"
+                   Canvas.Top="0"
+                   Width="201"
+                   Height="166"
+                   Stretch="None"
+                   Visibility="Collapsed"
+                   IsHitTestVisible="False"/>
+
+            <Image x:Name="SectionDetailImage"
+                   Canvas.Left="0"
+                   Canvas.Top="0"
+                   Width="201"
+                   Height="166"
+                   Stretch="None"
+                   IsHitTestVisible="False"/>
+
+            <Canvas x:Name="RightTabsCanvas"
+                Width="201"
+                Height="166"/>
+
+            <Canvas x:Name="LeftTabsCanvas"
+                Width="201"
+                Height="166"/>
 
             <Border x:Name="BookDragArea"
                     Canvas.Left="0"
@@ -34,27 +88,107 @@
                     Background="Transparent"
                     MouseLeftButtonDown="BookDragArea_MouseLeftButtonDown"/>
 
-            <Button x:Name="RightRedTabButton"
+            <!--<TextBlock x:Name="CreatureDescriptionText"
+                       Canvas.Left="128"
+                       Canvas.Top="63"
+                       Width="57"
+                       Height="44"
+                       Text="Tiny paws.
+                            Large appetite.
+                            Questionable priorities."
+                       TextWrapping="Wrap"
+                       FontFamily="Assets/Fonts/#Your Font Name"
+                       FontSize="7"
+                       Foreground="#21160F"
+                       TextAlignment="Center"
+                       IsHitTestVisible="False"/>-->
+
+            <!--<Image x:Name="RatPortraitImage"
+                   Canvas.Left="49"
+                   Canvas.Top="59"
+                   Width="48"
+                   Height="56"
+                   Stretch="None"
+                   Visibility="Collapsed"
+                   IsHitTestVisible="False"
+                   RenderOptions.BitmapScalingMode="NearestNeighbor"/>-->
+
+            <Image x:Name="RestingTabImage"
+                   Canvas.Left="181"
+                   Canvas.Top="40"
+                   Width="7"
+                   Height="8"
+                   Stretch="None"
+                   IsHitTestVisible="False"/>
+
+            <Image x:Name="TurningTabImage"
+                   Width="7"
+                   Height="8"
+                   Stretch="None"
+                   Visibility="Collapsed"
+                   IsHitTestVisible="False"
+                   RenderTransformOrigin="0.5,0.5"/>
+
+            <Button x:Name="RightTabButton"
+                    Style="{StaticResource InvisibleTabButton}"
                     Canvas.Left="181"
                     Canvas.Top="40"
-                    Width="6"
-                    Height="7"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    Padding="0"
-                    Cursor="Hand"
-                    Click="RightRedTab_Click"/>
+                    Width="7"
+                    Height="8"
+                    Click="RightTabButton_Click"
+                    MouseEnter="RightTabButton_MouseEnter"
+                    MouseLeave="RightTabButton_MouseLeave"
+                    PreviewMouseLeftButtonDown="RightTabButton_MouseDown"
+                    PreviewMouseLeftButtonUp="RightTabButton_MouseUp"/>
 
-            <Button x:Name="LeftRedTabButton"
-                    Canvas.Left="14"
+            <Image x:Name="LeftRestingTabImage"
+                   Canvas.Left="13"
+                   Canvas.Top="40"
+                   Width="7"
+                   Height="8"
+                   Stretch="None"
+                   Visibility="Collapsed"
+                   IsHitTestVisible="False"
+                   RenderTransformOrigin="0.5,0.5">
+
+                <Image.RenderTransform>
+                    <ScaleTransform ScaleX="-1"/>
+                </Image.RenderTransform>
+            </Image>
+
+            <Image x:Name="SpawnRatImage"
+                   Source="Assets/UI/FieldGuide/Pages/button_spawn.png"
+                   Canvas.Left="114"
+                   Canvas.Top="115"
+                   Width="56"
+                   Height="25"/>
+            
+            <Button x:Name="SpawnRatButton"
+                    Style="{StaticResource InvisibleTabButton}"
+                    Canvas.Left="114"
+                    Canvas.Top="115"
+                    Width="48"
+                    Height="18"
+                    Visibility="Collapsed"
+                    Click="SpawnRat_Click"
+                    MouseEnter="SpawnRatButton_MouseEnter"
+                    MouseLeave="SpawnRatButton_MouseLeave"
+                    PreviewMouseDown="SpawnRatButton_MouseLeftButtonDown"
+                    PreviewMouseUp="SpawnRatButton_MouseUp"/>
+
+            <Button x:Name="LeftTabButton"
+                    Style="{StaticResource InvisibleTabButton}"
+                    Canvas.Left="13"
                     Canvas.Top="40"
                     Width="7"
-                    Height="7"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    Padding="0"
-                    Cursor="Hand"
-                    Click="LeftRedTab_Click"/>
+                    Height="8"
+                    Visibility="Collapsed"
+                    IsEnabled="False"
+                    Click="LeftTabButton_Click"
+                    MouseEnter="LeftTabButton_MouseEnter"
+                    MouseLeave="LeftTabButton_MouseLeave"
+                    PreviewMouseLeftButtonDown="LeftTabButton_MouseDown"
+                    PreviewMouseLeftButtonUp="LeftTabButton_MouseUp"/>
 
         </Canvas>
     </Grid>

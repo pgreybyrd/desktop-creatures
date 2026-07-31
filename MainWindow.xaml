@@ -118,6 +118,13 @@
                           PreviewMouseDown="AlwaysOnTop_MouseDown"
                           PreviewMouseUp="AlwaysOnTop_MouseUp"/>
 
+            <Image x:Name="MouseHoleRatImage"
+                   Canvas.Left="186"
+                   Canvas.Top="215"
+                   Visibility="Collapsed"
+                   IsHitTestVisible="False"
+                   RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+            
             <Image x:Name="ExitImage"
                    Source="Assets/UI/MainMenu/Buttons/button_exit.png"
                    Canvas.Left="114"
