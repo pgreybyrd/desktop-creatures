@@ -22,7 +22,7 @@
                 Height="233"
                 RenderOptions.BitmapScalingMode="NearestNeighbor">
 
-            <Image Source="Assets/UI/MainMenu/menu_background.png"
+            <Image Source="/Assets/UI/MainMenu/menu_background.png"
                    Width="368"
                    Height="233"/>
             

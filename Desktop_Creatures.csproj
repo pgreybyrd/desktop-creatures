@@ -514,6 +514,7 @@
     <None Remove="Assets\Creatures\Rat\walk_4.png" />
     <None Remove="Assets\Creatures\Rat\walk_5.png" />
     <None Remove="assets\eagle.png" />
+    <None Remove="Assets\Fonts\font-MagicalStandard.png" />
     <None Remove="Assets\UI\button_always_on_top.png" />
     <None Remove="Assets\UI\button_always_on_top_off.png" />
     <None Remove="Assets\UI\button_always_on_top_on.png" />
@@ -598,6 +599,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\Fonts\font-MagicalStandard.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_0.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -1306,7 +1310,6 @@
 
   <ItemGroup>
     <Folder Include="Assets\Items\" />
-    <Folder Include="Assets\Fonts\" />
   </ItemGroup>
 
 </Project>
