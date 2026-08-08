@@ -11,25 +11,69 @@ namespace Desktop_Creatures
         {
             //only use if font changes are made, otherwise comment out to avoid unnecessary generation
             //MagicalStandardFontTool.Generate();
+            var magicalStandardDefinition = new FontDefinition
+            {
+                Name = "MagicalStandard",
+
+                CharacterRows =
+                [
+                    "{}[]|",
+                    "ABCDEFGHIJKLMNOPQRSTUVWXYZbdfghjklpqy0123456789!£$&()@?/\\",
+                    "#%i;*",
+                    "acemnorstuvwxz+:",
+                    "<>",
+                    "=,",
+                    "'`^~",
+                    "_-."
+                ],
+
+                Baseline = 7,
+
+                SpaceAdvance = 3,
+
+                BaselineAdjustments = new()
+                {
+                    ['g'] = 2,
+                    ['j'] = 1,
+                    ['p'] = 2,
+                    ['q'] = 2,
+                    ['y'] = 2,
+
+                    [','] = 1,
+
+                    ['_'] = 1,
+                    ['-'] = -2
+                }
+            };
+
+            BitmapFont magicalStandard =
+                FontTool.Generate(magicalStandardDefinition);
+
+            BitmapFontRegistry.Register(
+                magicalStandard.Name,
+                magicalStandard,
+                setAsDefault: true);
+
+            FontTool.Generate(magicalStandardDefinition);
 
             base.OnStartup(e);
 
-            string projectRoot = Path.GetFullPath(
-                Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
+            //string projectRoot = Path.GetFullPath(
+            //    Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
 
-            string fontPath = Path.Combine(
-                projectRoot,
-                "Assets",
-                "Fonts",
-                "font-MagicalStandard.json");
+            //string fontPath = Path.Combine(
+            //    projectRoot,
+            //    "Assets",
+            //    "Fonts",
+            //    "font-MagicalStandard.json");
 
-            BitmapFont magicalStandard =
-                BitmapFontLoader.Load(fontPath);
+            //BitmapFont magicalStandard =
+            //    BitmapFontLoader.Load(fontPath);
 
-            BitmapFontRegistry.Register(
-                "MagicalStandard",
-                magicalStandard,
-                setAsDefault: true);
+            //BitmapFontRegistry.Register(
+            //    "MagicalStandard",
+            //    magicalStandard,
+            //    setAsDefault: true);
         }
     }
 }
