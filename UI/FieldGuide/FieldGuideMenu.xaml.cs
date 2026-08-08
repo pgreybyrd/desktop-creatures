@@ -11,6 +11,8 @@ using WpfButton = System.Windows.Controls.Button;
 using WpfMouseEventArgs = System.Windows.Input.MouseEventArgs;
 using WpfMouseButtonEventArgs = System.Windows.Input.MouseButtonEventArgs;
 using WpfMouseButtonState = System.Windows.Input.MouseButtonState;
+using Desktop_Creatures.Rendering.Fonts;
+using System.IO;
 
 namespace Desktop_Creatures;
 
@@ -151,6 +153,17 @@ public partial class FieldGuideMenu : Window
         int uiScale)
     {
         InitializeComponent();
+
+        string projectRoot = Path.GetFullPath(
+            Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
+
+        string fontJsonPath = Path.Combine(
+            projectRoot,
+            "Assets",
+            "Fonts",
+            "font-MagicalStandard.json");
+
+        FoxText.Font = BitmapFontLoader.Load(fontJsonPath);
 
         _spawnRat = spawnRat;
         _uiScale = uiScale + 1;

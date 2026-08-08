@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using System.Windows;
 
 namespace Desktop_Creatures.Rendering.Fonts
 {
-    internal class BitmapGlyph
+    public sealed class BitmapGlyph
     {
+        public char Character { get; init; }
+
+        public Int32Rect Source { get; init; }
+
+        public int XOffset { get; init; }
+        public int YOffset { get; init; }
+
+        public int XAdvance { get; init; }
     }
 }
