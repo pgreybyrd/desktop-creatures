@@ -58,7 +58,6 @@
                    IsHitTestVisible="False"/>
 
             <controls:BitmapText
-                    x:Name="FoxText"
                     Text="The quick brown fox jumps over the lazy dog."
                     Width="100"
                     FontScale="1"

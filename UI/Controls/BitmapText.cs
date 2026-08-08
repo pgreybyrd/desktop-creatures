@@ -8,6 +8,9 @@ namespace Desktop_Creatures.UI.Controls;
 
 public sealed class BitmapText : FrameworkElement
 {
+    private BitmapFont? ActiveFont =>
+        Font ?? BitmapFontRegistry.DefaultFont;
+
     public static readonly DependencyProperty TextProperty =
         DependencyProperty.Register(
             nameof(Text),
@@ -66,18 +69,20 @@ public sealed class BitmapText : FrameworkElement
     }
 
     protected override void OnRender(
-        DrawingContext drawingContext)
+    DrawingContext drawingContext)
     {
         base.OnRender(drawingContext);
 
-        if (Font is null ||
+        BitmapFont? font = ActiveFont;
+
+        if (font is null ||
             string.IsNullOrEmpty(Text))
         {
             return;
         }
 
         List<string> lines =
-            WrapText(ActualWidth);
+            WrapText(ActualWidth, font);
 
         double y = 0;
 
@@ -85,19 +90,21 @@ public sealed class BitmapText : FrameworkElement
         {
             BitmapFontRenderer.DrawText(
                 drawingContext,
-                Font,
+                font,
                 line,
                 new WpfPoint(0, y),
                 FontScale);
 
-            y += Font.LineHeight * FontScale;
+            y += font.LineHeight * FontScale;
         }
     }
 
     protected override WpfSize MeasureOverride(
         WpfSize availableSize)
     {
-        if (Font is null ||
+        BitmapFont? font = ActiveFont;
+
+        if (font is null ||
             string.IsNullOrEmpty(Text))
         {
             return new WpfSize(0, 0);
@@ -108,11 +115,11 @@ public sealed class BitmapText : FrameworkElement
         if (double.IsInfinity(width))
         {
             width =
-                Font.MeasureText(Text) * FontScale;
+                font.MeasureText(Text) * FontScale;
         }
 
         List<string> lines =
-            WrapText(width);
+            WrapText(width, font);
 
         double measuredWidth = 0;
 
@@ -120,12 +127,12 @@ public sealed class BitmapText : FrameworkElement
         {
             measuredWidth = Math.Max(
                 measuredWidth,
-                Font.MeasureText(line) * FontScale);
+                font.MeasureText(line) * FontScale);
         }
 
         double measuredHeight =
             lines.Count *
-            Font.LineHeight *
+            font.LineHeight *
             FontScale;
 
         return new WpfSize(
@@ -133,11 +140,13 @@ public sealed class BitmapText : FrameworkElement
             measuredHeight);
     }
 
-    private List<string> WrapText(double availableWidth)
+    private List<string> WrapText(
+        double availableWidth,
+        BitmapFont font)
     {
         var lines = new List<string>();
 
-        if (Font is null || string.IsNullOrEmpty(Text))
+        if (string.IsNullOrEmpty(Text))
             return lines;
 
         double unscaledWidth = availableWidth / FontScale;
@@ -155,7 +164,7 @@ public sealed class BitmapText : FrameworkElement
                         ? word
                         : $"{currentLine} {word}";
 
-                if (Font.MeasureText(testLine) <= unscaledWidth)
+                if (font.MeasureText(testLine) <= unscaledWidth)
                 {
                     currentLine = testLine;
                 }

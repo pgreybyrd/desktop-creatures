@@ -14,7 +14,7 @@ public static class BitmapFontJsonGenerator
         string[] characterRows,
         int baseline,
         Dictionary<char, int>? baselineAdjustments = null,
-        int spaceAdvance = 4,
+        int spaceAdvance = 3,
         int glyphSpacing = 1)
     {
 
