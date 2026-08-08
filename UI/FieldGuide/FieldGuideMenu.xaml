@@ -47,6 +47,7 @@
                 Width="201" 
                 Height="166"
                 RenderOptions.BitmapScalingMode="NearestNeighbor">
+            
 
             <Image x:Name="BookBaseImage"
                    Canvas.Left="0"
@@ -55,6 +56,13 @@
                    Height="166"
                    Stretch="None"
                    IsHitTestVisible="False"/>
+
+            <controls:BitmapText
+                    x:Name="FoxText"
+                    Text="The quick brown fox jumps over the lazy dog."
+                    FontScale="1"
+                    Canvas.Left="100"
+                    Canvas.Top="100" />
 
             <Image x:Name="PageTurnImage"
                    Canvas.Left="0"
@@ -89,12 +97,7 @@
                     Background="Transparent"
                     MouseLeftButtonDown="BookDragArea_MouseLeftButtonDown"/>
             
-            <controls:BitmapText
-                    x:Name="FoxText"
-                    Text="The quick brown fox jumps over the lazy dog."
-                    FontScale="1"
-                    Canvas.Left="100"
-                    Canvas.Top="100" />
+            
 
             <!--<TextBlock x:Name="CreatureDescriptionText"
                        Canvas.Left="128"

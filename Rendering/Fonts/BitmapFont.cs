@@ -10,17 +10,21 @@ public sealed class BitmapFont
 
     public int LineHeight { get; }
 
+    public int Baseline { get; }
+
     private readonly Dictionary<char, BitmapGlyph> _glyphs;
 
     public BitmapFont(
         string name,
         BitmapImage atlas,
         int lineHeight,
+        int baseline,
         IEnumerable<BitmapGlyph> glyphs)
     {
         Name = name;
         Atlas = atlas;
         LineHeight = lineHeight;
+        Baseline = baseline;
 
         _glyphs = glyphs.ToDictionary(
             glyph => glyph.Character,

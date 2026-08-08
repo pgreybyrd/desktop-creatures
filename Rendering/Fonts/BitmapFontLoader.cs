@@ -49,6 +49,7 @@ public static class BitmapFontLoader
             config.Name,
             atlas,
             config.LineHeight,
+            config.Baseline,
             glyphs);
     }
 
@@ -77,6 +78,8 @@ public static class BitmapFontLoader
         public string Image { get; set; } = string.Empty;
 
         public int LineHeight { get; set; }
+
+        public int Baseline { get; set; }
 
         public Dictionary<string, GlyphConfig> Glyphs { get; set; } = new();
     }

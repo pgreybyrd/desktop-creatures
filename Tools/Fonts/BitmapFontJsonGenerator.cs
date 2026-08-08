@@ -12,9 +12,12 @@ public static class BitmapFontJsonGenerator
         string outputPath,
         string fontName,
         string[] characterRows,
+        int baseline,
+        Dictionary<char, int>? baselineAdjustments = null,
         int spaceAdvance = 4,
         int glyphSpacing = 1)
     {
+
         BitmapSource bitmap = LoadBitmap(imagePath);
 
         byte[] pixels = GetPixels(bitmap, out int stride);
@@ -63,6 +66,18 @@ public static class BitmapFontJsonGenerator
                 char character = characters[glyphIndex];
                 PixelRegion region = detectedGlyphs[glyphIndex];
 
+                int baselineAdjustment = 0;
+
+                if (baselineAdjustments is not null)
+                {
+                    baselineAdjustments.TryGetValue(
+                        character,
+                        out baselineAdjustment);
+                }
+
+                int yOffset =
+                    baseline - region.Height + baselineAdjustment;
+
                 glyphs[character.ToString()] = new GlyphConfig
                 {
                     X = region.X,
@@ -73,7 +88,7 @@ public static class BitmapFontJsonGenerator
                     XOffset = 0,
 
                     // Preserve vertical position relative to the row.
-                    YOffset = region.Y - row.Y,
+                    YOffset = yOffset,
 
                     XAdvance = region.Width + glyphSpacing
                 };
@@ -97,6 +112,7 @@ public static class BitmapFontJsonGenerator
             Name = fontName,
             Image = Path.GetFileName(imagePath),
             LineHeight = lineHeight,
+            Baseline = baseline,
             Glyphs = glyphs
         };
 
@@ -375,6 +391,8 @@ public static class BitmapFontJsonGenerator
         public string Image { get; set; } = "";
 
         public int LineHeight { get; set; }
+
+        public int Baseline { get; set; }
 
         public Dictionary<string, GlyphConfig> Glyphs
         { get; set; } = new();

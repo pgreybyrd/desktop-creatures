@@ -33,10 +33,43 @@ public static class MagicalStandardFontTool
             "_-."
         };
 
+        var yAdjustments = new Dictionary<char, int>
+        {
+            ['g'] = 2,
+            ['j'] = 2,
+            ['p'] = 2,
+            ['q'] = 2,
+            ['y'] = 2,
+
+            [','] = 1,
+
+            ['_'] = 1,
+            ['-'] = -2
+        };
+
+        const int baseline = 7;
+
+        var baselineAdjustments =
+            new Dictionary<char, int>
+            {
+                ['g'] = 2,
+                ['j'] = 2,
+                ['p'] = 2,
+                ['q'] = 2,
+                ['y'] = 2,
+
+                [','] = 1,
+
+                ['_'] = 1,
+                ['-'] = -2
+            };
+
         BitmapFontJsonGenerator.Generate(
             imagePath,
             outputPath,
             "MagicalStandard",
-            characterRows);
+            characterRows,
+            baseline,
+            baselineAdjustments);
     }
 }
