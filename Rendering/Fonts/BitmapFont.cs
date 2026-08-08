@@ -59,9 +59,10 @@ public sealed class BitmapFont
 
         foreach (char character in text)
         {
-            if (_glyphs.TryGetValue(
-                character,
-                out var glyph))
+            if (character == '\n')
+                break;
+
+            if (_glyphs.TryGetValue(character, out var glyph))
             {
                 width += glyph.XAdvance;
             }

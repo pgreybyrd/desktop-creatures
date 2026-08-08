@@ -60,6 +60,7 @@
             <controls:BitmapText
                     x:Name="FoxText"
                     Text="The quick brown fox jumps over the lazy dog."
+                    Width="100"
                     FontScale="1"
                     Canvas.Left="100"
                     Canvas.Top="100" />

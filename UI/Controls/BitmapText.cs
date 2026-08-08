@@ -65,7 +65,8 @@ public sealed class BitmapText : FrameworkElement
         SnapsToDevicePixels = true;
     }
 
-    protected override void OnRender(DrawingContext drawingContext)
+    protected override void OnRender(
+        DrawingContext drawingContext)
     {
         base.OnRender(drawingContext);
 
@@ -75,12 +76,22 @@ public sealed class BitmapText : FrameworkElement
             return;
         }
 
-        BitmapFontRenderer.DrawText(
-            drawingContext,
-            Font,
-            Text,
-            new WpfPoint(0, 0),
-            FontScale);
+        List<string> lines =
+            WrapText(ActualWidth);
+
+        double y = 0;
+
+        foreach (string line in lines)
+        {
+            BitmapFontRenderer.DrawText(
+                drawingContext,
+                Font,
+                line,
+                new WpfPoint(0, y),
+                FontScale);
+
+            y += Font.LineHeight * FontScale;
+        }
     }
 
     protected override WpfSize MeasureOverride(
@@ -92,14 +103,75 @@ public sealed class BitmapText : FrameworkElement
             return new WpfSize(0, 0);
         }
 
-        double width =
-            Font.MeasureText(Text) * FontScale;
+        double width = availableSize.Width;
 
-        double height =
-            Font.LineHeight * FontScale;
+        if (double.IsInfinity(width))
+        {
+            width =
+                Font.MeasureText(Text) * FontScale;
+        }
+
+        List<string> lines =
+            WrapText(width);
+
+        double measuredWidth = 0;
+
+        foreach (string line in lines)
+        {
+            measuredWidth = Math.Max(
+                measuredWidth,
+                Font.MeasureText(line) * FontScale);
+        }
+
+        double measuredHeight =
+            lines.Count *
+            Font.LineHeight *
+            FontScale;
 
         return new WpfSize(
-            width,
-            height);
+            measuredWidth,
+            measuredHeight);
+    }
+
+    private List<string> WrapText(double availableWidth)
+    {
+        var lines = new List<string>();
+
+        if (Font is null || string.IsNullOrEmpty(Text))
+            return lines;
+
+        double unscaledWidth = availableWidth / FontScale;
+
+        foreach (string paragraph in Text.Split('\n'))
+        {
+            string[] words = paragraph.Split(' ');
+
+            string currentLine = "";
+
+            foreach (string word in words)
+            {
+                string testLine =
+                    string.IsNullOrEmpty(currentLine)
+                        ? word
+                        : $"{currentLine} {word}";
+
+                if (Font.MeasureText(testLine) <= unscaledWidth)
+                {
+                    currentLine = testLine;
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(currentLine))
+                        lines.Add(currentLine);
+
+                    currentLine = word;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(currentLine))
+                lines.Add(currentLine);
+        }
+
+        return lines;
     }
 }
