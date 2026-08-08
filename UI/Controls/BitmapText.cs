@@ -41,6 +41,16 @@ public sealed class BitmapText : FrameworkElement
                 FrameworkPropertyMetadataOptions.AffectsRender |
                 FrameworkPropertyMetadataOptions.AffectsMeasure));
 
+    public static readonly DependencyProperty LineSpacingProperty =
+        DependencyProperty.Register(
+            nameof(LineSpacing),
+            typeof(double),
+            typeof(BitmapText),
+            new FrameworkPropertyMetadata(
+                1.0,
+                FrameworkPropertyMetadataOptions.AffectsRender |
+                FrameworkPropertyMetadataOptions.AffectsMeasure));
+
     public string Text
     {
         get => (string)GetValue(TextProperty);
@@ -59,6 +69,12 @@ public sealed class BitmapText : FrameworkElement
         set => SetValue(FontScaleProperty, value);
     }
 
+    public double LineSpacing
+    {
+        get => (double)GetValue(LineSpacingProperty);
+        set => SetValue(LineSpacingProperty, value);
+    }
+
     public BitmapText()
     {
         RenderOptions.SetBitmapScalingMode(
@@ -69,7 +85,7 @@ public sealed class BitmapText : FrameworkElement
     }
 
     protected override void OnRender(
-    DrawingContext drawingContext)
+        DrawingContext drawingContext)
     {
         base.OnRender(drawingContext);
 
@@ -95,7 +111,7 @@ public sealed class BitmapText : FrameworkElement
                 new WpfPoint(0, y),
                 FontScale);
 
-            y += font.LineHeight * FontScale;
+            y += (font.LineHeight + LineSpacing) * FontScale;
         }
     }
 
@@ -131,9 +147,10 @@ public sealed class BitmapText : FrameworkElement
         }
 
         double measuredHeight =
-            lines.Count *
-            font.LineHeight *
-            FontScale;
+        (
+            lines.Count * font.LineHeight +
+            Math.Max(0, lines.Count - 1) * LineSpacing
+        ) * FontScale;
 
         return new WpfSize(
             measuredWidth,

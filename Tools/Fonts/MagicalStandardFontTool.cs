@@ -36,7 +36,7 @@ public static class MagicalStandardFontTool
         var yAdjustments = new Dictionary<char, int>
         {
             ['g'] = 2,
-            ['j'] = 2,
+            ['j'] = 1,
             ['p'] = 2,
             ['q'] = 2,
             ['y'] = 2,
@@ -53,7 +53,7 @@ public static class MagicalStandardFontTool
             new Dictionary<char, int>
             {
                 ['g'] = 2,
-                ['j'] = 2,
+                ['j'] = 1,
                 ['p'] = 2,
                 ['q'] = 2,
                 ['y'] = 2,
