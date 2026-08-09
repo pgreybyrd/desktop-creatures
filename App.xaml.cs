@@ -46,34 +46,35 @@ namespace Desktop_Creatures
                 }
             };
 
-            BitmapFont magicalStandard =
+#if DEBUG
+            const bool regenerateFonts = false;
+
+            if (regenerateFonts)
+            {
                 FontTool.Generate(magicalStandardDefinition);
+            }
+#endif
+
+            base.OnStartup(e);
+
+            string projectRoot = Path.GetFullPath(
+                Path.Combine(
+                    AppContext.BaseDirectory,
+                    @"..\..\..\"));
+
+            string fontPath = Path.Combine(
+                projectRoot,
+                "Assets",
+                "Fonts",
+                $"font-{magicalStandardDefinition.Name}.json");
+
+            BitmapFont magicalStandard =
+                BitmapFontLoader.Load(fontPath);
 
             BitmapFontRegistry.Register(
                 magicalStandard.Name,
                 magicalStandard,
                 setAsDefault: true);
-
-            FontTool.Generate(magicalStandardDefinition);
-
-            base.OnStartup(e);
-
-            //string projectRoot = Path.GetFullPath(
-            //    Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
-
-            //string fontPath = Path.Combine(
-            //    projectRoot,
-            //    "Assets",
-            //    "Fonts",
-            //    "font-MagicalStandard.json");
-
-            //BitmapFont magicalStandard =
-            //    BitmapFontLoader.Load(fontPath);
-
-            //BitmapFontRegistry.Register(
-            //    "MagicalStandard",
-            //    magicalStandard,
-            //    setAsDefault: true);
         }
     }
 }
