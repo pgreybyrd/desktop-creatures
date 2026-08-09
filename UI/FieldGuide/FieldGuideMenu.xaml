@@ -47,7 +47,7 @@
                 Width="201" 
                 Height="166"
                 RenderOptions.BitmapScalingMode="NearestNeighbor">
-            
+
 
             <Image x:Name="BookBaseImage"
                    Canvas.Left="0"
@@ -57,13 +57,63 @@
                    Stretch="None"
                    IsHitTestVisible="False"/>
 
-            <controls:BitmapText
-                    Text="The quick brown fox jumps over the lazy dog."
-                    Width="100"
-                    LineSpacing="1"
-                    FontScale="1"
-                    Canvas.Left="100"
-                    Canvas.Top="100" />
+            <Canvas x:Name="CreatureEntryCanvas"
+                    Width="201"
+                    Height="166"
+                    IsHitTestVisible="False">
+
+                <!-- LEFT PAGE -->
+
+                <Border Canvas.Left="22"
+                        Canvas.Top="37"
+                        Width="78"
+                        Height="12"
+                        BorderBrush="Red"
+                        BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                <!-- CREATURE PORTRAIT REGION -->
+
+                <!-- Creature animation will eventually go here -->
+                <Border Canvas.Left="30"
+                        Canvas.Top="54"
+                        Width="62"
+                        Height="47"
+                        BorderBrush="Cyan"
+                        BorderThickness="1"
+                        IsHitTestVisible="False" HorizontalAlignment="Center" VerticalAlignment="Top" />
+
+                <Border Canvas.Left="22"
+                        Canvas.Top="107"
+                        Width="78"
+                        Height="34"
+                        BorderBrush="Green"
+                        BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+                <!-- RIGHT PAGE -->
+
+                <Border Canvas.Left="111"
+                        Canvas.Top="37"
+                        Width="67"
+                        Height="50"
+                        BorderBrush="Orange"
+                        BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                <Border Canvas.Left="111"
+                        Canvas.Top="92"
+                        Width="67"
+                        Height="30"
+                        BorderBrush="Purple"
+                        BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                <Border Canvas.Left="124"
+                        Canvas.Top="126"
+                        Width="42"
+                        Height="14"
+                        BorderBrush="Yellow"
+                        BorderThickness="1"/>
+
+            </Canvas>
 
             <Image x:Name="PageTurnImage"
                    Canvas.Left="0"
@@ -97,8 +147,8 @@
                     Height="166"
                     Background="Transparent"
                     MouseLeftButtonDown="BookDragArea_MouseLeftButtonDown"/>
-            
-            
+
+
 
             <!--<TextBlock x:Name="CreatureDescriptionText"
                        Canvas.Left="128"
@@ -174,7 +224,7 @@
                    Canvas.Top="115"
                    Width="56"
                    Height="25"/>
-            
+
             <Button x:Name="SpawnRatButton"
                     Style="{StaticResource InvisibleTabButton}"
                     Canvas.Left="114"

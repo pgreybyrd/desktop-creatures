@@ -11,9 +11,13 @@
 
   <ItemGroup>
     <Compile Remove="assets\Eagle\**" />
+    <Compile Remove="Assets\UI\FieldGuide\Pages\**" />
     <EmbeddedResource Remove="assets\Eagle\**" />
+    <EmbeddedResource Remove="Assets\UI\FieldGuide\Pages\**" />
     <None Remove="assets\Eagle\**" />
+    <None Remove="Assets\UI\FieldGuide\Pages\**" />
     <Page Remove="assets\Eagle\**" />
+    <Page Remove="Assets\UI\FieldGuide\Pages\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -538,40 +542,57 @@
     <None Remove="Assets\UI\button_spawn_rat.png" />
     <None Remove="Assets\UI\button_X.png" />
     <None Remove="Assets\UI\FieldGuide\BookBase.png" />
+    <None Remove="Assets\UI\FieldGuide\Book\BookBase.png" />
+    <None Remove="Assets\UI\FieldGuide\Book\opening_0.png" />
+    <None Remove="Assets\UI\FieldGuide\Book\opening_1.png" />
+    <None Remove="Assets\UI\FieldGuide\Book\opening_2.png" />
+    <None Remove="Assets\UI\FieldGuide\Book\PageTurnBase_0.png" />
+    <None Remove="Assets\UI\FieldGuide\Book\PageTurnBase_1.png" />
+    <None Remove="Assets\UI\FieldGuide\Book\PageTurnBase_10.png" />
+    <None Remove="Assets\UI\FieldGuide\Book\PageTurnBase_2.png" />
+    <None Remove="Assets\UI\FieldGuide\Book\PageTurnBase_3.png" />
+    <None Remove="Assets\UI\FieldGuide\Book\PageTurnBase_4.png" />
+    <None Remove="Assets\UI\FieldGuide\Book\PageTurnBase_5.png" />
+    <None Remove="Assets\UI\FieldGuide\Book\PageTurnBase_6.png" />
+    <None Remove="Assets\UI\FieldGuide\Book\PageTurnBase_7.png" />
+    <None Remove="Assets\UI\FieldGuide\Book\PageTurnBase_8.png" />
+    <None Remove="Assets\UI\FieldGuide\Book\PageTurnBase_9.png" />
+    <None Remove="Assets\UI\FieldGuide\Common\button_hover_spawn.png" />
+    <None Remove="Assets\UI\FieldGuide\Common\button_pressed_spawn.png" />
+    <None Remove="Assets\UI\FieldGuide\Common\button_spawn.png" />
+    <None Remove="Assets\UI\FieldGuide\Common\frame-basic.png" />
+    <None Remove="Assets\UI\FieldGuide\Common\tabs.png" />
+    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_0.png" />
+    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_1.png" />
+    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_10.png" />
+    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_11.png" />
+    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_12.png" />
+    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_13.png" />
+    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_14.png" />
+    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_15.png" />
+    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_16.png" />
+    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_17.png" />
+    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_18.png" />
+    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_19.png" />
+    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_2.png" />
+    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_20.png" />
+    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_21.png" />
+    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_22.png" />
+    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_23.png" />
+    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_24.png" />
+    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_25.png" />
+    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_26.png" />
+    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_3.png" />
+    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_4.png" />
+    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_5.png" />
+    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_6.png" />
+    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_7.png" />
+    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_8.png" />
+    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_9.png" />
+    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\spawn-icon-cheese.png" />
     <None Remove="Assets\UI\FieldGuide\opening_0.png" />
     <None Remove="Assets\UI\FieldGuide\opening_1.png" />
     <None Remove="Assets\UI\FieldGuide\opening_2.png" />
-    <None Remove="Assets\UI\FieldGuide\Pages\button_hover_spawn.png" />
-    <None Remove="Assets\UI\FieldGuide\Pages\button_pressed_spawn.png" />
-    <None Remove="Assets\UI\FieldGuide\Pages\button_spawn.png" />
-    <None Remove="Assets\UI\FieldGuide\Pages\RatPage.png" />
-    <None Remove="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_0.png" />
-    <None Remove="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_1.png" />
-    <None Remove="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_10.png" />
-    <None Remove="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_11.png" />
-    <None Remove="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_12.png" />
-    <None Remove="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_13.png" />
-    <None Remove="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_14.png" />
-    <None Remove="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_15.png" />
-    <None Remove="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_16.png" />
-    <None Remove="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_17.png" />
-    <None Remove="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_18.png" />
-    <None Remove="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_19.png" />
-    <None Remove="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_2.png" />
-    <None Remove="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_20.png" />
-    <None Remove="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_21.png" />
-    <None Remove="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_22.png" />
-    <None Remove="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_23.png" />
-    <None Remove="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_24.png" />
-    <None Remove="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_25.png" />
-    <None Remove="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_26.png" />
-    <None Remove="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_3.png" />
-    <None Remove="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_4.png" />
-    <None Remove="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_5.png" />
-    <None Remove="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_6.png" />
-    <None Remove="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_7.png" />
-    <None Remove="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_8.png" />
-    <None Remove="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_9.png" />
     <None Remove="Assets\UI\FieldGuide\PageTurnBase_0.png" />
     <None Remove="Assets\UI\FieldGuide\PageTurnBase_1.png" />
     <None Remove="Assets\UI\FieldGuide\PageTurnBase_10.png" />
@@ -602,87 +623,90 @@
     <Resource Include="Assets\Fonts\font-MagicalStandard.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_0.png">
+    <Content Include="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_0.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_1.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_10.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_10.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_11.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_11.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_12.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_12.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_13.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_13.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_14.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_14.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_15.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_15.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_16.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_16.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_17.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_17.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_18.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_18.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_19.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_19.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_2.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_20.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_20.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_21.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_21.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_22.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_22.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_23.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_23.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_24.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_24.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_25.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_25.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_26.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_26.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_3.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_4.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_4.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_5.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_5.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_6.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_6.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_7.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_7.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_8.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_8.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\Pages\Sprites\Rat\ratPortrait_9.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_9.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Creatures\Rat\spawn-icon-cheese.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Config\debug_settings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1146,66 +1170,66 @@
     <Resource Include="Assets\Creatures\Rat\Rainbow\walk_3.png" />
     <Resource Include="Assets\Creatures\Rat\Rainbow\walk_4.png" />
     <Resource Include="Assets\Creatures\Rat\Rainbow\walk_5.png" />
-    <Resource Include="Assets\UI\FieldGuide\BookBase.png">
+    <Content Include="Assets\UI\FieldGuide\Book\BookBase.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\opening_0.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Book\opening_0.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\opening_1.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Book\opening_1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\opening_2.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Book\opening_2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\Pages\button_hover_spawn.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Book\PageTurnBase_0.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\Pages\button_pressed_spawn.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Book\PageTurnBase_1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\Pages\button_spawn.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Book\PageTurnBase_10.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\Pages\RatPage.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Book\PageTurnBase_2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\PageTurnBase_0.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Book\PageTurnBase_3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\PageTurnBase_1.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Book\PageTurnBase_4.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\PageTurnBase_10.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Book\PageTurnBase_5.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\PageTurnBase_2.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Book\PageTurnBase_6.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\PageTurnBase_3.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Book\PageTurnBase_7.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\PageTurnBase_4.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Book\PageTurnBase_8.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\PageTurnBase_5.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Book\PageTurnBase_9.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\PageTurnBase_6.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Common\button_hover_spawn.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\PageTurnBase_7.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Common\button_pressed_spawn.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\PageTurnBase_8.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Common\button_spawn.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\PageTurnBase_9.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Common\frame-basic.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\FieldGuide\tabs.png">
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Common\tabs.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    </Content>
     <Resource Include="Assets\UI\MainMenu\Buttons\button_always_on_top.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

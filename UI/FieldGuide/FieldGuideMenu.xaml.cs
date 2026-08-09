@@ -69,7 +69,7 @@ public partial class FieldGuideMenu : Window
     private FieldGuidePage _currentPage = FieldGuidePage.Cover;
 
     //creature pages
-    private readonly BitmapImage _ratPage;
+    //private readonly BitmapImage _ratPage;
     private readonly BitmapImage _spawnButton;
     private readonly BitmapImage _spawnButtonPressed;
     private readonly BitmapImage _spawnButtonHover;
@@ -155,14 +155,14 @@ public partial class FieldGuideMenu : Window
         _spawnRat = spawnRat;
         _uiScale = uiScale + 1;
 
-        _ratPage = LoadUiImage(
-            $"{FieldGuideAssetPath}/Pages/RatPage.png");
+        //_ratPage = LoadUiImage(
+        //    $"{FieldGuideAssetPath}/Common/RatPage.png");
         _spawnButton = LoadUiImage(
-            $"{FieldGuideAssetPath}/Pages/button_spawn.png");
+            $"{FieldGuideAssetPath}/Common/button_spawn.png");
         _spawnButtonPressed = LoadUiImage(
-            $"{FieldGuideAssetPath}/Pages/button_pressed_spawn.png");
+            $"{FieldGuideAssetPath}/Common/button_pressed_spawn.png");
         _spawnButtonHover = LoadUiImage(
-            $"{FieldGuideAssetPath}/Pages/button_hover_spawn.png");
+            $"{FieldGuideAssetPath}/Common/button_hover_spawn.png");
 
         //_ratPortraitFrames = Enumerable
         //    .Range(0, 26) 
@@ -179,25 +179,25 @@ public partial class FieldGuideMenu : Window
         _openingFrames =
         [
             LoadUiImage(
-                $"{FieldGuideAssetPath}/opening_0.png"),
+                $"{FieldGuideAssetPath}/Book/opening_0.png"),
 
             LoadUiImage(
-                $"{FieldGuideAssetPath}/opening_1.png"),
+                $"{FieldGuideAssetPath}/Book/opening_1.png"),
 
             LoadUiImage(
-                $"{FieldGuideAssetPath}/opening_2.png"),
+                $"{FieldGuideAssetPath}/Book/opening_2.png"),
 
             //LoadUiImage(
             //    $"{FieldGuideAssetPath}/open.png")
         ];
 
         _bookBase = LoadUiImage(
-            $"{FieldGuideAssetPath}/BookBase.png");
+            $"{FieldGuideAssetPath}/Book/BookBase.png");
 
         _pageTurnFrames = Enumerable
             .Range(0, 11)
             .Select(index => LoadUiImage(
-                $"{FieldGuideAssetPath}/PageTurnBase_{index}.png"))
+                $"{FieldGuideAssetPath}/Book/PageTurnBase_{index}.png"))
             .ToArray();
 
         _tabTurnPaths = new()
@@ -211,7 +211,7 @@ public partial class FieldGuideMenu : Window
         //];
 
         _tabSpriteSheet = new TabSpriteSheet(
-            "Assets/UI/FieldGuide/tabs.png",
+            "Assets/UI/FieldGuide/Common/tabs.png",
             TabWidth,
             TabHeight);
 
@@ -644,7 +644,7 @@ public partial class FieldGuideMenu : Window
         switch (page)
         {
             case FieldGuidePage.Rat:
-                SectionDetailImage.Source = _ratPage;
+                //SectionDetailImage.Source = _ratPage;
 
                 //CreatureTitleText.Text = "RAT";
 
