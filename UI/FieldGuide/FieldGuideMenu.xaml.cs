@@ -535,6 +535,15 @@ public partial class FieldGuideMenu : Window
 
         SetCreaturePageVisible(false);
 
+        FieldGuideTabControl controls =
+            _tabControls[current.Tab];
+
+        controls.LeftImage.Visibility =
+            Visibility.Collapsed;
+
+        controls.LeftButton.Visibility =
+            Visibility.Collapsed;
+
         TurningTabImage.Source =
             _tabSpriteSheet.GetFrame(
                 current.Tab,
