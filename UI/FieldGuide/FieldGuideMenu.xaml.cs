@@ -1193,6 +1193,13 @@ public partial class FieldGuideMenu : Window
         CreatureContentCanvas.DataContext =
             entry;
 
+        CreaturePortraitFrameImage.Source =
+            LoadUiImage(entry.PortraitFrame);
+
+        CreaturePortraitImage.Source =
+            LoadUiImage(entry.Portrait);
+
+
         SetCreaturePageVisible(true);
 
         //Dispatcher.BeginInvoke(

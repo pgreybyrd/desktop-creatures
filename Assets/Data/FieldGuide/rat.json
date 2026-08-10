@@ -10,5 +10,7 @@
     "Investigates new objects.",
     "Most active at night."
   ],
-  "portraitFrame": "Assets/UI/FieldGuide/Creatures/Rat/frame-rat.png"
+  "portrait": "Assets/Creatures/Rat/GreyHooded/idle_look_front_2.png",
+  "portraitFrame": "Assets/UI/FieldGuide/Creatures/Rat/frame-rat.png",
+  "portraitForeground": "Assets/UI/FieldGuide/Creatures/Snake/foreground-snake.png"
 }

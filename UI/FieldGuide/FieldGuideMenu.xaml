@@ -70,34 +70,55 @@
                         Width="78"
                         Height="12"
                         BorderBrush="Red"
-                        BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        BorderThickness="0"
+                        HorizontalAlignment="Left" VerticalAlignment="Center">
 
                 </Border>
 
                 <!-- CREATURE PORTRAIT REGION -->
+                <Grid Canvas.Left="28"
+                      Canvas.Top="54"
+                      Width="62"
+                      Height="47">
 
-                <!-- Creature animation will eventually go here -->
-                <Border Canvas.Left="28"
-                        Canvas.Top="54"
-                        Width="62"
-                        Height="47"
-                        BorderBrush="Cyan"
-                        BorderThickness="1"
-                        IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <!-- Frame fills the cyan portrait region -->
+                    <Image x:Name="CreaturePortraitFrameImage"
+                           Stretch="None"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           IsHitTestVisible="False"/>
 
-                <Border Canvas.Left="34"
-                        Canvas.Top="60"
-                        Width="50"
-                        Height="35"
-                        BorderBrush="Blue"
-                        BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <!-- DEBUG: cyan outer/frame region -->
+                    <Border BorderBrush="Cyan"
+                            BorderThickness="0"
+                            IsHitTestVisible="False"/>
+
+                    <!-- Creature animation viewport -->
+                    <Border x:Name="CreaturePortraitViewport"
+                            Width="50"
+                            Height="35"
+                            BorderBrush="Blue"
+                            BorderThickness="0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            ClipToBounds="True">
+
+                        <Image x:Name="CreaturePortraitImage"
+                               Stretch="None"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               IsHitTestVisible="False"/>
+
+                    </Border>
+
+                </Grid>
 
                 <Border Canvas.Left="20"
                         Canvas.Top="107"
                         Width="78"
                         Height="34"
                         BorderBrush="Green"
-                        BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
                 <!-- RIGHT PAGE -->
 
@@ -106,21 +127,21 @@
                         Width="76"
                         Height="50"
                         BorderBrush="Orange"
-                        BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
                 <Border Canvas.Left="104"
                         Canvas.Top="92"
                         Width="76"
                         Height="30"
                         BorderBrush="Purple"
-                        BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        BorderThickness="0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
                 <Border Canvas.Left="128"
                         Canvas.Top="128"
                         Width="28"
                         Height="13"
                         BorderBrush="Yellow"
-                        BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
             </Canvas>
 

@@ -10,5 +10,6 @@
     "Prefers open space.",
     "Very dramatic."
   ],
+  "portrait": "Assets/Creatures/Eagle/fly_0.png",
   "portraitFrame": "Assets/UI/FieldGuide/Creatures/Eagle/frame-eagle.png"
 }

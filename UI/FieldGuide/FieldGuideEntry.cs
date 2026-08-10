@@ -14,7 +14,8 @@ namespace Desktop_Creatures.UI.FieldGuide
 
         public List<string> FieldNotes { get; init; } = [];
 
-        public string? PortraitFrame { get; init; }
+        public string Portrait { get; init; } = string.Empty;
+        public string PortraitFrame { get; init; } = string.Empty;
         public string? SpawnIcon { get; init; }
 
         public string FactsText =>
