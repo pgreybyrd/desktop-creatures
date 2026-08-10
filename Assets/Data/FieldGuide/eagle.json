@@ -1,0 +1,15 @@
+{
+  "id": "rat",
+  "name": "RAT",
+  "description": "Rats are curious, social creatures with quick paws and quicker noses. They explore anything new, remember where food appears, and are rarely far from some kind of mischief.",
+  "habitat": "Urban",
+  "activity": "Night",
+  "diet": "Omnivore",
+  "fieldNotes": [
+    "Loves snacks.",
+    "Investigates new objects.",
+    "Most active at night."
+  ],
+  "portraitFrame": "Assets/UI/FieldGuide/Creatures/Rat/frame-rat.png",
+  "spawnIcon": "Assets/UI/FieldGuide/Creatures/Rat/spawn-icon-cheese.png"
+}

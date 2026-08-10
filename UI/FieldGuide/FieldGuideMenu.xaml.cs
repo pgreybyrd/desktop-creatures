@@ -1,19 +1,21 @@
 ﻿using Desktop_Creatures.Assets.UI;
+using Desktop_Creatures.Creatures;
+using Desktop_Creatures.UI.FieldGuide;
+using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using WpfImage = System.Windows.Controls.Image;
+using System.Text.Json.Serialization;
 using WpfButton = System.Windows.Controls.Button;
-using WpfMouseEventArgs = System.Windows.Input.MouseEventArgs;
+using WpfImage = System.Windows.Controls.Image;
 using WpfMouseButtonEventArgs = System.Windows.Input.MouseButtonEventArgs;
 using WpfMouseButtonState = System.Windows.Input.MouseButtonState;
-using System.IO;
-using System.Text.Json;
-using Desktop_Creatures.UI.FieldGuide;
+using WpfMouseEventArgs = System.Windows.Input.MouseEventArgs;
 
 namespace Desktop_Creatures;
 
@@ -40,13 +42,6 @@ public enum ButtonState
     Pressed
 }
 
-public enum FieldGuidePage
-{
-    Cover,
-    Rat,
-    Eagle
-}
-
 public partial class FieldGuideMenu : Window
 {
     private const string FieldGuideAssetPath =
@@ -62,16 +57,12 @@ public partial class FieldGuideMenu : Window
     private readonly BitmapImage _bookBase;
     private readonly BitmapImage[] _pageTurnFrames;
 
-    //private readonly BitmapImage[] _ratPortraitFrames;
-    //private CancellationTokenSource? _ratPortraitAnimationCancellation;
-
     private readonly TabSpriteSheet _tabSpriteSheet;
     private const int TabWidth = 7;
     private const int TabHeight = 8;
 
     private bool _isPageTurning;
     private FieldGuideTab _currentTab = FieldGuideTab.Red;
-    private FieldGuidePage _currentPage = FieldGuidePage.Cover;
 
     //creature pages
     private readonly BitmapImage _spawnButton;
@@ -83,14 +74,6 @@ public partial class FieldGuideMenu : Window
     private string? _currentCreatureId;
 
     private bool _isOpening;
-
-    private readonly Dictionary<FieldGuideTab, FieldGuidePage>
-        _pagesByTab = new()
-        {
-            [FieldGuideTab.Red] = FieldGuidePage.Rat,
-            //[FieldGuideTab.Blue] = FieldGuidePage.Eagle
-            //add all the other tabs and pages as needed
-        };
 
     public readonly record struct TabTurnPose(
         double X,
@@ -185,6 +168,9 @@ public partial class FieldGuideMenu : Window
                 $"Could not load Field Guide entry '{creatureId}'.");
     }
 
+    private readonly Dictionary<FieldGuideTab, FieldGuideTabEntry>
+        _tabsByColor;
+
     public FieldGuideMenu(
         Action spawnRat,
         int uiScale)
@@ -197,10 +183,20 @@ public partial class FieldGuideMenu : Window
         _titleScale = uiScale + 1;
         _bookScale = uiScale + 2;
 
-        FieldGuideEntry ratEntry =
-            LoadFieldGuideEntry("rat");
+        FieldGuideDefinition guide =
+            LoadFieldGuideDefinition();
 
-        DataContext = ratEntry;
+        _tabsByColor =
+            guide.Tabs.ToDictionary(
+                entry => entry.Tab);
+
+        _creatureEntries =
+            guide.Tabs
+                .Select(entry => entry.CreatureId)
+                .Distinct()
+                .ToDictionary(
+                    id => id,
+                    LoadFieldGuideEntry);
 
         BookCanvas.LayoutTransform =
             new ScaleTransform(_bookScale, _bookScale);
@@ -405,6 +401,34 @@ public partial class FieldGuideMenu : Window
         }
     }
 
+    private static readonly JsonSerializerOptions JsonOptions =
+        new()
+    {
+        PropertyNameCaseInsensitive = true,
+        Converters =
+        {
+            new System.Text.Json.Serialization.JsonStringEnumConverter()
+        }
+    };
+
+    private static FieldGuideDefinition LoadFieldGuideDefinition()
+    {
+        string path = Path.Combine(
+            AppContext.BaseDirectory,
+            "Assets",
+            "Data",
+            "FieldGuide",
+            "fieldGuide.json");
+
+        string json = File.ReadAllText(path);
+
+        return JsonSerializer.Deserialize<FieldGuideDefinition>(
+            json,
+            JsonOptions)
+            ?? throw new InvalidOperationException(
+                "Could not load Field Guide definition.");
+    }
+
     private void SetSpawnButtonVisible(bool visible)
     {
         var visibility =
@@ -468,11 +492,12 @@ public partial class FieldGuideMenu : Window
         object sender,
         RoutedEventArgs e)
     {
-        var destination = _pagesByTab[_currentTab];
+        FieldGuideTabEntry tabEntry =
+            _tabsByColor[_currentTab];
 
-        await TurnToPageAsync(
-            _currentTab,
-            destination);
+        await TurnToCreatureAsync(
+            tabEntry.Tab,
+            tabEntry.CreatureId);
     }
 
     private async void LeftTabButton_Click(
@@ -492,11 +517,12 @@ public partial class FieldGuideMenu : Window
             return;
         }
 
-        var destination = _pagesByTab[tab];
+        FieldGuideTabEntry tabEntry =
+            _tabsByColor[tab];
 
-        await TurnToPageAsync(
-            tab,
-            destination);
+        await TurnToCreatureAsync(
+            tabEntry.Tab,
+            tabEntry.CreatureId);
     }
 
     private void RightTabButton_MouseEnter(
@@ -581,10 +607,12 @@ public partial class FieldGuideMenu : Window
 
     private async Task TurnBackAsync()
     {
+        
+
         if (_isOpening || _isPageTurning)
             return;
 
-        if (_currentPage == FieldGuidePage.Cover)
+        if (_currentCreatureId is null)
             return;
 
         if (!_tabTurnPaths.TryGetValue(
@@ -643,8 +671,6 @@ public partial class FieldGuideMenu : Window
             TurningTabImage.Visibility =
                 Visibility.Collapsed;
 
-            _currentPage = FieldGuidePage.Cover;
-
             SetCreaturePageVisible(false);
 
             ShowRightRestingTab(_currentTab);
@@ -661,6 +687,13 @@ public partial class FieldGuideMenu : Window
 
             LeftTabButton.IsEnabled = false;
             RightTabButton.IsEnabled = true;
+
+            _currentCreatureId = null;
+
+            SetCreaturePageVisible(false);
+
+            ShowRightRestingTab(
+                _currentTab);
         }
     }
 
@@ -685,14 +718,11 @@ public partial class FieldGuideMenu : Window
             Visibility.Collapsed;
     }
 
-    private async Task TurnToPageAsync(
+    private async Task TurnToCreatureAsync(
         FieldGuideTab tab,
-        FieldGuidePage destination)
+        string creatureId)
     {
         if (_isOpening || _isPageTurning)
-            return;
-
-        if (_currentPage == destination)
             return;
 
         if (!_tabTurnPaths.TryGetValue(
@@ -757,11 +787,18 @@ public partial class FieldGuideMenu : Window
             TurningTabImage.Visibility = Visibility.Collapsed;
 
             _currentTab = tab;
-            _currentPage = destination;
 
             ShowLeftRestingTab(tab, path[^1]);
 
-            ShowPageContent(destination);
+            _currentTab = tab;
+            _currentCreatureId = creatureId;
+
+            ShowLeftRestingTab(
+                tab,
+                path[^1]);
+
+            ShowCreatureEntry(
+                creatureId);
         }
         finally
         {
@@ -774,16 +811,16 @@ public partial class FieldGuideMenu : Window
         }
     }
 
-    private void ShowPageContent(FieldGuidePage page)
+    private void ShowCreatureEntry(
+        string creatureId)
     {
-        SetCreaturePageVisible(false);
+        FieldGuideEntry entry =
+            _creatureEntries[creatureId];
 
-        switch (page)
-        {
-            case FieldGuidePage.Rat:
-                SetCreaturePageVisible(true);
-                break;
-        }
+        CreatureContentCanvas.DataContext =
+            entry;
+
+        SetCreaturePageVisible(true);
     }
 
     private void StartCreaturePortraitAnimation()
@@ -849,25 +886,4 @@ public partial class FieldGuideMenu : Window
 
         return image;
     }
-
-    public sealed record FieldGuideTabDefinition(
-        FieldGuideTab Tab,
-        FieldGuidePage Page,
-        double RightX,
-        double RightY);
-
-    private readonly FieldGuideTabDefinition[] _tabDefinitions =
-    [
-        new(FieldGuideTab.Red,
-            FieldGuidePage.Rat,
-            181,
-            40),
-
-        new(FieldGuideTab.Green,
-            FieldGuidePage.Eagle,
-            181,
-            50)
-
-        // Remaining tabs later.
-    ];
 }
