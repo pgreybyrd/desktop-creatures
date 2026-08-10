@@ -221,5 +221,22 @@
                    IsHitTestVisible="False"/>
 
         </Canvas>
+
+        <!-- ALWAYS-AVAILABLE WINDOW CONTROL -->
+        <Canvas x:Name="WindowControlsCanvas">
+
+            <Image x:Name="CloseButtonImage"
+                   Stretch="None"
+                   IsHitTestVisible="False"/>
+
+            <Button x:Name="CloseFieldGuideButton"
+                    Style="{StaticResource InvisibleTabButton}"
+                    Click="CloseFieldGuide_Click"
+                    MouseEnter="CloseFieldGuideButton_MouseEnter"
+                    MouseLeave="CloseFieldGuideButton_MouseLeave"
+                    PreviewMouseLeftButtonDown="CloseFieldGuideButton_MouseDown"
+                    PreviewMouseLeftButtonUp="CloseFieldGuideButton_MouseUp"/>
+
+        </Canvas>
     </Grid>
 </Window>
