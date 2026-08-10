@@ -142,8 +142,6 @@
                     MouseLeftButtonDown="BookDragArea_MouseLeftButtonDown"/>
 
             <Image x:Name="RestingTabImage"
-                   Canvas.Left="181"
-                   Canvas.Top="40"
                    Width="7"
                    Height="8"
                    Stretch="None"
@@ -159,8 +157,6 @@
 
             <Button x:Name="RightTabButton"
                     Style="{StaticResource InvisibleTabButton}"
-                    Canvas.Left="181"
-                    Canvas.Top="40"
                     Width="7"
                     Height="8"
                     Click="RightTabButton_Click"

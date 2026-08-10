@@ -171,6 +171,12 @@ public partial class FieldGuideMenu : Window
     private readonly Dictionary<FieldGuideTab, FieldGuideTabEntry>
         _tabsByColor;
 
+    private FieldGuideTabEntry GetTabEntry(
+        FieldGuideTab tab)
+    {
+        return _tabsByColor[tab];
+    }
+
     public FieldGuideMenu(
         Action spawnRat,
         int uiScale)
@@ -209,11 +215,11 @@ public partial class FieldGuideMenu : Window
 
         Canvas.SetLeft(
             CreatureNameText,
-            BookX(44));
+            BookX(46));
 
         Canvas.SetTop(
             CreatureNameText,
-            BookY(37));
+            BookY(39));
 
         CreatureNameText.FontScale =
             _titleScale;
@@ -231,25 +237,25 @@ public partial class FieldGuideMenu : Window
 
         Canvas.SetLeft(
             CreatureDescriptionText,
-            BookX(104) + ContentPadding);
+            BookX(106) + ContentPadding);
 
         Canvas.SetTop(
             CreatureDescriptionText,
-            BookY(37) + ContentPadding);
+            BookY(39) + ContentPadding);
 
         CreatureDescriptionText.FontScale =
             _uiScale;
 
         CreatureDescriptionText.Width =
-            76 * _bookScale;
+            74 * _bookScale;
 
         Canvas.SetLeft(
             CreatureFieldNotesText,
-            BookX(104) + ContentPadding);
+            BookX(106) + ContentPadding);
 
         Canvas.SetTop(
             CreatureFieldNotesText,
-            BookY(92) + ContentPadding);
+            BookY(94) + ContentPadding);
 
         CreatureFieldNotesText.FontScale =
             _uiScale;
@@ -332,6 +338,9 @@ public partial class FieldGuideMenu : Window
                 ButtonState.Normal);
 
         _currentTab = FieldGuideTab.Red;
+
+        PositionRightTab(
+            _currentTab);
 
         TurningTabImage.Source =
             _tabSpriteSheet.GetFrame(
@@ -700,6 +709,8 @@ public partial class FieldGuideMenu : Window
     private void ShowRightRestingTab(
         FieldGuideTab tab)
     {
+        PositionRightTab(tab);
+
         RestingTabImage.Source =
             _tabSpriteSheet.GetFrame(
                 tab,
@@ -716,6 +727,29 @@ public partial class FieldGuideMenu : Window
 
         LeftTabButton.Visibility =
             Visibility.Collapsed;
+    }
+
+    private void PositionRightTab(
+        FieldGuideTab tab)
+    {
+        FieldGuideTabEntry entry =
+            GetTabEntry(tab);
+
+        Canvas.SetLeft(
+            RestingTabImage,
+            entry.RightX);
+
+        Canvas.SetTop(
+            RestingTabImage,
+            entry.RightY);
+
+        Canvas.SetLeft(
+            RightTabButton,
+            entry.RightX);
+
+        Canvas.SetTop(
+            RightTabButton,
+            entry.RightY);
     }
 
     private async Task TurnToCreatureAsync(
