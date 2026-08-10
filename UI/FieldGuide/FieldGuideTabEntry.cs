@@ -11,7 +11,6 @@ namespace Desktop_Creatures.UI.FieldGuide
         public required FieldGuideTab Tab { get; init; }
         public required string CreatureId { get; init; }
 
-        public int RightX { get; init; }
         public int RightY { get; init; }
     }
 }

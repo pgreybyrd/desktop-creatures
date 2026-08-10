@@ -60,6 +60,9 @@ public partial class FieldGuideMenu : Window
     private readonly TabSpriteSheet _tabSpriteSheet;
     private const int TabWidth = 7;
     private const int TabHeight = 8;
+    private const int RightTabX = 181;
+
+    private const int PageTurnFrameDelayMs = 40;
 
     private bool _isPageTurning;
     private FieldGuideTab _currentTab = FieldGuideTab.Red;
@@ -79,22 +82,6 @@ public partial class FieldGuideMenu : Window
         double X,
         double Y,
         bool IsMirrored);
-
-    private readonly TabTurnPose[] _redTabTurnPath =
-    [
-        new(181, 40, false), // frame 0
-        new(176, 38, false), // frame 1
-        new(169, 34, false), // frame 2
-        new(158, 28, false), // frame 3
-        new(144, 21, false), // frame 4
-        new(120, 16, false), // frame 5
-
-        new(87,  16, true),  // frame 6: page crosses center
-        new(58,  23, true),  // frame 7
-        new(35,  31, true),  // frame 8
-        new(20,  38, true),  // frame 9
-        new(13,  40, true)   // frame 10
-    ];
 
     private static void ApplyTabPose(
         WpfImage tabImage,
@@ -126,23 +113,24 @@ public partial class FieldGuideMenu : Window
         _uiScale;
 
     private static TabTurnPose[] CreateTabTurnPath(
-        double startY)
+        int startY)
     {
+        int yOffset = startY - 40;
+
         return
         [
-            new(190, startY, false),
-            new(182, startY - 2, false),
-            new(172, startY - 5, false),
-            new(158, startY - 8, false),
-            new(143, startY - 10, false),
-            new(125, startY - 11, false),
+            new(181, 40 + yOffset, false),
+            new(176, 38 + yOffset, false),
+            new(169, 34 + yOffset, false),
+            new(158, 30 + yOffset, false),
+            new(144, 24 + yOffset, false),
+            new(120, 21 + yOffset, false),
 
-            new(105, startY - 11, true),
-            new(87,  startY - 10, true),
-            new(70,  startY - 8, true),
-            new(56,  startY - 5, true),
-            new(45,  startY - 2, true),
-            new(37,  startY, true)
+            new(87,  20 + yOffset, true),
+            new(58,  24 + yOffset, true),
+            new(35,  29 + yOffset, true),
+            new(20,  35 + yOffset, true),
+            new(13,  40 + yOffset, true)
         ];
     }
 
@@ -328,15 +316,12 @@ public partial class FieldGuideMenu : Window
                 $"{FieldGuideAssetPath}/Book/PageTurnBase_{index}.png"))
             .ToArray();
 
-        _tabTurnPaths = new()
-        {
-            [FieldGuideTab.Red] = _redTabTurnPath
-            //add other tabs and their turn paths as needed
-        };
-        //_tabTurnPaths[FieldGuideTab.Green] =
-        //[
-        //    // Its own 11 coordinates.
-        //];
+        _tabTurnPaths =
+            _tabsByColor.Values
+                .ToDictionary(
+                    entry => entry.Tab,
+                    entry => CreateTabTurnPath(
+                        entry.RightY));
 
         _tabSpriteSheet = new TabSpriteSheet(
             "Assets/UI/FieldGuide/Common/tabs.png",
@@ -676,7 +661,7 @@ public partial class FieldGuideMenu : Window
                     TurningTabImage,
                     path[i]);
 
-                await Task.Delay(60);
+                await Task.Delay(PageTurnFrameDelayMs);
             }
 
             LeftRestingTabImage.Source =
@@ -748,9 +733,11 @@ public partial class FieldGuideMenu : Window
         FieldGuideTabEntry entry =
             GetTabEntry(tab);
 
+        const int rightTabX = 181;
+
         Canvas.SetLeft(
             RestingTabImage,
-            entry.RightX);
+            rightTabX);
 
         Canvas.SetTop(
             RestingTabImage,
@@ -758,7 +745,7 @@ public partial class FieldGuideMenu : Window
 
         Canvas.SetLeft(
             RightTabButton,
-            entry.RightX);
+            rightTabX);
 
         Canvas.SetTop(
             RightTabButton,
@@ -828,7 +815,7 @@ public partial class FieldGuideMenu : Window
                     TurningTabImage,
                     path[i]);
 
-                await Task.Delay(60);
+                await Task.Delay(PageTurnFrameDelayMs);
             }
 
             PageTurnImage.Visibility =
