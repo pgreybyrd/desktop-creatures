@@ -173,6 +173,21 @@
         </Canvas>
 
         <!-- Actual screen-space content -->
+
+        <Canvas x:Name="FrontPageCanvas"
+                Visibility="Collapsed">
+
+            <controls:BitmapText
+                x:Name="FrontPageTitleText"
+                Text="FIELD GUIDE"/>
+
+            <controls:BitmapText
+                x:Name="FrontPageBodyText"
+                Text="A guide to the creatures&#x0A;living in your desktop ecosystem."
+                LineSpacing="1"/>
+
+        </Canvas>
+
         <Canvas x:Name="CreatureContentCanvas"
                 Visibility="Collapsed"
                 IsHitTestVisible="False">

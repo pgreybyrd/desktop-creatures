@@ -61,6 +61,7 @@ public partial class FieldGuideMenu : Window
     private const int TabWidth = 7;
     private const int TabHeight = 8;
     private const int RightTabX = 181;
+    private const int FrontPageIndex = -1;
     private int _currentTabIndex = -1;
 
     private const int PageTurnFrameDelayMs = 40;
@@ -293,6 +294,30 @@ public partial class FieldGuideMenu : Window
         Width = BookCanvas.Width * _bookScale;
         Height = BookCanvas.Height * _bookScale;
 
+        //front page
+        Canvas.SetLeft(
+            FrontPageTitleText,
+            BookX(45));
+
+        Canvas.SetTop(
+            FrontPageTitleText,
+            BookY(45));
+
+        FrontPageTitleText.FontScale =
+            _titleScale;
+
+        Canvas.SetLeft(
+            FrontPageBodyText,
+            BookX(35));
+
+        Canvas.SetTop(
+            FrontPageBodyText,
+            BookY(80));
+
+        FrontPageBodyText.FontScale =
+            _uiScale;
+        //----------
+
         _openingFrames =
         [
             LoadUiImage(
@@ -470,11 +495,94 @@ public partial class FieldGuideMenu : Window
             return;
         }
 
-        FieldGuideTabEntry destination =
+        FieldGuideTabEntry clicked =
             _tabsByColor[tab];
+
+        int destinationOrder =
+            clicked.Order - 1;
+
+        if (destinationOrder == FrontPageIndex)
+        {
+            await TurnBackwardToFrontPageAsync();
+            return;
+        }
+
+        FieldGuideTabEntry destination =
+            _tabsByColor.Values
+                .Single(entry =>
+                    entry.Order == destinationOrder);
 
         await TurnBackwardToAsync(
             destination);
+    }
+
+    private async Task TurnBackwardToFrontPageAsync()
+    {
+        if (_isOpening || _isPageTurning)
+            return;
+
+        FieldGuideTabEntry current =
+            _tabsByColor[_currentTab];
+
+        if (!_tabTurnPaths.TryGetValue(
+            current.Tab,
+            out var path))
+        {
+            return;
+        }
+
+        _isPageTurning = true;
+
+        SetCreaturePageVisible(false);
+
+        TurningTabImage.Source =
+            _tabSpriteSheet.GetFrame(
+                current.Tab,
+                ButtonState.Normal);
+
+        TurningTabImage.Visibility =
+            Visibility.Visible;
+
+        try
+        {
+            PageTurnImage.Visibility =
+                Visibility.Visible;
+
+            for (int i = _pageTurnFrames.Length - 1;
+                 i >= 0;
+                 i--)
+            {
+                PageTurnImage.Source =
+                    _pageTurnFrames[i];
+
+                ApplyTabPose(
+                    TurningTabImage,
+                    path[i]);
+
+                await Task.Delay(
+                    PageTurnFrameDelayMs);
+            }
+
+            _currentTabIndex =
+                FrontPageIndex;
+
+            _currentCreatureId = null;
+
+            UpdateRestingTabs();
+
+            FrontPageCanvas.Visibility =
+                Visibility.Visible;
+        }
+        finally
+        {
+            PageTurnImage.Visibility =
+                Visibility.Collapsed;
+
+            TurningTabImage.Visibility =
+                Visibility.Collapsed;
+
+            _isPageTurning = false;
+        }
     }
 
     private void Tab_MouseEnter(
@@ -646,7 +754,8 @@ public partial class FieldGuideMenu : Window
 
         _isOpening = true;
 
-        BookBaseImage.Visibility = Visibility.Collapsed;
+        BookBaseImage.Visibility = 
+            Visibility.Collapsed;
 
         RightTabsCanvas.Visibility =
             Visibility.Collapsed;
@@ -654,7 +763,8 @@ public partial class FieldGuideMenu : Window
         SetSpawnButtonVisible(false);
 
         PageTurnImage.Source = _openingFrames[0];
-        PageTurnImage.Visibility = Visibility.Visible;
+        PageTurnImage.Visibility = 
+            Visibility.Visible;
 
         try
         {
@@ -668,7 +778,9 @@ public partial class FieldGuideMenu : Window
         {
             _isOpening = false;
 
-            
+            FrontPageCanvas.Visibility =
+                Visibility.Visible;
+
             PageTurnImage.Visibility =
                 Visibility.Collapsed;
 
@@ -794,7 +906,19 @@ public partial class FieldGuideMenu : Window
 
         _isPageTurning = true;
 
+        FrontPageCanvas.Visibility =
+            Visibility.Collapsed;
+
         SetCreaturePageVisible(false);
+
+        FieldGuideTabControl controls =
+            _tabControls[current.Tab];
+
+        controls.LeftImage.Visibility =
+            Visibility.Collapsed;
+
+        controls.LeftButton.Visibility =
+            Visibility.Collapsed;
 
         TurningTabImage.Source =
             _tabSpriteSheet.GetFrame(
@@ -879,6 +1003,18 @@ public partial class FieldGuideMenu : Window
 
         _isPageTurning = true;
 
+        FrontPageCanvas.Visibility =
+            Visibility.Collapsed;
+
+        FieldGuideTabControl controls =
+            _tabControls[destination.Tab];
+
+        controls.RightImage.Visibility =
+            Visibility.Collapsed;
+
+        controls.RightButton.Visibility =
+            Visibility.Collapsed;
+
         TurningTabImage.Source =
             _tabSpriteSheet.GetFrame(
                 destination.Tab,
@@ -890,6 +1026,9 @@ public partial class FieldGuideMenu : Window
         try
         {
             SetCreaturePageVisible(false);
+
+            FrontPageCanvas.Visibility =
+                Visibility.Collapsed;
 
             PageTurnImage.Visibility =
                 Visibility.Visible;
