@@ -1,0 +1,16 @@
+{
+  "tabs": [
+    {
+      "tab": "Red",
+      "creatureId": "rat",
+      "rightX": 181,
+      "rightY": 40
+    },
+    {
+      "tab": "Green",
+      "creatureId": "eagle",
+      "rightX": 181,
+      "rightY": 50
+    }
+  ]
+}

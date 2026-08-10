@@ -74,12 +74,13 @@ public partial class FieldGuideMenu : Window
     private FieldGuidePage _currentPage = FieldGuidePage.Cover;
 
     //creature pages
-    //private readonly BitmapImage _ratPage;
     private readonly BitmapImage _spawnButton;
     private readonly BitmapImage _spawnButtonPressed;
     private readonly BitmapImage _spawnButtonHover;
 
-    private readonly FieldGuideEntry _ratEntry;
+    private readonly Dictionary<string, FieldGuideEntry> _creatureEntries;
+
+    private string? _currentCreatureId;
 
     private bool _isOpening;
 
@@ -262,16 +263,14 @@ public partial class FieldGuideMenu : Window
 
         Canvas.SetLeft(
             SpawnButtonImage,
-            BookX(121));
+            BookX(128));
 
         Canvas.SetTop(
             SpawnButtonImage,
-            BookY(127));
+            BookY(128));
 
         SpawnButtonImage.Visibility = Visibility.Visible;
 
-        //_ratPage = LoadUiImage(
-        //    $"{FieldGuideAssetPath}/Common/RatPage.png");
         _spawnButton = LoadUiImage(
             $"{FieldGuideAssetPath}/Common/button_spawn.png");
         _spawnButtonPressed = LoadUiImage(
@@ -286,12 +285,6 @@ public partial class FieldGuideMenu : Window
 
         SpawnButtonImage.Height =
             _spawnButton.PixelHeight * _uiScale;
-
-        //_ratPortraitFrames = Enumerable
-        //    .Range(0, 26) 
-        //    .Select(index => LoadUiImage(
-        //        $"{FieldGuideAssetPath}/Pages/Sprites/Rat/ratPortrait_{index}.png"))
-        //    .ToArray();
 
         Width = BookCanvas.Width * _bookScale;
         Height = BookCanvas.Height * _bookScale;
@@ -601,8 +594,6 @@ public partial class FieldGuideMenu : Window
             return;
         }
 
-        //StopRatPortraitAnimation();
-
         _isPageTurning = true;
 
         LeftTabButton.IsEnabled = false;
@@ -610,9 +601,6 @@ public partial class FieldGuideMenu : Window
 
         LeftRestingTabImage.Visibility =
             Visibility.Collapsed;
-        //SpawnRatButton.Visibility = Visibility.Collapsed;
-
-        SectionDetailImage.Source = null;
 
         TurningTabImage.Source =
             _tabSpriteSheet.GetFrame(
@@ -788,8 +776,6 @@ public partial class FieldGuideMenu : Window
 
     private void ShowPageContent(FieldGuidePage page)
     {
-        SectionDetailImage.Source = null;
-
         SetCreaturePageVisible(false);
 
         switch (page)
@@ -798,6 +784,12 @@ public partial class FieldGuideMenu : Window
                 SetCreaturePageVisible(true);
                 break;
         }
+    }
+
+    private void StartCreaturePortraitAnimation()
+    {
+        // Implementation for starting the creature portrait animation.
+        // This could involve setting up a timer or task to cycle through frames.
     }
 
     private void ShowLeftRestingTab(
@@ -841,54 +833,6 @@ public partial class FieldGuideMenu : Window
             DragMove();
         }
     }
-
-    //private void StartRatPortraitAnimation()
-    //{
-    //    StopRatPortraitAnimation();
-
-    //    _ratPortraitAnimationCancellation =
-    //        new CancellationTokenSource();
-
-    //    _ = PlayRatPortraitAnimationAsync(
-    //        _ratPortraitAnimationCancellation.Token);
-    //}
-
-    //private void StopRatPortraitAnimation()
-    //{
-    //    _ratPortraitAnimationCancellation?.Cancel();
-    //    _ratPortraitAnimationCancellation?.Dispose();
-    //    _ratPortraitAnimationCancellation = null;
-
-    //    RatPortraitImage.Visibility =
-    //        Visibility.Collapsed;
-    //}
-
-    //private async Task PlayRatPortraitAnimationAsync(
-    //    CancellationToken cancellationToken)
-    //{
-    //    RatPortraitImage.Visibility =
-    //        Visibility.Visible;
-
-    //    while (!cancellationToken.IsCancellationRequested &&
-    //           _currentPage == FieldGuidePage.Rat)
-    //    {
-    //        foreach (var frame in _ratPortraitFrames)
-    //        {
-    //            cancellationToken.ThrowIfCancellationRequested();
-
-    //            RatPortraitImage.Source = frame;
-
-    //            await Task.Delay(
-    //                120,
-    //                cancellationToken);
-    //        }
-
-    //        // A small pause prevents the idle from feeling frantic.
-    //        await Task.Delay(
-    //            700,
-    //            cancellationToken);
-    //    }
-    //}
 
     private static BitmapImage LoadUiImage(string path)
     {

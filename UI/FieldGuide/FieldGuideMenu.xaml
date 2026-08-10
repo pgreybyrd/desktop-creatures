@@ -58,9 +58,9 @@
                    IsHitTestVisible="False"/>
 
             <Canvas x:Name="CreatureEntryCanvas"
-                    Visibility="Collapsed"
                     Width="201"
                     Height="166"
+                    Visibility="Collapsed"
                     IsHitTestVisible="False">
 
                 <!-- LEFT PAGE -->
@@ -115,12 +115,12 @@
                         BorderBrush="Purple"
                         BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
-                <Border Canvas.Left="121"
-                        Canvas.Top="127"
-                        Width="42"
-                        Height="14"
+                <Border Canvas.Left="128"
+                        Canvas.Top="128"
+                        Width="28"
+                        Height="13"
                         BorderBrush="Yellow"
-                        BorderThickness="1"/>
+                        BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
             </Canvas>
 
@@ -132,22 +132,6 @@
                    Stretch="None"
                    Visibility="Collapsed"
                    IsHitTestVisible="False"/>
-
-            <Image x:Name="SectionDetailImage"
-                   Canvas.Left="0"
-                   Canvas.Top="0"
-                   Width="201"
-                   Height="166"
-                   Stretch="None"
-                   IsHitTestVisible="False"/>
-
-            <Canvas x:Name="RightTabsCanvas"
-                Width="201"
-                Height="166"/>
-
-            <Canvas x:Name="LeftTabsCanvas"
-                Width="201"
-                Height="166"/>
 
             <Border x:Name="BookDragArea"
                     Canvas.Left="0"
@@ -202,16 +186,16 @@
 
             <Button x:Name="SpawnCreatureButton"
                     Style="{StaticResource InvisibleTabButton}"
-                    Canvas.Left="121"
-                    Canvas.Top="127"
-                    Width="42"
-                    Height="14"
                     Visibility="Collapsed"
+                    Canvas.Left="128"
+                    Canvas.Top="128"
+                    Width="28"
+                    Height="13"
                     Click="SpawnCreature_Click"
                     MouseEnter="SpawnCreatureButton_MouseEnter"
                     MouseLeave="SpawnCreatureButton_MouseLeave"
                     PreviewMouseDown="SpawnCreatureButton_MouseLeftButtonDown"
-                    PreviewMouseUp="SpawnCreatureButton_MouseUp"/>
+                    PreviewMouseUp="SpawnCreatureButton_MouseUp" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
             <Button x:Name="LeftTabButton"
                     Style="{StaticResource InvisibleTabButton}"
@@ -254,8 +238,6 @@
                 LineSpacing="1"/>
 
             <Image x:Name="SpawnButtonImage"
-                   Canvas.Left="118"
-                   Canvas.Top="125"
                    Stretch="Fill"
                    RenderOptions.BitmapScalingMode="NearestNeighbor"
                    IsHitTestVisible="False"/>
