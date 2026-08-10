@@ -11,6 +11,9 @@ using WpfButton = System.Windows.Controls.Button;
 using WpfMouseEventArgs = System.Windows.Input.MouseEventArgs;
 using WpfMouseButtonEventArgs = System.Windows.Input.MouseButtonEventArgs;
 using WpfMouseButtonState = System.Windows.Input.MouseButtonState;
+using System.IO;
+using System.Text.Json;
+using Desktop_Creatures.UI.FieldGuide;
 
 namespace Desktop_Creatures;
 
@@ -52,6 +55,8 @@ public partial class FieldGuideMenu : Window
     private readonly Action _spawnRat;
 
     private readonly int _uiScale;
+    private readonly int _titleScale;
+    private readonly int _bookScale;
 
     private readonly BitmapImage[] _openingFrames;
     private readonly BitmapImage _bookBase;
@@ -73,6 +78,8 @@ public partial class FieldGuideMenu : Window
     private readonly BitmapImage _spawnButton;
     private readonly BitmapImage _spawnButtonPressed;
     private readonly BitmapImage _spawnButtonHover;
+
+    private readonly FieldGuideEntry _ratEntry;
 
     private bool _isOpening;
 
@@ -125,6 +132,15 @@ public partial class FieldGuideMenu : Window
         FieldGuideTab,
         TabTurnPose[]> _tabTurnPaths;
 
+    private int BookX(int x) =>
+        x * _bookScale;
+
+    private int BookY(int y) =>
+        y * _bookScale;
+
+    private int ContentPadding =>
+        _uiScale;
+
     private static TabTurnPose[] CreateTabTurnPath(
         double startY)
     {
@@ -146,6 +162,28 @@ public partial class FieldGuideMenu : Window
         ];
     }
 
+    private static FieldGuideEntry LoadFieldGuideEntry(
+        string creatureId)
+    {
+        string path = Path.Combine(
+            AppContext.BaseDirectory,
+            "Assets",
+            "Data",
+            "FieldGuide",
+            $"{creatureId}.json");
+
+        string json = File.ReadAllText(path);
+
+        return JsonSerializer.Deserialize<FieldGuideEntry>(
+            json,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            })
+            ?? throw new InvalidOperationException(
+                $"Could not load Field Guide entry '{creatureId}'.");
+    }
+
     public FieldGuideMenu(
         Action spawnRat,
         int uiScale)
@@ -153,7 +191,84 @@ public partial class FieldGuideMenu : Window
         InitializeComponent();
 
         _spawnRat = spawnRat;
-        _uiScale = uiScale + 1;
+
+        _uiScale = uiScale;
+        _titleScale = uiScale + 1;
+        _bookScale = uiScale + 2;
+
+        FieldGuideEntry ratEntry =
+            LoadFieldGuideEntry("rat");
+
+        DataContext = ratEntry;
+
+        BookCanvas.LayoutTransform =
+            new ScaleTransform(_bookScale, _bookScale);
+
+        CreatureContentCanvas.Width =
+            BookCanvas.Width * _bookScale;
+
+        CreatureContentCanvas.Height =
+            BookCanvas.Height * _bookScale;
+
+        Canvas.SetLeft(
+            CreatureNameText,
+            BookX(44));
+
+        Canvas.SetTop(
+            CreatureNameText,
+            BookY(37));
+
+        CreatureNameText.FontScale =
+            _titleScale;
+
+        Canvas.SetLeft(
+            CreatureFactsText,
+            BookX(22) + ContentPadding);
+
+        Canvas.SetTop(
+            CreatureFactsText,
+            BookY(109) + ContentPadding);
+
+        CreatureFactsText.FontScale =
+            _uiScale;
+
+        Canvas.SetLeft(
+            CreatureDescriptionText,
+            BookX(104) + ContentPadding);
+
+        Canvas.SetTop(
+            CreatureDescriptionText,
+            BookY(37) + ContentPadding);
+
+        CreatureDescriptionText.FontScale =
+            _uiScale;
+
+        CreatureDescriptionText.Width =
+            76 * _bookScale;
+
+        Canvas.SetLeft(
+            CreatureFieldNotesText,
+            BookX(104) + ContentPadding);
+
+        Canvas.SetTop(
+            CreatureFieldNotesText,
+            BookY(92) + ContentPadding);
+
+        CreatureFieldNotesText.FontScale =
+            _uiScale;
+
+        CreatureFieldNotesText.Width =
+            76 * _bookScale;
+
+        Canvas.SetLeft(
+            SpawnButtonImage,
+            BookX(121));
+
+        Canvas.SetTop(
+            SpawnButtonImage,
+            BookY(127));
+
+        SpawnButtonImage.Visibility = Visibility.Visible;
 
         //_ratPage = LoadUiImage(
         //    $"{FieldGuideAssetPath}/Common/RatPage.png");
@@ -164,17 +279,22 @@ public partial class FieldGuideMenu : Window
         _spawnButtonHover = LoadUiImage(
             $"{FieldGuideAssetPath}/Common/button_hover_spawn.png");
 
+        SpawnButtonImage.Source = _spawnButton;
+
+        SpawnButtonImage.Width =
+            _spawnButton.PixelWidth * _uiScale;
+
+        SpawnButtonImage.Height =
+            _spawnButton.PixelHeight * _uiScale;
+
         //_ratPortraitFrames = Enumerable
         //    .Range(0, 26) 
         //    .Select(index => LoadUiImage(
         //        $"{FieldGuideAssetPath}/Pages/Sprites/Rat/ratPortrait_{index}.png"))
         //    .ToArray();
 
-        MainCanvas.LayoutTransform =
-            new ScaleTransform(_uiScale, _uiScale);
-
-        Width = MainCanvas.Width * _uiScale;
-        Height = MainCanvas.Height * _uiScale;
+        Width = BookCanvas.Width * _bookScale;
+        Height = BookCanvas.Height * _bookScale;
 
         _openingFrames =
         [
@@ -255,12 +375,6 @@ public partial class FieldGuideMenu : Window
 
         BookBaseImage.Visibility = Visibility.Collapsed;
 
-        //CreatureTitleText.Visibility =
-        //    Visibility.Collapsed;
-
-        //CreatureDescriptionText.Visibility =
-        //    Visibility.Collapsed;
-
         SetSpawnButtonVisible(false);
 
         PageTurnImage.Source = _openingFrames[0];
@@ -298,22 +412,63 @@ public partial class FieldGuideMenu : Window
         }
     }
 
-    private void SetSpawnButtonVisible(
-        bool visible)
+    private void SetSpawnButtonVisible(bool visible)
     {
-        var visibility = visible
-            ? Visibility.Visible
-            : Visibility.Collapsed;
+        var visibility =
+            visible
+                ? Visibility.Visible
+                : Visibility.Collapsed;
 
-        SpawnRatButton.Visibility = visibility;
-        SpawnRatImage.Visibility = visibility;
+        SpawnCreatureButton.Visibility = visibility;
+        SpawnButtonImage.Visibility = visibility;
     }
 
-    private void SpawnRat_Click(
+    private void SetCreaturePageVisible(bool visible)
+    {
+        var visibility =
+            visible
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+
+        CreatureEntryCanvas.Visibility = visibility;
+        CreatureContentCanvas.Visibility = visibility;
+
+        SetSpawnButtonVisible(visible);
+    }
+
+    private void SpawnCreature_Click(
         object sender,
         RoutedEventArgs e)
     {
         _spawnRat();
+    }
+
+    private void SpawnCreatureButton_MouseEnter(
+        object sender,
+        WpfMouseEventArgs e)
+    {
+        SpawnButtonImage.Source = _spawnButtonHover;
+    }
+
+    private void SpawnCreatureButton_MouseLeave(
+        object sender,
+        WpfMouseEventArgs e)
+    {
+        SpawnButtonImage.Source = _spawnButton;
+    }
+
+    private void SpawnCreatureButton_MouseLeftButtonDown(
+        object sender,
+        WpfMouseEventArgs e)
+    {
+        SpawnButtonImage.Source = _spawnButtonPressed;
+    }
+
+    private void SpawnCreatureButton_MouseUp(
+        object sender,
+        WpfMouseEventArgs e)
+    {
+        SpawnButtonImage.Source = _spawnButtonHover;
     }
 
     private async void RightTabButton_Click(
@@ -455,7 +610,7 @@ public partial class FieldGuideMenu : Window
 
         LeftRestingTabImage.Visibility =
             Visibility.Collapsed;
-        SpawnRatButton.Visibility = Visibility.Collapsed;
+        //SpawnRatButton.Visibility = Visibility.Collapsed;
 
         SectionDetailImage.Source = null;
 
@@ -501,6 +656,8 @@ public partial class FieldGuideMenu : Window
                 Visibility.Collapsed;
 
             _currentPage = FieldGuidePage.Cover;
+
+            SetCreaturePageVisible(false);
 
             ShowRightRestingTab(_currentTab);
         }
@@ -633,32 +790,12 @@ public partial class FieldGuideMenu : Window
     {
         SectionDetailImage.Source = null;
 
-        //CreatureTitleText.Visibility =
-        //    Visibility.Collapsed;
-
-        //CreatureDescriptionText.Visibility =
-        //    Visibility.Collapsed;
-
-        SetSpawnButtonVisible(false);
+        SetCreaturePageVisible(false);
 
         switch (page)
         {
             case FieldGuidePage.Rat:
-                //SectionDetailImage.Source = _ratPage;
-
-                //CreatureTitleText.Text = "RAT";
-
-                //CreatureDescriptionText.Text =
-                //    "Tiny paws.\r\nLarge appetite.\r\nQuestionable priorities.";
-
-                ////CreatureTitleText.Visibility =
-                ////    Visibility.Visible;
-
-                //CreatureDescriptionText.Visibility =
-                //    Visibility.Visible;
-
-                SetSpawnButtonVisible(true);
-                //StartRatPortraitAnimation();
+                SetCreaturePageVisible(true);
                 break;
         }
     }
@@ -703,35 +840,6 @@ public partial class FieldGuideMenu : Window
         {
             DragMove();
         }
-    }
-
-    private void SpawnRatButton_MouseEnter(
-        object sender,
-        WpfMouseEventArgs e)
-    {
-        SpawnRatImage.Source = _spawnButtonHover;
-        SpawnRatImage.Visibility = Visibility.Visible;
-    }
-    private void SpawnRatButton_MouseLeave(
-        object sender,
-        WpfMouseEventArgs e)
-    {
-        SpawnRatImage.Source = _spawnButton;
-        SpawnRatImage.Visibility = Visibility.Visible;
-    }
-    private void SpawnRatButton_MouseLeftButtonDown(
-        object sender,
-        WpfMouseEventArgs e)
-    {
-        SpawnRatImage.Source = _spawnButtonPressed;
-        SpawnRatImage.Visibility = Visibility.Visible;
-    }
-    private void SpawnRatButton_MouseUp(
-        object sender,
-        WpfMouseEventArgs e)
-    {
-        SpawnRatImage.Source = _spawnButtonHover;
-        SpawnRatImage.Visibility = Visibility.Visible;
     }
 
     //private void StartRatPortraitAnimation()

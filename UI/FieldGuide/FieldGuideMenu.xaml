@@ -43,11 +43,11 @@
     </Window.Resources>
 
     <Grid>
-        <Canvas x:Name="MainCanvas"
-                Width="201" 
-                Height="166"
-                RenderOptions.BitmapScalingMode="NearestNeighbor">
-
+        <!-- Scaled as one giant pixel-art book -->
+        <Canvas x:Name="BookCanvas"
+            Width="201"
+            Height="166">
+            <!-- book, page turns, tabs, debug regions -->
 
             <Image x:Name="BookBaseImage"
                    Canvas.Left="0"
@@ -58,56 +58,65 @@
                    IsHitTestVisible="False"/>
 
             <Canvas x:Name="CreatureEntryCanvas"
+                    Visibility="Collapsed"
                     Width="201"
                     Height="166"
                     IsHitTestVisible="False">
 
                 <!-- LEFT PAGE -->
 
-                <Border Canvas.Left="22"
+                <Border Canvas.Left="20"
                         Canvas.Top="37"
                         Width="78"
                         Height="12"
                         BorderBrush="Red"
-                        BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center">
+
+                </Border>
 
                 <!-- CREATURE PORTRAIT REGION -->
 
                 <!-- Creature animation will eventually go here -->
-                <Border Canvas.Left="30"
+                <Border Canvas.Left="28"
                         Canvas.Top="54"
                         Width="62"
                         Height="47"
                         BorderBrush="Cyan"
                         BorderThickness="1"
-                        IsHitTestVisible="False" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                        IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
-                <Border Canvas.Left="22"
+                <Border Canvas.Left="34"
+                        Canvas.Top="60"
+                        Width="50"
+                        Height="35"
+                        BorderBrush="Blue"
+                        BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <Border Canvas.Left="20"
                         Canvas.Top="107"
                         Width="78"
                         Height="34"
                         BorderBrush="Green"
-                        BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-
+                        BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
                 <!-- RIGHT PAGE -->
 
-                <Border Canvas.Left="111"
+                <Border Canvas.Left="104"
                         Canvas.Top="37"
-                        Width="67"
+                        Width="76"
                         Height="50"
                         BorderBrush="Orange"
-                        BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
-                <Border Canvas.Left="111"
+                <Border Canvas.Left="104"
                         Canvas.Top="92"
-                        Width="67"
+                        Width="76"
                         Height="30"
                         BorderBrush="Purple"
                         BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
-                <Border Canvas.Left="124"
-                        Canvas.Top="126"
+                <Border Canvas.Left="121"
+                        Canvas.Top="127"
                         Width="42"
                         Height="14"
                         BorderBrush="Yellow"
@@ -147,33 +156,6 @@
                     Height="166"
                     Background="Transparent"
                     MouseLeftButtonDown="BookDragArea_MouseLeftButtonDown"/>
-
-
-
-            <!--<TextBlock x:Name="CreatureDescriptionText"
-                       Canvas.Left="128"
-                       Canvas.Top="63"
-                       Width="57"
-                       Height="44"
-                       Text="Tiny paws.
-                            Large appetite.
-                            Questionable priorities."
-                       TextWrapping="Wrap"
-                       FontFamily="Assets/Fonts/#Your Font Name"
-                       FontSize="7"
-                       Foreground="#21160F"
-                       TextAlignment="Center"
-                       IsHitTestVisible="False"/>-->
-
-            <!--<Image x:Name="RatPortraitImage"
-                   Canvas.Left="49"
-                   Canvas.Top="59"
-                   Width="48"
-                   Height="56"
-                   Stretch="None"
-                   Visibility="Collapsed"
-                   IsHitTestVisible="False"
-                   RenderOptions.BitmapScalingMode="NearestNeighbor"/>-->
 
             <Image x:Name="RestingTabImage"
                    Canvas.Left="181"
@@ -218,25 +200,18 @@
                 </Image.RenderTransform>
             </Image>
 
-            <Image x:Name="SpawnRatImage"
-                   Source="Assets/UI/FieldGuide/Pages/button_spawn.png"
-                   Canvas.Left="114"
-                   Canvas.Top="115"
-                   Width="56"
-                   Height="25"/>
-
-            <Button x:Name="SpawnRatButton"
+            <Button x:Name="SpawnCreatureButton"
                     Style="{StaticResource InvisibleTabButton}"
-                    Canvas.Left="114"
-                    Canvas.Top="115"
-                    Width="48"
-                    Height="18"
+                    Canvas.Left="121"
+                    Canvas.Top="127"
+                    Width="42"
+                    Height="14"
                     Visibility="Collapsed"
-                    Click="SpawnRat_Click"
-                    MouseEnter="SpawnRatButton_MouseEnter"
-                    MouseLeave="SpawnRatButton_MouseLeave"
-                    PreviewMouseDown="SpawnRatButton_MouseLeftButtonDown"
-                    PreviewMouseUp="SpawnRatButton_MouseUp"/>
+                    Click="SpawnCreature_Click"
+                    MouseEnter="SpawnCreatureButton_MouseEnter"
+                    MouseLeave="SpawnCreatureButton_MouseLeave"
+                    PreviewMouseDown="SpawnCreatureButton_MouseLeftButtonDown"
+                    PreviewMouseUp="SpawnCreatureButton_MouseUp"/>
 
             <Button x:Name="LeftTabButton"
                     Style="{StaticResource InvisibleTabButton}"
@@ -251,6 +226,39 @@
                     MouseLeave="LeftTabButton_MouseLeave"
                     PreviewMouseLeftButtonDown="LeftTabButton_MouseDown"
                     PreviewMouseLeftButtonUp="LeftTabButton_MouseUp"/>
+
+        </Canvas>
+
+        <!-- Actual screen-space content -->
+        <Canvas x:Name="CreatureContentCanvas"
+                Visibility="Collapsed"
+                IsHitTestVisible="False">
+
+            <controls:BitmapText
+                x:Name="CreatureNameText"
+                Text="{Binding Name}"/>
+
+            <controls:BitmapText
+                x:Name="CreatureFactsText"
+                Text="{Binding FactsText}"
+                LineSpacing="1"/>
+
+            <controls:BitmapText
+                x:Name="CreatureDescriptionText"
+                Text="{Binding Description}"
+                LineSpacing="1"/>
+
+            <controls:BitmapText
+                x:Name="CreatureFieldNotesText"
+                Text="{Binding FieldNotesText}"
+                LineSpacing="1"/>
+
+            <Image x:Name="SpawnButtonImage"
+                   Canvas.Left="118"
+                   Canvas.Top="125"
+                   Stretch="Fill"
+                   RenderOptions.BitmapScalingMode="NearestNeighbor"
+                   IsHitTestVisible="False"/>
 
         </Canvas>
     </Grid>
