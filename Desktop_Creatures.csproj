@@ -1369,4 +1369,8 @@
     <Folder Include="Assets\Items\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WpfBitmapFonts\WpfBitmapFonts.Core\WpfBitmapFonts.Core.csproj" />
+  </ItemGroup>
+
 </Project>

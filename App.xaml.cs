@@ -1,6 +1,6 @@
 ﻿using Desktop_Creatures.Tools.Fonts;
 using System.Windows;
-using Desktop_Creatures.Rendering.Fonts;
+using WpfBitmapFonts.Core.Fonts;
 using System.IO;
 
 namespace Desktop_Creatures
