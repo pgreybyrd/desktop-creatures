@@ -214,9 +214,13 @@
                 Visibility="Collapsed"
                 IsHitTestVisible="False">
 
-            <controls:BitmapText
-                x:Name="CreatureNameText"
-                Text="{Binding Name}"/>
+            <Grid x:Name="CreatureNameContainer">
+                <controls:BitmapText
+                    x:Name="CreatureNameText"
+                    Text="{Binding Name}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"/>
+            </Grid>
 
             <controls:BitmapText
                 x:Name="CreatureFactsText"

@@ -176,6 +176,16 @@ public partial class FieldGuideMenu : Window
     {
         return _tabsByColor[tab];
     }
+    private void CenterCreatureName()
+    {
+        int titleCenterX =
+            BookX(59);
+
+        Canvas.SetLeft(
+            CreatureNameText,
+            titleCenterX -
+            (CreatureNameText.ActualWidth / 2));
+    }
 
     public FieldGuideMenu(
         Action spawnRat,
@@ -214,12 +224,15 @@ public partial class FieldGuideMenu : Window
             BookCanvas.Height * _bookScale;
 
         Canvas.SetLeft(
-            CreatureNameText,
-            BookX(46));
+            CreatureNameContainer,
+            BookX(20));
 
         Canvas.SetTop(
-            CreatureNameText,
+            CreatureNameContainer,
             BookY(39));
+
+        CreatureNameContainer.Width =
+            BookX(78);
 
         CreatureNameText.FontScale =
             _titleScale;
@@ -616,8 +629,6 @@ public partial class FieldGuideMenu : Window
 
     private async Task TurnBackAsync()
     {
-        
-
         if (_isOpening || _isPageTurning)
             return;
 
@@ -632,6 +643,8 @@ public partial class FieldGuideMenu : Window
         }
 
         _isPageTurning = true;
+
+        SetCreaturePageVisible(false);
 
         LeftTabButton.IsEnabled = false;
         RightTabButton.IsEnabled = false;
@@ -799,7 +812,10 @@ public partial class FieldGuideMenu : Window
 
         try
         {
-            PageTurnImage.Visibility = Visibility.Visible;
+            SetCreaturePageVisible(false);
+
+            PageTurnImage.Visibility = 
+                Visibility.Visible;
 
             for (int i = 0;
                  i < _pageTurnFrames.Length;
@@ -818,11 +834,8 @@ public partial class FieldGuideMenu : Window
             PageTurnImage.Visibility =
                 Visibility.Collapsed;
 
-            TurningTabImage.Visibility = Visibility.Collapsed;
-
-            _currentTab = tab;
-
-            ShowLeftRestingTab(tab, path[^1]);
+            TurningTabImage.Visibility =
+                Visibility.Collapsed;
 
             _currentTab = tab;
             _currentCreatureId = creatureId;
@@ -855,6 +868,9 @@ public partial class FieldGuideMenu : Window
             entry;
 
         SetCreaturePageVisible(true);
+
+        //Dispatcher.BeginInvoke(
+         //   CenterCreatureName);
     }
 
     private void StartCreaturePortraitAnimation()
