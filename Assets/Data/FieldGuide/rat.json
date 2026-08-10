@@ -10,6 +10,5 @@
     "Investigates new objects.",
     "Most active at night."
   ],
-  "portraitFrame": "Assets/UI/FieldGuide/Creatures/Rat/frame-rat.png",
-  "spawnIcon": "Assets/UI/FieldGuide/Creatures/Rat/spawn-icon-cheese.png"
+  "portraitFrame": "Assets/UI/FieldGuide/Creatures/Rat/frame-rat.png"
 }

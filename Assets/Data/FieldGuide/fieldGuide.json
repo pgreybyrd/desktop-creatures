@@ -3,12 +3,14 @@
     {
       "tab": "Red",
       "creatureId": "rat",
-      "rightY": 40
+      "rightY": 40,
+      "order": 0
     },
     {
       "tab": "Green",
       "creatureId": "eagle",
-      "rightY": 50
+      "rightY": 50,
+      "order": 1
     }
   ]
 }

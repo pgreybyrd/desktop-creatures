@@ -1,15 +1,14 @@
 {
-  "id": "rat",
-  "name": "RAT",
-  "description": "Rats are curious, social creatures with quick paws and quicker noses. They explore anything new, remember where food appears, and are rarely far from some kind of mischief.",
-  "habitat": "Urban",
-  "activity": "Night",
-  "diet": "Omnivore",
+  "id": "eagle",
+  "name": "EAGLE",
+  "description": "A powerful bird of prey with keen eyesight and broad wings built for soaring.",
+  "habitat": "Cliffs",
+  "activity": "Day",
+  "diet": "Carnivore",
   "fieldNotes": [
-    "Loves snacks.",
-    "Investigates new objects.",
-    "Most active at night."
+    "Soars high above the desktop.",
+    "Prefers open space.",
+    "Very dramatic."
   ],
-  "portraitFrame": "Assets/UI/FieldGuide/Creatures/Rat/frame-rat.png",
-  "spawnIcon": "Assets/UI/FieldGuide/Creatures/Rat/spawn-icon-cheese.png"
+  "portraitFrame": "Assets/UI/FieldGuide/Creatures/Eagle/frame-eagle.png"
 }

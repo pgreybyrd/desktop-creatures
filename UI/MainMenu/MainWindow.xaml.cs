@@ -320,7 +320,7 @@ public partial class MainWindow : Window
         }
 
         _fieldGuideMenu = new FieldGuideMenu(
-            SpawnRat,
+            SpawnCreature,
             _uiScale)
         {
             Owner = this
@@ -332,6 +332,26 @@ public partial class MainWindow : Window
         };
 
         _fieldGuideMenu.Show();
+    }
+
+    private void SpawnCreature(string creatureId)
+    {
+        switch (creatureId)
+        {
+            case "rat":
+                SpawnRat();
+                break;
+
+            case "eagle":
+                SpawnEagle();
+                break;
+
+            default:
+                throw new ArgumentOutOfRangeException(
+                    nameof(creatureId),
+                    creatureId,
+                    "Unknown creature.");
+        }
     }
 
     private void ClearRats_Click(object sender, RoutedEventArgs e)
@@ -493,34 +513,6 @@ public partial class MainWindow : Window
 
         return image;
     }
-
-    //private void SpawnRat_MouseEnter(
-    //    object sender,
-    //    WpfMouseEventArgs e)
-    //{
-    //    SpawnRatImage.Source = _spawnRatImages.Hover;
-    //}
-
-    //private void SpawnRat_MouseLeave(
-    //    object sender,
-    //   WpfMouseEventArgs e)
-    //{
-    //    SpawnRatImage.Source = _spawnRatImages.Normal;
-    //}
-
-    //private void SpawnRat_MouseLeftButtonDown(
-    //    object sender,
-    //    WpfMouseButtonEventArgs e)
-    //{
-    //    SpawnRatImage.Source = _spawnRatImages.Pressed;
-    //}
-
-    //private void SpawnRat_MouseUp(
-    //    object sender,
-    //    WpfMouseButtonEventArgs e)
-    //{
-    //    SpawnRatImage.Source = _spawnRatImages.Hover;
-    //}
 
     private void FieldGuide_MouseEnter(
         object sender,

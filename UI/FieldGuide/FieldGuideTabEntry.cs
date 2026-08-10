@@ -12,5 +12,7 @@ namespace Desktop_Creatures.UI.FieldGuide
         public required string CreatureId { get; init; }
 
         public int RightY { get; init; }
+
+        public int Order { get; init; }
     }
 }

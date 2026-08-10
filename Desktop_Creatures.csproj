@@ -638,6 +638,9 @@
     <Content Include="Assets\Fonts\font-MagicalStandard.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\UI\FieldGuide\Creatures\Eagle\frame-eagle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\UI\FieldGuide\Creatures\Rat\frame-rat.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

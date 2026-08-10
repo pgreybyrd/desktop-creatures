@@ -47,7 +47,7 @@ public partial class FieldGuideMenu : Window
     private const string FieldGuideAssetPath =
         "Assets/UI/FieldGuide";
 
-    private readonly Action _spawnRat;
+    private readonly Action<string> _spawnCreature;
 
     private readonly int _uiScale;
     private readonly int _titleScale;
@@ -61,6 +61,7 @@ public partial class FieldGuideMenu : Window
     private const int TabWidth = 7;
     private const int TabHeight = 8;
     private const int RightTabX = 181;
+    private int _currentTabIndex = -1;
 
     private const int PageTurnFrameDelayMs = 40;
 
@@ -176,12 +177,12 @@ public partial class FieldGuideMenu : Window
     }
 
     public FieldGuideMenu(
-        Action spawnRat,
+        Action<string> spawnCreature,
         int uiScale)
     {
         InitializeComponent();
 
-        _spawnRat = spawnRat;
+        _spawnCreature = spawnCreature;
 
         _uiScale = uiScale;
         _titleScale = uiScale + 1;
@@ -328,17 +329,11 @@ public partial class FieldGuideMenu : Window
             TabWidth,
             TabHeight);
 
+        BuildTabs();
+
         BookBaseImage.Source = _openingFrames[0];
 
-        RestingTabImage.Source =
-            _tabSpriteSheet.GetFrame(
-                FieldGuideTab.Red,
-                ButtonState.Normal);
-
         _currentTab = FieldGuideTab.Red;
-
-        PositionRightTab(
-            _currentTab);
 
         TurningTabImage.Source =
             _tabSpriteSheet.GetFrame(
@@ -349,6 +344,292 @@ public partial class FieldGuideMenu : Window
             Visibility.Collapsed;
 
         Loaded += FieldGuideMenu_Loaded;
+    }
+
+    private void BuildTabs()
+    {
+        foreach (FieldGuideTabEntry entry in
+                 _tabsByColor.Values.OrderBy(e => e.Order))
+        {
+            var rightImage =
+                CreateTabImage(entry.Tab);
+
+            var rightButton =
+                CreateTabButton(
+                    entry.Tab,
+                    RightTab_Click);
+
+            var leftImage =
+                CreateTabImage(entry.Tab);
+
+            leftImage.RenderTransformOrigin =
+                new System.Windows.Point(0.5, 0.5);
+
+            leftImage.RenderTransform =
+                new ScaleTransform(-1, 1);
+
+            var leftButton =
+                CreateTabButton(
+                    entry.Tab,
+                    LeftTab_Click);
+
+            Canvas.SetLeft(rightImage, RightTabX);
+            Canvas.SetTop(rightImage, entry.RightY);
+
+            Canvas.SetLeft(rightButton, RightTabX);
+            Canvas.SetTop(rightButton, entry.RightY);
+
+            // For now use the final position from that tab's turn path.
+            TabTurnPose leftPose =
+                _tabTurnPaths[entry.Tab][^1];
+
+            Canvas.SetLeft(leftImage, leftPose.X);
+            Canvas.SetTop(leftImage, leftPose.Y);
+
+            Canvas.SetLeft(leftButton, leftPose.X);
+            Canvas.SetTop(leftButton, leftPose.Y);
+
+            RightTabsCanvas.Children.Add(rightImage);
+            RightTabsCanvas.Children.Add(rightButton);
+
+            LeftTabsCanvas.Children.Add(leftImage);
+            LeftTabsCanvas.Children.Add(leftButton);
+
+            _tabControls[entry.Tab] =
+                new FieldGuideTabControl(
+                    leftImage,
+                    leftButton,
+                    rightImage,
+                    rightButton);
+        }
+
+        UpdateRestingTabs();
+    }
+
+    private WpfImage CreateTabImage(
+        FieldGuideTab tab)
+    {
+        return new WpfImage
+        {
+            Width = TabWidth,
+            Height = TabHeight,
+            Stretch = Stretch.None,
+            IsHitTestVisible = false,
+            Source = _tabSpriteSheet.GetFrame(
+                tab,
+                ButtonState.Normal)
+        };
+    }
+
+    private WpfButton CreateTabButton(
+        FieldGuideTab tab,
+        RoutedEventHandler clickHandler)
+    {
+        var button = new WpfButton
+        {
+            Width = TabWidth,
+            Height = TabHeight,
+            Tag = tab,
+            Style = (Style)FindResource(
+                "InvisibleTabButton")
+        };
+
+        button.Click += clickHandler;
+        button.MouseEnter += Tab_MouseEnter;
+        button.MouseLeave += Tab_MouseLeave;
+        button.PreviewMouseLeftButtonDown += Tab_MouseDown;
+        button.PreviewMouseLeftButtonUp += Tab_MouseUp;
+
+        return button;
+    }
+
+    private async void RightTab_Click(
+        object sender,
+        RoutedEventArgs e)
+    {
+        if (sender is not WpfButton button ||
+            button.Tag is not FieldGuideTab tab)
+        {
+            return;
+        }
+
+        FieldGuideTabEntry destination =
+            _tabsByColor[tab];
+
+        await TurnForwardToAsync(
+            destination);
+    }
+
+    private async void LeftTab_Click(
+        object sender,
+        RoutedEventArgs e)
+    {
+        if (sender is not WpfButton button ||
+            button.Tag is not FieldGuideTab tab)
+        {
+            return;
+        }
+
+        FieldGuideTabEntry destination =
+            _tabsByColor[tab];
+
+        await TurnBackwardToAsync(
+            destination);
+    }
+
+    private void Tab_MouseEnter(
+        object sender,
+        WpfMouseEventArgs e)
+    {
+        FieldGuideTab? tab =
+            GetTabFromButton(sender);
+
+        if (tab is null)
+            return;
+
+        FieldGuideTabControl controls =
+            _tabControls[tab.Value];
+
+        WpfImage image =
+            controls.LeftButton.Visibility ==
+                Visibility.Visible
+                ? controls.LeftImage
+                : controls.RightImage;
+
+        image.Source =
+            _tabSpriteSheet.GetFrame(
+                tab.Value,
+                ButtonState.Hover);
+    }
+
+    private void Tab_MouseLeave(
+        object sender,
+        WpfMouseEventArgs e)
+    {
+        FieldGuideTab? tab =
+            GetTabFromButton(sender);
+
+        if (tab is null)
+            return;
+
+        FieldGuideTabControl controls =
+            _tabControls[tab.Value];
+
+        WpfImage image =
+            controls.LeftButton.Visibility ==
+                Visibility.Visible
+                ? controls.LeftImage
+                : controls.RightImage;
+
+        image.Source =
+            _tabSpriteSheet.GetFrame(
+                tab.Value,
+                ButtonState.Normal);
+    }
+
+    private void Tab_MouseDown(
+        object sender,
+        WpfMouseEventArgs e)
+    {
+        FieldGuideTab? tab =
+            GetTabFromButton(sender);
+
+        if (tab is null)
+            return;
+
+        FieldGuideTabControl controls =
+            _tabControls[tab.Value];
+
+        WpfImage image =
+            controls.LeftButton.Visibility ==
+                Visibility.Visible
+                ? controls.LeftImage
+                : controls.RightImage;
+
+        image.Source =
+            _tabSpriteSheet.GetFrame(
+                tab.Value,
+                ButtonState.Pressed);
+    }
+
+    private void Tab_MouseUp(
+        object sender,
+        WpfMouseEventArgs e)
+    {
+        FieldGuideTab? tab =
+            GetTabFromButton(sender);
+
+        if (tab is null)
+            return;
+
+        FieldGuideTabControl controls =
+            _tabControls[tab.Value];
+
+        WpfImage image =
+            controls.LeftButton.Visibility ==
+                Visibility.Visible
+                ? controls.LeftImage
+                : controls.RightImage;
+
+        image.Source =
+            _tabSpriteSheet.GetFrame(
+                tab.Value,
+                ButtonState.Hover);
+    }
+
+    private sealed record FieldGuideTabControl(
+        WpfImage LeftImage,
+        WpfButton LeftButton,
+        WpfImage RightImage,
+        WpfButton RightButton);
+
+    private readonly Dictionary<
+        FieldGuideTab,
+        FieldGuideTabControl> _tabControls = new();
+
+    private void UpdateRestingTabs()
+    {
+        foreach (FieldGuideTabEntry entry in
+                 _tabsByColor.Values)
+        {
+            var controls =
+                _tabControls[entry.Tab];
+
+            bool isOnLeft =
+                entry.Order <= _currentTabIndex;
+
+            controls.LeftImage.Visibility =
+                isOnLeft
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
+
+            controls.LeftButton.Visibility =
+                isOnLeft
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
+
+            controls.RightImage.Visibility =
+                isOnLeft
+                    ? Visibility.Collapsed
+                    : Visibility.Visible;
+
+            controls.RightButton.Visibility =
+                isOnLeft
+                    ? Visibility.Collapsed
+                    : Visibility.Visible;
+        }
+    }
+
+    private FieldGuideTab? GetTabFromButton(
+        object sender)
+    {
+        if (sender is WpfButton button &&
+            button.Tag is FieldGuideTab tab)
+        {
+            return tab;
+        }
+
+        return null;
     }
 
     private async void FieldGuideMenu_Loaded(
@@ -364,12 +645,11 @@ public partial class FieldGuideMenu : Window
             return;
 
         _isOpening = true;
-        RestingTabImage.Visibility =
-            Visibility.Collapsed;
-
-        RightTabButton.IsEnabled = false;
 
         BookBaseImage.Visibility = Visibility.Collapsed;
+
+        RightTabsCanvas.Visibility =
+            Visibility.Collapsed;
 
         SetSpawnButtonVisible(false);
 
@@ -398,13 +678,8 @@ public partial class FieldGuideMenu : Window
             BookBaseImage.Visibility =
                 Visibility.Visible;
 
-            RestingTabImage.Visibility =
+            RightTabsCanvas.Visibility =
                 Visibility.Visible;
-
-            RightTabButton.Visibility =
-                Visibility.Visible;
-
-            RightTabButton.IsEnabled = true;
         }
     }
 
@@ -464,7 +739,10 @@ public partial class FieldGuideMenu : Window
         object sender,
         RoutedEventArgs e)
     {
-        _spawnRat();
+        if (_currentCreatureId is null)
+            return;
+
+        _spawnCreature(_currentCreatureId);
     }
 
     private void SpawnCreatureButton_MouseEnter(
@@ -495,124 +773,8 @@ public partial class FieldGuideMenu : Window
         SpawnButtonImage.Source = _spawnButtonHover;
     }
 
-    private async void RightTabButton_Click(
-        object sender,
-        RoutedEventArgs e)
-    {
-        FieldGuideTabEntry tabEntry =
-            _tabsByColor[_currentTab];
-
-        await TurnToCreatureAsync(
-            tabEntry.Tab,
-            tabEntry.CreatureId);
-    }
-
-    private async void LeftTabButton_Click(
-        object sender,
-        RoutedEventArgs e)
-    {
-        await TurnBackAsync();
-    }
-
-    private async void TabButton_Click(
-        object sender,
-        RoutedEventArgs e)
-    {
-        if (sender is not WpfButton button ||
-            button.Tag is not FieldGuideTab tab)
-        {
-            return;
-        }
-
-        FieldGuideTabEntry tabEntry =
-            _tabsByColor[tab];
-
-        await TurnToCreatureAsync(
-            tabEntry.Tab,
-            tabEntry.CreatureId);
-    }
-
-    private void RightTabButton_MouseEnter(
-        object sender,
-        WpfMouseEventArgs e)
-    {
-        RestingTabImage.Source =
-            _tabSpriteSheet.GetFrame(
-                _currentTab,
-                ButtonState.Hover);
-    }
-
-    private void RightTabButton_MouseLeave(
-        object sender,
-        WpfMouseEventArgs e)
-    {
-        RestingTabImage.Source =
-            _tabSpriteSheet.GetFrame(
-                _currentTab,
-                ButtonState.Normal);
-    }
-
-    private void RightTabButton_MouseDown(
-        object sender,
-        MouseButtonEventArgs e)
-    {
-        RestingTabImage.Source =
-            _tabSpriteSheet.GetFrame(
-                _currentTab,
-                ButtonState.Pressed);
-    }
-
-    private void RightTabButton_MouseUp(
-        object sender,
-        MouseButtonEventArgs e)
-    {
-        RestingTabImage.Source =
-            _tabSpriteSheet.GetFrame(
-                _currentTab,
-                ButtonState.Hover);
-    }
-
-    private void LeftTabButton_MouseEnter(
-        object sender,
-        WpfMouseEventArgs e)
-    {
-        LeftRestingTabImage.Source =
-            _tabSpriteSheet.GetFrame(
-                _currentTab,
-                ButtonState.Hover);
-    }
-
-    private void LeftTabButton_MouseLeave(
-        object sender,
-        WpfMouseEventArgs e)
-    {
-        LeftRestingTabImage.Source =
-            _tabSpriteSheet.GetFrame(
-                _currentTab,
-                ButtonState.Normal);
-    }
-
-    private void LeftTabButton_MouseDown(
-        object sender,
-        MouseButtonEventArgs e)
-    {
-        LeftRestingTabImage.Source =
-            _tabSpriteSheet.GetFrame(
-                _currentTab,
-                ButtonState.Pressed);
-    }
-
-    private void LeftTabButton_MouseUp(
-        object sender,
-        MouseButtonEventArgs e)
-    {
-        LeftRestingTabImage.Source =
-            _tabSpriteSheet.GetFrame(
-                _currentTab,
-                ButtonState.Hover);
-    }
-
-    private async Task TurnBackAsync()
+    private async Task TurnBackwardToAsync(
+        FieldGuideTabEntry destination)
     {
         if (_isOpening || _isPageTurning)
             return;
@@ -620,8 +782,11 @@ public partial class FieldGuideMenu : Window
         if (_currentCreatureId is null)
             return;
 
+        FieldGuideTabEntry current =
+            _tabsByColor[_currentTab];
+
         if (!_tabTurnPaths.TryGetValue(
-            _currentTab,
+            current.Tab,
             out var path))
         {
             return;
@@ -631,15 +796,9 @@ public partial class FieldGuideMenu : Window
 
         SetCreaturePageVisible(false);
 
-        LeftTabButton.IsEnabled = false;
-        RightTabButton.IsEnabled = false;
-
-        LeftRestingTabImage.Visibility =
-            Visibility.Collapsed;
-
         TurningTabImage.Source =
             _tabSpriteSheet.GetFrame(
-                _currentTab,
+                current.Tab,
                 ButtonState.Normal);
 
         TurningTabImage.Visibility =
@@ -661,16 +820,9 @@ public partial class FieldGuideMenu : Window
                     TurningTabImage,
                     path[i]);
 
-                await Task.Delay(PageTurnFrameDelayMs);
+                await Task.Delay(
+                    PageTurnFrameDelayMs);
             }
-
-            LeftRestingTabImage.Source =
-                _tabSpriteSheet.GetFrame(
-                    _currentTab,
-                    ButtonState.Normal);
-
-            LeftRestingTabImage.Visibility =
-                Visibility.Collapsed;
 
             PageTurnImage.Visibility =
                 Visibility.Collapsed;
@@ -678,9 +830,19 @@ public partial class FieldGuideMenu : Window
             TurningTabImage.Visibility =
                 Visibility.Collapsed;
 
-            SetCreaturePageVisible(false);
+            _currentTabIndex =
+                destination.Order;
 
-            ShowRightRestingTab(_currentTab);
+            _currentTab =
+                destination.Tab;
+
+            _currentCreatureId =
+                destination.CreatureId;
+
+            UpdateRestingTabs();
+
+            ShowCreatureEntry(
+                destination.CreatureId);
         }
         finally
         {
@@ -691,117 +853,45 @@ public partial class FieldGuideMenu : Window
                 Visibility.Collapsed;
 
             _isPageTurning = false;
-
-            LeftTabButton.IsEnabled = false;
-            RightTabButton.IsEnabled = true;
-
-            _currentCreatureId = null;
-
-            SetCreaturePageVisible(false);
-
-            ShowRightRestingTab(
-                _currentTab);
         }
     }
 
-    private void ShowRightRestingTab(
-        FieldGuideTab tab)
-    {
-        PositionRightTab(tab);
-
-        RestingTabImage.Source =
-            _tabSpriteSheet.GetFrame(
-                tab,
-                ButtonState.Normal);
-
-        RestingTabImage.Visibility =
-            Visibility.Visible;
-
-        RightTabButton.Visibility =
-            Visibility.Visible;
-
-        LeftRestingTabImage.Visibility =
-            Visibility.Collapsed;
-
-        LeftTabButton.Visibility =
-            Visibility.Collapsed;
-    }
-
-    private void PositionRightTab(
-        FieldGuideTab tab)
-    {
-        FieldGuideTabEntry entry =
-            GetTabEntry(tab);
-
-        const int rightTabX = 181;
-
-        Canvas.SetLeft(
-            RestingTabImage,
-            rightTabX);
-
-        Canvas.SetTop(
-            RestingTabImage,
-            entry.RightY);
-
-        Canvas.SetLeft(
-            RightTabButton,
-            rightTabX);
-
-        Canvas.SetTop(
-            RightTabButton,
-            entry.RightY);
-    }
-
-    private async Task TurnToCreatureAsync(
-        FieldGuideTab tab,
-        string creatureId)
+    private async Task TurnForwardToAsync(
+        FieldGuideTabEntry destination)
     {
         if (_isOpening || _isPageTurning)
             return;
 
         if (!_tabTurnPaths.TryGetValue(
-            tab,
+            destination.Tab,
             out var path))
         {
             throw new InvalidOperationException(
-                $"No page-turn path exists for tab {tab}.");
+                $"No page-turn path exists for tab {destination.Tab}.");
         }
 
         if (path.Length != _pageTurnFrames.Length)
         {
             throw new InvalidOperationException(
-                $"Tab path for {tab} has {path.Length} poses, " +
+                $"Tab path for {destination.Tab} has {path.Length} poses, " +
                 $"but the page animation has {_pageTurnFrames.Length} frames.");
         }
 
         _isPageTurning = true;
 
-        RightTabButton.IsEnabled = false;
-        LeftTabButton.IsEnabled = false;
-
-        RestingTabImage.Source =
-            _tabSpriteSheet.GetFrame(
-                tab,
-                ButtonState.Normal);
-
-        RestingTabImage.Visibility =
-            Visibility.Collapsed;
-
-        RestingTabImage.Visibility = Visibility.Collapsed;
-        LeftRestingTabImage.Visibility = Visibility.Collapsed;
-
         TurningTabImage.Source =
             _tabSpriteSheet.GetFrame(
-                tab,
+                destination.Tab,
                 ButtonState.Normal);
 
-        TurningTabImage.Visibility = Visibility.Visible;
+        TurningTabImage.Visibility =
+            Visibility.Visible;
 
         try
         {
             SetCreaturePageVisible(false);
 
-            PageTurnImage.Visibility = 
+            PageTurnImage.Visibility =
                 Visibility.Visible;
 
             for (int i = 0;
@@ -815,7 +905,8 @@ public partial class FieldGuideMenu : Window
                     TurningTabImage,
                     path[i]);
 
-                await Task.Delay(PageTurnFrameDelayMs);
+                await Task.Delay(
+                    PageTurnFrameDelayMs);
             }
 
             PageTurnImage.Visibility =
@@ -824,24 +915,29 @@ public partial class FieldGuideMenu : Window
             TurningTabImage.Visibility =
                 Visibility.Collapsed;
 
-            _currentTab = tab;
-            _currentCreatureId = creatureId;
+            _currentTabIndex =
+                destination.Order;
 
-            ShowLeftRestingTab(
-                tab,
-                path[^1]);
+            _currentTab =
+                destination.Tab;
+
+            _currentCreatureId =
+                destination.CreatureId;
+
+            UpdateRestingTabs();
 
             ShowCreatureEntry(
-                creatureId);
+                destination.CreatureId);
         }
         finally
         {
-            TurningTabImage.Visibility = Visibility.Collapsed;
+            PageTurnImage.Visibility =
+                Visibility.Collapsed;
+
+            TurningTabImage.Visibility =
+                Visibility.Collapsed;
 
             _isPageTurning = false;
-
-            RightTabButton.IsEnabled = false;
-            LeftTabButton.IsEnabled = true;
         }
     }
 
@@ -864,38 +960,6 @@ public partial class FieldGuideMenu : Window
     {
         // Implementation for starting the creature portrait animation.
         // This could involve setting up a timer or task to cycle through frames.
-    }
-
-    private void ShowLeftRestingTab(
-        FieldGuideTab tab,
-        TabTurnPose finalPose)
-    {
-        LeftRestingTabImage.Source =
-            _tabSpriteSheet.GetFrame(
-                tab,
-                ButtonState.Normal);
-
-        Canvas.SetLeft(
-            LeftRestingTabImage,
-            finalPose.X);
-
-        Canvas.SetTop(
-            LeftRestingTabImage,
-            finalPose.Y);
-
-        Canvas.SetLeft(
-            LeftTabButton,
-            finalPose.X);
-
-        Canvas.SetTop(
-            LeftTabButton,
-            finalPose.Y);
-
-        LeftRestingTabImage.Visibility =
-            Visibility.Visible;
-
-        LeftTabButton.Visibility =
-            Visibility.Visible;
     }
 
     private void BookDragArea_MouseLeftButtonDown(

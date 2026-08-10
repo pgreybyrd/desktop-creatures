@@ -141,11 +141,13 @@
                     Background="Transparent"
                     MouseLeftButtonDown="BookDragArea_MouseLeftButtonDown"/>
 
-            <Image x:Name="RestingTabImage"
-                   Width="7"
-                   Height="8"
-                   Stretch="None"
-                   IsHitTestVisible="False"/>
+            <Canvas x:Name="LeftTabsCanvas"
+                    Width="201"
+                    Height="166"/>
+
+            <Canvas x:Name="RightTabsCanvas"
+                    Width="201"
+                    Height="166"/>
 
             <Image x:Name="TurningTabImage"
                    Width="7"
@@ -154,31 +156,6 @@
                    Visibility="Collapsed"
                    IsHitTestVisible="False"
                    RenderTransformOrigin="0.5,0.5"/>
-
-            <Button x:Name="RightTabButton"
-                    Style="{StaticResource InvisibleTabButton}"
-                    Width="7"
-                    Height="8"
-                    Click="RightTabButton_Click"
-                    MouseEnter="RightTabButton_MouseEnter"
-                    MouseLeave="RightTabButton_MouseLeave"
-                    PreviewMouseLeftButtonDown="RightTabButton_MouseDown"
-                    PreviewMouseLeftButtonUp="RightTabButton_MouseUp"/>
-
-            <Image x:Name="LeftRestingTabImage"
-                   Canvas.Left="13"
-                   Canvas.Top="40"
-                   Width="7"
-                   Height="8"
-                   Stretch="None"
-                   Visibility="Collapsed"
-                   IsHitTestVisible="False"
-                   RenderTransformOrigin="0.5,0.5">
-
-                <Image.RenderTransform>
-                    <ScaleTransform ScaleX="-1"/>
-                </Image.RenderTransform>
-            </Image>
 
             <Button x:Name="SpawnCreatureButton"
                     Style="{StaticResource InvisibleTabButton}"
@@ -192,20 +169,6 @@
                     MouseLeave="SpawnCreatureButton_MouseLeave"
                     PreviewMouseDown="SpawnCreatureButton_MouseLeftButtonDown"
                     PreviewMouseUp="SpawnCreatureButton_MouseUp" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-
-            <Button x:Name="LeftTabButton"
-                    Style="{StaticResource InvisibleTabButton}"
-                    Canvas.Left="13"
-                    Canvas.Top="40"
-                    Width="7"
-                    Height="8"
-                    Visibility="Collapsed"
-                    IsEnabled="False"
-                    Click="LeftTabButton_Click"
-                    MouseEnter="LeftTabButton_MouseEnter"
-                    MouseLeave="LeftTabButton_MouseLeave"
-                    PreviewMouseLeftButtonDown="LeftTabButton_MouseDown"
-                    PreviewMouseLeftButtonUp="LeftTabButton_MouseUp"/>
 
         </Canvas>
 
