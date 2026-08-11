@@ -2805,6 +2805,7 @@
 
   <ItemGroup>
     <Folder Include="Assets\Items\" />
+    <Folder Include="Logs\" />
     <Folder Include="Rendering\Fonts\" />
     <Folder Include="UI\Controls\" />
   </ItemGroup>

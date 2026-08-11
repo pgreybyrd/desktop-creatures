@@ -1,6 +1,7 @@
 {
 	"workingMonitor": 3,
-	"alwaysOnTop": false,
+	"menusAlwaysOnTop": true,
+	"ecosystemAlwaysOnTop": true,
 	"clickThrough": true,
 	"editMode": false,
 	"spawnLimit": 20,

@@ -94,10 +94,10 @@ public class SurfaceManager
         double x,
         double y,
         int creatureWidth,
-        int creatureHeight)
+        int footOffsetY)
     { 
         double feetX = x + creatureWidth / 2.0;
-        double feetY = y + creatureHeight;
+        double feetY = y + footOffsetY;
 
         return _surfaces
             .Where(s =>
@@ -131,23 +131,45 @@ public class SurfaceManager
     {
         foreach (var screen in Forms.Screen.AllScreens)
         {
-            var area = screen.Bounds;
+            var workArea =
+                ToDipRectangle(screen.WorkingArea);
 
-            //System.Windows.MessageBox.Show(
-                //$"SCREEN Bounds L={area.Left} T={area.Top} R={area.Right} B={area.Bottom} W={area.Width} H={area.Height}");
-            Debug.WriteLine(
-                $"SCREEN Bounds L={area.Left} T={area.Top} R={area.Right} B={area.Bottom} W={area.Width} H={area.Height}");
+            var screenArea =
+                ToDipRectangle(screen.Bounds);
 
-            var dipArea = ToDipRectangle(screen.WorkingArea);
+            // Normal usable desktop floor
+            _surfaces.Add(
+                new Surface(
+                    new Rectangle(
+                        workArea.Left,
+                        workArea.Bottom - 1,
+                        workArea.Width,
+                        1),
+                    "MonitorGround"));
 
-            _surfaces.Add(new Surface(
-                new Rectangle(
-                    dipArea.Left,
-                    dipArea.Bottom - 1,
-                    dipArea.Width,
-                    1),
-                "MonitorGround"));
+            // Absolute monitor-edge safety floor
+            if (screenArea.Bottom != workArea.Bottom)
+            {
+                _surfaces.Add(
+                    new Surface(
+                        new Rectangle(
+                            screenArea.Left,
+                            screenArea.Bottom - 1,
+                            screenArea.Width,
+                            1),
+                        "MonitorSafetyGround"));
+            }
         }
+    }
+
+    public Rectangle GetMonitorBoundsUnderCursor()
+    {
+        var screen =
+            Forms.Screen.FromPoint(
+                Forms.Cursor.Position);
+
+        return ToDipRectangle(
+            screen.Bounds);
     }
 
     private bool LooksLikeMonitorShell(RECT rect)

@@ -1,24 +1,29 @@
 ﻿using Desktop_Creatures.Config;
 using Desktop_Creatures.Creatures;
 using Desktop_Creatures.Utilities;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Desktop_Creatures.World.Surfaces;
 
 namespace Desktop_Creatures;
 
 public partial class CreatureWindow : Window
 {
     private readonly Creature _creature;
+    private readonly SurfaceManager _surfaceManager;
 
     private bool _isDragging;
     private System.Windows.Point _dragOffset;
 
     public Creature GetCreature() => _creature;
 
-    public CreatureWindow(Creature creature)
+    public CreatureWindow(
+        Creature creature,
+        SurfaceManager surfaceManager)
     {
         InitializeComponent();
 
@@ -27,6 +32,7 @@ public partial class CreatureWindow : Window
         MouseLeftButtonUp += OnMouseLeftButtonUp;
 
         _creature = creature;
+        _surfaceManager = surfaceManager;
 
         //int scale = _creature.Scale;
 
@@ -98,8 +104,26 @@ public partial class CreatureWindow : Window
         var mouseDip = source.CompositionTarget.TransformFromDevice.Transform(
             new System.Windows.Point(mousePixels.X, mousePixels.Y));
 
-        double x = mouseDip.X - _dragOffset.X;
-        double y = mouseDip.Y - _dragOffset.Y;
+        double x = 
+            mouseDip.X - _dragOffset.X;
+
+        double y = 
+            mouseDip.Y - _dragOffset.Y;
+
+        var monitor =
+            _surfaceManager.GetMonitorBoundsUnderCursor();
+
+        x = Math.Clamp(
+            x,
+            monitor.Left,
+            monitor.Right -
+                _creature.SpriteWidth);
+
+        y = Math.Clamp(
+            y,
+            monitor.Top,
+            monitor.Bottom -
+                _creature.SpriteHeight);
 
         _creature.DragTo(x, y);
 

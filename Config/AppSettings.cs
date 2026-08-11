@@ -3,7 +3,8 @@
 public class AppSettings
 {
     public int WorkingMonitor { get; set; } = 0;
-    public bool AlwaysOnTop { get; set; } = true;
+    public bool MenusAlwaysOnTop { get; set; } = true;
+    public bool EcosystemAlwaysOnTop { get; set; } = true;
     public bool ClickThrough { get; set; } = true;
     public bool EditMode { get; set; } = false;
     public int SpawnLimit { get; set; } = 20;

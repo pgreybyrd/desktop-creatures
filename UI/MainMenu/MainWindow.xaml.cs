@@ -42,6 +42,7 @@ public partial class MainWindow : Window
     private UiButtonImages _minimizeImages = null!;
     private UiButtonImages _closeImages = null!;
 
+    private readonly List<POIWindow> _poiWindows = new();
     private readonly List<CreatureWindow> _creatureWindows = new();
     private Creature _activeCreature;
 
@@ -83,7 +84,6 @@ public partial class MainWindow : Window
             AssetImageLoader.Load(
                 "Assets/UI/MainMenu/version.png");
 
-        //_spawnRatImages = LoadButtonImages("spawn_rat");
         _fieldGuideImages = LoadButtonImages("field_guide");
         _clearRatsImages = LoadButtonImages("clear_rats");
         _alwaysOnTopOnImages = LoadButtonImages("always_on_top_on");
@@ -92,7 +92,6 @@ public partial class MainWindow : Window
         _minimizeImages = LoadButtonImages("minimize");
         _closeImages = LoadButtonImages("X");
 
-        //SpawnRatImage.Source = _spawnRatImages.Normal;
         FieldGuideImage.Source = _fieldGuideImages.Normal;
         ClearRatsImage.Source = _clearRatsImages.Normal;
         AlwaysOnTopToggleImage.Source = _alwaysOnTopOffImages.Normal;
@@ -183,8 +182,15 @@ public partial class MainWindow : Window
             $"Added bowl at ({bowl.Position.X:F1}, {bowl.Position.Y:F1}) " +
             $"with {bowl.AnchorPoints.Count} interaction point(s).");
 
-        var bowlWindow = new POIWindow(bowl);
+        var bowlWindow = new POIWindow(bowl)
+        {
+            Topmost =
+                _settings.EcosystemAlwaysOnTop ||
+                _settings.MenusAlwaysOnTop
+        };
+
         bowlWindow.Show();
+        _poiWindows.Add(bowlWindow);
     }
 
     private static UiButtonImages LoadButtonImages(string buttonName)
@@ -214,7 +220,7 @@ public partial class MainWindow : Window
         var screen = Forms.Screen.AllScreens[_moniterIndex];
         var area = screen.WorkingArea;
 
-        _creaturesAlwaysOnTop = _settings.AlwaysOnTop;
+        _creaturesAlwaysOnTop = _settings.EcosystemAlwaysOnTop;
         Topmost = false;
 
         _uiScale = _settings.Scale;
@@ -249,9 +255,6 @@ public partial class MainWindow : Window
 
     private void SpawnRat()
     {
-        //UpdateMenuSurface();
-        //_surfaceManager.Refresh();
-
         var menuSurface = _surfaceManager.MenuSurface
             ?? throw new InvalidOperationException("Menu surface was not set.");
 
@@ -270,10 +273,23 @@ public partial class MainWindow : Window
             "rat",
             new CreatureSettings());
 
-        double spawnX = menuSurface.Left + 
-            (menuSurface.Right - menuSurface.Left - ratSettings.SpriteWidth) / 2.0;
+        double ratWidth =
+            ratSettings.SpriteWidth *
+            ratSettings.Scale;
 
-        double spawnY = menuSurface.Top - ratSettings.SpriteHeight;
+        double ratHeight =
+            ratSettings.SpriteHeight *
+            ratSettings.Scale;
+
+        double spawnX =
+            menuSurface.Left +
+            (menuSurface.Right -
+             menuSurface.Left -
+             ratWidth) / 2.0;
+
+        double spawnY =
+            menuSurface.Top -
+            ratHeight;
 
         var rat = new Rat(
             spawnX,
@@ -282,9 +298,11 @@ public partial class MainWindow : Window
             _pointOfInterestManager,
             _surfaceManager);
 
-        var ratWindow = new CreatureWindow(rat)
-        {
-            Owner = this,
+        var ratWindow =
+            new CreatureWindow(
+                rat,
+                _surfaceManager)
+            {
             Topmost = _creaturesAlwaysOnTop
         };
 
@@ -331,10 +349,10 @@ public partial class MainWindow : Window
 
         _fieldGuideMenu = new FieldGuideMenu(
             SpawnCreature,
-            _uiScale)
-        {
-            Owner = this
-        };
+            _uiScale);
+
+        _fieldGuideMenu.Topmost =
+            _settings.EcosystemAlwaysOnTop;
 
         _fieldGuideMenu.Closed += (_, _) =>
         {
@@ -392,9 +410,11 @@ public partial class MainWindow : Window
             area,
             _surfaceManager);
 
-        var eagleWindow = new CreatureWindow(eagle)
-        {
-            Owner = this,
+        var eagleWindow =
+            new CreatureWindow(
+                eagle,
+                _surfaceManager)
+            {
             Topmost = _creaturesAlwaysOnTop
         };
 
@@ -449,6 +469,30 @@ public partial class MainWindow : Window
         AlwaysOnTopToggleImage.Source =
             GetAlwaysOnTopImages().Hover;
     }
+
+    private void ApplyTopmostSettings()
+    {
+        bool menusTopmost =
+            _settings.MenusAlwaysOnTop;
+
+        bool ecosystemTopmost =
+            _settings.EcosystemAlwaysOnTop;
+
+        Topmost = menusTopmost;
+
+        if (_fieldGuideMenu is not null)
+            _fieldGuideMenu.Topmost = menusTopmost;
+
+        if (_settingsWindow is not null)
+            _settingsWindow.Topmost = menusTopmost;
+
+        foreach (var creatureWindow in _creatureWindows)
+            creatureWindow.Topmost = ecosystemTopmost;
+
+        foreach (var poiWindow in _poiWindows)
+            poiWindow.Topmost = ecosystemTopmost;
+    }
+
     //private void EcosystemAlwaysOnTopToggle_Click(
     //    object sender,
     //    RoutedEventArgs e)

@@ -33,7 +33,7 @@ namespace Desktop_Creatures.Utilities
     public static class Logger
     {
         // Fields for log file paths
-        private static readonly string _logDirectory = Path.Combine(Environment.CurrentDirectory, "Logs");
+        private static readonly string _logDirectory = Path.Combine(AppContext.BaseDirectory, "Logs");
         private static readonly string _errorLogFile = Path.Combine(_logDirectory, "errors.log");
         private static readonly string _debugLogFile = Path.Combine(_logDirectory, "debug.log");
         private static readonly string _warningLogFile = Path.Combine(_logDirectory, "warning.log");
@@ -57,16 +57,12 @@ namespace Desktop_Creatures.Utilities
             Warning = 4
         }
 
-        // Static constructor
-        static Logger()
-        {
-            EnsureLogDirectoryExists();
-            InitializeDebugLog();
-        }
-
         public static void Initialize(DebugSettings settings)
         {
             _settings = settings;
+
+            EnsureLogDirectoryExists();
+            InitializeDebugLog();
         }
 
         /// <summary>
@@ -213,8 +209,18 @@ namespace Desktop_Creatures.Utilities
         /// </summary>
         private static void InitializeDebugLog()
         {
-            string startMessage = $"{Environment.NewLine}Debug Log started on {DateTime.Now:HH:mm:ss.fff}{Environment.NewLine}";
-            File.AppendAllText(_debugLogFile, startMessage);
+            string startMessage =
+                $"{Environment.NewLine}" +
+                $"Debug Log started on {DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}" +
+                $"{Environment.NewLine}" +
+                $"Base directory: {AppContext.BaseDirectory}" +
+                $"{Environment.NewLine}" +
+                $"Log path: {_debugLogFile}" +
+                $"{Environment.NewLine}";
+
+            File.AppendAllText(
+                _debugLogFile,
+                startMessage);
         }
     }
 }

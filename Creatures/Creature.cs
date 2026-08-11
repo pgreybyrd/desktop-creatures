@@ -196,11 +196,17 @@ public abstract class Creature
         CurrentSurface = SurfaceManager.FindSurfaceBelow(
             X,
             Y,
-            Settings.SpriteWidth,
-            Settings.SpriteHeight);
+            SpriteWidth,
+            GetCurrentFootY());
 
         if (CurrentSurface is not null)
             Y = CurrentSurface.Top - GetCurrentFootY();
+
+        Logger.LogDebug(
+            DebugCategory.Movement,
+            $"Spawn X={X:F1}, Y={Y:F1}, " +
+            $"FeetY={Y + GetCurrentFootY():F1}, " +
+            $"MenuTop={SurfaceManager.MenuSurface?.Top}");
 
         SetAction(CreatureAction.Running, "Run");
         PickNewTarget();
@@ -277,7 +283,7 @@ public abstract class Creature
     {
         return
             Math.Abs(
-                (Y + Settings.SpriteHeight)
+                (Y + SpriteHeight)
                 - surface.Top)
             < LandingTolerance
             &&
@@ -290,7 +296,7 @@ public abstract class Creature
     {
         return
             x >= surface.Left &&
-            x <= surface.Right - Settings.SpriteWidth &&
+            x <= surface.Right - SpriteWidth &&
             Math.Abs(y - (surface.Top - GetCurrentFootY())) <= LandingTolerance;
     }
 
@@ -300,7 +306,7 @@ public abstract class Creature
             return false;
 
         int minX = CurrentSurface.Left;
-        int maxX = CurrentSurface.Right - Settings.SpriteWidth;
+        int maxX = CurrentSurface.Right - SpriteWidth;
 
         if (maxX <= minX)
             return false;
@@ -567,8 +573,8 @@ public abstract class Creature
 
         var surface = SurfaceManager.Surfaces
             .Where(s =>
-                X + Settings.SpriteWidth / 2.0 >= s.Left &&
-                X + Settings.SpriteWidth / 2.0 <= s.Right &&
+                X + SpriteWidth / 2.0 >= s.Left &&
+                X + SpriteWidth / 2.0 <= s.Right &&
                 previousFeetY <= s.Top &&
                 currentFeetY >= s.Top)
             .OrderBy(s => s.Top)
@@ -642,7 +648,7 @@ public abstract class Creature
             X = Math.Clamp(
                 X,
                 CurrentSurface.Left,
-                CurrentSurface.Right - Settings.SpriteWidth);
+                CurrentSurface.Right - SpriteWidth);
         }
     }
 
@@ -698,7 +704,7 @@ public abstract class Creature
         }
 
         int minX = CurrentSurface.Left;
-        int maxX = CurrentSurface.Right - Settings.SpriteWidth;
+        int maxX = CurrentSurface.Right - SpriteWidth;
 
         if (maxX <= minX)
         {
