@@ -77,6 +77,45 @@ public class SurfaceManager
         return new Point(creatureX, creatureY);
     }
 
+    public Point? SnapPoiToSurface(
+        Point poiPosition,
+        double poiWidth,
+        double poiHeight,     
+        double maxSnapDistance)
+    {
+        double bottomCenterX =
+            poiPosition.X + poiWidth / 2.0;
+
+        double bottomY =
+            poiPosition.Y + poiHeight;
+
+        Surface? surface =
+            _surfaces
+                .Where(surface =>
+                    bottomCenterX >= surface.Left &&
+                    bottomCenterX <= surface.Right &&
+                    Math.Abs(
+                        surface.Top - bottomY)
+                        <= maxSnapDistance)
+                .OrderBy(surface =>
+                    Math.Abs(
+                        surface.Top - bottomY))
+                .FirstOrDefault();
+
+        if (surface is null)
+            return null;
+
+        double snappedX =
+            poiPosition.X;
+
+        double snappedY =
+            surface.Top - poiHeight;
+
+        return new Point(
+            snappedX,
+            snappedY);
+    }
+
     public void AddTemporarySurface(Rectangle bounds)
     {
         _surfaces.Add(new Surface(bounds));

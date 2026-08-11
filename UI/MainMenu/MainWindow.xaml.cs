@@ -182,8 +182,11 @@ public partial class MainWindow : Window
             $"Added bowl at ({bowl.Position.X:F1}, {bowl.Position.Y:F1}) " +
             $"with {bowl.AnchorPoints.Count} interaction point(s).");
 
-        var bowlWindow = new POIWindow(bowl)
-        {
+        var bowlWindow =
+            new POIWindow(
+                bowl,
+                _surfaceManager)
+            {
             Topmost =
                 _settings.EcosystemAlwaysOnTop ||
                 _settings.MenusAlwaysOnTop

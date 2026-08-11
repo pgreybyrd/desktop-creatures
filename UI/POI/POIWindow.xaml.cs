@@ -6,6 +6,7 @@ using System;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using Point = System.Windows.Point;
 
 namespace Desktop_Creatures;
 
@@ -15,11 +16,14 @@ public partial class POIWindow : Window
     private readonly SurfaceManager _surfaceManager;
 
     //public POIWindow(string imagePath, double width, double height, bool alwaysOnTop)
-    public POIWindow(PointOfInterest poi)
+    public POIWindow(
+        PointOfInterest poi,
+        SurfaceManager surfaceManager)
     {
         InitializeComponent();
 
         _poi = poi;
+        _surfaceManager = surfaceManager;
 
         Width = poi.Settings.Width * _poi.AppSettings.Scale;
         Height = poi.Settings.Height * _poi.AppSettings.Scale;
@@ -58,17 +62,36 @@ public partial class POIWindow : Window
     //    UpdateInteractionPoints();
     //}
 
-    private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    private void Window_MouseLeftButtonDown(
+        object sender,
+        MouseButtonEventArgs e)
     {
-
         DragMove();
 
-        _poi.Position = new System.Windows.Point(Left, Top);
+        var droppedPosition =
+            new Point(
+                Left,
+                Top);
 
-        //Logger.LogDebug(
-        //    $"Bowl window moved to ({Left:F1}, {Top:F1})");
+        var snappedPosition =
+            _surfaceManager.SnapPoiToSurface(
+                droppedPosition,
+                ActualWidth,
+                ActualHeight,
+                30);
 
-        //Logger.LogDebug(
-        //    $"POI says ({_poi.Position.X:F1}, {_poi.Position.Y:F1})");
+        if (snappedPosition is not null)
+        {
+            Left =
+                snappedPosition.Value.X;
+
+            Top =
+                snappedPosition.Value.Y;
+        }
+
+        _poi.Position =
+            new Point(
+                Left,
+                Top);
     }
 }
