@@ -34,6 +34,15 @@ public partial class CreatureWindow : Window
         _creature = creature;
         _surfaceManager = surfaceManager;
 
+        _creature.InteractionStarted +=
+            BringCreatureToFront;
+
+        Closed += (_, _) =>
+        {
+            _creature.InteractionStarted -=
+                BringCreatureToFront;
+        };
+
         //int scale = _creature.Scale;
 
         //SizeToContent = SizeToContent.WidthAndHeight;
@@ -89,6 +98,15 @@ public partial class CreatureWindow : Window
 
         Left = _creature.X;
         Top = _creature.Y;
+    }
+
+    public void BringCreatureToFront()
+    {
+        if (Topmost)
+        {
+            Topmost = false;
+            Topmost = true;
+        }
     }
 
     public void RefreshTopmost(bool shouldBeTopmost)

@@ -71,6 +71,9 @@ public abstract class Creature
     protected Surface? CurrentSurface;
 
     public CreatureAction CurrentAction { get; protected set; }
+
+    public event Action? InteractionStarted;
+
     protected NeedManager Needs { get; } = new();
 
     protected BehaviorController BehaviorController { get; } = new();
@@ -592,6 +595,8 @@ public abstract class Creature
 
         SpeedX = 0;
         StateTicksRemaining = 0;
+
+        InteractionStarted?.Invoke();
 
         SetAction(CreatureAction.Eating, "Eat");
     }
