@@ -62,7 +62,12 @@ public abstract class Creature
     protected virtual int FootOffsetY => SpriteHeight;
 
     protected PointOfInterest? TargetPoi;
+
+    protected WorldInteractionTarget?
+        TargetInteraction;
+
     protected PointOfInterest? EatingPoi;
+
     protected Surface? CurrentSurface;
 
     public CreatureAction CurrentAction { get; protected set; }
@@ -460,9 +465,18 @@ public abstract class Creature
         if (snappedPosition is null)
             return false;
 
-        TargetPoi = target.PointOfInterest;
-        TargetX = snappedPosition.Value.X;
-        TargetY = snappedPosition.Value.Y;
+        TargetPoi =
+            target.PointOfInterest;
+
+        TargetInteraction =
+            target;
+
+        TargetX =
+            snappedPosition.Value.X;
+
+        TargetY =
+            snappedPosition.Value.Y;
+
         MovementSpeed = Run.RunSpeed;
 
         Logger.LogDebug(

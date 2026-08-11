@@ -3,17 +3,22 @@
 public class WorldInteractionTarget
 {
     public PointOfInterest PointOfInterest { get; }
+
     public WorldInteractionPoint InteractionPoint { get; }
 
-    public System.Windows.Point Position { get; }
+    public System.Windows.Point Position =>
+        PointOfInterest.GetWorldInteractionPointPosition(
+            InteractionPoint);
+
+    public bool IsValid =>
+        PointOfInterest.IsEnabled &&
+        InteractionPoint.IsAvailable;
 
     public WorldInteractionTarget(
         PointOfInterest pointOfInterest,
-        WorldInteractionPoint interactionPoint,
-        System.Windows.Point position)
+        WorldInteractionPoint interactionPoint)
     {
         PointOfInterest = pointOfInterest;
         InteractionPoint = interactionPoint;
-        Position = position;
     }
 }

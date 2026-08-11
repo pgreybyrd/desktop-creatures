@@ -53,13 +53,16 @@ namespace Desktop_Creatures.World
                     poi.IsEnabled &&
                     (!poiType.HasValue || poi.Type == poiType.Value))
                 .SelectMany(poi =>
-                    poi.GetWorldInteractionPoints(interactionType)
-                        .Select(interactionPoint => new WorldInteractionTarget(
-                            poi,
-                            interactionPoint,
-                            poi.GetWorldInteractionPointPosition(interactionPoint))))
+                    poi.GetWorldInteractionPoints(
+                        interactionType)
+                        .Select(interactionPoint =>
+                            new WorldInteractionTarget(
+                                poi,
+                                interactionPoint)))
                 .OrderBy(target =>
-                    Distance(creaturePosition, target.Position))
+                    Distance(
+                        creaturePosition, 
+                        target.Position))
                 .FirstOrDefault();
         }
 
