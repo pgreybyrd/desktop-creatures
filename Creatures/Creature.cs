@@ -490,6 +490,36 @@ public abstract class Creature
         return true;
     }
 
+    private bool RefreshInteractionTargetPosition()
+    {
+        if (TargetInteraction is null)
+            return false;
+
+        if (!TargetInteraction.IsValid)
+            return false;
+
+        var position =
+            TargetInteraction.Position;
+
+        var snappedPosition =
+            SurfaceManager.SnapToSurface(
+                position,
+                SpriteWidth,
+                GetCurrentFootY(),
+                10);
+
+        if (snappedPosition is null)
+            return false;
+
+        TargetX =
+            snappedPosition.Value.X;
+
+        TargetY =
+            snappedPosition.Value.Y;
+
+        return true;
+    }
+
     protected virtual void StartEating(PointOfInterest poi)
     {
         int eatFrameCount = Animations.TryGetValue("Eat", out var eatFrames)
@@ -623,6 +653,18 @@ public abstract class Creature
 
     protected virtual void MoveTowardsTarget()
     {
+        if (TargetInteraction is not null)
+        {
+            if (!RefreshInteractionTargetPosition())
+            {
+                TargetInteraction = null;
+                TargetPoi = null;
+
+                StartIdle();
+                return;
+            }
+        }
+
         double dx = TargetX - X;
         double dy = TargetY - Y;
 
