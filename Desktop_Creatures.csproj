@@ -669,6 +669,9 @@
     <None Remove="Assets\UI\button_X.png" />
     <None Remove="Assets\UI\FieldGuide\BookBase.png" />
     <None Remove="Assets\UI\FieldGuide\Book\BookBase.png" />
+    <None Remove="Assets\UI\FieldGuide\Book\exit-hover.png" />
+    <None Remove="Assets\UI\FieldGuide\Book\exit-pressed.png" />
+    <None Remove="Assets\UI\FieldGuide\Book\exit.png" />
     <None Remove="Assets\UI\FieldGuide\Book\opening_0.png" />
     <None Remove="Assets\UI\FieldGuide\Book\opening_1.png" />
     <None Remove="Assets\UI\FieldGuide\Book\opening_2.png" />
@@ -1149,6 +1152,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\FieldGuide\Book\close.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Book\exit-hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Book\exit-pressed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Book\exit.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\FieldGuide\Creatures\Eagle\frame-eagle.png">

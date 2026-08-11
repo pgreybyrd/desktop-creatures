@@ -79,6 +79,10 @@ public partial class FieldGuideMenu : Window
     private readonly BitmapImage _closeButtonHover;
     private readonly BitmapImage _closeButtonPressed;
 
+    private readonly BitmapImage _exitButton;
+    private readonly BitmapImage _exitButtonHover;
+    private readonly BitmapImage _exitButtonPressed;
+
     private readonly Dictionary<string, FieldGuideEntry> _creatureEntries;
 
     private string? _currentCreatureId;
@@ -308,11 +312,62 @@ public partial class FieldGuideMenu : Window
         CloseButtonImage.Source =
             _closeButton;
 
+        _exitButton = AssetImageLoader.Load(
+            $"{FieldGuideAssetPath}/Book/exit.png");
+
+        _exitButtonHover = AssetImageLoader.Load(
+            $"{FieldGuideAssetPath}/Book/exit-hover.png");
+
+        _exitButtonPressed = AssetImageLoader.Load(
+            $"{FieldGuideAssetPath}/Book/exit-pressed.png");
+
+        ExitButtonImage.Source =
+            _exitButton;
+
+        //EXIT BUTTON
+        int exitX =
+            BookX(182);
+
+        int exitY =
+            BookY(21);
+
+        Canvas.SetLeft(
+            ExitButtonImage,
+            exitX);
+
+        Canvas.SetTop(
+            ExitButtonImage,
+            exitY);
+
+        Canvas.SetLeft(
+            ExitFieldGuideButton,
+            exitX);
+
+        Canvas.SetTop(
+            ExitFieldGuideButton,
+            exitY);
+
+        ExitButtonImage.Width =
+            _exitButton.PixelWidth * _uiScale;
+
+        ExitButtonImage.Height =
+            _exitButton.PixelHeight * _uiScale;
+
+        ExitFieldGuideButton.Width =
+            ExitButtonImage.Width;
+
+        ExitFieldGuideButton.Height =
+            ExitButtonImage.Height;
+
+        Width = BookCanvas.Width * _bookScale;
+        Height = BookCanvas.Height * _bookScale;
+
+        //CLOSE BUTTON
         int closeX =
-            BookX(185);
+            BookX(7);
 
         int closeY =
-            BookY(25);
+            BookY(21);
 
         Canvas.SetLeft(
             CloseButtonImage,
@@ -341,9 +396,6 @@ public partial class FieldGuideMenu : Window
 
         CloseFieldGuideButton.Height =
             CloseButtonImage.Height;
-
-        Width = BookCanvas.Width * _bookScale;
-        Height = BookCanvas.Height * _bookScale;
 
         //front page
         Canvas.SetLeft(
@@ -645,11 +697,62 @@ public partial class FieldGuideMenu : Window
         }
     }
 
-    private void CloseFieldGuide_Click(
+    private async void CloseFieldGuide_Click(
         object sender,
         RoutedEventArgs e)
     {
-        Close();
+        await PlayClosingAnimationAsync();
+    }
+
+    private async Task PlayClosingAnimationAsync()
+    {
+        if (_isOpening || _isPageTurning)
+            return;
+
+        _isOpening = true;
+
+        FrontPageCanvas.Visibility =
+            Visibility.Collapsed;
+
+        SetCreaturePageVisible(false);
+
+        LeftTabsCanvas.Visibility =
+            Visibility.Collapsed;
+
+        RightTabsCanvas.Visibility =
+            Visibility.Collapsed;
+
+        WindowControlsCanvas.Visibility =
+            Visibility.Collapsed;
+
+        BookBaseImage.Visibility =
+            Visibility.Collapsed;
+
+        PageTurnImage.Visibility =
+            Visibility.Visible;
+
+        try
+        {
+            for (int i = _openingFrames.Length - 1;
+                 i >= 0;
+                 i--)
+            {
+                PageTurnImage.Source =
+                    _openingFrames[i];
+
+                await Task.Delay(100);
+            }
+        }
+        finally
+        {
+            PageTurnImage.Source =
+                _openingFrames[0];
+
+            PageTurnImage.Visibility =
+                Visibility.Visible;
+
+            _isOpening = false;
+        }
     }
 
     private void CloseFieldGuideButton_MouseEnter(
@@ -682,6 +785,45 @@ public partial class FieldGuideMenu : Window
     {
         CloseButtonImage.Source =
             _closeButtonHover;
+    }
+
+    private void ExitFieldGuide_Click(
+    object sender,
+    RoutedEventArgs e)
+    {
+        Close();
+    }
+
+    private void ExitFieldGuideButton_MouseEnter(
+        object sender,
+        WpfMouseEventArgs e)
+    {
+        ExitButtonImage.Source =
+            _exitButtonHover;
+    }
+
+    private void ExitFieldGuideButton_MouseLeave(
+        object sender,
+        WpfMouseEventArgs e)
+    {
+        ExitButtonImage.Source =
+            _exitButton;
+    }
+
+    private void ExitFieldGuideButton_MouseDown(
+        object sender,
+        WpfMouseEventArgs e)
+    {
+        ExitButtonImage.Source =
+            _exitButtonPressed;
+    }
+
+    private void ExitFieldGuideButton_MouseUp(
+        object sender,
+        WpfMouseEventArgs e)
+    {
+        ExitButtonImage.Source =
+            _exitButtonHover;
     }
 
     private void Tab_MouseEnter(

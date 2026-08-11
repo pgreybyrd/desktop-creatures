@@ -27,7 +27,7 @@
                    Height="233"/>
 
             <Image Name="VersionImage"
-                   Width="43"
+                   Width="45"
                    Height="5" Canvas.Left="162" Canvas.Top="68"/>
 
 

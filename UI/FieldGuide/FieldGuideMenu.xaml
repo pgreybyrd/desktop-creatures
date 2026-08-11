@@ -253,7 +253,8 @@
         <Canvas x:Name="WindowControlsCanvas">
 
             <Image x:Name="CloseButtonImage"
-                   Stretch="None"
+                   Stretch="Fill"
+                   RenderOptions.BitmapScalingMode="NearestNeighbor"
                    IsHitTestVisible="False"/>
 
             <Button x:Name="CloseFieldGuideButton"
@@ -263,6 +264,19 @@
                     MouseLeave="CloseFieldGuideButton_MouseLeave"
                     PreviewMouseLeftButtonDown="CloseFieldGuideButton_MouseDown"
                     PreviewMouseLeftButtonUp="CloseFieldGuideButton_MouseUp"/>
+
+            <Image x:Name="ExitButtonImage"
+                   Stretch="Fill"
+                   RenderOptions.BitmapScalingMode="NearestNeighbor"
+                   IsHitTestVisible="False"/>
+
+            <Button x:Name="ExitFieldGuideButton"
+                    Style="{StaticResource InvisibleTabButton}"
+                    Click="ExitFieldGuide_Click"
+                    MouseEnter="ExitFieldGuideButton_MouseEnter"
+                    MouseLeave="ExitFieldGuideButton_MouseLeave"
+                    PreviewMouseLeftButtonDown="ExitFieldGuideButton_MouseDown"
+                    PreviewMouseLeftButtonUp="ExitFieldGuideButton_MouseUp"/>
 
         </Canvas>
     </Grid>
