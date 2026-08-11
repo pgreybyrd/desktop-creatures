@@ -455,7 +455,7 @@ public partial class MainWindow : Window
     private void SetCreaturesTopmost(bool isTopmost)
     {
         foreach (var creatureWindow in _creatureWindows)
-            creatureWindow.Topmost = isTopmost;
+            creatureWindow.RefreshTopmost(isTopmost);
     }
 
     private void AlwaysOnTopToggle_Click(

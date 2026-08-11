@@ -50,6 +50,15 @@ public partial class CreatureWindow : Window
 
         Left = _creature.X;
         Top = _creature.Y;
+
+        Deactivated += (_, _) =>
+        {
+            if (Topmost)
+            {
+                Topmost = false;
+                Topmost = true;
+            }
+        };
     }
     public void UpdateCreature()
     {
@@ -80,6 +89,18 @@ public partial class CreatureWindow : Window
 
         Left = _creature.X;
         Top = _creature.Y;
+    }
+
+    public void RefreshTopmost(bool shouldBeTopmost)
+    {
+        if (!shouldBeTopmost)
+        {
+            Topmost = false;
+            return;
+        }
+
+        Topmost = false;
+        Topmost = true;
     }
 
     private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
