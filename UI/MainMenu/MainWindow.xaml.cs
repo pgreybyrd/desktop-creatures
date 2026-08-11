@@ -128,10 +128,10 @@ public partial class MainWindow : Window
     private void CreateFoodBowl()
     {
         if (!_pointOfInterestSettings.TryGetValue(
-            "rat_bowl",
+            "food_bowl",
             out var bowlSettings))
         {
-            System.Windows.MessageBox.Show("rat_bowl settings not found!");
+            System.Windows.MessageBox.Show("food_bowl settings not found!");
             return;
         }
 
@@ -150,7 +150,7 @@ public partial class MainWindow : Window
             menuSurface.Top - bowlHeight;
 
         var bowl = new PointOfInterest(
-            "Rat Bowl",
+            "Food Bowl",
             new Point(bowlX, bowlY),
             PointOfInterestType.Food,
             bowlSettings,

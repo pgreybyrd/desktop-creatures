@@ -746,11 +746,15 @@
     <None Remove="Assets\UI\menu_background.png" />
     <None Remove="Assets\UI\menu_title.png" />
     <None Remove="Assets\World\Buildings\arch_0.png" />
+    <None Remove="Assets\World\Food\bowl-food_empty.png" />
+    <None Remove="Assets\World\Food\bowl-food_full.png" />
     <None Remove="Assets\World\Food\bowl_empty.png" />
     <None Remove="Assets\World\Nests\nest_0.png" />
     <None Remove="Assets\World\Rocks\rock_0.png" />
     <None Remove="Assets\World\Trees\tree_0.png" />
     <None Remove="Assets\World\Trees\tree_1.png" />
+    <None Remove="Assets\World\Water\bowl-water_empty.png" />
+    <None Remove="Assets\World\Water\bowl-water_full.png" />
     <None Remove="Config\creature_settings.json" />
     <None Remove="Config\point_of_interest_settings.json" />
     <None Remove="Screenshots\DesktopCreatures.gif" />
@@ -1259,10 +1263,22 @@
     <Content Include="Assets\World\Buildings\arch_0.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\World\Food\bowl-food_empty.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\World\Food\bowl-food_full.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\World\Nests\nest_0.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\World\Rocks\rock_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\World\Water\bowl-water_empty.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\World\Water\bowl-water_full.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Config\debug_settings.json">
@@ -2772,12 +2788,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\MainMenu\menu_title.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\World\Food\bowl_empty.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\World\Food\bowl_full.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\World\Trees\tree_0.png">
