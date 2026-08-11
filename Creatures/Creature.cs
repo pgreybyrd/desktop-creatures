@@ -559,6 +559,17 @@ public abstract class Creature
         return distance <= Eat.InteractionReach;
     }
 
+    private bool IsEatingTargetStillValid()
+    {
+        if (TargetInteraction is null)
+            return false;
+
+        if (!TargetInteraction.IsValid)
+            return false;
+
+        return CanInteractWithTarget();
+    }
+
     protected virtual void StartEating(PointOfInterest poi)
     {
         int eatFrameCount = Animations.TryGetValue("Eat", out var eatFrames)
@@ -591,8 +602,29 @@ public abstract class Creature
             DebugCategory.Behavior,
             $"UpdateEating decrement timer to {EatingTicksRemaining}, FrameIndex={CurrentFrameIndex}");
 
+        if (!IsEatingTargetStillValid())
+        {
+            CancelEating();
+            return;
+        }
+
         if (EatingTicksRemaining <= 0)
             FinishEating();
+    }
+
+    private void CancelEating()
+    {
+        Logger.LogDebug(
+            DebugCategory.Behavior,
+            "Eating cancelled because interaction target is no longer valid.");
+
+        EatingPoi = null;
+        TargetPoi = null;
+        TargetInteraction = null;
+
+        EatingTicksRemaining = 0;
+
+        StartIdle();
     }
 
     protected virtual void UpdateRunning()
@@ -792,6 +824,7 @@ public abstract class Creature
 
         EatingPoi = null;
         TargetPoi = null;
+        TargetInteraction = null;
 
         PickPostEatTarget();
     }
