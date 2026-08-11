@@ -68,6 +68,7 @@ public partial class FieldGuideMenu : Window
     private const int PageTurnFrameDelayMs = 40;
 
     private bool _isPageTurning;
+    private bool _isBookOpen = true;
     private FieldGuideTab _currentTab = FieldGuideTab.Red;
 
     //creature pages
@@ -722,9 +723,6 @@ public partial class FieldGuideMenu : Window
         RightTabsCanvas.Visibility =
             Visibility.Collapsed;
 
-        WindowControlsCanvas.Visibility =
-            Visibility.Collapsed;
-
         BookBaseImage.Visibility =
             Visibility.Collapsed;
 
@@ -752,7 +750,54 @@ public partial class FieldGuideMenu : Window
                 Visibility.Visible;
 
             _isOpening = false;
+            _isBookOpen = false;
+
+            CloseButtonImage.Visibility =
+                Visibility.Collapsed;
+
+            CloseFieldGuideButton.Visibility =
+                Visibility.Collapsed;
+
+            ExitButtonImage.Visibility =
+                Visibility.Visible;
+
+            ExitFieldGuideButton.Visibility =
+                Visibility.Visible;
+
+            OpenBookButton.Visibility =
+                Visibility.Visible;
         }
+    }
+
+    private async void OpenBook_Click(
+        object sender,
+        RoutedEventArgs e)
+    {
+        if (_isBookOpen || _isOpening)
+            return;
+
+        OpenBookButton.Visibility =
+            Visibility.Collapsed;
+
+        _currentTabIndex =
+            FrontPageIndex;
+
+        _currentCreatureId =
+            null;
+
+        UpdateRestingTabs();
+
+        SetCreaturePageVisible(false);
+
+        await PlayOpeningAnimationAsync();
+
+        _isBookOpen = true;
+
+        CloseButtonImage.Visibility =
+            Visibility.Visible;
+
+        CloseFieldGuideButton.Visibility =
+            Visibility.Visible;
     }
 
     private void CloseFieldGuideButton_MouseEnter(
