@@ -1,3 +1,4 @@
+using Desktop_Creatures.Assets;
 using Desktop_Creatures.Behaviors;
 using Desktop_Creatures.Config;
 using Desktop_Creatures.Needs;
@@ -5,6 +6,7 @@ using Desktop_Creatures.Personality;
 using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
+using System.IO;
 using System.Windows.Media.Imaging;
 using Point = System.Windows.Point;
 
@@ -174,27 +176,15 @@ public abstract class Creature
             Animations["Eat"] = LoadFrames(assetFolder, "eat", Settings.Eat.EatFrameCount);
     }
 
-    protected static BitmapImage LoadImage(string path)
-    {
-        var image = new BitmapImage();
-
-        image.BeginInit();
-        image.UriSource = new Uri($"pack://application:,,,/{path}");
-        image.CacheOption = BitmapCacheOption.OnLoad;
-        image.EndInit();
-
-        image.Freeze();
-
-        return image;
-    }
-
     protected static BitmapImage[] LoadFrames(
         string assetFolder,
         string animationName,
         int frameCount)
     {
         return Enumerable.Range(0, frameCount)
-            .Select(i => LoadImage($"{assetFolder}/{animationName}_{i}.png"))
+            .Select(i =>
+                AssetImageLoader.Load(
+                    $"{assetFolder}/{animationName}_{i}.png"))
             .ToArray();
     }
 

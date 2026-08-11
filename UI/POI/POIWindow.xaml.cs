@@ -1,4 +1,5 @@
-﻿using Desktop_Creatures.Utilities;
+﻿using Desktop_Creatures.Assets;
+using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
 using System;
@@ -34,9 +35,7 @@ public partial class POIWindow : Window
             ? poi.Settings.AssetPath
             : poi.Settings.EmptyAssetPath;
 
-        PoiImage.Source = new BitmapImage(
-            new Uri($"pack://application:,,,/{path}")
-        );
+        PoiImage.Source = AssetImageLoader.Load(path);
     }
 
     //public void SnapToSurface()

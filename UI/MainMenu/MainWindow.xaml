@@ -22,10 +22,14 @@
                 Height="233"
                 RenderOptions.BitmapScalingMode="NearestNeighbor">
 
-            <Image Source="/Assets/UI/MainMenu/menu_background.png"
+            <Image Name="MainCanvasImage"
                    Width="368"
                    Height="233"/>
-            
+
+            <Image Name="VersionImage"
+                   Width="43"
+                   Height="5" Canvas.Left="162" Canvas.Top="68"/>
+
 
             <Border x:Name="DragArea"
                     Canvas.Left="109"
@@ -35,7 +39,7 @@
                     Background="#01000000"
                     MouseLeftButtonDown="DragArea_MouseLeftButtonDown" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-            <Button x:Name="SpawnEagleButton1"
+            <!--<Button x:Name="SpawnEagleButton1"
                     Canvas.Left="10"
                     Canvas.Top="10"
                     Width="99"
@@ -53,7 +57,7 @@
                     Background="Transparent"
                     BorderThickness="0"
                     Opacity="0"
-                    Click="SpawnEagle_Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    Click="SpawnEagle_Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>-->
 
             <Image x:Name="FieldGuideImage"
                    Source="Assets/UI/MainMenu/Buttons/button_field_guide.png"
@@ -124,7 +128,7 @@
                    Visibility="Collapsed"
                    IsHitTestVisible="False"
                    RenderOptions.BitmapScalingMode="NearestNeighbor"/>
-            
+
             <Image x:Name="ExitImage"
                    Source="Assets/UI/MainMenu/Buttons/button_exit.png"
                    Canvas.Left="114"

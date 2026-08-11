@@ -20,7 +20,7 @@ namespace Desktop_Creatures.Assets.UI
             int cellWidth,
             int cellHeight)
         {
-            var sheet = LoadUiImage(assetPath);
+            var sheet = AssetImageLoader.Load(assetPath);
 
             foreach (FieldGuideTab tab in
                      Enum.GetValues<FieldGuideTab>())
@@ -53,22 +53,6 @@ namespace Desktop_Creatures.Assets.UI
             ButtonState state)
         {
             return _frames[(tab, state)];
-        }
-
-        private static BitmapImage LoadUiImage(string path)
-        {
-            var image = new BitmapImage();
-
-            image.BeginInit();
-            image.UriSource = new Uri(
-                $"pack://application:,,,/{path}",
-                UriKind.Absolute);
-            image.CacheOption = BitmapCacheOption.OnLoad;
-            image.EndInit();
-
-            image.Freeze();
-
-            return image;
         }
     }
 }

@@ -1,18 +1,20 @@
-﻿using Desktop_Creatures.Assets.UI;
+﻿using Desktop_Creatures.Assets;
+using Desktop_Creatures.Assets.UI;
 using Desktop_Creatures.Config;
 using Desktop_Creatures.Creatures;
 using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
+using System.IO;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Forms = System.Windows.Forms;
-using WpfMouseEventArgs = System.Windows.Input.MouseEventArgs;
+using Point = System.Windows.Point;
 using WpfMouseButtonEventArgs = System.Windows.Input.MouseButtonEventArgs;
 using WpfMouseButtonState = System.Windows.Input.MouseButtonState;
-using Point = System.Windows.Point;
+using WpfMouseEventArgs = System.Windows.Input.MouseEventArgs;
 
 namespace Desktop_Creatures;
 
@@ -72,6 +74,14 @@ public partial class MainWindow : Window
         _workingArea = LoadSettings();
 
         _surfaceManager.Refresh();
+
+        MainCanvasImage.Source =
+            AssetImageLoader.Load(
+                "Assets/UI/MainMenu/menu_background.png");
+
+        VersionImage.Source =
+            AssetImageLoader.Load(
+                "Assets/UI/MainMenu/version.png");
 
         //_spawnRatImages = LoadButtonImages("spawn_rat");
         _fieldGuideImages = LoadButtonImages("field_guide");
@@ -180,9 +190,9 @@ public partial class MainWindow : Window
     private static UiButtonImages LoadButtonImages(string buttonName)
     {
         return new UiButtonImages(
-            LoadUiImage($"Assets/UI/MainMenu/Buttons/button_{buttonName}.png"),
-            LoadUiImage($"Assets/UI/MainMenu/Buttons/button_hover_{buttonName}.png"),
-            LoadUiImage($"Assets/UI/MainMenu/Buttons/button_pressed_{buttonName}.png"));
+            AssetImageLoader.Load($"Assets/UI/MainMenu/Buttons/button_{buttonName}.png"),
+            AssetImageLoader.Load($"Assets/UI/MainMenu/Buttons/button_hover_{buttonName}.png"),
+            AssetImageLoader.Load($"Assets/UI/MainMenu/Buttons/button_pressed_{buttonName}.png"));
     }
 
     private Rectangle LoadSettings()
@@ -496,22 +506,6 @@ public partial class MainWindow : Window
             UpdateMenuSurface();
             _surfaceManager.Refresh();
         }
-    }
-
-    private static BitmapImage LoadUiImage(string path)
-    {
-        var image = new BitmapImage();
-
-        image.BeginInit();
-        image.UriSource = new Uri(
-            $"pack://application:,,,/{path}",
-            UriKind.Absolute);
-        image.CacheOption = BitmapCacheOption.OnLoad;
-        image.EndInit();
-
-        image.Freeze();
-
-        return image;
     }
 
     private void FieldGuide_MouseEnter(

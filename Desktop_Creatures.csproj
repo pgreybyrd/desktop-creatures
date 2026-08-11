@@ -404,6 +404,77 @@
     <None Remove="Assets\Creatures\Rat\GreyHooded\walk_3.png" />
     <None Remove="Assets\Creatures\Rat\GreyHooded\walk_4.png" />
     <None Remove="Assets\Creatures\Rat\GreyHooded\walk_5.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\eat_1.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\eat_10.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\eat_11.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\eat_12.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\eat_13.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\eat_2.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\eat_3.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\eat_4.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\eat_5.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\eat_6.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\eat_7.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\eat_8.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\eat_9.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\fall_0.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\hop_0.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_look_front_0.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_look_front_1.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_look_front_2.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_look_front_3.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_look_left_0.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_look_left_1.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_look_left_2.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_look_left_3.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_look_left_4.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_look_right_0.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_look_right_1.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_look_right_10.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_look_right_11.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_look_right_2.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_look_right_3.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_look_right_4.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_look_right_5.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_look_right_6.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_look_right_7.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_look_right_8.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_look_right_9.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_look_up_0.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_look_up_1.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_look_up_2.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_look_up_3.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_look_up_4.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_look_up_5.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_sit_back_0.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_sit_back_1.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_sit_back_2.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_sit_back_3.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_sit_back_4.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_sit_back_5.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_sit_front_0.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_sit_front_1.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_sit_front_2.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_sit_front_3.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_sit_front_4.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_sit_front_5.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_sit_front_6.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_sit_front_7.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\idle_sniff_up_0.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\run_0.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\run_1.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\run_2.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\run_3.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\run_4.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\run_5.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\sleep_0.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\sleep_1.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\walk_0.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\walk_1.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\walk_2.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\walk_3.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\walk_4.png" />
+    <None Remove="Assets\Creatures\Rat\Grey\walk_5.png" />
     <None Remove="Assets\Creatures\Rat\idle_look_front_1.png" />
     <None Remove="Assets\Creatures\Rat\idle_look_front_2.png" />
     <None Remove="Assets\Creatures\Rat\idle_look_front_3.png" />
@@ -522,8 +593,58 @@
     <None Remove="Assets\Data\FieldGuide\fieldGuide.json" />
     <None Remove="Assets\Data\FieldGuide\rat.json" />
     <None Remove="assets\eagle.png" />
+    <None Remove="Assets\Effects\Emotes\angry.png" />
+    <None Remove="Assets\Effects\Emotes\content.png" />
+    <None Remove="Assets\Effects\Emotes\dizzy.png" />
+    <None Remove="Assets\Effects\Emotes\exclamation_point.png" />
+    <None Remove="Assets\Effects\Emotes\happy.png" />
+    <None Remove="Assets\Effects\Emotes\heart.png" />
+    <None Remove="Assets\Effects\Emotes\heart_eyes.png" />
+    <None Remove="Assets\Effects\Emotes\hunger_bowl.png" />
+    <None Remove="Assets\Effects\Emotes\hunger_cheese.png" />
+    <None Remove="Assets\Effects\Emotes\hunger_drumstick.png" />
+    <None Remove="Assets\Effects\Emotes\play1.png" />
+    <None Remove="Assets\Effects\Emotes\play2.png" />
+    <None Remove="Assets\Effects\Emotes\play3.png" />
+    <None Remove="Assets\Effects\Emotes\question_mark.png" />
+    <None Remove="Assets\Effects\Emotes\sad.png" />
+    <None Remove="Assets\Effects\Emotes\scared.png" />
+    <None Remove="Assets\Effects\Emotes\sick.png" />
+    <None Remove="Assets\Effects\Emotes\social.png" />
+    <None Remove="Assets\Effects\Emotes\thirst.png" />
+    <None Remove="Assets\Effects\Emotes\thought_bubble_grow_0.png" />
+    <None Remove="Assets\Effects\Emotes\thought_bubble_grow_1.png" />
+    <None Remove="Assets\Effects\Emotes\thought_bubble_grow_2.png" />
+    <None Remove="Assets\Effects\Emotes\thought_bubble_grow_3.png" />
+    <None Remove="Assets\Effects\Emotes\thought_bubble_grow_4.png" />
+    <None Remove="Assets\Effects\Emotes\thought_bubble_grow_5.png" />
+    <None Remove="Assets\Effects\Emotes\thought_bubble_grow_6.png" />
+    <None Remove="Assets\Effects\Emotes\thought_bubble_grow_7.png" />
+    <None Remove="Assets\Effects\Emotes\tired.png" />
+    <None Remove="Assets\Effects\Emotes\tired2.png" />
+    <None Remove="Assets\Effects\Emotes\zzz_trail_0.png" />
+    <None Remove="Assets\Effects\Emotes\zzz_trail_1.png" />
+    <None Remove="Assets\Effects\Emotes\zzz_trail_10.png" />
+    <None Remove="Assets\Effects\Emotes\zzz_trail_11.png" />
+    <None Remove="Assets\Effects\Emotes\zzz_trail_12.png" />
+    <None Remove="Assets\Effects\Emotes\zzz_trail_13.png" />
+    <None Remove="Assets\Effects\Emotes\zzz_trail_14.png" />
+    <None Remove="Assets\Effects\Emotes\zzz_trail_15.png" />
+    <None Remove="Assets\Effects\Emotes\zzz_trail_16.png" />
+    <None Remove="Assets\Effects\Emotes\zzz_trail_17.png" />
+    <None Remove="Assets\Effects\Emotes\zzz_trail_18.png" />
+    <None Remove="Assets\Effects\Emotes\zzz_trail_19.png" />
+    <None Remove="Assets\Effects\Emotes\zzz_trail_2.png" />
+    <None Remove="Assets\Effects\Emotes\zzz_trail_3.png" />
+    <None Remove="Assets\Effects\Emotes\zzz_trail_4.png" />
+    <None Remove="Assets\Effects\Emotes\zzz_trail_5.png" />
+    <None Remove="Assets\Effects\Emotes\zzz_trail_6.png" />
+    <None Remove="Assets\Effects\Emotes\zzz_trail_7.png" />
+    <None Remove="Assets\Effects\Emotes\zzz_trail_8.png" />
+    <None Remove="Assets\Effects\Emotes\zzz_trail_9.png" />
     <None Remove="Assets\Fonts\font-MagicalStandard.json" />
     <None Remove="Assets\Fonts\font-MagicalStandard.png" />
+    <None Remove="Assets\Fonts\Variants\font-MagicalStandard-Drunk.json" />
     <None Remove="Assets\UI\button_always_on_top.png" />
     <None Remove="Assets\UI\button_always_on_top_off.png" />
     <None Remove="Assets\UI\button_always_on_top_on.png" />
@@ -618,19 +739,388 @@
     <None Remove="Assets\UI\MainMenu\Buttons\button_pressed_field_guide.png" />
     <None Remove="Assets\UI\MainMenu\Buttons\button_pressed_settings.png" />
     <None Remove="Assets\UI\MainMenu\Buttons\button_settings.png" />
+    <None Remove="Assets\UI\MainMenu\version.png" />
     <None Remove="Assets\UI\menu_background.png" />
     <None Remove="Assets\UI\menu_title.png" />
+    <None Remove="Assets\World\Buildings\arch_0.png" />
     <None Remove="Assets\World\Food\bowl_empty.png" />
+    <None Remove="Assets\World\Nests\nest_0.png" />
+    <None Remove="Assets\World\Rocks\rock_0.png" />
     <None Remove="Assets\World\Trees\tree_0.png" />
     <None Remove="Assets\World\Trees\tree_1.png" />
     <None Remove="Config\creature_settings.json" />
     <None Remove="Config\point_of_interest_settings.json" />
+    <None Remove="Screenshots\DesktopCreatures.gif" />
+    <None Remove="Screenshots\DesktopCreatures2.gif" />
+    <None Remove="Screenshots\RATS1.png" />
+    <None Remove="Screenshots\RATS2.png" />
+    <None Remove="Screenshots\RATS3.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Assets\Fonts\font-MagicalStandard.png">
+    <Content Include="Assets\Creatures\Rat\Grey\eat_1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\eat_10.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\eat_11.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\eat_12.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\eat_13.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\eat_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\eat_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\eat_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\eat_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\eat_6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\eat_7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\eat_8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\eat_9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\fall_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\hop_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_look_front_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_look_front_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_look_front_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_look_front_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_look_left_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_look_left_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_look_left_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_look_left_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_look_left_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_look_right_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_look_right_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_look_right_10.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_look_right_11.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_look_right_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_look_right_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_look_right_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_look_right_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_look_right_6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_look_right_7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_look_right_8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_look_right_9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_look_up_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_look_up_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_look_up_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_look_up_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_look_up_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_look_up_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_sit_back_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_sit_back_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_sit_back_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_sit_back_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_sit_back_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_sit_back_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_sit_front_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_sit_front_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_sit_front_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_sit_front_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_sit_front_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_sit_front_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_sit_front_6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_sit_front_7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\idle_sniff_up_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\run_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\run_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\run_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\run_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\run_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\run_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\sleep_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\sleep_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\walk_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\walk_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\walk_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\walk_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\walk_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Grey\walk_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\angry.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\content.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\dizzy.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\exclamation_point.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\happy.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\heart.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\heart_eyes.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\hunger_bowl.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\hunger_cheese.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\hunger_drumstick.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\play1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\play2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\play3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\question_mark.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\sad.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\scared.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\sick.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\social.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\thirst.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\thought_bubble_grow_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\thought_bubble_grow_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\thought_bubble_grow_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\thought_bubble_grow_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\thought_bubble_grow_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\thought_bubble_grow_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\thought_bubble_grow_6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\thought_bubble_grow_7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\tired.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\tired2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\zzz_trail_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\zzz_trail_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\zzz_trail_10.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\zzz_trail_11.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\zzz_trail_12.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\zzz_trail_13.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\zzz_trail_14.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\zzz_trail_15.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\zzz_trail_16.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\zzz_trail_17.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\zzz_trail_18.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\zzz_trail_19.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\zzz_trail_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\zzz_trail_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\zzz_trail_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\zzz_trail_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\zzz_trail_6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\zzz_trail_7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\zzz_trail_8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Effects\Emotes\zzz_trail_9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Fonts\font-MagicalStandard.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Creatures\Rat\GreyHooded\sleep2_0.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -647,6 +1137,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Fonts\font-MagicalStandard.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Fonts\Variants\font-MagicalStandard-Drunk.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\FieldGuide\Book\close-hover.png">
@@ -746,6 +1239,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\FieldGuide\Creatures\Rat\spawn-icon-cheese.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\MainMenu\version.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\World\Buildings\arch_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\World\Nests\nest_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\World\Rocks\rock_0.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Config\debug_settings.json">
@@ -1024,222 +1529,654 @@
     <Content Include="Assets\Creatures\Rat\Albino\walk_5.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Assets\Creatures\Rat\Black\eat_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\eat_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\eat_10.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\eat_11.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\eat_12.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\eat_13.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\eat_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\eat_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\eat_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\eat_5.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\eat_6.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\eat_7.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\eat_8.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\eat_9.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\fall_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\hop_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_look_front_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_look_front_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_look_front_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_look_front_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_look_left_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_look_left_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_look_left_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_look_left_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_look_left_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_look_right_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_look_right_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_look_right_10.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_look_right_11.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_look_right_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_look_right_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_look_right_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_look_right_5.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_look_right_6.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_look_right_7.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_look_right_8.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_look_right_9.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_look_up_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_look_up_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_look_up_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_look_up_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_look_up_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_look_up_5.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_sit_back_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_sit_back_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_sit_back_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_sit_back_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_sit_back_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_sit_back_5.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_sit_front_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_sit_front_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_sit_front_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_sit_front_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_sit_front_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_sit_front_5.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_sit_front_6.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_sit_front_7.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\idle_sniff_up_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\run_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\run_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\run_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\run_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\run_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\run_5.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\sleep_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\sleep_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\walk_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\walk_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\walk_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\walk_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\walk_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Black\walk_5.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\eat_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\eat_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\eat_10.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\eat_11.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\eat_12.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\eat_13.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\eat_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\eat_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\eat_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\eat_5.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\eat_6.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\eat_7.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\eat_8.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\eat_9.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\fall_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\hop_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_look_front_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_look_front_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_look_front_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_look_front_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_look_left_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_look_left_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_look_left_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_look_left_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_look_left_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_look_right_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_look_right_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_look_right_10.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_look_right_11.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_look_right_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_look_right_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_look_right_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_look_right_5.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_look_right_6.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_look_right_7.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_look_right_8.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_look_right_9.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_look_up_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_look_up_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_look_up_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_look_up_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_look_up_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_look_up_5.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_sit_back_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_sit_back_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_sit_back_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_sit_back_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_sit_back_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_sit_back_5.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_sit_front_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_sit_front_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_sit_front_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_sit_front_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_sit_front_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_sit_front_5.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_sit_front_6.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_sit_front_7.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\idle_sniff_up_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\run_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\run_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\run_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\run_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\run_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\run_5.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\sleep_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\sleep_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\walk_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\walk_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\walk_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\walk_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\walk_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Chocolate\walk_5.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\eat_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\eat_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\eat_10.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\eat_11.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\eat_12.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\eat_13.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\eat_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\eat_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\eat_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\eat_5.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\eat_6.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\eat_7.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\eat_8.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\eat_9.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\fall_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\hop_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_look_front_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_look_front_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_look_front_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_look_front_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_look_left_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_look_left_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_look_left_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_look_left_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_look_left_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_look_right_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_look_right_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_look_right_10.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_look_right_11.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_look_right_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_look_right_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_look_right_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_look_right_5.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_look_right_6.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_look_right_7.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_look_right_8.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_look_right_9.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_look_up_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_look_up_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_look_up_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_look_up_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_look_up_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_look_up_5.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_sit_back_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_sit_back_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_sit_back_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_sit_back_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_sit_back_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_sit_back_5.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_sit_front_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_sit_front_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_sit_front_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_sit_front_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_sit_front_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_sit_front_5.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_sit_front_6.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_sit_front_7.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\idle_sniff_up_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\run_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\run_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\run_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\run_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\run_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\run_5.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\sleep_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\sleep_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\walk_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\walk_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\walk_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\walk_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\walk_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Cinnamon\walk_5.png" />
+    <Content Include="Assets\Creatures\Rat\Black\eat_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\eat_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\eat_10.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\eat_11.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\eat_12.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\eat_13.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\eat_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\eat_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\eat_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\eat_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\eat_6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\eat_7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\eat_8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\eat_9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\fall_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\hop_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_look_front_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_look_front_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_look_front_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_look_front_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_look_left_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_look_left_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_look_left_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_look_left_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_look_left_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_look_right_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_look_right_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_look_right_10.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_look_right_11.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_look_right_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_look_right_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_look_right_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_look_right_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_look_right_6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_look_right_7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_look_right_8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_look_right_9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_look_up_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_look_up_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_look_up_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_look_up_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_look_up_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_look_up_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_sit_back_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_sit_back_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_sit_back_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_sit_back_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_sit_back_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_sit_back_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_sit_front_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_sit_front_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_sit_front_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_sit_front_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_sit_front_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_sit_front_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_sit_front_6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_sit_front_7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\idle_sniff_up_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\run_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\run_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\run_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\run_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\run_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\run_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\sleep_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\sleep_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\walk_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\walk_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\walk_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\walk_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\walk_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Black\walk_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\eat_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\eat_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\eat_10.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\eat_11.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\eat_12.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\eat_13.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\eat_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\eat_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\eat_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\eat_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\eat_6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\eat_7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\eat_8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\eat_9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\fall_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\hop_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_look_front_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_look_front_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_look_front_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_look_front_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_look_left_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_look_left_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_look_left_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_look_left_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_look_left_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_look_right_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_look_right_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_look_right_10.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_look_right_11.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_look_right_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_look_right_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_look_right_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_look_right_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_look_right_6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_look_right_7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_look_right_8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_look_right_9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_look_up_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_look_up_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_look_up_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_look_up_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_look_up_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_look_up_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_sit_back_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_sit_back_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_sit_back_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_sit_back_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_sit_back_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_sit_back_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_sit_front_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_sit_front_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_sit_front_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_sit_front_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_sit_front_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_sit_front_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_sit_front_6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_sit_front_7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\idle_sniff_up_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\run_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\run_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\run_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\run_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\run_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\run_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\sleep_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\sleep_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\walk_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\walk_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\walk_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\walk_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\walk_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Chocolate\walk_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\eat_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\eat_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\eat_10.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\eat_11.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\eat_12.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\eat_13.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\eat_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\eat_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\eat_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\eat_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\eat_6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\eat_7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\eat_8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\eat_9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\fall_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\hop_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_look_front_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_look_front_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_look_front_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_look_front_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_look_left_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_look_left_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_look_left_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_look_left_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_look_left_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_look_right_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_look_right_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_look_right_10.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_look_right_11.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_look_right_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_look_right_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_look_right_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_look_right_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_look_right_6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_look_right_7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_look_right_8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_look_right_9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_look_up_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_look_up_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_look_up_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_look_up_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_look_up_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_look_up_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_sit_back_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_sit_back_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_sit_back_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_sit_back_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_sit_back_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_sit_back_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_sit_front_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_sit_front_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_sit_front_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_sit_front_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_sit_front_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_sit_front_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_sit_front_6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_sit_front_7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\idle_sniff_up_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\run_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\run_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\run_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\run_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\run_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\run_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\sleep_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\sleep_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\walk_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\walk_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\walk_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\walk_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\walk_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Cinnamon\walk_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Creatures\Rat\GreyHooded\eat_0.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1456,79 +2393,225 @@
     <Content Include="Assets\Creatures\Rat\GreyHooded\walk_5.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Assets\Creatures\Rat\Grey\eat_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\eat_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\eat_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\eat_10.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\eat_11.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\eat_12.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\eat_13.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\eat_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\eat_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\eat_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\eat_5.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\eat_6.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\eat_7.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\eat_8.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\eat_9.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\fall_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\hop_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_look_front_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_look_front_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_look_front_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_look_front_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_look_left_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_look_left_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_look_left_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_look_left_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_look_left_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_look_right_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_look_right_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_look_right_10.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_look_right_11.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_look_right_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_look_right_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_look_right_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_look_right_5.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_look_right_6.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_look_right_7.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_look_right_8.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_look_right_9.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_look_up_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_look_up_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_look_up_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_look_up_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_look_up_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_look_up_5.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_sit_back_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_sit_back_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_sit_back_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_sit_back_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_sit_back_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_sit_back_5.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_sit_front_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_sit_front_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_sit_front_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_sit_front_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_sit_front_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_sit_front_5.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_sit_front_6.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_sit_front_7.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\idle_sniff_up_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\run_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\run_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\run_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\run_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\run_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\run_5.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\sleep_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\sleep_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\walk_0.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\walk_1.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\walk_2.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\walk_3.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\walk_4.png" />
-    <Resource Include="Assets\Creatures\Rat\Rainbow\walk_5.png" />
+    <Content Include="Assets\Creatures\Rat\Grey\eat_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\eat_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\eat_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\eat_10.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\eat_11.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\eat_12.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\eat_13.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\eat_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\eat_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\eat_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\eat_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\eat_6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\eat_7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\eat_8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\eat_9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\fall_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\hop_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_look_front_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_look_front_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_look_front_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_look_front_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_look_left_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_look_left_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_look_left_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_look_left_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_look_left_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_look_right_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_look_right_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_look_right_10.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_look_right_11.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_look_right_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_look_right_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_look_right_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_look_right_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_look_right_6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_look_right_7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_look_right_8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_look_right_9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_look_up_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_look_up_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_look_up_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_look_up_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_look_up_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_look_up_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_sit_back_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_sit_back_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_sit_back_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_sit_back_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_sit_back_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_sit_back_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_sit_front_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_sit_front_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_sit_front_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_sit_front_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_sit_front_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_sit_front_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_sit_front_6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_sit_front_7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\idle_sniff_up_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\run_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\run_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\run_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\run_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\run_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\run_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\sleep_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\sleep_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\walk_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\walk_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\walk_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\walk_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\walk_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Rainbow\walk_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\UI\FieldGuide\Book\BookBase.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1589,106 +2672,123 @@
     <Content Include="Assets\UI\FieldGuide\Common\tabs.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Assets\UI\MainMenu\Buttons\button_always_on_top.png">
+    <Content Include="Assets\UI\MainMenu\Buttons\button_always_on_top.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\MainMenu\Buttons\button_always_on_top_off.png">
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\button_always_on_top_off.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\MainMenu\Buttons\button_always_on_top_on.png">
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\button_always_on_top_on.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\MainMenu\Buttons\button_clear_rats.png">
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\button_clear_rats.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\MainMenu\Buttons\button_exit.png">
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\button_exit.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\MainMenu\Buttons\button_field_guide.png">
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\button_field_guide.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\MainMenu\Buttons\button_hover_always_on_top_off.png">
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\button_hover_always_on_top_off.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\MainMenu\Buttons\button_hover_always_on_top_on.png">
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\button_hover_always_on_top_on.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\MainMenu\Buttons\button_hover_clear_rats.png">
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\button_hover_clear_rats.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\MainMenu\Buttons\button_hover_exit.png">
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\button_hover_exit.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\MainMenu\Buttons\button_hover_field_guide.png">
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\button_hover_field_guide.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\MainMenu\Buttons\button_hover_minimize.png">
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\button_hover_minimize.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\MainMenu\Buttons\button_hover_settings.png">
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\button_hover_settings.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\MainMenu\Buttons\button_hover_spawn_rat.png">
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\button_hover_spawn_rat.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\MainMenu\Buttons\button_hover_X.png">
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\button_hover_X.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\MainMenu\Buttons\button_minimize.png">
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\button_minimize.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\MainMenu\Buttons\button_pressed_always_on_top_off.png">
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\button_pressed_always_on_top_off.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\MainMenu\Buttons\button_pressed_always_on_top_on.png">
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\button_pressed_always_on_top_on.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\MainMenu\Buttons\button_pressed_clear_rats.png">
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\button_pressed_clear_rats.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\MainMenu\Buttons\button_pressed_exit.png">
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\button_pressed_exit.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\MainMenu\Buttons\button_pressed_field_guide.png">
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\button_pressed_field_guide.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\MainMenu\Buttons\button_pressed_minimize.png">
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\button_pressed_minimize.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\MainMenu\Buttons\button_pressed_settings.png">
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\button_pressed_settings.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\MainMenu\Buttons\button_pressed_spawn_rat.png">
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\button_pressed_spawn_rat.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\MainMenu\Buttons\button_pressed_X.png">
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\button_pressed_X.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\MainMenu\Buttons\button_settings.png">
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\button_settings.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\MainMenu\Buttons\button_spawn_rat.png">
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\button_spawn_rat.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\MainMenu\Buttons\button_X.png">
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\button_X.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\MainMenu\menu_background.png">
+    </Content>
+    <Content Include="Assets\UI\MainMenu\menu_background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\UI\MainMenu\menu_title.png">
+    </Content>
+    <Content Include="Assets\UI\MainMenu\menu_title.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\World\Food\bowl_empty.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\World\Food\bowl_full.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\World\Trees\tree_0.png" />
-    <Resource Include="Assets\World\Trees\tree_1.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
+    </Content>
+    <Content Include="Assets\World\Food\bowl_empty.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\World\Food\bowl_full.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\World\Trees\tree_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\World\Trees\tree_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Screenshots\DesktopCreatures.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Screenshots\DesktopCreatures2.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Screenshots\RATS1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Screenshots\RATS2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Screenshots\RATS3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

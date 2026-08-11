@@ -1,16 +1,17 @@
-﻿using Desktop_Creatures.Assets.UI;
+﻿using Desktop_Creatures.Assets;
+using Desktop_Creatures.Assets.UI;
 using Desktop_Creatures.Creatures;
 using Desktop_Creatures.UI.FieldGuide;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Text.Json.Serialization;
 using WpfButton = System.Windows.Controls.Button;
 using WpfImage = System.Windows.Controls.Image;
 using WpfMouseButtonEventArgs = System.Windows.Input.MouseButtonEventArgs;
@@ -280,11 +281,11 @@ public partial class FieldGuideMenu : Window
 
         SpawnButtonImage.Visibility = Visibility.Visible;
 
-        _spawnButton = LoadUiImage(
+        _spawnButton = AssetImageLoader.Load(
             $"{FieldGuideAssetPath}/Common/button_spawn.png");
-        _spawnButtonPressed = LoadUiImage(
+        _spawnButtonPressed = AssetImageLoader.Load(
             $"{FieldGuideAssetPath}/Common/button_pressed_spawn.png");
-        _spawnButtonHover = LoadUiImage(
+        _spawnButtonHover = AssetImageLoader.Load(   
             $"{FieldGuideAssetPath}/Common/button_hover_spawn.png");
 
         SpawnButtonImage.Source = _spawnButton;
@@ -295,13 +296,13 @@ public partial class FieldGuideMenu : Window
         SpawnButtonImage.Height =
             _spawnButton.PixelHeight * _uiScale;
 
-        _closeButton = LoadUiImage(
+        _closeButton = AssetImageLoader.Load(
             $"{FieldGuideAssetPath}/Book/close.png");
 
-        _closeButtonHover = LoadUiImage(
+        _closeButtonHover = AssetImageLoader.Load(
             $"{FieldGuideAssetPath}/Book/close-hover.png");
 
-        _closeButtonPressed = LoadUiImage(
+        _closeButtonPressed = AssetImageLoader.Load(
             $"{FieldGuideAssetPath}/Book/close-pressed.png");
 
         CloseButtonImage.Source =
@@ -370,25 +371,25 @@ public partial class FieldGuideMenu : Window
 
         _openingFrames =
         [
-            LoadUiImage(
+            AssetImageLoader.Load(
                 $"{FieldGuideAssetPath}/Book/opening_0.png"),
 
-            LoadUiImage(
+            AssetImageLoader.Load(
                 $"{FieldGuideAssetPath}/Book/opening_1.png"),
 
-            LoadUiImage(
+            AssetImageLoader.Load(
                 $"{FieldGuideAssetPath}/Book/opening_2.png"),
 
-            //LoadUiImage(
+            //AssetImageLoader.Load(
             //    $"{FieldGuideAssetPath}/open.png")
         ];
 
-        _bookBase = LoadUiImage(
+        _bookBase = AssetImageLoader.Load(
             $"{FieldGuideAssetPath}/Book/BookBase.png");
 
         _pageTurnFrames = Enumerable
             .Range(0, 11)
-            .Select(index => LoadUiImage(
+            .Select(index => AssetImageLoader.Load(
                 $"{FieldGuideAssetPath}/Book/PageTurnBase_{index}.png"))
             .ToArray();
 
@@ -1194,10 +1195,10 @@ public partial class FieldGuideMenu : Window
             entry;
 
         CreaturePortraitFrameImage.Source =
-            LoadUiImage(entry.PortraitFrame);
+            AssetImageLoader.Load(entry.PortraitFrame);
 
         CreaturePortraitImage.Source =
-            LoadUiImage(entry.Portrait);
+            AssetImageLoader.Load(entry.Portrait);
 
 
         SetCreaturePageVisible(true);
@@ -1220,21 +1221,5 @@ public partial class FieldGuideMenu : Window
         {
             DragMove();
         }
-    }
-
-    private static BitmapImage LoadUiImage(string path)
-    {
-        var image = new BitmapImage();
-
-        image.BeginInit();
-        image.UriSource = new Uri(
-            $"pack://application:,,,/{path}",
-            UriKind.Absolute);
-        image.CacheOption = BitmapCacheOption.OnLoad;
-        image.EndInit();
-
-        image.Freeze();
-
-        return image;
     }
 }

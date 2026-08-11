@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Desktop_Creatures.Assets;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,9 +24,7 @@ namespace Desktop_Creatures
         {
             InitializeComponent();
 
-            TreeImage.Source = new BitmapImage(
-            new Uri($"pack://application:,,,/{imagePath}")
-        );
+            TreeImage.Source = AssetImageLoader.Load(imagePath);
         }
     }
 }
