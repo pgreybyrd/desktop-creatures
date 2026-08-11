@@ -454,19 +454,37 @@ public abstract class Creature
                CurrentAction is CreatureAction.Running or CreatureAction.Idle;
     }
 
-    protected virtual bool TrySetFoodTarget(WorldInteractionTarget target)
+    protected virtual bool TrySetFoodTarget(
+        WorldInteractionTarget target)
     {
         if (!CanSearchForFood())
             return false;
 
-        Point? snappedPosition = SurfaceManager.SnapToSurface(
-            target.Position,
-            SpriteWidth,
-            GetCurrentFootY(),
-            10);
+        if (!target.IsValid)
+            return false;
+
+        if (!target.InteractionPoint.TryReserve())
+            return false;
+
+        Point? snappedPosition =
+            SurfaceManager.SnapToSurface(
+                target.Position,
+                SpriteWidth,
+                GetCurrentFootY(),
+                10);
 
         if (snappedPosition is null)
+        {
+            target.InteractionPoint.Release();
             return false;
+        }
+
+        if (!CanReachInteractionTarget(
+                snappedPosition.Value))
+        {
+            target.InteractionPoint.Release();
+            return false;
+        }
 
         TargetPoi =
             target.PointOfInterest;
@@ -480,15 +498,12 @@ public abstract class Creature
         TargetY =
             snappedPosition.Value.Y;
 
-        MovementSpeed = Run.RunSpeed;
+        MovementSpeed =
+            Run.RunSpeed;
 
-        Logger.LogDebug(
-            DebugCategory.Behavior,
-            $"Trying food target: " +
-            $"interaction=({target.Position.X:F1}, {target.Position.Y:F1}), " +
-            $"snapped={snappedPosition}");
-
-        SetAction(CreatureAction.Running, "Run");
+        SetAction(
+            CreatureAction.Running,
+            "Run");
 
         return true;
     }
@@ -513,6 +528,12 @@ public abstract class Creature
 
         if (snappedPosition is null)
             return false;
+
+        if (!CanReachInteractionTarget(
+                snappedPosition.Value))
+        {
+            return false;
+        }
 
         TargetX =
             snappedPosition.Value.X;
@@ -560,6 +581,15 @@ public abstract class Creature
             $"allowed={Eat.InteractionReach:F1}");
 
         return distance <= Eat.InteractionReach;
+    }
+
+    private void ReleaseTargetInteraction()
+    {
+        if (TargetInteraction is null)
+            return;
+
+        TargetInteraction.InteractionPoint.Release();
+        TargetInteraction = null;
     }
 
     private bool IsEatingTargetStillValid()
@@ -625,7 +655,8 @@ public abstract class Creature
 
         EatingPoi = null;
         TargetPoi = null;
-        TargetInteraction = null;
+
+        ReleaseTargetInteraction();
 
         EatingTicksRemaining = 0;
 
@@ -733,7 +764,7 @@ public abstract class Creature
         {
             if (!RefreshInteractionTargetPosition())
             {
-                TargetInteraction = null;
+                ReleaseTargetInteraction();
                 TargetPoi = null;
 
                 StartIdle();
@@ -790,6 +821,24 @@ public abstract class Creature
         }
     }
 
+    private bool CanReachInteractionTarget(
+        Point snappedPosition)
+    {
+        if (CurrentSurface is null)
+            return false;
+
+        double targetSurfaceTop =
+            snappedPosition.Y +
+            GetCurrentFootY();
+
+        // Ground creatures can stay on their current level
+        // or descend to lower surfaces.
+        // They cannot currently travel upward.
+        return targetSurfaceTop >=
+            CurrentSurface.Top -
+            LandingTolerance;
+    }
+
     public virtual void DragTo(double x, double y)
     {
         X = x;
@@ -829,7 +878,8 @@ public abstract class Creature
 
         EatingPoi = null;
         TargetPoi = null;
-        TargetInteraction = null;
+
+        ReleaseTargetInteraction();
 
         PickPostEatTarget();
     }

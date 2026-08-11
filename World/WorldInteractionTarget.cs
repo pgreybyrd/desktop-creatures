@@ -11,8 +11,7 @@ public class WorldInteractionTarget
             InteractionPoint);
 
     public bool IsValid =>
-        PointOfInterest.IsEnabled &&
-        InteractionPoint.IsAvailable;
+        PointOfInterest.IsEnabled;
 
     public WorldInteractionTarget(
         PointOfInterest pointOfInterest,

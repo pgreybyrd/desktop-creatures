@@ -33,4 +33,18 @@ public class WorldInteractionPoint
         Type = type;
         Offset = offset;
     }
+
+    public bool TryReserve()
+    {
+        if (!IsAvailable)
+            return false;
+
+        IsAvailable = false;
+        return true;
+    }
+
+    public void Release()
+    {
+        IsAvailable = true;
+    }
 }
