@@ -47,9 +47,15 @@ public class SurfaceManager
         Surface? surface = _surfaces
             .Where(surface =>
                 desiredFeetPosition.X >= surface.Left &&
-                desiredFeetPosition.X <= surface.Right)
+                desiredFeetPosition.X <= surface.Right &&
+                Math.Abs(
+                    surface.Top -
+                    desiredFeetPosition.Y)
+                    <= maxSnapDistance)
             .OrderBy(surface =>
-                Math.Abs(surface.Top - desiredFeetPosition.Y))
+                Math.Abs(
+                    surface.Top -
+                    desiredFeetPosition.Y))
             .FirstOrDefault();
 
         if (surface is null)

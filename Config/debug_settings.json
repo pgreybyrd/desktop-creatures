@@ -1,7 +1,7 @@
 {
   "enabled": true,
 
-  "behavior": false,
+  "behavior": true,
   "surface": false,
   "animation": false,
   "pointOfInterest": false,

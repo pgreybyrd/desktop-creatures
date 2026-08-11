@@ -103,7 +103,8 @@
         "eatFrameTicks": 4,
         "eatingTicksRemaining": 100,
         "foodSearchCooldownTicks": 120,
-        "leaveFoodDistance": 120
+        "leaveFoodDistance": 120,
+        "interactionReach": 20
       },
       "fall": {
         "fallFrameCount": 1,

@@ -520,6 +520,45 @@ public abstract class Creature
         return true;
     }
 
+    private bool CanInteractWithTarget()
+    {
+        if (TargetInteraction is null)
+            return false;
+
+        if (!TargetInteraction.IsValid)
+            return false;
+
+        var targetPosition =
+            TargetInteraction.Position;
+
+        double creatureFeetX =
+            X + SpriteWidth / 2.0;
+
+        double creatureFeetY =
+            Y + GetCurrentFootY();
+
+        double dx =
+            targetPosition.X - creatureFeetX;
+
+        double dy =
+            targetPosition.Y - creatureFeetY;
+
+        double distance =
+            Math.Sqrt(
+                dx * dx +
+                dy * dy);
+
+        Logger.LogDebug(
+            DebugCategory.Behavior,
+            $"Interaction check: " +
+            $"creatureFeet=({creatureFeetX:F1}, {creatureFeetY:F1}) " +
+            $"target=({targetPosition.X:F1}, {targetPosition.Y:F1}) " +
+            $"distance={distance:F1}, " +
+            $"allowed={Eat.InteractionReach:F1}");
+
+        return distance <= Eat.InteractionReach;
+    }
+
     protected virtual void StartEating(PointOfInterest poi)
     {
         int eatFrameCount = Animations.TryGetValue("Eat", out var eatFrames)
@@ -679,8 +718,14 @@ public abstract class Creature
 
         if (distance < Run.ArrivalDistance)
         {
-            if (TargetPoi?.Type == PointOfInterestType.Food)
+            if (TargetPoi?.Type ==
+                PointOfInterestType.Food)
             {
+                if (!CanInteractWithTarget())
+                {
+                    return;
+                }
+
                 Logger.LogDebug(
                     DebugCategory.Behavior,
                     $"ARRIVED! distance={distance}");
