@@ -2,6 +2,7 @@
 using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
+using PixelRecolor.Wpf;
 using System;
 using System.Windows;
 using System.Windows.Input;
@@ -25,20 +26,26 @@ public partial class POIWindow : Window
         _poi = poi;
         _surfaceManager = surfaceManager;
 
-        Width = poi.Settings.Width * _poi.AppSettings.Scale;
-        Height = poi.Settings.Height * _poi.AppSettings.Scale;
+        Width = 
+            poi.Settings.Width * _poi.AppSettings.Scale;
+        Height = 
+            poi.Settings.Height * _poi.AppSettings.Scale;
 
         PoiImage.Width = Width;
         PoiImage.Height = Height;
 
-        Left = poi.Position.X;
-        Top = poi.Position.Y;
+        Left = 
+            poi.Position.X;
+        Top = 
+            poi.Position.Y;
 
-        var path = poi.IsEnabled || poi.Settings.EmptyAssetPath is null
+        var path = 
+            poi.IsEnabled || poi.Settings.EmptyAssetPath is null
             ? poi.Settings.AssetPath
             : poi.Settings.EmptyAssetPath;
 
-        PoiImage.Source = AssetImageLoader.Load(path);
+        PoiImage.Source =
+            LoadPoiImage();
     }
 
     //public void SnapToSurface()
@@ -61,6 +68,38 @@ public partial class POIWindow : Window
 
     //    UpdateInteractionPoints();
     //}
+
+    private BitmapSource LoadPoiImage()
+    {
+        bool useEmpty =
+            !_poi.IsEnabled &&
+            _poi.Settings.EmptyAssetPath is not null;
+
+        string assetPath =
+            useEmpty
+                ? _poi.Settings.EmptyAssetPath!
+                : _poi.Settings.AssetPath;
+
+        string? maskPath =
+            useEmpty
+                ? _poi.Settings.EmptyMaskPath
+                : _poi.Settings.MaskPath;
+
+        BitmapSource source =
+            AssetImageLoader.Load(assetPath);
+
+        if (maskPath is null)
+            return source;
+
+        BitmapSource mask =
+            AssetImageLoader.Load(maskPath);
+
+        return BitmapRecolorer.RecolorGrayscale(
+            source,
+            mask,
+            hue: 285,
+            saturation: 0.8);
+    }
 
     private void Window_MouseLeftButtonDown(
         object sender,

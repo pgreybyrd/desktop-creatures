@@ -118,6 +118,7 @@ public partial class MainWindow : Window
             _surfaceManager.Refresh();
 
             CreateFoodBowl();
+            CreateWaterDish();
 
             SpawnRat();
 
@@ -194,6 +195,68 @@ public partial class MainWindow : Window
 
         bowlWindow.Show();
         _poiWindows.Add(bowlWindow);
+    }
+
+    private void CreateWaterDish()
+    {
+        if (!_pointOfInterestSettings.TryGetValue(
+            "water_dish",
+            out var dishSettings))
+        {
+            System.Windows.MessageBox.Show(
+                "water_dish settings not found!");
+
+            return;
+        }
+
+        var menuSurface =
+            _surfaceManager.MenuSurface
+            ?? throw new InvalidOperationException(
+                "Menu surface must exist before creating the water dish.");
+
+        double dishWidth =
+            dishSettings.Width * _uiScale;
+
+        double dishHeight =
+            dishSettings.Height * _uiScale;
+
+        // Put it slightly left of the food bowl for now.
+        double dishX =
+            menuSurface.Left +
+            (menuSurface.Width * 0.25) -
+            (dishWidth / 2.0);
+
+        double dishY =
+            menuSurface.Top -
+            dishHeight;
+
+        var dish =
+            new PointOfInterest(
+                "Water Dish",
+                new Point(
+                    dishX,
+                    dishY),
+                PointOfInterestType.Water,
+                dishSettings,
+                _settings);
+
+        _pointOfInterestManager.Add(
+            dish);
+
+        var dishWindow =
+            new POIWindow(
+                dish,
+                _surfaceManager)
+            {
+                Topmost =
+                    _settings.EcosystemAlwaysOnTop ||
+                    _settings.MenusAlwaysOnTop
+            };
+
+        dishWindow.Show();
+
+        _poiWindows.Add(
+            dishWindow);
     }
 
     private static UiButtonImages LoadButtonImages(string buttonName)

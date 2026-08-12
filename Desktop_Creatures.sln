@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desktop_Creatures", "Deskto
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfBitmapFonts.Core", "..\WpfBitmapFonts\WpfBitmapFonts.Core\WpfBitmapFonts.Core.csproj", "{A0A5CDAC-BBDA-6AF6-36FA-212820B12583}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelRecolor.Core", "..\PixelRecolor\PixelRecolor.Core\PixelRecolor.Core.csproj", "{11C8694A-252D-8BC5-844E-C216D158B337}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelRecolor.Wpf", "..\PixelRecolor\PixelRecolor.Wpf\PixelRecolor.Wpf.csproj", "{D4F44611-5691-DE07-811D-E13B25252780}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{A0A5CDAC-BBDA-6AF6-36FA-212820B12583}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0A5CDAC-BBDA-6AF6-36FA-212820B12583}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0A5CDAC-BBDA-6AF6-36FA-212820B12583}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11C8694A-252D-8BC5-844E-C216D158B337}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11C8694A-252D-8BC5-844E-C216D158B337}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11C8694A-252D-8BC5-844E-C216D158B337}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11C8694A-252D-8BC5-844E-C216D158B337}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4F44611-5691-DE07-811D-E13B25252780}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4F44611-5691-DE07-811D-E13B25252780}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4F44611-5691-DE07-811D-E13B25252780}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4F44611-5691-DE07-811D-E13B25252780}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

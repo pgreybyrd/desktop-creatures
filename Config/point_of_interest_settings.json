@@ -4,5 +4,13 @@
       "emptyAssetPath": "Assets/World/Food/bowl-food_empty.png",
       "width": 13,
       "height": 8
+    },
+    "water_dish": {
+      "assetPath": "Assets/World/Water/water_dish_full.png",
+      "emptyAssetPath": "Assets/World/Water/water_dish_empty.png",
+      "maskPath": "Assets/World/Water/water_dish_full_mask.png",
+      "emptyMaskPath": "Assets/World/Water/water_dish_empty_mask.png",
+      "width": 9,
+      "height": 9
     }
 }

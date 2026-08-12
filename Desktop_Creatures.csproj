@@ -755,6 +755,8 @@
     <None Remove="Assets\World\Trees\tree_1.png" />
     <None Remove="Assets\World\Water\bowl-water_empty.png" />
     <None Remove="Assets\World\Water\bowl-water_full.png" />
+    <None Remove="Assets\World\Water\water_dish_empty_mask.png" />
+    <None Remove="Assets\World\Water\water_dish_full_mask.png" />
     <None Remove="Config\creature_settings.json" />
     <None Remove="Config\point_of_interest_settings.json" />
     <None Remove="Screenshots\DesktopCreatures.gif" />
@@ -1275,10 +1277,16 @@
     <Content Include="Assets\World\Rocks\rock_0.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\World\Water\bowl-water_empty.png">
+    <Content Include="Assets\World\Water\water_dish_empty.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\World\Water\bowl-water_full.png">
+    <Content Include="Assets\World\Water\water_dish_empty_mask.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\World\Water\water_dish_full.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\World\Water\water_dish_full_mask.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Config\debug_settings.json">
@@ -2815,12 +2823,14 @@
 
   <ItemGroup>
     <Folder Include="Assets\Items\" />
+    <Folder Include="Assets\POI\WaterDish\" />
     <Folder Include="Logs\" />
     <Folder Include="Rendering\Fonts\" />
     <Folder Include="UI\Controls\" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PixelRecolor\PixelRecolor.Wpf\PixelRecolor.Wpf.csproj" />
     <ProjectReference Include="..\WpfBitmapFonts\WpfBitmapFonts.Core\WpfBitmapFonts.Core.csproj" />
   </ItemGroup>
 
