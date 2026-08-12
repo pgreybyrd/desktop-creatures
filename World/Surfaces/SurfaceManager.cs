@@ -80,7 +80,7 @@ public class SurfaceManager
     public Point? SnapPoiToSurface(
         Point poiPosition,
         double poiWidth,
-        double poiHeight,     
+        double poiHeight,
         double maxSnapDistance)
     {
         double bottomCenterX =
@@ -108,8 +108,12 @@ public class SurfaceManager
         double snappedX =
             poiPosition.X;
 
+        double visualOverlap = 5;
+
         double snappedY =
-            surface.Top - poiHeight;
+            surface.Top -
+            poiHeight +
+            visualOverlap;
 
         return new Point(
             snappedX,
