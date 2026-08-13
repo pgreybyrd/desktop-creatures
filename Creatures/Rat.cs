@@ -9,6 +9,7 @@ namespace Desktop_Creatures.Creatures
         private static readonly string[] Variants =
         [
             "Chocolate",
+            "Grey",
             "GreyHooded",
             "Albino",
             "Rainbow",
@@ -16,19 +17,34 @@ namespace Desktop_Creatures.Creatures
             "Cinnamon"
         ];
 
+        public string Variant { get; }
+
         public Rat(
             double startX,
             double startY,
             CreatureSettings settings,
             PointOfInterestManager pointOfInterestManager,
-            SurfaceManager surfaceManager)
-            : base(settings, pointOfInterestManager, surfaceManager)
+            SurfaceManager surfaceManager,
+            Guid? id = null,
+            string? name = null,
+            string? variant = null)
+            : base(
+                settings,
+                pointOfInterestManager,
+                surfaceManager,
+                id,
+                name)
         {
-            //var variant = Variants[Random.Next(Variants.Length)];
-            var variant = "GreyHooded";
+            Variant =
+                variant ??
+                Variants[Random.Next(Variants.Length)];
 
-            LoadAssets($"Assets/Creatures/Rat/{variant}");
-            InitializeGroundCreature(startX, startY);
+            LoadAssets(
+                $"Assets/Creatures/Rat/{Variant}");
+
+            InitializeGroundCreature(
+                startX,
+                startY);
         }
     }
 }

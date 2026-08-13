@@ -31,9 +31,12 @@ public enum CreatureAction
 
 public abstract class Creature
 {
-    protected string Name = string.Empty;
+    public Guid Id { get; }
+
+    public string Name { get; protected set; }
 
     protected readonly Random Random = new();
+
     private readonly PersonalityManager PersonalityManager = new();
     protected PointOfInterestManager PointOfInterestManager;
     protected SurfaceManager SurfaceManager;
@@ -118,8 +121,13 @@ public abstract class Creature
     protected Creature(
         CreatureSettings settings,
         PointOfInterestManager pointOfInterestManager,
-        SurfaceManager surfaceManager)
+        SurfaceManager surfaceManager,
+        Guid? id = null,
+        string? name = null)
     {
+        Id = id ?? Guid.NewGuid();
+        Name = name ?? string.Empty;
+
         Settings = settings;
         PointOfInterestManager = pointOfInterestManager;
         SurfaceManager = surfaceManager;
@@ -659,20 +667,21 @@ public abstract class Creature
         if (!TargetInteraction.IsValid)
             return false;
 
-        var targetPosition =
-            TargetInteraction.Position;
+        Point? snappedPosition =
+            SurfaceManager.SnapToSurface(
+                TargetInteraction.Position,
+                SpriteWidth,
+                GetCurrentFootY(),
+                10);
 
-        double creatureFeetX =
-            X + SpriteWidth / 2.0;
-
-        double creatureFeetY =
-            Y + GetCurrentFootY();
+        if (snappedPosition is null)
+            return false;
 
         double dx =
-            targetPosition.X - creatureFeetX;
+            snappedPosition.Value.X - X;
 
         double dy =
-            targetPosition.Y - creatureFeetY;
+            snappedPosition.Value.Y - Y;
 
         double distance =
             Math.Sqrt(
@@ -682,13 +691,53 @@ public abstract class Creature
         Logger.LogDebug(
             DebugCategory.Behavior,
             $"Interaction check: " +
-            $"creatureFeet=({creatureFeetX:F1}, {creatureFeetY:F1}) " +
-            $"target=({targetPosition.X:F1}, {targetPosition.Y:F1}) " +
+            $"creature=({X:F1}, {Y:F1}) " +
+            $"snappedTarget=({snappedPosition.Value.X:F1}, {snappedPosition.Value.Y:F1}) " +
             $"distance={distance:F1}, " +
             $"allowed={Eat.InteractionReach:F1}");
 
-        return distance <= Eat.InteractionReach;
+        return distance <=
+            Eat.InteractionReach;
     }
+
+    //private bool CanInteractWithTarget()
+    //{
+    //    if (TargetInteraction is null)
+    //        return false;
+
+    //    if (!TargetInteraction.IsValid)
+    //        return false;
+
+    //    var targetPosition =
+    //        TargetInteraction.Position;
+
+    //    double creatureFeetX =
+    //        X + SpriteWidth / 2.0;
+
+    //    double creatureFeetY =
+    //        Y + GetCurrentFootY();
+
+    //    double dx =
+    //        targetPosition.X - creatureFeetX;
+
+    //    double dy =
+    //        targetPosition.Y - creatureFeetY;
+
+    //    double distance =
+    //        Math.Sqrt(
+    //            dx * dx +
+    //            dy * dy);
+
+    //    Logger.LogDebug(
+    //        DebugCategory.Behavior,
+    //        $"Interaction check: " +
+    //        $"creatureFeet=({creatureFeetX:F1}, {creatureFeetY:F1}) " +
+    //        $"target=({targetPosition.X:F1}, {targetPosition.Y:F1}) " +
+    //        $"distance={distance:F1}, " +
+    //        $"allowed={Eat.InteractionReach:F1}");
+
+    //    return distance <= Eat.InteractionReach;
+    //}
 
     private void ReleaseTargetInteraction()
     {
@@ -835,8 +884,14 @@ public abstract class Creature
         if (CurrentAction != CreatureAction.Running)
             return;
 
-        if (StateTicksRemaining <= 0)
+        // Interaction travel should continue until the interaction
+        // succeeds, fails, or is cancelled. The normal wander timer
+        // should only control ordinary wandering.
+        if (TargetInteraction is null &&
+            StateTicksRemaining <= 0)
+        {
             StartIdle();
+        }
     }
 
     protected virtual void StartIdle()
@@ -944,31 +999,40 @@ public abstract class Creature
             $"[{GetType().Name}] " +
             $"Position=({X:F1}, {Y:F1}) " +
             $"Target=({TargetX:F1}, {TargetY:F1}) " +
-            $"Distance={distance:F1}");
+            $"Distance={distance:F1} " +
+            $"Interaction={TargetInteraction?.InteractionPoint.Type.ToString() ?? "none"} " +
+            $"Surface=" +
+            $"{(CurrentSurface is null ? "none" : $"[{CurrentSurface.Left},{CurrentSurface.Right}] Top={CurrentSurface.Top}")}");
 
         if (distance < Run.ArrivalDistance)
         {
-            if (!CanInteractWithTarget())
-                return;
-
-            Logger.LogDebug(
-                DebugCategory.Behavior,
-                $"ARRIVED! distance={distance}");
-
-            if (TargetInteraction?.InteractionPoint.Type ==
-                WorldInteractionPointType.Eat)
+            // This is an interaction destination.
+            if (TargetInteraction is not null)
             {
-                StartEating(TargetPoi!);
+                if (!CanInteractWithTarget())
+                    return;
+
+                Logger.LogDebug(
+                    DebugCategory.Behavior,
+                    $"ARRIVED! distance={distance}");
+
+                switch (TargetInteraction.InteractionPoint.Type)
+                {
+                    case WorldInteractionPointType.Eat:
+                        StartEating(TargetPoi!);
+                        return;
+
+                    case WorldInteractionPointType.Drink:
+                        StartDrinking(TargetPoi!);
+                        return;
+                }
+
+                // Unknown interaction type for now.
+                StartIdle();
                 return;
             }
 
-            if (TargetInteraction?.InteractionPoint.Type ==
-                WorldInteractionPointType.Drink)
-            {
-                StartDrinking(TargetPoi!);
-                return;
-            }
-
+            // This was just an ordinary wandering destination.
             StartIdle();
             return;
         }
@@ -981,10 +1045,19 @@ public abstract class Creature
 
         if (CurrentSurface is not null)
         {
+            double beforeClampX = X;
+
             X = Math.Clamp(
                 X,
                 CurrentSurface.Left,
                 CurrentSurface.Right - SpriteWidth);
+
+            if (Math.Abs(beforeClampX - X) > 0.01)
+            {
+                Logger.LogDebug(
+                    DebugCategory.Movement,
+                    $"X CLAMPED: {beforeClampX:F1} -> {X:F1}");
+            }
         }
     }
 
