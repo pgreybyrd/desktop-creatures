@@ -24,7 +24,8 @@ namespace Desktop_Creatures.Creatures
             SurfaceManager surfaceManager)
             : base(settings, pointOfInterestManager, surfaceManager)
         {
-            var variant = Variants[Random.Next(Variants.Length)];
+            //var variant = Variants[Random.Next(Variants.Length)];
+            var variant = "GreyHooded";
 
             LoadAssets($"Assets/Creatures/Rat/{variant}");
             InitializeGroundCreature(startX, startY);

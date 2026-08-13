@@ -22,6 +22,7 @@ public enum CreatureAction
     Perching,
     Sleeping,
     Eating,
+    Drinking,
     Running,
     Falling,
     Chasing,
@@ -144,10 +145,10 @@ public abstract class Creature
                     () => new Point(X, Y),
 
                 canSearch:
-                    CanSearchForFood,
+                    CanSearchForInteraction,
 
                 trySetTarget:
-                    TrySetFoodTarget,
+                    TrySetInteractionTarget,
 
                 searchCooldownTicks:
                     Eat.FoodSearchCooldownTicks));
@@ -165,10 +166,10 @@ public abstract class Creature
                     () => new Point(X, Y),
 
                 canSearch:
-                    CanSearchForFood,
+                    CanSearchForInteraction,
 
                 trySetTarget:
-                    TrySetFoodTarget,
+                    TrySetInteractionTarget,
 
                 searchCooldownTicks:
                     Eat.FoodSearchCooldownTicks));
@@ -215,7 +216,19 @@ public abstract class Creature
             Animations["Fall"] = LoadFrames(assetFolder, "fall", Settings.Fall.FallFrameCount);
 
         if (Settings.Eat is not null)
-            Animations["Eat"] = LoadFrames(assetFolder, "eat", Settings.Eat.EatFrameCount);
+        {
+            Animations["Eat"] =
+                LoadFrames(
+                    assetFolder,
+                    "eat",
+                    Settings.Eat.EatFrameCount);
+
+            Animations["Drink"] =
+                LoadFrames(
+                    assetFolder,
+                    "drink",
+                    Settings.Eat.EatFrameCount);
+        }
     }
 
     protected static BitmapImage[] LoadFrames(
@@ -308,8 +321,13 @@ public abstract class Creature
 
     protected virtual void UpdateTimers()
     {
-        if (CurrentAction == CreatureAction.Eating)
-            TickDown(ref EatingTicksRemaining);
+        if (CurrentAction is
+            CreatureAction.Eating or
+            CreatureAction.Drinking)
+        {
+            TickDown(
+                ref EatingTicksRemaining);
+        }
 
         if (CurrentAction is CreatureAction.Running or CreatureAction.Idle)
             TickDown(ref StateTicksRemaining);
@@ -442,7 +460,34 @@ public abstract class Creature
             case CreatureAction.Eating:
                 UpdateEating();
                 break;
+            case CreatureAction.Drinking:
+                UpdateDrinking();
+                break;
         }
+    }
+
+    protected virtual void UpdateDrinking()
+    {
+        if (!IsEatingTargetStillValid())
+        {
+            CancelEating();
+            return;
+        }
+
+        if (EatingTicksRemaining <= 0)
+            FinishDrinking();
+    }
+
+    protected virtual void FinishDrinking()
+    {
+        Needs.Drink();
+
+        EatingPoi = null;
+        TargetPoi = null;
+
+        ReleaseTargetInteraction();
+
+        PickPostEatTarget();
     }
 
     protected virtual void UpdateAnimation()
@@ -470,6 +515,9 @@ public abstract class Creature
             CreatureAction.Eating when Settings.Eat is not null
                 => Settings.Eat.EatFrameTicks,
 
+            CreatureAction.Drinking when Settings.Eat is not null
+                => Settings.Eat.EatFrameTicks,
+
             CreatureAction.Sleeping when Settings.Sleep is not null
                 => Settings.Sleep.SleepFrameTicks,
 
@@ -480,18 +528,18 @@ public abstract class Creature
             AdvanceAnimation(frameTicks.Value);
     }
 
-    protected virtual bool CanSearchForFood()
+    protected virtual bool CanSearchForInteraction()
     {
         return Settings.Run is not null &&
                CurrentSurface is not null &&
-               TargetPoi is null &&
+               TargetInteraction is null &&
                CurrentAction is CreatureAction.Running or CreatureAction.Idle;
     }
 
-    protected virtual bool TrySetFoodTarget(
+    protected virtual bool TrySetInteractionTarget(
         WorldInteractionTarget target)
     {
-        if (!CanSearchForFood())
+        if (!CanSearchForInteraction())
             return false;
 
         if (!target.IsValid)
@@ -665,6 +713,24 @@ public abstract class Creature
         SetAction(CreatureAction.Eating, "Eat");
     }
 
+    protected virtual void StartDrinking(
+        PointOfInterest poi)
+    {
+        EatingPoi = poi;
+
+        EatingTicksRemaining =
+            Eat.EatingTicksRemaining;
+
+        SpeedX = 0;
+        StateTicksRemaining = 0;
+
+        InteractionStarted?.Invoke();
+
+        SetAction(
+            CreatureAction.Drinking,
+            "Drink");
+    }
+
     protected virtual void UpdateEating()
     {
         Logger.LogDebug(
@@ -820,19 +886,24 @@ public abstract class Creature
 
         if (distance < Run.ArrivalDistance)
         {
-            if (TargetPoi?.Type ==
-                PointOfInterestType.Food)
+            if (!CanInteractWithTarget())
+                return;
+
+            Logger.LogDebug(
+                DebugCategory.Behavior,
+                $"ARRIVED! distance={distance}");
+
+            if (TargetInteraction?.InteractionPoint.Type ==
+                WorldInteractionPointType.Eat)
             {
-                if (!CanInteractWithTarget())
-                {
-                    return;
-                }
+                StartEating(TargetPoi!);
+                return;
+            }
 
-                Logger.LogDebug(
-                    DebugCategory.Behavior,
-                    $"ARRIVED! distance={distance}");
-
-                StartEating(TargetPoi);
+            if (TargetInteraction?.InteractionPoint.Type ==
+                WorldInteractionPointType.Drink)
+            {
+                StartDrinking(TargetPoi!);
                 return;
             }
 
