@@ -5,6 +5,7 @@ using Desktop_Creatures.Creatures;
 using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
+using Desktop_Creatures.Persistence;
 using System.IO;
 using System.Windows;
 using System.Windows.Media;
@@ -72,6 +73,11 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
 
+        Closing += (_, _) =>
+        {
+            SaveCreatures();
+        };
+
         _workingArea = LoadSettings();
 
         _surfaceManager.Refresh();
@@ -120,9 +126,16 @@ public partial class MainWindow : Window
             CreateFoodBowl();
             CreateWaterDish();
 
-            SpawnRat();
+            bool loadedCreatures =
+                LoadSavedCreatures();
 
-            SetCreaturesTopmost(_creaturesAlwaysOnTop);
+            if (!loadedCreatures)
+            {
+                SpawnRat();
+            }
+
+            SetCreaturesTopmost(
+                _creaturesAlwaysOnTop);
         };
     }
 
@@ -327,7 +340,8 @@ public partial class MainWindow : Window
         DragMove();
     }
 
-    private void SpawnRat()
+    private void SpawnRat(
+        CreatureSaveData? saveData = null)
     {
         var menuSurface = _surfaceManager.MenuSurface
             ?? throw new InvalidOperationException("Menu surface was not set.");
@@ -355,22 +369,36 @@ public partial class MainWindow : Window
             ratSettings.SpriteHeight *
             ratSettings.Scale;
 
-        double spawnX =
-            menuSurface.Left +
-            (menuSurface.Right -
-             menuSurface.Left -
-             ratWidth) / 2.0;
+        double spawnX;
+        double spawnY;
 
-        double spawnY =
-            menuSurface.Top -
-            ratHeight;
+        if (saveData is not null)
+        {
+            spawnX = saveData.X;
+            spawnY = saveData.Y;
+        }
+        else
+        {
+            spawnX =
+                menuSurface.Left +
+                (menuSurface.Right -
+                 menuSurface.Left -
+                 ratWidth) / 2.0;
+
+            spawnY =
+                menuSurface.Top -
+                ratHeight;
+        }
 
         var rat = new Rat(
             spawnX,
             spawnY,
             ratSettings,
             _pointOfInterestManager,
-            _surfaceManager);
+            _surfaceManager,
+            id: saveData?.Id,
+            name: saveData?.Name,
+            variant: saveData?.Variant);
 
         var ratWindow =
             new CreatureWindow(
@@ -383,6 +411,50 @@ public partial class MainWindow : Window
         ratWindow.Show();
 
         _creatureWindows.Add(ratWindow);
+    }
+
+    private void SaveCreatures()
+    {
+        var saveData =
+            _creatureWindows
+                .Select(window =>
+                    window.GetCreature())
+                .OfType<Rat>()
+                .Select(rat =>
+                    new CreatureSaveData
+                    {
+                        Id = rat.Id,
+                        CreatureType = "rat",
+                        Name = rat.Name,
+                        Variant = rat.Variant,
+                        X = rat.X,
+                        Y = rat.Y
+                    })
+                .ToList();
+
+        CreatureSaveManager.Save(
+            saveData);
+    }
+
+    private bool LoadSavedCreatures()
+    {
+        var savedCreatures =
+            CreatureSaveManager.Load();
+
+        bool loadedAny = false;
+
+        foreach (var saveData in savedCreatures)
+        {
+            switch (saveData.CreatureType.ToLowerInvariant())
+            {
+                case "rat":
+                    SpawnRat(saveData);
+                    loadedAny = true;
+                    break;
+            }
+        }
+
+        return loadedAny;
     }
 
     private void ClearRats()
