@@ -240,6 +240,14 @@ public partial class MainWindow : Window
                 dishSettings,
                 _settings);
 
+        dish.AddWorldInteractionPoint(
+            new WorldInteractionPoint(
+                "Drink Center",
+                WorldInteractionPointType.Drink,
+                new Point(
+                    dishSettings.Width / 2.0,
+                    dishSettings.Height)));
+
         _pointOfInterestManager.Add(
             dish);
 

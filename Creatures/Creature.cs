@@ -151,6 +151,27 @@ public abstract class Creature
 
                 searchCooldownTicks:
                     Eat.FoodSearchCooldownTicks));
+
+        BehaviorController.AddBehavior(
+            new NeedInteractionBehavior(
+                needs: Needs,
+                needType: NeedType.Thirst,
+
+                poiManager: PointOfInterestManager,
+                poiType: PointOfInterestType.Water,
+                interactionType: WorldInteractionPointType.Drink,
+
+                getPosition:
+                    () => new Point(X, Y),
+
+                canSearch:
+                    CanSearchForFood,
+
+                trySetTarget:
+                    TrySetFoodTarget,
+
+                searchCooldownTicks:
+                    Eat.FoodSearchCooldownTicks));
     }
 
     public void LoadAssets(string assetFolder)
