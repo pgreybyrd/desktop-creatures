@@ -874,7 +874,9 @@ public abstract class Creature
 
         Logger.LogDebug(
             DebugCategory.Behavior,
-            $"After Eat(): Hunger={Needs.Hunger:F2}, IsHungry={Needs.IsHungry}");
+            $"After Eat(): " +
+            $"Hunger={Needs.GetNeed(NeedType.Hunger).Value:F2}, " +
+            $"IsHungry={Needs.IsHungry}");
 
         EatingPoi = null;
         TargetPoi = null;
