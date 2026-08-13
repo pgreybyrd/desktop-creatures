@@ -48,7 +48,7 @@ public abstract class Creature
     protected double MovementSpeed;
 
     protected int StateTicksRemaining;
-    protected int EatingTicksRemaining;
+    protected int InteractionTicksRemaining;
 
     protected CreatureSettings Settings { get; }
 
@@ -67,7 +67,7 @@ public abstract class Creature
     protected WorldInteractionTarget?
         TargetInteraction;
 
-    protected PointOfInterest? EatingPoi;
+    protected PointOfInterest? InteractionPoi;
 
     protected Surface? CurrentSurface;
 
@@ -326,7 +326,7 @@ public abstract class Creature
             CreatureAction.Drinking)
         {
             TickDown(
-                ref EatingTicksRemaining);
+                ref InteractionTicksRemaining);
         }
 
         if (CurrentAction is CreatureAction.Running or CreatureAction.Idle)
@@ -466,28 +466,53 @@ public abstract class Creature
         }
     }
 
-    protected virtual void UpdateDrinking()
-    {
-        if (!IsEatingTargetStillValid())
-        {
-            CancelEating();
-            return;
-        }
+    //protected virtual void UpdateDrinking()
+    //{
+    //    if (!IsEatingTargetStillValid())
+    //    {
+    //        CancelEating();
+    //        return;
+    //    }
 
-        if (EatingTicksRemaining <= 0)
-            FinishDrinking();
-    }
+    //    if (EatingTicksRemaining <= 0)
+    //        FinishDrinking();
+    //}
 
     protected virtual void FinishDrinking()
     {
         Needs.Drink();
 
-        EatingPoi = null;
+        InteractionPoi = null;
         TargetPoi = null;
 
         ReleaseTargetInteraction();
 
         PickPostEatTarget();
+    }
+
+    protected virtual void UpdateEating()
+    {
+        UpdateInteraction(
+            FinishEating);
+    }
+
+    protected virtual void UpdateDrinking()
+    {
+        UpdateInteraction(
+            FinishDrinking);
+    }
+
+    private void UpdateInteraction(
+    Action finishAction)
+    {
+        if (!IsInteractionTargetStillValid())
+        {
+            CancelInteraction();
+            return;
+        }
+
+        if (InteractionTicksRemaining <= 0)
+            finishAction();
     }
 
     protected virtual void UpdateAnimation()
@@ -674,7 +699,7 @@ public abstract class Creature
         TargetInteraction = null;
     }
 
-    private bool IsEatingTargetStillValid()
+    private bool IsInteractionTargetStillValid()
     {
         if (TargetInteraction is null)
             return false;
@@ -685,41 +710,32 @@ public abstract class Creature
         return CanInteractWithTarget();
     }
 
-    protected virtual void StartEating(PointOfInterest poi)
+    protected virtual void StartEating(
+    PointOfInterest poi)
     {
-        int eatFrameCount = Animations.TryGetValue("Eat", out var eatFrames)
-            ? eatFrames.Length
-            : 0;
-
-        Logger.LogDebug(
-            DebugCategory.Animation,
-            "StartEating()" +
-            $"Animation keys: {string.Join(", ", Animations.Keys)}\n" +
-            $"Eat frame count: {eatFrameCount},\n" +
-            $"Eat frame ticks: {Eat.EatFrameTicks}");
-
-        EatingPoi = poi;
-        EatingTicksRemaining = Eat.EatingTicksRemaining;
-
-        Logger.LogDebug(
-            DebugCategory.Behavior,
-            $"EatingTicksRemaining loaded as: {Eat.EatingTicksRemaining}");
-
-        SpeedX = 0;
-        StateTicksRemaining = 0;
-
-        InteractionStarted?.Invoke();
-
-        SetAction(CreatureAction.Eating, "Eat");
+        StartInteraction(
+            poi,
+            CreatureAction.Eating,
+            "Eat");
     }
 
     protected virtual void StartDrinking(
         PointOfInterest poi)
     {
-        EatingPoi = poi;
+        StartInteraction(
+            poi,
+            CreatureAction.Drinking,
+            "Drink");
+    }
 
-        EatingTicksRemaining =
-            Eat.EatingTicksRemaining;
+    private void StartInteraction(
+        PointOfInterest poi,
+        CreatureAction action,
+        string animationName)
+    {
+        InteractionPoi = poi;
+        InteractionTicksRemaining =
+            Eat.EatingTicksRemaining; // temporary shared timing
 
         SpeedX = 0;
         StateTicksRemaining = 0;
@@ -727,38 +743,84 @@ public abstract class Creature
         InteractionStarted?.Invoke();
 
         SetAction(
-            CreatureAction.Drinking,
-            "Drink");
+            action,
+            animationName);
     }
 
-    protected virtual void UpdateEating()
+    //protected virtual void StartEating(PointOfInterest poi)
+    //{
+    //    int eatFrameCount = Animations.TryGetValue("Eat", out var eatFrames)
+    //        ? eatFrames.Length
+    //        : 0;
+
+    //    Logger.LogDebug(
+    //        DebugCategory.Animation,
+    //        "StartEating()" +
+    //        $"Animation keys: {string.Join(", ", Animations.Keys)}\n" +
+    //        $"Eat frame count: {eatFrameCount},\n" +
+    //        $"Eat frame ticks: {Eat.EatFrameTicks}");
+
+    //    EatingPoi = poi;
+    //    EatingTicksRemaining = Eat.EatingTicksRemaining;
+
+    //    Logger.LogDebug(
+    //        DebugCategory.Behavior,
+    //        $"EatingTicksRemaining loaded as: {Eat.EatingTicksRemaining}");
+
+    //    SpeedX = 0;
+    //    StateTicksRemaining = 0;
+
+    //    InteractionStarted?.Invoke();
+
+    //    SetAction(CreatureAction.Eating, "Eat");
+    //}
+
+    //protected virtual void StartDrinking(
+    //    PointOfInterest poi)
+    //{
+    //    EatingPoi = poi;
+
+    //    EatingTicksRemaining =
+    //        Eat.EatingTicksRemaining;
+
+    //    SpeedX = 0;
+    //    StateTicksRemaining = 0;
+
+    //    InteractionStarted?.Invoke();
+
+    //    SetAction(
+    //        CreatureAction.Drinking,
+    //        "Drink");
+    //}
+
+    //protected virtual void UpdateEating()
+    //{
+    //    Logger.LogDebug(
+    //        DebugCategory.Behavior,
+    //        $"UpdateEating decrement timer to {EatingTicksRemaining}, FrameIndex={CurrentFrameIndex}");
+
+    //    if (!IsEatingTargetStillValid())
+    //    {
+    //        CancelEating();
+    //        return;
+    //    }
+
+    //    if (EatingTicksRemaining <= 0)
+    //        FinishEating();
+    //}
+
+    private void CancelInteraction()
     {
         Logger.LogDebug(
             DebugCategory.Behavior,
-            $"UpdateEating decrement timer to {EatingTicksRemaining}, FrameIndex={CurrentFrameIndex}");
+            "Interaction cancelled because target is no longer valid.");
 
-        if (!IsEatingTargetStillValid())
-        {
-            CancelEating();
-            return;
-        }
-
-        if (EatingTicksRemaining <= 0)
-            FinishEating();
-    }
-
-    private void CancelEating()
-    {
-        Logger.LogDebug(
-            DebugCategory.Behavior,
-            "Eating cancelled because interaction target is no longer valid.");
-
-        EatingPoi = null;
+        InteractionPoi = null;
         TargetPoi = null;
 
         ReleaseTargetInteraction();
 
-        EatingTicksRemaining = 0;
+        InteractionTicksRemaining = 0;
 
         StartIdle();
     }
@@ -983,7 +1045,7 @@ public abstract class Creature
             $"Hunger={Needs.GetNeed(NeedType.Hunger).Value:F2}, " +
             $"IsHungry={Needs.IsHungry}");
 
-        EatingPoi = null;
+        InteractionPoi = null;
         TargetPoi = null;
 
         ReleaseTargetInteraction();
