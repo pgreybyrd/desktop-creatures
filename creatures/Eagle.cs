@@ -280,7 +280,7 @@ namespace Desktop_Creatures.Creatures
             _targetType = DestinationType.Flying;
         }
 
-        protected override void PickPostEatTarget()
+        protected override void PickPostInteractionTarget()
         {
             // Fly to a nearby perch.
         }

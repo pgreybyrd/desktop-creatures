@@ -487,7 +487,7 @@ public abstract class Creature
 
         ReleaseTargetInteraction();
 
-        PickPostEatTarget();
+        PickPostInteractionTarget();
     }
 
     protected virtual void UpdateEating()
@@ -1050,10 +1050,10 @@ public abstract class Creature
 
         ReleaseTargetInteraction();
 
-        PickPostEatTarget();
+        PickPostInteractionTarget();
     }
 
-    protected virtual void PickPostEatTarget()
+    protected virtual void PickPostInteractionTarget()
     {
         if (CurrentSurface is null)
         {
