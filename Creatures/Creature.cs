@@ -131,13 +131,26 @@ public abstract class Creature
         if (Settings.Eat is null)
             return;
 
-        BehaviorController.AddBehavior(new EatBehavior(
-            Needs,
-            Eat,
-            PointOfInterestManager,
-            () => new Point(X, Y),
-            CanSearchForFood,
-            TrySetFoodTarget));
+        BehaviorController.AddBehavior(
+            new NeedInteractionBehavior(
+                needs: Needs,
+                needType: NeedType.Hunger,
+
+                poiManager: PointOfInterestManager,
+                poiType: PointOfInterestType.Food,
+                interactionType: WorldInteractionPointType.Eat,
+
+                getPosition:
+                    () => new Point(X, Y),
+
+                canSearch:
+                    CanSearchForFood,
+
+                trySetTarget:
+                    TrySetFoodTarget,
+
+                searchCooldownTicks:
+                    Eat.FoodSearchCooldownTicks));
     }
 
     public void LoadAssets(string assetFolder)
