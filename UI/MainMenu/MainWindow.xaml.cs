@@ -33,6 +33,10 @@ public partial class MainWindow : Window
     private AppSettings _settings = null!;
     private SettingsWindow? _settingsWindow;
 
+    private double _lastMainLeft;
+    private double _lastMainTop;
+    private bool _mainLocationInitialized;
+
     private FieldGuideMenu? _fieldGuideMenu;
 
     private UiButtonImages _spawnRatImages = null!;
@@ -73,6 +77,8 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+
+        LocationChanged += MainWindow_LocationChanged;
 
         Closing += (_, _) =>
         {
@@ -153,6 +159,34 @@ public partial class MainWindow : Window
             SetCreaturesTopmost(
                 _creaturesAlwaysOnTop);
         };
+    }
+
+    private void MainWindow_LocationChanged(
+        object? sender,
+        EventArgs e)
+    {
+        if (!_mainLocationInitialized)
+        {
+            _lastMainLeft = Left;
+            _lastMainTop = Top;
+            _mainLocationInitialized = true;
+            return;
+        }
+
+        double deltaX =
+            Left - _lastMainLeft;
+
+        double deltaY =
+            Top - _lastMainTop;
+
+        _lastMainLeft = Left;
+        _lastMainTop = Top;
+
+        if (_settingsWindow is not null)
+        {
+            _settingsWindow.Left += deltaX;
+            _settingsWindow.Top += deltaY;
+        }
     }
 
     private void SpawnSpriteSheetTestRat()
@@ -730,11 +764,19 @@ public partial class MainWindow : Window
 
         _settingsWindow =
             new SettingsWindow(
-                _settings)
+                _settings,
+                _uiScale)
             {
                 Owner = this,
-                Topmost = _settings.MenusAlwaysOnTop
+                Topmost =
+                    _settings.MenusAlwaysOnTop
             };
+
+        _settingsWindow.Left =
+            Left + (108 * _uiScale);
+
+        _settingsWindow.Top =
+            Top + (12 * _uiScale);
 
         _settingsWindow.Closed += (_, _) =>
         {
@@ -750,12 +792,13 @@ public partial class MainWindow : Window
     }
 
     private void DragArea_MouseLeftButtonDown(
-        object sender, 
+        object sender,
         WpfMouseButtonEventArgs e)
     {
         if (e.ButtonState == WpfMouseButtonState.Pressed)
         {
             DragMove();
+
             UpdateMenuSurface();
             _surfaceManager.Refresh();
         }
