@@ -149,9 +149,56 @@ public partial class MainWindow : Window
                 SpawnRat();
             }
 
+            SpawnSpriteSheetTestRat();
+
             SetCreaturesTopmost(
                 _creaturesAlwaysOnTop);
         };
+    }
+
+    private void SpawnSpriteSheetTestRat()
+    {
+        var menuSurface =
+            _surfaceManager.MenuSurface
+            ?? throw new InvalidOperationException(
+                "Menu surface was not set.");
+
+        var ratSettings =
+            _creatureSettings.GetValueOrDefault(
+                "rat",
+                new CreatureSettings());
+
+        double spawnX =
+            menuSurface.Left + 20;
+
+        double spawnY =
+            menuSurface.Top -
+            (ratSettings.SpriteHeight *
+             ratSettings.Scale);
+
+        var rat =
+            new Rat(
+                spawnX,
+                spawnY,
+                ratSettings,
+                _pointOfInterestManager,
+                _surfaceManager,
+                variant: "Albino",
+                useSpriteSheetTest: true);
+
+        var ratWindow =
+            new CreatureWindow(
+                rat,
+                _surfaceManager)
+            {
+                Topmost =
+                    _creaturesAlwaysOnTop
+            };
+
+        ratWindow.Show();
+
+        _creatureWindows.Add(
+            ratWindow);
     }
 
     private void CreateFoodBowl()
