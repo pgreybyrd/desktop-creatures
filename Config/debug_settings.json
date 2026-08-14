@@ -1,9 +1,9 @@
 {
   "enabled": true,
 
-  "behavior": true,
+  "behavior": false,
   "surface": false,
-  "animation": false,
+  "animation": true,
   "pointOfInterest": false,
   "needs": false,
   "movement": true,

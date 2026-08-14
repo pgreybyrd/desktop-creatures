@@ -2,10 +2,11 @@
 using Desktop_Creatures.Assets.UI;
 using Desktop_Creatures.Config;
 using Desktop_Creatures.Creatures;
+using Desktop_Creatures.Graphics.Animation;
+using Desktop_Creatures.Persistence;
 using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
-using Desktop_Creatures.Persistence;
 using System.IO;
 using System.Windows;
 using System.Windows.Media;
@@ -79,6 +80,20 @@ public partial class MainWindow : Window
         };
 
         _workingArea = LoadSettings();
+
+        //TEMP TEST_-------------------------
+        var testSheet =
+            SpriteSheetLoader.Load(
+                "Assets/SpriteSheetTests/rat.png",
+                "Assets/SpriteSheetTests/rat.json");
+
+        var run =
+            testSheet.GetAnimation("run");
+
+        Logger.LogDebug(
+            DebugCategory.Animation,
+            $"SPRITESHEET TEST: Run has {run.FrameCount} frames.");
+        //---------------------------------
 
         _surfaceManager.Refresh();
 

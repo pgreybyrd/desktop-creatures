@@ -645,6 +645,8 @@
     <None Remove="Assets\Fonts\font-MagicalStandard.json" />
     <None Remove="Assets\Fonts\font-MagicalStandard.png" />
     <None Remove="Assets\Fonts\Variants\font-MagicalStandard-Drunk.json" />
+    <None Remove="Assets\SpriteSheetTests\rat.json" />
+    <None Remove="Assets\SpriteSheetTests\rat.png" />
     <None Remove="Assets\UI\button_always_on_top.png" />
     <None Remove="Assets\UI\button_always_on_top_off.png" />
     <None Remove="Assets\UI\button_always_on_top_on.png" />
@@ -1443,6 +1445,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Fonts\Variants\font-MagicalStandard-Drunk.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\SpriteSheetTests\rat.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\SpriteSheetTests\rat.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\FieldGuide\Book\close-hover.png">
