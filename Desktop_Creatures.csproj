@@ -744,9 +744,34 @@
     <None Remove="Assets\UI\MainMenu\Buttons\button_pressed_field_guide.png" />
     <None Remove="Assets\UI\MainMenu\Buttons\button_pressed_settings.png" />
     <None Remove="Assets\UI\MainMenu\Buttons\button_settings.png" />
+    <None Remove="Assets\UI\MainMenu\Buttons\toggle_off.png" />
+    <None Remove="Assets\UI\MainMenu\Buttons\toggle_off_hover.png" />
+    <None Remove="Assets\UI\MainMenu\Buttons\toggle_off_pressed.png" />
+    <None Remove="Assets\UI\MainMenu\Buttons\toggle_on.png" />
+    <None Remove="Assets\UI\MainMenu\Buttons\toggle_on_hover.png" />
+    <None Remove="Assets\UI\MainMenu\Buttons\toggle_on_pressed.png" />
     <None Remove="Assets\UI\MainMenu\version.png" />
     <None Remove="Assets\UI\menu_background.png" />
     <None Remove="Assets\UI\menu_title.png" />
+    <None Remove="Assets\UI\Settings\Buttons\scale_1x.png" />
+    <None Remove="Assets\UI\Settings\Buttons\scale_1x_hover.png" />
+    <None Remove="Assets\UI\Settings\Buttons\scale_1x_pressed.png" />
+    <None Remove="Assets\UI\Settings\Buttons\scale_2x.png" />
+    <None Remove="Assets\UI\Settings\Buttons\scale_2x_hover.png" />
+    <None Remove="Assets\UI\Settings\Buttons\scale_2x_pressed.png" />
+    <None Remove="Assets\UI\Settings\Buttons\scale_3x.png" />
+    <None Remove="Assets\UI\Settings\Buttons\scale_3x_hover.png" />
+    <None Remove="Assets\UI\Settings\Buttons\scale_3x_pressed.png" />
+    <None Remove="Assets\UI\Settings\Buttons\scale_4x.png" />
+    <None Remove="Assets\UI\Settings\Buttons\scale_4x_hover.png" />
+    <None Remove="Assets\UI\Settings\Buttons\scale_4x_pressed.png" />
+    <None Remove="Assets\UI\Settings\Buttons\toggle_off.png" />
+    <None Remove="Assets\UI\Settings\Buttons\toggle_off_hover.png" />
+    <None Remove="Assets\UI\Settings\Buttons\toggle_off_pressed.png" />
+    <None Remove="Assets\UI\Settings\Buttons\toggle_on.png" />
+    <None Remove="Assets\UI\Settings\Buttons\toggle_on_hover.png" />
+    <None Remove="Assets\UI\Settings\Buttons\toggle_on_pressed.png" />
+    <None Remove="Assets\UI\Settings\settings_window.png" />
     <None Remove="Assets\World\Buildings\arch_0.png" />
     <None Remove="Assets\World\Food\bowl-food_empty.png" />
     <None Remove="Assets\World\Food\bowl-food_full.png" />
@@ -1561,7 +1586,82 @@
     <Content Include="Assets\UI\FieldGuide\Creatures\Rat\spawn-icon-cheese.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\toggle_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\toggle_off_hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\toggle_off_pressed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\toggle_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\toggle_on_hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\toggle_on_pressed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\UI\MainMenu\version.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\Settings\Buttons\scale_1x.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\Settings\Buttons\scale_1x_hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\Settings\Buttons\scale_1x_pressed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\Settings\Buttons\scale_2x.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\Settings\Buttons\scale_2x_hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\Settings\Buttons\scale_2x_pressed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\Settings\Buttons\scale_3x.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\Settings\Buttons\scale_3x_hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\Settings\Buttons\scale_3x_pressed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\Settings\Buttons\scale_4x.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\Settings\Buttons\scale_4x_hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\Settings\Buttons\scale_4x_pressed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\Settings\Buttons\toggle_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\Settings\Buttons\toggle_off_hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\Settings\Buttons\toggle_off_pressed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\Settings\Buttons\toggle_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\Settings\Buttons\toggle_on_hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\Settings\Buttons\toggle_on_pressed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\Settings\settings_window.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\World\Buildings\arch_0.png">

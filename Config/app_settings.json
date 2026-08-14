@@ -5,5 +5,6 @@
 	"clickThrough": true,
 	"editMode": false,
 	"spawnLimit": 20,
-	"scale": 2
+	"scale": 2,
+	"creatureDisplayScale": 1
 }

@@ -9,5 +9,6 @@ public class AppSettings
     public bool EditMode { get; set; } = false;
     public int SpawnLimit { get; set; } = 20;
     public int Scale { get; set; } = 1;
+    public int CreatureDisplayScale { get; set; } = 1;
 }
 

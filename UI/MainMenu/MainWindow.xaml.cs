@@ -37,9 +37,8 @@ public partial class MainWindow : Window
 
     private UiButtonImages _spawnRatImages = null!;
     private UiButtonImages _fieldGuideImages = null!;
-    private UiButtonImages _clearRatsImages = null!;
-    private UiButtonImages _alwaysOnTopOnImages = null!;
-    private UiButtonImages _alwaysOnTopOffImages = null!;
+    private UiButtonImages _clearRatsImages = null!; 
+    private UiButtonImages _settingsImages = null!;
     private UiButtonImages _exitImages = null!;
     private UiButtonImages _minimizeImages = null!;
     private UiButtonImages _closeImages = null!;
@@ -67,6 +66,7 @@ public partial class MainWindow : Window
     private readonly SurfaceManager _surfaceManager = new();
 
     private const int MaxRats = 20;
+    private const int MaxEagles = 10;
 
     private int _uiScale = 1;
 
@@ -107,15 +107,14 @@ public partial class MainWindow : Window
 
         _fieldGuideImages = LoadButtonImages("field_guide");
         _clearRatsImages = LoadButtonImages("clear_rats");
-        _alwaysOnTopOnImages = LoadButtonImages("always_on_top_on");
-        _alwaysOnTopOffImages = LoadButtonImages("always_on_top_off");
+        _settingsImages = LoadButtonImages("settings");
         _exitImages = LoadButtonImages("exit");
         _minimizeImages = LoadButtonImages("minimize");
         _closeImages = LoadButtonImages("X");
 
         FieldGuideImage.Source = _fieldGuideImages.Normal;
         ClearRatsImage.Source = _clearRatsImages.Normal;
-        AlwaysOnTopToggleImage.Source = _alwaysOnTopOffImages.Normal;
+        SettingsImage.Source = _settingsImages.Normal;
         ExitImage.Source = _exitImages.Normal;
         MinimizeImage.Source = _minimizeImages.Normal;
         XImage.Source = _closeImages.Normal;
@@ -674,8 +673,6 @@ public partial class MainWindow : Window
 
         SetCreaturesTopmost(_creaturesAlwaysOnTop);
 
-        AlwaysOnTopToggleImage.Source =
-            GetAlwaysOnTopImages().Hover;
     }
 
     private void ApplyTopmostSettings()
@@ -721,19 +718,23 @@ public partial class MainWindow : Window
         Topmost = _uiAlwaysOnTop;
     }
 
-    private void SettingsButton_Click(
+    private void Settings_Click(
         object sender,
         RoutedEventArgs e)
     {
         if (_settingsWindow is not null)
         {
-            _settingsWindow.Owner = this;//settings window will minimoze/close with main window
-
             _settingsWindow.Activate();
             return;
         }
 
-        _settingsWindow = new SettingsWindow();
+        _settingsWindow =
+            new SettingsWindow(
+                _settings)
+            {
+                Owner = this,
+                Topmost = _settings.MenusAlwaysOnTop
+            };
 
         _settingsWindow.Closed += (_, _) =>
         {
@@ -814,32 +815,40 @@ public partial class MainWindow : Window
         ClearRatsImage.Source = _clearRatsImages.Hover;
     }
 
-    private void AlwaysOnTop_MouseEnter(
+    private void Settings_MouseEnter(
         object sender,
         WpfMouseEventArgs e)
     {
-        AlwaysOnTopToggleImage.Source = GetAlwaysOnTopImages().Hover;
+        SettingsImage.Source =
+            _settingsImages.Hover;
     }
 
-    private void AlwaysOnTop_MouseLeave(
+    private void Settings_MouseLeave(
         object sender,
         WpfMouseEventArgs e)
     {
-        AlwaysOnTopToggleImage.Source = GetAlwaysOnTopImages().Normal;
+        SettingsImage.Source =
+            _settingsImages.Normal;
     }
 
-    private void AlwaysOnTop_MouseDown(
+    private void Settings_MouseDown(
         object sender,
         WpfMouseButtonEventArgs e)
     {
-        AlwaysOnTopToggleImage.Source = GetAlwaysOnTopImages().Pressed;
+        SettingsImage.Source =
+            _settingsImages.Pressed;
     }
 
-    private void AlwaysOnTop_MouseUp(
+    private void Settings_MouseUp(
         object sender,
         WpfMouseButtonEventArgs e)
     {
-        AlwaysOnTopToggleImage.Source = GetAlwaysOnTopImages().Hover;
+        SettingsImage.Source =
+            _settingsImages.Hover;
+
+        Settings_Click(
+            sender,
+            e);
     }
 
     private void Exit_MouseEnter(
@@ -923,12 +932,5 @@ public partial class MainWindow : Window
         WpfMouseButtonEventArgs e)
     {
         XImage.Source = _closeImages.Hover;
-    }
-
-    private UiButtonImages GetAlwaysOnTopImages()
-    {
-        return _creaturesAlwaysOnTop
-            ? _alwaysOnTopOnImages
-            : _alwaysOnTopOffImages;
     }
 }

@@ -22,6 +22,25 @@ public static class SettingsLoader
             }
         ) ?? new AppSettings();
     }
+
+    public static void Save(
+    AppSettings settings)
+    {
+        const string path =
+            "Config/app_settings.json";
+
+        string json =
+            JsonSerializer.Serialize(
+                settings,
+                new JsonSerializerOptions
+                {
+                    WriteIndented = true
+                });
+
+        File.WriteAllText(
+            path,
+            json);
+    }
 }
 
 public static class DebugSettingsLoader

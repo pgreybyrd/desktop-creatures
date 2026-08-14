@@ -101,14 +101,14 @@
                     PreviewMouseDown="ClearRats_MouseDown"
                     PreviewMouseUp="ClearRats_MouseUp"/>
 
-            <Image x:Name="AlwaysOnTopToggleImage"
-                   Source="Assets/UI/MainMenu/Buttons/button_always_on_top_off.png"
+            <Image x:Name="SettingsImage"
+                   Source="/Assets/UI/MainMenu/Buttons/button_settings.png"
                    Canvas.Left="114"
                    Canvas.Top="161"
                    Width="139"
                    Height="33"/>
 
-            <ToggleButton x:Name="AlwaysOnTopToggle"
+            <ToggleButton x:Name="SettingsButton"
                           Canvas.Left="114"
                           Canvas.Top="161"
                           Width="139"
@@ -116,11 +116,11 @@
                           Background="Transparent"
                           BorderThickness="0"
                           Opacity="0"
-                          Click="AlwaysOnTopToggle_Click"
-                          MouseEnter="AlwaysOnTop_MouseEnter"
-                          MouseLeave="AlwaysOnTop_MouseLeave"
-                          PreviewMouseDown="AlwaysOnTop_MouseDown"
-                          PreviewMouseUp="AlwaysOnTop_MouseUp"/>
+                          Click="Settings_Click"
+                          MouseEnter="Settings_MouseEnter"
+                          MouseLeave="Settings_MouseLeave"
+                          PreviewMouseDown="Settings_MouseDown"
+                          PreviewMouseUp="Settings_MouseUp"/>
 
             <Image x:Name="MouseHoleRatImage"
                    Canvas.Left="186"

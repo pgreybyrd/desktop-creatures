@@ -1,0 +1,34 @@
+{
+  "name": "Silver",
+  "regions": {
+    "nose":   { "hue": 350, "saturation": 0.30 },
+    "ears":   { "hue": 350, "saturation": 0.22 },
+    "eyes":   { "hue": 0,   "saturation": 0.00 },
+    "paws":   { "hue": 350, "saturation": 0.16 },
+    "feet":   { "hue": 355, "saturation": 0.14 },
+    "head":   { "hue": 215, "saturation": 0.08 },
+    "body":   { "hue": 215, "saturation": 0.10 },
+    "belly":  { "hue": 25,  "saturation": 0.06 },
+    "tail":   { "hue": 350, "saturation": 0.20 }
+  }
+
+  // "body": {
+  // "hue": 215,
+  // "saturation": 0.10,
+  // "brightness": 0.72
+
+}
+{
+  "name": "Silver",
+  "regions": {
+    "nose":  { "hue": 350, "saturation": 0.30, "brightness": 1.0 },
+    "ears":  { "hue": 350, "saturation": 0.22, "brightness": 1.0 },
+    "eyes":  { "hue": 0,   "saturation": 0.0,  "brightness": 1.0 },
+    "paws":  { "hue": 350, "saturation": 0.16, "brightness": 1.0 },
+    "feet":  { "hue": 355, "saturation": 0.14, "brightness": 1.0 },
+    "head":  { "hue": 215, "saturation": 0.08, "brightness": 1.0 },
+    "body":  { "hue": 215, "saturation": 0.10, "brightness": 1.0 },
+    "belly": { "hue": 25,  "saturation": 0.06, "brightness": 1.0 },
+    "tail":  { "hue": 350, "saturation": 0.20, "brightness": 1.0 }
+  }
+}
