@@ -40,7 +40,7 @@ namespace Desktop_Creatures.Creatures
         {
             _useSpriteSheetTest = useSpriteSheetTest;
 
-        Variant =
+            Variant =
                 variant ??
                 Variants[Random.Next(Variants.Length)];
 
@@ -54,13 +54,13 @@ namespace Desktop_Creatures.Creatures
                         "Assets/SpriteSheetTests/rat.png",
                         "Assets/SpriteSheetTests/rat.json");
 
-                var run =
-                    sheet.GetAnimation("run");
-
-                OverrideAnimation(
-                    "Run",
-                    run.Frames.Select(
-                        frame => frame.Image));
+                foreach (var animation in sheet.Animations)
+                {
+                    OverrideAnimation(
+                        animation.Key,
+                        animation.Value.Frames.Select(
+                            frame => frame.Image));
+                }
             }
 
             InitializeGroundCreature(

@@ -138,7 +138,7 @@ public partial class MainWindow : Window
 
             _surfaceManager.Refresh();
 
-            CreateFoodBowl();
+            CreateFoodBowl(); 
             CreateWaterDish();
 
             bool loadedCreatures =

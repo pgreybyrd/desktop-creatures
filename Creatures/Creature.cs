@@ -106,7 +106,8 @@ public abstract class Creature
         ?? throw new InvalidOperationException(
             "Creature requires FallSettings.");
 
-    protected Dictionary<string, BitmapSource[]> Animations { get; } = new();
+    protected Dictionary<string, BitmapSource[]> Animations { get; } =
+        new(StringComparer.OrdinalIgnoreCase);
 
     public BitmapSource? CurrentFrame =>
         CurrentFrames.Length > 0

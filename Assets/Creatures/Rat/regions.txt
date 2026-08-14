@@ -1,0 +1,11 @@
+nose: #ff0000
+ears: #ff8400
+eyes: #fffb00
+paws: #72ff00
+feet: #00ffca
+head: #8d00ff
+body: #00ff7b
+belly: #ff00e0
+tail: #0206f7
+
+
