@@ -15,8 +15,8 @@ namespace Desktop_Creatures
         private readonly int _uiScale;
 
         private readonly BitmapImage _exitNormal = LoadImage("exit.png");
-        private readonly BitmapImage _exitHover = LoadImage("exit-hover.png");
-        private readonly BitmapImage _exitPressed = LoadImage("exit-pressed.png");
+        private readonly BitmapImage _exitHover = LoadImage("exit_hover.png");
+        private readonly BitmapImage _exitPressed = LoadImage("exit_pressed.png");
 
         public SettingsWindow(
             AppSettings settings,

@@ -33,8 +33,8 @@
         <!-- X lives OUTSIDE the panel -->
         <Image x:Name="ExitImage"
                Source="/Assets/UI/Settings/Buttons/exit.png"
-               Canvas.Left="126"
-               Canvas.Top="3"
+               Canvas.Left="130"
+               Canvas.Top="6"
                Stretch="None"
                MouseEnter="Exit_MouseEnter"
                MouseLeave="Exit_MouseLeave"

@@ -120,7 +120,7 @@ public partial class MainWindow : Window
 
         FieldGuideImage.Source = _fieldGuideImages.Normal;
         ClearRatsImage.Source = _clearRatsImages.Normal;
-        SettingsImage.Source = _settingsImages.Normal;
+        SettingsButtonImage.Source = _settingsImages.Normal;
         ExitImage.Source = _exitImages.Normal;
         MinimizeImage.Source = _minimizeImages.Normal;
         XImage.Source = _closeImages.Normal;
@@ -752,13 +752,13 @@ public partial class MainWindow : Window
         Topmost = _uiAlwaysOnTop;
     }
 
-    private void Settings_Click(
+    private void SettingsButton_Click(
         object sender,
         RoutedEventArgs e)
     {
         if (_settingsWindow is not null)
         {
-            _settingsWindow.Activate();
+            _settingsWindow.Close();
             return;
         }
 
@@ -858,40 +858,36 @@ public partial class MainWindow : Window
         ClearRatsImage.Source = _clearRatsImages.Hover;
     }
 
-    private void Settings_MouseEnter(
+    private void SettingsButton_MouseEnter(
         object sender,
         WpfMouseEventArgs e)
     {
-        SettingsImage.Source =
+        SettingsButtonImage.Source =
             _settingsImages.Hover;
     }
 
-    private void Settings_MouseLeave(
+    private void SettingsButton_MouseLeave(
         object sender,
         WpfMouseEventArgs e)
     {
-        SettingsImage.Source =
+        SettingsButtonImage.Source =
             _settingsImages.Normal;
     }
 
-    private void Settings_MouseDown(
+    private void SettingsButton_MouseDown(
         object sender,
         WpfMouseButtonEventArgs e)
     {
-        SettingsImage.Source =
+        SettingsButtonImage.Source =
             _settingsImages.Pressed;
     }
 
-    private void Settings_MouseUp(
+    private void SettingsButton_MouseUp(
         object sender,
         WpfMouseButtonEventArgs e)
     {
-        SettingsImage.Source =
+        SettingsButtonImage.Source =
             _settingsImages.Hover;
-
-        Settings_Click(
-            sender,
-            e);
     }
 
     private void Exit_MouseEnter(

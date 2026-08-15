@@ -753,6 +753,8 @@
     <None Remove="Assets\UI\MainMenu\version.png" />
     <None Remove="Assets\UI\menu_background.png" />
     <None Remove="Assets\UI\menu_title.png" />
+    <None Remove="Assets\UI\Settings\Buttons\exit_hover.png" />
+    <None Remove="Assets\UI\Settings\Buttons\exit_pressed.png" />
     <None Remove="Assets\UI\Settings\Buttons\scale_1x.png" />
     <None Remove="Assets\UI\Settings\Buttons\scale_1x_hover.png" />
     <None Remove="Assets\UI\Settings\Buttons\scale_1x_pressed.png" />
@@ -1607,13 +1609,13 @@
     <Content Include="Assets\UI\MainMenu\version.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\UI\Settings\Buttons\exit-hover.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\Settings\Buttons\exit-pressed.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Assets\UI\Settings\Buttons\exit.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\Settings\Buttons\exit_hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\Settings\Buttons\exit_pressed.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\Settings\Buttons\scale_1x.png">
