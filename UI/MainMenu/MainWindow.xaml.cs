@@ -80,10 +80,11 @@ public partial class MainWindow : Window
 
         LocationChanged += MainWindow_LocationChanged;
 
-        Closing += (_, _) =>
-        {
-            SaveCreatures();
-        };
+        // TODO: Re-enable when creature persistence is ready.
+        //Closing += (_, _) =>
+        //{
+        //    SaveCreatures();
+        //};
 
         _workingArea = LoadSettings();
 
@@ -143,21 +144,38 @@ public partial class MainWindow : Window
 
             _surfaceManager.Refresh();
 
-            CreateFoodBowl(); 
-            CreateWaterDish();
+            // TODO: Re-enable when POIs are ready for release.
+            //CreateFoodBowl(); 
+            //CreateWaterDish();
 
-            bool loadedCreatures =
-                LoadSavedCreatures();
+            // TODO: Re-enable when creature persistence is ready.
+            //bool loadedCreatures =
+            //    LoadSavedCreatures();
+            //
+            //if (!loadedCreatures)
+            //{
+            //    SpawnRat();
+            //}
 
-            if (!loadedCreatures)
-            {
-                SpawnRat();
-            }
+            // Spawn one fresh rat on startup.
+            SpawnRat();
 
-            SpawnSpriteSheetTestRat();
+            // TEMP sprite-sheet test rat disabled for release.
+            //SpawnSpriteSheetTestRat();
 
-            SetCreaturesTopmost(
-                _creaturesAlwaysOnTop);
+            ApplyTopmostSettings();
+
+            ApplyTopmostSettings();
+        };
+
+        Activated += (_, _) =>
+        {
+            KeepCreaturesAboveMainMenu();
+        };
+
+        PreviewMouseDown += (_, _) =>
+        {
+            KeepCreaturesAboveMainMenu();
         };
     }
 
@@ -402,12 +420,16 @@ public partial class MainWindow : Window
         var screen = Forms.Screen.AllScreens[_moniterIndex];
         var area = screen.WorkingArea;
 
-        _creaturesAlwaysOnTop = _settings.EcosystemAlwaysOnTop;
-        Topmost = false;
+        _creaturesAlwaysOnTop = 
+            _settings.EcosystemAlwaysOnTop;
+
+        Topmost =
+            _settings.EcosystemAlwaysOnTop;
 
         _uiScale = _settings.Scale;
 
-        MainCanvas.LayoutTransform = new ScaleTransform(_uiScale, _uiScale);
+        MainCanvas.LayoutTransform = 
+            new ScaleTransform(_uiScale, _uiScale);
 
         Width = MainCanvas.Width * _uiScale;
         Height = MainCanvas.Height * _uiScale;
@@ -601,6 +623,11 @@ public partial class MainWindow : Window
             _fieldGuideMenu = null;
         };
 
+        _fieldGuideMenu.Activated += (_, _) =>
+        {
+            KeepCreaturesAboveMainMenu();
+        };
+
         _fieldGuideMenu.Show();
     }
 
@@ -724,25 +751,32 @@ public partial class MainWindow : Window
 
     private void ApplyTopmostSettings()
     {
-        bool menusTopmost =
-            _settings.MenusAlwaysOnTop;
-
-        bool ecosystemTopmost =
+        bool isAlwaysOnTop =
             _settings.EcosystemAlwaysOnTop;
 
-        Topmost = menusTopmost;
+        Topmost =
+            isAlwaysOnTop;
 
         if (_fieldGuideMenu is not null)
-            _fieldGuideMenu.Topmost = menusTopmost;
+        {
+            _fieldGuideMenu.Topmost =
+                isAlwaysOnTop;
+        }
 
         if (_settingsWindow is not null)
-            _settingsWindow.Topmost = menusTopmost;
+        {
+            _settingsWindow.Topmost =
+                isAlwaysOnTop;
+        }
 
-        foreach (var creatureWindow in _creatureWindows)
-            creatureWindow.Topmost = ecosystemTopmost;
+        SetCreaturesTopmost(
+            isAlwaysOnTop);
 
         foreach (var poiWindow in _poiWindows)
-            poiWindow.Topmost = ecosystemTopmost;
+        {
+            poiWindow.Topmost =
+                isAlwaysOnTop;
+        }
     }
 
     //private void EcosystemAlwaysOnTopToggle_Click(
@@ -782,11 +816,14 @@ public partial class MainWindow : Window
             {
                 Owner = this,
                 Topmost =
-                    _settings.MenusAlwaysOnTop
+                    _settings.EcosystemAlwaysOnTop
             };
 
         _settingsWindow.ScaleChanged +=
             OnCreatureDisplayScaleChanged;
+
+        _settingsWindow.EcosystemAlwaysOnTopChanged +=
+            OnEcosystemAlwaysOnTopChanged;
 
         _settingsWindow.Left =
             Left + (108 * _uiScale);
@@ -797,9 +834,18 @@ public partial class MainWindow : Window
         _settingsWindow.Closed += (_, _) =>
         {
             _settingsWindow = null;
+
+            KeepCreaturesAboveMainMenu();
+        };
+
+        _settingsWindow.Activated += (_, _) =>
+        {
+            KeepCreaturesAboveMainMenu();
         };
 
         _settingsWindow.Show();
+
+        KeepCreaturesAboveMainMenu();
     }
 
     private void OnCreatureDisplayScaleChanged(
@@ -810,6 +856,41 @@ public partial class MainWindow : Window
             window.SetDisplayScale(
                 scale);
         }
+    }
+
+    private void KeepCreaturesAboveMainMenu()
+    {
+        if (!_settings.EcosystemAlwaysOnTop)
+            return;
+
+        Dispatcher.BeginInvoke(() =>
+        {
+            foreach (var creatureWindow in _creatureWindows)
+            {
+                creatureWindow.RefreshTopmost(true);
+            }
+
+            if (_fieldGuideMenu is not null)
+            {
+                _fieldGuideMenu.Topmost = false;
+                _fieldGuideMenu.Topmost = true;
+            }
+
+            if (_settingsWindow is not null)
+            {
+                _settingsWindow.Topmost = false;
+                _settingsWindow.Topmost = true;
+            }
+        });
+    }
+
+    private void OnEcosystemAlwaysOnTopChanged(
+        bool isAlwaysOnTop)
+    {
+        _creaturesAlwaysOnTop =
+            isAlwaysOnTop;
+
+        ApplyTopmostSettings();
     }
 
     private void Minimize_Click(object sender, RoutedEventArgs e)
@@ -827,6 +908,8 @@ public partial class MainWindow : Window
 
             UpdateMenuSurface();
             _surfaceManager.Refresh();
+
+            KeepCreaturesAboveMainMenu();
         }
     }
 

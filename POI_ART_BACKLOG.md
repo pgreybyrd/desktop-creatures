@@ -15,7 +15,7 @@ than designing everything around a single species.
 - [x] Surface snapping
 - [x] Eat interaction point
 - [x] Creature reservations
-- [ ] Add small visual surface overlap when snapped
+- [x] Add small visual surface overlap when snapped
 - [ ] Additional bowl variants/colors
 - [x] Empty bowl artwork/state
 
@@ -23,8 +23,8 @@ than designing everything around a single species.
 - [x] Base artwork
 - [x] Filled state
 - [x] Empty state
-- [ ] Drink interaction point
-- [ ] Surface snapping
+- [x] Drink interaction point
+- [x] Surface snapping
 - [ ] Additional bowl variants/colors
 - [ ] Drinking behavior
 

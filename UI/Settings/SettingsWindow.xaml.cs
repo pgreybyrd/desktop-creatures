@@ -58,6 +58,7 @@ namespace Desktop_Creatures
             _toggleOffImages = LoadButtonImages("toggle_off");
 
             RefreshScaleButtons();
+            RefreshAlwaysOnTopButton();
         }
 
         private static UiButtonImages LoadButtonImages(string buttonName)
@@ -104,6 +105,28 @@ namespace Desktop_Creatures
                 scale == 4
                     ? _scale4Images.Pressed
                     : _scale4Images.Normal;
+        }
+
+        private void ToggleAlwaysOnTop()
+        {
+            _settings.EcosystemAlwaysOnTop =
+                !_settings.EcosystemAlwaysOnTop;
+
+            SettingsLoader.Save(
+                _settings);
+
+            RefreshAlwaysOnTopButton();
+
+            EcosystemAlwaysOnTopChanged?.Invoke(
+                _settings.EcosystemAlwaysOnTop);
+        }
+
+        private void RefreshAlwaysOnTopButton()
+        {
+            AlwaysOnTopImage.Source =
+                _settings.EcosystemAlwaysOnTop
+                    ? _toggleOnImages.Normal
+                    : _toggleOffImages.Normal;
         }
 
         private void Scale1_Click(
@@ -288,28 +311,34 @@ namespace Desktop_Creatures
             object sender,
             WpfMouseEventArgs e)
         {
-            AlwaysOnTopImage.Source = _toggleOnImages.Hover;
+            AlwaysOnTopImage.Source =
+                _settings.EcosystemAlwaysOnTop
+                    ? _toggleOnImages.Hover
+                    : _toggleOffImages.Hover;
         }
 
         private void AlwaysOnTop_MouseLeave(
             object sender,
             WpfMouseEventArgs e)
         {
-            AlwaysOnTopImage.Source = _toggleOnImages.Normal;
+            RefreshAlwaysOnTopButton();
         }
 
         private void AlwaysOnTop_MouseDown(
             object sender,
             WpfMouseButtonEventArgs e)
         {
-            AlwaysOnTopImage.Source = _toggleOnImages.Pressed;
+            AlwaysOnTopImage.Source =
+                _settings.EcosystemAlwaysOnTop
+                    ? _toggleOnImages.Pressed
+                    : _toggleOffImages.Pressed;
         }
 
         private void AlwaysOnTop_MouseUp(
             object sender,
             WpfMouseButtonEventArgs e)
         {
-            AlwaysOnTopImage.Source = _toggleOnImages.Hover;
+            ToggleAlwaysOnTop();
         }
 
         private void DragArea_MouseLeftButtonDown(
