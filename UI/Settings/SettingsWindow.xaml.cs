@@ -1,4 +1,6 @@
-﻿using Desktop_Creatures.Config;
+﻿using Desktop_Creatures.Assets;
+using Desktop_Creatures.Assets.UI;
+using Desktop_Creatures.Config;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -11,12 +13,19 @@ namespace Desktop_Creatures
 {
     public partial class SettingsWindow : Window
     {
+        public event Action<int>? ScaleChanged;
+        public event Action<bool>? EcosystemAlwaysOnTopChanged;
+
         private readonly AppSettings _settings;
         private readonly int _uiScale;
 
-        private readonly BitmapImage _exitNormal = LoadImage("exit.png");
-        private readonly BitmapImage _exitHover = LoadImage("exit_hover.png");
-        private readonly BitmapImage _exitPressed = LoadImage("exit_pressed.png");
+        private readonly UiButtonImages _exitImages = null!;
+        private readonly UiButtonImages _scale1Images = null!;
+        private readonly UiButtonImages _scale2Images = null!;
+        private readonly UiButtonImages _scale3Images = null!;
+        private readonly UiButtonImages _scale4Images = null!;
+        private readonly UiButtonImages _toggleOnImages = null!;
+        private readonly UiButtonImages _toggleOffImages = null!;
 
         public SettingsWindow(
             AppSettings settings,
@@ -39,49 +48,268 @@ namespace Desktop_Creatures
             Height =
                 SettingsCanvas.Height *
                 _uiScale;
+
+            _exitImages = LoadButtonImages("exit");
+            _scale1Images = LoadButtonImages("scale_1x");
+            _scale2Images = LoadButtonImages("scale_2x");
+            _scale3Images = LoadButtonImages("scale_3x");
+            _scale4Images = LoadButtonImages("scale_4x");
+            _toggleOnImages = LoadButtonImages("toggle_on");
+            _toggleOffImages = LoadButtonImages("toggle_off");
+
+            RefreshScaleButtons();
         }
 
-        private static BitmapImage LoadImage(
-            string fileName)
+        private static UiButtonImages LoadButtonImages(string buttonName)
         {
-            return new BitmapImage(
-                new Uri(
-                    $"pack://application:,,,/Assets/UI/Settings/Buttons/{fileName}",
-                    UriKind.Absolute));
+            return new UiButtonImages(
+                AssetImageLoader.Load($"Assets/UI/Settings/Buttons/{buttonName}.png"),
+                AssetImageLoader.Load($"Assets/UI/Settings/Buttons/{buttonName}_hover.png"),
+                AssetImageLoader.Load($"Assets/UI/Settings/Buttons/{buttonName}_pressed.png"));
+        }
+
+        private void SetScale(int scale)
+        {
+            _settings.CreatureDisplayScale = scale;
+
+            SettingsLoader.Save(
+                _settings);
+
+            RefreshScaleButtons();
+
+            ScaleChanged?.Invoke(scale);
+        }
+
+        private void RefreshScaleButtons()
+        {
+            int scale =
+                _settings.CreatureDisplayScale;
+
+            Scale1Image.Source =
+                scale == 1
+                    ? _scale1Images.Pressed
+                    : _scale1Images.Normal;
+
+            Scale2Image.Source =
+                scale == 2
+                    ? _scale2Images.Pressed
+                    : _scale2Images.Normal;
+
+            Scale3Image.Source =
+                scale == 3
+                    ? _scale3Images.Pressed
+                    : _scale3Images.Normal;
+
+            Scale4Image.Source =
+                scale == 4
+                    ? _scale4Images.Pressed
+                    : _scale4Images.Normal;
+        }
+
+        private void Scale1_Click(
+            object sender,
+            RoutedEventArgs e)
+        {
+            SetScale(1);
+        }
+
+        private void Scale1_MouseEnter(
+            object sender,
+            WpfMouseEventArgs e)
+        {
+            Scale1Image.Source = _scale1Images.Hover;
+        }
+
+        private void Scale1_MouseLeave(
+            object sender,
+            WpfMouseEventArgs e)
+        {
+            RefreshScaleButtons();
+        }
+
+        private void Scale1_MouseUp(
+            object sender,
+            MouseButtonEventArgs e)
+        {
+            SetScale(1);
+        }
+
+        private void Scale1_MouseDown(
+            object sender,
+            WpfMouseButtonEventArgs e)
+        {
+            Scale1Image.Source = _scale1Images.Pressed;
+
+            Scale1_Click(sender, e);
+        }
+
+        private void Scale2_Click(
+            object sender,
+            RoutedEventArgs e)
+        {
+            SetScale(2);
+        }
+
+        private void Scale2_MouseEnter(
+            object sender,
+            WpfMouseEventArgs e)
+        {
+            Scale2Image.Source = _scale2Images.Hover;
+        }
+
+        private void Scale2_MouseLeave(
+            object sender,
+            WpfMouseEventArgs e)
+        {
+            RefreshScaleButtons();
+        }
+
+        private void Scale2_MouseUp(
+            object sender,
+            MouseButtonEventArgs e)
+        {
+            SetScale(2);
+        }
+
+        private void Scale2_MouseDown(
+            object sender,
+            WpfMouseButtonEventArgs e)
+        {
+            Scale2Image.Source = _scale2Images.Pressed;
+
+            Scale2_Click(sender, e);
+        }
+
+        private void Scale3_Click(
+            object sender,
+            RoutedEventArgs e)
+        {
+            SetScale(3);
+        }
+
+        private void Scale3_MouseEnter(
+            object sender,
+            WpfMouseEventArgs e)
+        {
+            Scale3Image.Source = _scale3Images.Hover;
+        }
+
+        private void Scale3_MouseLeave(
+            object sender,
+            WpfMouseEventArgs e)
+        {
+            RefreshScaleButtons();
+        }
+
+        private void Scale3_MouseUp(
+            object sender,
+            MouseButtonEventArgs e)
+        {
+            SetScale(3);
+        }
+
+        private void Scale3_MouseDown(
+            object sender,
+            WpfMouseButtonEventArgs e)
+        {
+            Scale3Image.Source = _scale3Images.Pressed;
+
+            Scale3_Click(sender, e);
+        }
+
+        private void Scale4_Click(
+            object sender,
+            RoutedEventArgs e)
+        {
+            SetScale(4);
+        }
+
+        private void Scale4_MouseEnter(
+            object sender,
+            WpfMouseEventArgs e)
+        {
+            Scale4Image.Source = _scale4Images.Hover;
+        }
+
+        private void Scale4_MouseLeave(
+            object sender,
+            WpfMouseEventArgs e)
+        {
+            RefreshScaleButtons();
+        }
+
+        private void Scale4_MouseUp(
+            object sender,
+            MouseButtonEventArgs e)
+        {
+            SetScale(4);
+        }
+
+        private void Scale4_MouseDown(
+            object sender,
+            WpfMouseButtonEventArgs e)
+        {
+            Scale4Image.Source = _scale4Images.Pressed;
+
+            Scale4_Click(sender, e);
         }
 
         private void Exit_MouseEnter(
             object sender,
             WpfMouseEventArgs e)
         {
-            ExitImage.Source =
-                _exitHover;
+            ExitImage.Source = _exitImages.Hover;
         }
 
         private void Exit_MouseLeave(
             object sender,
             WpfMouseEventArgs e)
         {
-            ExitImage.Source =
-                _exitNormal;
+            ExitImage.Source = _exitImages.Normal;
         }
 
         private void Exit_MouseDown(
             object sender,
             WpfMouseButtonEventArgs e)
         {
-            ExitImage.Source =
-                _exitPressed;
+            ExitImage.Source = _exitImages.Pressed;
         }
 
         private void Exit_MouseUp(
             object sender,
             WpfMouseButtonEventArgs e)
         {
-            ExitImage.Source =
-                _exitHover;
+            ExitImage.Source = _exitImages.Hover;
 
             Close();
+        }
+
+        private void AlwaysOnTop_MouseEnter(
+            object sender,
+            WpfMouseEventArgs e)
+        {
+            AlwaysOnTopImage.Source = _toggleOnImages.Hover;
+        }
+
+        private void AlwaysOnTop_MouseLeave(
+            object sender,
+            WpfMouseEventArgs e)
+        {
+            AlwaysOnTopImage.Source = _toggleOnImages.Normal;
+        }
+
+        private void AlwaysOnTop_MouseDown(
+            object sender,
+            WpfMouseButtonEventArgs e)
+        {
+            AlwaysOnTopImage.Source = _toggleOnImages.Pressed;
+        }
+
+        private void AlwaysOnTop_MouseUp(
+            object sender,
+            WpfMouseButtonEventArgs e)
+        {
+            AlwaysOnTopImage.Source = _toggleOnImages.Hover;
         }
 
         private void DragArea_MouseLeftButtonDown(

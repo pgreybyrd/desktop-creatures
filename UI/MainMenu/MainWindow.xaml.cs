@@ -501,8 +501,9 @@ public partial class MainWindow : Window
                 _surfaceManager)
             {
             Topmost = _creaturesAlwaysOnTop
-        };
+            };
 
+        ratWindow.SetDisplayScale(_settings.CreatureDisplayScale);
         ratWindow.Show();
 
         _creatureWindows.Add(ratWindow);
@@ -639,6 +640,17 @@ public partial class MainWindow : Window
             "eagle",
             new CreatureSettings());
 
+        int eagleCount = _creatureWindows.Count(w =>
+            w.GetCreature() is Eagle);
+
+        if (eagleCount >= MaxEagles)
+        {
+            System.Windows.MessageBox.Show(
+                $"Maximum eagle count reached: {MaxEagles}",
+                "Too many eagles!");
+            return;
+        }
+
         var screen = Forms.Screen.PrimaryScreen!;
         var area = screen.WorkingArea;
 
@@ -659,6 +671,7 @@ public partial class MainWindow : Window
             Topmost = _creaturesAlwaysOnTop
         };
 
+        eagleWindow.SetDisplayScale(_settings.CreatureDisplayScale);
         eagleWindow.Show();
 
         _creatureWindows.Add(eagleWindow);
@@ -772,6 +785,9 @@ public partial class MainWindow : Window
                     _settings.MenusAlwaysOnTop
             };
 
+        _settingsWindow.ScaleChanged +=
+            OnCreatureDisplayScaleChanged;
+
         _settingsWindow.Left =
             Left + (108 * _uiScale);
 
@@ -784,6 +800,16 @@ public partial class MainWindow : Window
         };
 
         _settingsWindow.Show();
+    }
+
+    private void OnCreatureDisplayScaleChanged(
+        int scale)
+    {
+        foreach (var window in _creatureWindows)
+        {
+            window.SetDisplayScale(
+                scale);
+        }
     }
 
     private void Minimize_Click(object sender, RoutedEventArgs e)

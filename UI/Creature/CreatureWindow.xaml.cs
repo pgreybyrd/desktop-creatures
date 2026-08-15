@@ -57,8 +57,7 @@ public partial class CreatureWindow : Window
 
         CreatureImage.Source = _creature.CurrentFrame;
 
-        Left = _creature.X;
-        Top = _creature.Y;
+        UpdateWindowPosition();
 
         Deactivated += (_, _) =>
         {
@@ -96,8 +95,54 @@ public partial class CreatureWindow : Window
             $"Image={CreatureImage.Width}x{CreatureImage.Height}, " +
             $"CurrentFrame hash = {_creature.CurrentFrame.GetHashCode()}");
 
-        Left = _creature.X;
-        Top = _creature.Y;
+        UpdateWindowPosition();
+    }
+
+    public void SetDisplayScale(int displayScale)
+    {
+        displayScale =
+            Math.Clamp(displayScale, 1, 4);
+
+        _creature.SetDisplayScale(
+            displayScale);
+
+        double width =
+            _creature.SpriteWidth *
+            displayScale;
+
+        double height =
+            _creature.SpriteHeight *
+            displayScale;
+
+        Width = width;
+        Height = height;
+
+        CreatureImage.Width = width;
+        CreatureImage.Height = height;
+
+        UpdateWindowPosition();
+    }
+
+    private void UpdateWindowPosition()
+    {
+        double displayScale =
+            _creature.DisplayScale;
+
+        double extraWidth =
+            _creature.SpriteWidth *
+            (displayScale - 1);
+
+        double extraHeight =
+            _creature.CurrentFootY *
+            (displayScale - 1);
+
+        Left =
+            _creature.X -
+            (extraWidth / 2.0);
+
+        Top =
+            _creature.Y -
+            extraHeight;
     }
 
     public void BringCreatureToFront()

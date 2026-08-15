@@ -55,11 +55,13 @@ public abstract class Creature
     protected CreatureSettings Settings { get; }
 
     public int Scale => Settings.Scale;
+    public int DisplayScale { get; private set; } = 1;
     public int SizeTier { get; init; }
 
     public bool SpriteFacesRight => Settings.SpriteFacesRight;
     public int SpriteWidth => Settings.SpriteWidth * Settings.Scale;
     public int SpriteHeight => Settings.SpriteHeight * Settings.Scale;
+    public int CurrentFootY => GetCurrentFootY();
     public double LandingTolerance => Settings.LandingTolerance;
 
     protected virtual int FootOffsetY => SpriteHeight;
@@ -189,6 +191,18 @@ public abstract class Creature
     {
         Animations[animationName] =
             frames.ToArray();
+    }
+
+    public void SetDisplayScale(int scale)
+    {
+        DisplayScale =
+            Math.Clamp(scale, 1, 4);
+
+        if (Settings.Run is not null)
+        {
+            MovementSpeed =
+                Run.RunSpeed * DisplayScale;
+        }
     }
 
     public void LoadAssets(string assetFolder)
@@ -610,7 +624,7 @@ public abstract class Creature
             snappedPosition.Value.Y;
 
         MovementSpeed =
-            Run.RunSpeed;
+            Run.RunSpeed * DisplayScale;
 
         SetAction(
             CreatureAction.Running,
@@ -994,7 +1008,7 @@ public abstract class Creature
             return;
         }
 
-        MovementSpeed = Run.RunSpeed;
+        MovementSpeed = Run.RunSpeed * DisplayScale;
 
         StateTicksRemaining = Random.Next(
             Run.MinRunTicks,
@@ -1043,7 +1057,7 @@ public abstract class Creature
 
         TargetX = Math.Clamp(desiredX, minX, maxX);
         TargetY = CurrentSurface.Top - GetCurrentFootY();
-        MovementSpeed = Run.RunSpeed;
+        MovementSpeed = Run.RunSpeed * DisplayScale;
 
         StateTicksRemaining = Random.Next(
             Run.MinRunTicks,

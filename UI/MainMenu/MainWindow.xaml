@@ -102,7 +102,7 @@
                     PreviewMouseUp="ClearRats_MouseUp"/>
 
             <Image x:Name="SettingsButtonImage"
-                   Source="/Assets/UI/MainMenu/Buttons/button_settings.png"
+                   Source="Assets/UI/MainMenu/Buttons/button_settings.png"
                    Canvas.Left="114"
                    Canvas.Top="161"
                    Width="139"

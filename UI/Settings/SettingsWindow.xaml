@@ -47,31 +47,51 @@
                Source="/Assets/UI/Settings/Buttons/scale_1x.png"
                Canvas.Left="19"
                Canvas.Top="109"
-               Stretch="None" />
+               Stretch="None"
+               MouseUp= "Scale1_MouseUp"
+               MouseEnter="Scale1_MouseEnter"
+               MouseLeave="Scale1_MouseLeave"
+               MouseLeftButtonDown="Scale1_MouseDown"/>
 
         <Image x:Name="Scale2Image"
                Source="/Assets/UI/Settings/Buttons/scale_2x.png"
                Canvas.Left="49"
                Canvas.Top="109"
-               Stretch="None" />
+               Stretch="None"
+               MouseUp= "Scale2_MouseUp"
+               MouseEnter="Scale2_MouseEnter"
+               MouseLeave="Scale2_MouseLeave"
+               MouseLeftButtonDown="Scale2_MouseDown" />
 
         <Image x:Name="Scale3Image"
                Source="/Assets/UI/Settings/Buttons/scale_3x.png"
                Canvas.Left="79"
                Canvas.Top="109"
-               Stretch="None" />
+               Stretch="None"
+               MouseUp= "Scale3_MouseUp"
+               MouseEnter="Scale3_MouseEnter"
+               MouseLeave="Scale3_MouseLeave"
+               MouseLeftButtonDown="Scale3_MouseDown"/>
 
         <Image x:Name="Scale4Image"
                Source="/Assets/UI/Settings/Buttons/scale_4x.png"
                Canvas.Left="108"
                Canvas.Top="109"
-               Stretch="None" />
+               Stretch="None"
+               MouseUp= "Scale4_MouseUp"
+               MouseEnter="Scale4_MouseEnter"
+               MouseLeave="Scale4_MouseLeave"
+               MouseLeftButtonDown="Scale4_MouseDown"/>
 
         <Image x:Name="AlwaysOnTopImage"
                Source="/Assets/UI/Settings/Buttons/toggle_off.png"
                Canvas.Left="52"
                Canvas.Top="179"
-               Stretch="None" />
+               Stretch="None"
+               MouseEnter="AlwaysOnTop_MouseEnter"
+               MouseLeave="AlwaysOnTop_MouseLeave"
+               MouseLeftButtonDown="AlwaysOnTop_MouseDown"
+               MouseLeftButtonUp="AlwaysOnTop_MouseUp" />
 
     </Canvas>
 </Window>
