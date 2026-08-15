@@ -33,6 +33,14 @@ namespace Desktop_Creatures
         {
             InitializeComponent();
 
+            SettingsBackgroundImage.Source =
+                AssetImageLoader.Load(
+                    "Assets/UI/Settings/settings_window.png");
+
+            ExitImage.Source =
+                AssetImageLoader.Load(
+                    "Assets/UI/Settings/Buttons/exit.png");
+
             _settings = settings;
             _uiScale = uiScale;
 

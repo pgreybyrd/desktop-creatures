@@ -22,7 +22,7 @@
             MouseLeftButtonDown="DragArea_MouseLeftButtonDown" />
 
         <!-- Actual 147x189 settings panel -->
-        <Image Source="/Assets/UI/Settings/settings_window.png"
+        <Image x:Name="SettingsBackgroundImage"
                Width="151"
                Height="191"
                Canvas.Left="0"
@@ -32,7 +32,6 @@
 
         <!-- X lives OUTSIDE the panel -->
         <Image x:Name="ExitImage"
-               Source="/Assets/UI/Settings/Buttons/exit.png"
                Canvas.Left="130"
                Canvas.Top="6"
                Stretch="None"
