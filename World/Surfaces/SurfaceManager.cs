@@ -405,6 +405,7 @@ public class SurfaceManager
 
         return false;
     }
+    //Phantom window detection code included!! rawr
 
     [DllImport("dwmapi.dll")]
     private static extern int DwmGetWindowAttribute(
