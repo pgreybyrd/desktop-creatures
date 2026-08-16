@@ -10,7 +10,7 @@ public static class CreatureAppearanceFactory
 {
     public static CreatureAppearance Create(
         string creatureType,
-        string variant)
+        CreatureAppearanceTraits traits)
     {
         string creatureFolder =
             $"Assets/Creatures/{creatureType}/Appearance";
@@ -37,19 +37,9 @@ public static class CreatureAppearanceFactory
             RegionDefinitionLoader.Load(
                 regionsJson);
 
-        // Appearance recipe
-        string appearanceJson =
-            AssetTextLoader.Load(
-                $"{creatureFolder}/Appearances/{variant}.json");
-
-        var appearance =
-            CreatureAppearanceLoader.Load(
-                appearanceJson);
-
-        // Palette selected by the appearance recipe
         string paletteJson =
             AssetTextLoader.Load(
-                $"{creatureFolder}/Palettes/{appearance.Palette}.json");
+                $"{creatureFolder}/Palettes/{traits.Palette}.json");
 
         var palette =
             RegionPaletteLoader.Load(
@@ -62,7 +52,7 @@ public static class CreatureAppearanceFactory
                 regionMask,
                 regions,
                 palette,
-                appearance,
+                traits,
 
                 patternId =>
                     AssetImageLoader.Load(
@@ -77,7 +67,7 @@ public static class CreatureAppearanceFactory
                         $"{creatureFolder}/Effects/{effectId}.png"));
 
         return new CreatureAppearance(
-            variant,
+            traits,
             spriteSheet);
     }
 }

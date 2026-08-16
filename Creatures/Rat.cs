@@ -2,24 +2,24 @@ using Desktop_Creatures.Config;
 using Desktop_Creatures.Graphics.Animation;
 using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
+using PixelRecolor.Core;
 
 namespace Desktop_Creatures.Creatures
 {
     public class Rat : Creature
     {
-        private static readonly string[] Variants =
+        private static readonly string[] Palettes =
         [
-            "Chocolate",
-            "Grey",
-            "GreyHooded",
-            "Albino",
-            "Rainbow",
-            "Black",
-            "Cinnamon"
+            "chocolate",
+            "grey",
+            "albino",
+            "black",
+            "cinnamon"
         ];
+
         public CreatureAppearance Appearance { get; }
-        public string Variant =>
-            Appearance.Variant;
+        public CreatureAppearanceTraits AppearanceTraits =>
+            Appearance.Traits;
 
         public Rat(
             double x,
@@ -29,7 +29,7 @@ namespace Desktop_Creatures.Creatures
             SurfaceManager surfaceManager,
             Guid? id = null,
             string? name = null,
-            string? variant = null)
+            CreatureAppearanceTraits? appearanceTraits = null)
             : base(
                 settings,
                 pointOfInterestManager,
@@ -37,14 +37,14 @@ namespace Desktop_Creatures.Creatures
                 id,
                 name)
         {
-            string selectedVariant =
-                variant ??
-                Variants[Random.Next(Variants.Length)];
+            CreatureAppearanceTraits selectedTraits =
+                appearanceTraits ??
+                CreateRandomAppearanceTraits();
 
             Appearance =
                 CreatureAppearanceFactory.Create(
                     "Rat",
-                    selectedVariant);
+                    selectedTraits);
 
             var sheet = 
                 SpriteSheetLoader.Load(
@@ -62,6 +62,18 @@ namespace Desktop_Creatures.Creatures
             InitializeGroundCreature(
                 x,
                 y);
+        }
+
+        private CreatureAppearanceTraits CreateRandomAppearanceTraits()
+        {
+            string palette =
+                Palettes[Random.Next(Palettes.Length)];
+
+            return new CreatureAppearanceTraits(
+                Palette: palette,
+                Patterns: [],
+                Accessories: [],
+                Effects: []);
         }
     }
 }

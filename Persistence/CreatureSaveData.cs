@@ -1,4 +1,6 @@
-﻿namespace Desktop_Creatures.Persistence;
+﻿using PixelRecolor.Core;
+
+namespace Desktop_Creatures.Persistence;
 
 public class CreatureSaveData
 {
@@ -8,7 +10,7 @@ public class CreatureSaveData
 
     public string Name { get; set; } = "";
 
-    public string Variant { get; set; } = "";
+    public CreatureAppearanceTraits? AppearanceTraits { get; set; }
 
     public double X { get; set; }
 

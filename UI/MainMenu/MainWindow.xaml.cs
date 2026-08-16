@@ -1,11 +1,12 @@
-﻿using Desktop_Creatures.Tools.Images;
-using Desktop_Creatures.Config;
+﻿using Desktop_Creatures.Config;
 using Desktop_Creatures.Creatures;
-using Desktop_Creatures.Graphics.Animation;
+using Desktop_Creatures.Graphics;
 using Desktop_Creatures.Persistence;
+using Desktop_Creatures.Tools.Images;
 using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
+using PixelRecolor.Core;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -14,7 +15,6 @@ using Point = System.Windows.Point;
 using WpfMouseButtonEventArgs = System.Windows.Input.MouseButtonEventArgs;
 using WpfMouseButtonState = System.Windows.Input.MouseButtonState;
 using WpfMouseEventArgs = System.Windows.Input.MouseEventArgs;
-using Desktop_Creatures.Graphics;
 
 namespace Desktop_Creatures;
 
@@ -512,7 +512,10 @@ public partial class MainWindow : Window
         //    _surfaceManager,
         //    id: saveData?.Id,
         //    name: saveData?.Name,
-        //    variant: saveData?.Variant);
+        //    appearanceTraits: saveData?.AppearanceTraits
+
+        string testPalette = "albino";
+
         var rat = new Rat(
             spawnX,
             spawnY,
@@ -521,7 +524,11 @@ public partial class MainWindow : Window
             _surfaceManager,
             id: saveData?.Id,
             name: saveData?.Name,
-            variant: "black");
+            appearanceTraits: new CreatureAppearanceTraits(
+                Palette: testPalette,
+                Patterns: [],
+                Accessories: [],
+                Effects: []));
 
         var ratWindow =
             new CreatureWindow(
@@ -550,7 +557,7 @@ public partial class MainWindow : Window
                         Id = rat.Id,
                         CreatureType = "rat",
                         Name = rat.Name,
-                        Variant = rat.Variant,
+                        AppearanceTraits = rat.AppearanceTraits,
                         X = rat.X,
                         Y = rat.Y
                     })

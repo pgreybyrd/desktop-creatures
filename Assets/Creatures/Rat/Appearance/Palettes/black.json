@@ -4,12 +4,12 @@
     "nose": {
       "hue": 16,
       "saturation": 0.36,
-      "brightness": 0.54
+      "brightness": 0.70
     },
     "ears": {
       "hue": 16,
-      "saturation": 0.30,
-      "brightness": 0.67
+      "saturation": 0.43,
+      "brightness": 0.75
     },
     "eyes": {
       "hue": 0,
@@ -19,12 +19,12 @@
     "paws": {
       "hue": 17,
       "saturation": 0.30,
-      "brightness": 0.57
+      "brightness": 0.65
     },
     "feet": {
       "hue": 17,
       "saturation": 0.30,
-      "brightness": 0.57
+      "brightness": 0.60
     },
     "head": {
       "hue": 0,
@@ -43,8 +43,8 @@
     },
     "tail": {
       "hue": 15,
-      "saturation": 0.31,
-      "brightness": 0.64
+      "saturation": 0.40,
+      "brightness": 0.90
     }
   }
 }

@@ -1,18 +1,19 @@
-﻿using System.Windows.Media.Imaging;
+﻿using PixelRecolor.Core;
+using System.Windows.Media.Imaging;
 
 namespace Desktop_Creatures.Creatures;
 
 public sealed class CreatureAppearance
 {
-    public string Variant { get; }
+    public CreatureAppearanceTraits Traits { get; }
 
     public BitmapSource SpriteSheet { get; }
 
     public CreatureAppearance(
-        string variant,
+        CreatureAppearanceTraits traits,
         BitmapSource spriteSheet)
     {
-        Variant = variant;
+        Traits = traits;
         SpriteSheet = spriteSheet;
     }
 }
