@@ -26,7 +26,8 @@ public enum CreatureAction
     Running,
     Falling,
     Chasing,
-    Carrying
+    Carrying,
+    Held
 }
 
 public abstract class Creature
@@ -36,6 +37,8 @@ public abstract class Creature
     public string Name { get; protected set; }
 
     protected readonly Random Random = new();
+
+    private int _animationDirection = 1;
 
     private readonly PersonalityManager PersonalityManager = new();
     protected PointOfInterestManager PointOfInterestManager;
@@ -75,6 +78,12 @@ public abstract class Creature
     public double LandingTolerance => Settings.LandingTolerance;
 
     protected virtual int FootOffsetY => SpriteHeight;
+
+    public virtual Point PickupAnchor =>
+        new(
+            SpriteWidth / 2.0,
+            SpriteHeight / 4.0);
+
 
     protected PointOfInterest? TargetPoi;
 
@@ -359,6 +368,8 @@ public abstract class Creature
         if (CurrentFrameIndex >= CurrentFrames.Length)
             CurrentFrameIndex = 0;
 
+        CurrentFrameIndex = 0;
+        _animationDirection = 1;
         AnimationTick = 0;
     }
 
@@ -460,10 +471,26 @@ public abstract class Creature
     {
         return CurrentAction switch
         {
-            CreatureAction.Running => SpriteHeight - (Settings.FootOffsetY * Settings.Scale),
-            CreatureAction.Idle => SpriteHeight - (Settings.FootOffsetY * Settings.Scale),
-            CreatureAction.Eating => SpriteHeight - (Settings.FootOffsetY * Settings.Scale),
-            CreatureAction.Falling => SpriteHeight - (Settings.FootOffsetY * Settings.Scale),
+            CreatureAction.Running =>
+                SpriteHeight -
+                (Settings.FootOffsetY * Settings.Scale),
+
+            CreatureAction.Idle =>
+                SpriteHeight -
+                (Settings.FootOffsetY * Settings.Scale),
+
+            CreatureAction.Eating =>
+                SpriteHeight -
+                (Settings.FootOffsetY * Settings.Scale),
+
+            CreatureAction.Falling =>
+                SpriteHeight -
+                (Settings.FootOffsetY * Settings.Scale),
+
+            CreatureAction.Held =>
+                SpriteHeight -
+                (Settings.FootOffsetY * Settings.Scale),
+
             _ => SpriteHeight
         };
     }
@@ -558,6 +585,9 @@ public abstract class Creature
 
             CreatureAction.Falling when Settings.Fall is not null
                 => Settings.Fall.FallFrameTicks,
+
+            CreatureAction.Held
+                => 8,
 
             CreatureAction.Flying when Settings.Flight is not null
                 => Settings.Flight.FlyingFrameTicks,
@@ -1133,5 +1163,45 @@ public abstract class Creature
     {
         return CurrentSurface is not null &&
                PoiIsOnSurface(poi, CurrentSurface);
+    }
+
+    public void UpdateHeldAnimation()
+    {
+        if (CurrentAction == CreatureAction.Held)
+            AdvanceAnimationPingPong(8);
+    }
+
+    protected void AdvanceAnimationPingPong(
+        int frameTicks)
+    {
+        if (CurrentFrames.Length <= 1)
+            return;
+
+        AnimationTick++;
+
+        if (AnimationTick < frameTicks)
+            return;
+
+        AnimationTick = 0;
+
+        CurrentFrameIndex +=
+            _animationDirection;
+
+        if (CurrentFrameIndex >= CurrentFrames.Length - 1)
+        {
+            CurrentFrameIndex =
+                CurrentFrames.Length - 1;
+
+            _animationDirection = -1;
+        }
+        else if (CurrentFrameIndex <= 0)
+        {
+            CurrentFrameIndex = 0;
+            _animationDirection = 1;
+        }
+    }
+
+    public virtual void OnPickedUp()
+    {
     }
 }

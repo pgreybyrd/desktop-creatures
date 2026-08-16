@@ -71,7 +71,14 @@ public partial class CreatureWindow : Window
     public void UpdateCreature()
     {
         if (_isDragging)
+        {
+            _creature.UpdateHeldAnimation();
+
+            if (CreatureImage.Source != _creature.CurrentFrame)
+                CreatureImage.Source = _creature.CurrentFrame;
+
             return;
+        }
 
         _creature.Update();
 
@@ -166,10 +173,21 @@ public partial class CreatureWindow : Window
         Topmost = true;
     }
 
-    private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    private void OnMouseLeftButtonDown(
+        object sender,
+        MouseButtonEventArgs e)
     {
         _isDragging = true;
-        _dragOffset = e.GetPosition(this);
+
+        _dragOffset =
+            new System.Windows.Point(
+                _creature.PickupAnchor.X *
+                    _creature.DisplayScale,
+                _creature.PickupAnchor.Y *
+                    _creature.DisplayScale);
+
+        _creature.OnPickedUp();
+
         CaptureMouse();
     }
 
@@ -177,6 +195,8 @@ public partial class CreatureWindow : Window
     {
         if (!_isDragging)
             return;
+
+        //_creature.OnPickedUp();
 
         var source = PresentationSource.FromVisual(this);
 

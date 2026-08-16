@@ -1,8 +1,10 @@
+using Desktop_Creatures.Audio;
 using Desktop_Creatures.Config;
 using Desktop_Creatures.Graphics.Animation;
 using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
 using PixelRecolor.Core;
+using Point = System.Windows.Point;
 
 namespace Desktop_Creatures.Creatures
 {
@@ -17,10 +19,15 @@ namespace Desktop_Creatures.Creatures
             "cinnamon"
         ];
 
+        private readonly CreatureSoundPlayer _sounds;
+
         public CreatureAppearance Appearance { get; }
         public string? AppearanceId { get; }
         public CreatureAppearanceTraits AppearanceTraits =>
             Appearance.Traits;
+
+        public override Point PickupAnchor =>
+            new(33, 11);
 
         public Rat(
             double x,
@@ -78,9 +85,32 @@ namespace Desktop_Creatures.Creatures
                         frame => frame.Image));
             }
 
+            var soundSet =
+                new CreatureSoundSet();
+
+            soundSet.Add(
+                "squeak",
+                "Assets/Creatures/Rat/Sounds/squeak_01.wav",
+                "Assets/Creatures/Rat/Sounds/squeak_02.wav",
+                "Assets/Creatures/Rat/Sounds/squeak_03.wav",
+                "Assets/Creatures/Rat/Sounds/squeak_04.wav",
+                "Assets/Creatures/Rat/Sounds/squeak_05.wav",
+                "Assets/Creatures/Rat/Sounds/squeak_06.wav",
+                "Assets/Creatures/Rat/Sounds/squeak_07.wav",
+                "Assets/Creatures/Rat/Sounds/squeak_08.wav",
+                "Assets/Creatures/Rat/Sounds/squeak_09.wav",
+                "Assets/Creatures/Rat/Sounds/squeak_10.wav");
+
+            _sounds =
+                new CreatureSoundPlayer(
+                    soundSet);
+
             InitializeGroundCreature(
                 x,
                 y);
+
+            // TEMP TEST
+            _sounds.PlayRandom("squeak");
         }
 
         private CreatureAppearanceTraits CreateRandomAppearanceTraits()
@@ -93,6 +123,15 @@ namespace Desktop_Creatures.Creatures
                 Patterns: [],
                 Accessories: [],
                 Effects: []);
+        }
+
+        public override void OnPickedUp()
+        {
+            _sounds.PlayRandom("squeak");
+
+            SetAction(
+                CreatureAction.Held,
+                "dangle");
         }
     }
 }
