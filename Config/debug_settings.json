@@ -1,12 +1,12 @@
 {
-  "enabled": false,
+  "enabled": true,
 
   "behavior": false,
-  "surface": false,
+  "surface": true,
   "animation": true,
   "pointOfInterest": false,
   "needs": false,
-  "movement": true,
+  "movement": false,
   "physics": false,
   "window": false,
   "assetLoading": false,

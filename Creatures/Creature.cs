@@ -63,6 +63,10 @@ public abstract class Creature
         SpriteWidth * DisplayScale;
     public double DisplayFootY =>
         CurrentFootY * DisplayScale;
+    public double DisplayLeft =>
+        X - ((DisplayWidth - SpriteWidth) / 2.0);
+    public double DisplayCenterX =>
+        DisplayLeft + (DisplayWidth / 2.0);
 
     public bool SpriteFacesRight => Settings.SpriteFacesRight;
     public int SpriteWidth => Settings.SpriteWidth * Settings.Scale;
@@ -872,17 +876,28 @@ public abstract class Creature
 
         double currentFeetY = Y + GetCurrentFootY();
 
-        var surface = SurfaceManager.Surfaces
-            .Where(s =>
-                X + SpriteWidth / 2.0 >= s.Left &&
-                X + SpriteWidth / 2.0 <= s.Right &&
-                previousFeetY <= s.Top &&
-                currentFeetY >= s.Top)
-            .OrderBy(s => s.Top)
-            .FirstOrDefault();
+        var surface =
+            SurfaceManager.Surfaces
+                .Where(s =>
+                    DisplayCenterX >= s.Left &&
+                    DisplayCenterX <= s.Right &&
+                    previousFeetY <= s.Top &&
+                    currentFeetY >= s.Top)
+                .OrderBy(s => s.Top)
+                .FirstOrDefault();
 
         if (surface is null)
             return;
+
+        Logger.LogDebug(
+            DebugCategory.Surface,
+            $"LANDING SURFACE: " +
+            $"Kind={surface.Kind}, " +
+            $"Type={surface.GetType().Name}, " +
+            $"Bounds=({surface.Left}, {surface.Top}) - " +
+            $"({surface.Right}, {surface.Bottom}), " +
+            $"Rat=({X:F1}, {Y:F1}), " +
+            $"Scale={DisplayScale}");
 
         CurrentSurface = surface;
         Y = surface.Top - GetCurrentFootY();
