@@ -112,7 +112,6 @@
     <None Remove="Assets\Creatures\Rat\Appearance\Appearances\rainbow.json" />
     <None Remove="Assets\Creatures\Rat\Appearance\Appearances\sir_rattington.json" />
     <None Remove="Assets\Creatures\Rat\Appearance\Appearances\valentines.json" />
-    <None Remove="Assets\Creatures\Rat\Appearance\Effects\rainbow_sparkles.png" />
     <None Remove="Assets\Creatures\Rat\Appearance\Palettes\albino.json" />
     <None Remove="Assets\Creatures\Rat\Appearance\Palettes\black.json" />
     <None Remove="Assets\Creatures\Rat\Appearance\Palettes\chocolate.json" />
@@ -903,7 +902,7 @@
     <Content Include="Assets\Creatures\Rat\Appearance\Appearances\valentines.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Appearance\Effects\rainbow_sparkles.png">
+    <Content Include="Assets\Creatures\Rat\Appearance\Effects\sparkles-rainbow.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Creatures\Rat\Appearance\Palettes\albino.json">
@@ -919,9 +918,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Creatures\Rat\Appearance\Palettes\grey.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Creatures\Rat\Appearance\Palettes\orange.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Creatures\Rat\Appearance\Palettes\silver.json">

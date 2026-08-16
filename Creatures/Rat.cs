@@ -18,6 +18,7 @@ namespace Desktop_Creatures.Creatures
         ];
 
         public CreatureAppearance Appearance { get; }
+        public string? AppearanceId { get; }
         public CreatureAppearanceTraits AppearanceTraits =>
             Appearance.Traits;
 
@@ -29,7 +30,8 @@ namespace Desktop_Creatures.Creatures
             SurfaceManager surfaceManager,
             Guid? id = null,
             string? name = null,
-            CreatureAppearanceTraits? appearanceTraits = null)
+            CreatureAppearanceTraits? appearanceTraits = null,
+            string? appearanceId = null)
             : base(
                 settings,
                 pointOfInterestManager,
@@ -37,9 +39,26 @@ namespace Desktop_Creatures.Creatures
                 id,
                 name)
         {
-            CreatureAppearanceTraits selectedTraits =
-                appearanceTraits ??
-                CreateRandomAppearanceTraits();
+            CreatureAppearanceTraits selectedTraits;
+
+            AppearanceId = appearanceId;
+
+            if (appearanceId is not null)
+            {
+                selectedTraits =
+                    CreatureAppearanceFactory.LoadTraits(
+                        "Rat",
+                        appearanceId);
+            }
+            else if (appearanceTraits is not null)
+            {
+                selectedTraits = appearanceTraits;
+            }
+            else
+            {
+                selectedTraits =
+                    CreateRandomAppearanceTraits();
+            }
 
             Appearance =
                 CreatureAppearanceFactory.Create(

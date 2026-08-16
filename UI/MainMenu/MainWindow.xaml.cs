@@ -78,27 +78,12 @@ public partial class MainWindow : Window
 
         LocationChanged += MainWindow_LocationChanged;
 
-        // TODO: Re-enable when creature persistence is ready.
-        //Closing += (_, _) =>
-        //{
-        //    SaveCreatures();
-        //};
+        Closing += (_, _) =>
+        {
+            SaveCreatures();
+        };
 
         _workingArea = LoadSettings();
-
-        //TEMP TEST_-------------------------
-        //var testSheet =
-        //    SpriteSheetLoader.Load(
-        //        "Assets/SpriteSheetTests/rat.png",
-        //        "Assets/SpriteSheetTests/rat.json");
-
-        //var run =
-        //    testSheet.GetAnimation("run");
-
-        //Logger.LogDebug(
-        //    DebugCategory.Animation,
-        //    $"SPRITESHEET TEST: Run has {run.FrameCount} frames.");
-        //---------------------------------
 
         _surfaceManager.Refresh();
 
@@ -146,20 +131,13 @@ public partial class MainWindow : Window
             //CreateFoodBowl(); 
             //CreateWaterDish();
 
-            // TODO: Re-enable when creature persistence is ready.
-            //bool loadedCreatures =
-            //    LoadSavedCreatures();
-            //
-            //if (!loadedCreatures)
-            //{
-            //    SpawnRat();
-            //}
+            bool loadedCreatures =
+                LoadSavedCreatures();
 
-            // Spawn one fresh rat on startup.
-            SpawnRat();
-
-            // TEMP sprite-sheet test rat disabled for release.
-            //SpawnSpriteSheetTestRat();
+            if (!loadedCreatures)
+            {
+                SpawnRat();
+            }
 
             ApplyTopmostSettings();
 
@@ -204,50 +182,6 @@ public partial class MainWindow : Window
             _settingsWindow.Top += deltaY;
         }
     }
-
-    //private void SpawnSpriteSheetTestRat()
-    //{
-    //    var menuSurface =
-    //        _surfaceManager.MenuSurface
-    //        ?? throw new InvalidOperationException(
-    //            "Menu surface was not set.");
-
-    //    var ratSettings =
-    //        _creatureSettings.GetValueOrDefault(
-    //            "rat",
-    //            new CreatureSettings());
-
-    //    double spawnX =
-    //        menuSurface.Left + 20;
-
-    //    double spawnY =
-    //        menuSurface.Top -
-    //        (ratSettings.SpriteHeight *
-    //         ratSettings.Scale);
-
-    //    var rat =
-    //        new Rat(
-    //            spawnX,
-    //            spawnY,
-    //            ratSettings,
-    //            _pointOfInterestManager,
-    //            _surfaceManager,
-    //            variant: "Albino");
-
-    //    var ratWindow =
-    //        new CreatureWindow(
-    //            rat,
-    //            _surfaceManager)
-    //        {
-    //            Topmost =
-    //                _creaturesAlwaysOnTop
-    //        };
-
-    //    ratWindow.Show();
-
-    //    _creatureWindows.Add(
-    //        ratWindow);
-    //}
 
     private void CreateFoodBowl()
     {
@@ -504,18 +438,6 @@ public partial class MainWindow : Window
                 ratHeight;
         }
 
-        //var rat = new Rat(
-        //    spawnX,
-        //    spawnY,
-        //    ratSettings,
-        //    _pointOfInterestManager,
-        //    _surfaceManager,
-        //    id: saveData?.Id,
-        //    name: saveData?.Name,
-        //    appearanceTraits: saveData?.AppearanceTraits
-
-        string testPalette = "albino";
-
         var rat = new Rat(
             spawnX,
             spawnY,
@@ -524,11 +446,12 @@ public partial class MainWindow : Window
             _surfaceManager,
             id: saveData?.Id,
             name: saveData?.Name,
-            appearanceTraits: new CreatureAppearanceTraits(
-                Palette: testPalette,
-                Patterns: [],
-                Accessories: [],
-                Effects: []));
+            appearanceTraits:
+                saveData?.AppearanceId is null
+                    ? saveData?.AppearanceTraits
+                    : null,
+            appearanceId:
+                saveData?.AppearanceId);
 
         var ratWindow =
             new CreatureWindow(
@@ -557,7 +480,13 @@ public partial class MainWindow : Window
                         Id = rat.Id,
                         CreatureType = "rat",
                         Name = rat.Name,
-                        AppearanceTraits = rat.AppearanceTraits,
+
+                        AppearanceId =
+                            rat.AppearanceId,
+
+                        AppearanceTraits =
+                            rat.AppearanceTraits,
+
                         X = rat.X,
                         Y = rat.Y
                     })

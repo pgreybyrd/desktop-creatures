@@ -1,50 +1,50 @@
 {
-  "name": "Black",
+  "name": "grey",
   "regions": {
     "nose": {
-      "hue": 350,
-      "saturation": 0.30,
-      "brightness": 1.0
+      "hue": 12,
+      "saturation": 0.20,
+      "brightness": 0.75
     },
     "ears": {
-      "hue": 350,
-      "saturation": 0.22,
-      "brightness": 1.0
+      "hue": 1,
+      "saturation": 0.35,
+      "brightness": 0.69
     },
     "eyes": {
       "hue": 0,
       "saturation": 0.0,
-      "brightness": 1.0
+      "brightness": 0.0
     },
     "paws": {
-      "hue": 350,
-      "saturation": 0.16,
-      "brightness": 1.0
+      "hue": 1,
+      "saturation": 0.35,
+      "brightness": 0.69
     },
     "feet": {
-      "hue": 355,
-      "saturation": 0.14,
-      "brightness": 1.0
+      "hue": 1,
+      "saturation": 0.35,
+      "brightness": 0.69
     },
     "head": {
-      "hue": 215,
-      "saturation": 0.08,
-      "brightness": 0.35
+      "hue": 170,
+      "saturation": 0.11,
+      "brightness": 0.44
     },
     "body": {
-      "hue": 215,
-      "saturation": 0.10,
-      "brightness": 0.32
+      "hue": 170,
+      "saturation": 0.11,
+      "brightness": 0.44
     },
     "belly": {
-      "hue": 25,
-      "saturation": 0.06,
-      "brightness": 0.40
+      "hue": 160,
+      "saturation": 0.09,
+      "brightness": 0.55
     },
     "tail": {
-      "hue": 350,
-      "saturation": 0.20,
-      "brightness": 1.0
+      "hue": 15,
+      "saturation": 0.31,
+      "brightness": 0.64
     }
   }
 }

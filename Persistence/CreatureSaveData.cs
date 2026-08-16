@@ -10,6 +10,8 @@ public class CreatureSaveData
 
     public string Name { get; set; } = "";
 
+    public string? AppearanceId { get; set; }
+
     public CreatureAppearanceTraits? AppearanceTraits { get; set; }
 
     public double X { get; set; }

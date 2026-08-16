@@ -70,4 +70,22 @@ public static class CreatureAppearanceFactory
             traits,
             spriteSheet);
     }
+
+    public static CreatureAppearanceTraits LoadTraits(
+        string creatureType,
+        string appearanceId)
+    {
+        string creatureFolder =
+            $"Assets/Creatures/{creatureType}/Appearance";
+
+        string appearanceJson =
+            AssetTextLoader.Load(
+                $"{creatureFolder}/Appearances/{appearanceId}.json");
+
+        CreatureAppearanceDefinition definition =
+            CreatureAppearanceLoader.Load(
+                appearanceJson);
+
+        return definition.Traits;
+    }
 }

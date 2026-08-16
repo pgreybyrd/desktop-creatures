@@ -1,22 +1,22 @@
 {
   "id": "gerald",
-  "traits":{
+  "traits": {
     "palette": "silver",
     "patterns": [
-    {
+      {
         "id": "hooded",
         "recolor": {
-        "hue": 290,
-        "saturation": 0.85,
-        "brightness": 0.75
+          "hue": 170,
+          "saturation": 0.11,
+          "brightness": 0.65
         }
-    }
+      }
     ],
-    "accessories": [}
-    ],
+    "accessories": [],
     "effects": [
-    {
-        "id": "rainbow_sparkles",
-        "recolor": null
-    }
+      {
+        "id": "sparkles-rainbow"
+      }
+    ]
+  }
 }
