@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
@@ -254,10 +255,16 @@ public class SurfaceManager
             if (!IsWindowVisible(hWnd))
                 return true;
 
+            if (IsWindowCloaked(hWnd))
+                return true;
+
             if (IsIconic(hWnd))
                 return true;
 
             GetWindowRect(hWnd, out RECT rect);
+
+            if (!IsTopEdgeExposed(hWnd, rect))
+                return true;
 
             int width = rect.Right - rect.Left;
             int height = rect.Bottom - rect.Top;
@@ -326,6 +333,86 @@ public class SurfaceManager
         return builder.ToString();
     }
 
+    private static bool IsWindowCloaked(IntPtr hWnd)
+    {
+        const int DWMWA_CLOAKED = 14;
+
+        int cloaked = 0;
+
+        int result = DwmGetWindowAttribute(
+            hWnd,
+            DWMWA_CLOAKED,
+            out cloaked,
+            Marshal.SizeOf<int>());
+
+        return result == 0 && cloaked != 0;
+    }
+
+    private static bool IsTopEdgeExposed(
+    IntPtr hWnd,
+    RECT rect)
+    {
+        int width =
+            rect.Right - rect.Left;
+
+        if (width <= 0)
+            return false;
+
+        // Sample several places slightly inside the
+        // window's top edge.
+        double[] samplePositions =
+        {
+        0.10,
+        0.25,
+        0.50,
+        0.75,
+        0.90
+    };
+
+        const int sampleYOffset = 8;
+
+        foreach (double position in samplePositions)
+        {
+            int x =
+                rect.Left +
+                (int)(width * position);
+
+            int y =
+                rect.Top +
+                sampleYOffset;
+
+            IntPtr windowAtPoint =
+                WindowFromPoint(
+                    new POINT
+                    {
+                        X = x,
+                        Y = y
+                    });
+
+            if (windowAtPoint == IntPtr.Zero)
+                continue;
+
+            // WindowFromPoint can return a child control,
+            // so compare its root window with our candidate.
+            IntPtr rootWindow =
+                GetAncestor(
+                    windowAtPoint,
+                    GA_ROOT);
+
+            if (rootWindow == hWnd)
+                return true;
+        }
+
+        return false;
+    }
+
+    [DllImport("dwmapi.dll")]
+    private static extern int DwmGetWindowAttribute(
+        IntPtr hWnd,
+        int dwAttribute,
+        out int pvAttribute,
+        int cbAttribute);
+
     [DllImport("user32.dll", SetLastError = true)]
     private static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
 
@@ -350,6 +437,24 @@ public class SurfaceManager
 
     [DllImport("user32.dll")]
     private static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+
+    private const uint GA_ROOT = 2;
+
+    [DllImport("user32.dll")]
+    private static extern IntPtr WindowFromPoint(
+        POINT point);
+
+    [DllImport("user32.dll")]
+    private static extern IntPtr GetAncestor(
+        IntPtr hWnd,
+        uint gaFlags);
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct POINT
+    {
+        public int X;
+        public int Y;
+    }
 
     private struct RECT
     {
