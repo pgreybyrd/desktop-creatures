@@ -1,4 +1,4 @@
-﻿using Desktop_Creatures.Assets;
+﻿using Desktop_Creatures.Tools.Images;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -60,6 +60,56 @@ public static class SpriteSheetLoader
             logicalFrames,
             animations);
     }
+
+    public static SpriteSheet Load(
+        BitmapSource spriteSheet,
+        string jsonPath)
+    {
+        string fullJsonPath =
+            ResolveAssetPath(jsonPath);
+
+        if (!File.Exists(fullJsonPath))
+        {
+            throw new FileNotFoundException(
+                $"Sprite sheet metadata not found: {fullJsonPath}",
+                fullJsonPath);
+        }
+
+        string json =
+            File.ReadAllText(fullJsonPath);
+
+        var metadata =
+            JsonSerializer.Deserialize<SpriteSheetMetadata>(
+                json,
+                new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                })
+            ?? throw new InvalidOperationException(
+                $"Could not deserialize sprite sheet metadata: {jsonPath}");
+
+        if (metadata.Frames.Count == 0)
+        {
+            throw new InvalidOperationException(
+                $"Sprite sheet contains no frames: {jsonPath}");
+        }
+
+        var logicalFrames =
+            BuildFrames(
+                spriteSheet,
+                metadata);
+
+        var animations =
+            BuildAnimations(
+                logicalFrames,
+                metadata.Meta.FrameTags);
+
+        return new SpriteSheet(
+            spriteSheet,
+            logicalFrames,
+            animations);
+    }
+
 
     private static List<SpriteFrame> BuildFrames(
         BitmapSource sheetImage,

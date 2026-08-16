@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Desktop_Creatures.Tools.Images;
 
-namespace Desktop_Creatures.Assets.UI
+namespace Desktop_Creatures.Graphics
 {
     public sealed class TabSpriteSheet
     {

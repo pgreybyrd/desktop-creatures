@@ -1,0 +1,7 @@
+patterns:
+-blaze
+-masked
+-spotted
+-variegated
+
+

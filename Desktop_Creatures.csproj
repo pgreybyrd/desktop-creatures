@@ -100,6 +100,30 @@
     <None Remove="Assets\Creatures\Rat\Albino\walk_3.png" />
     <None Remove="Assets\Creatures\Rat\Albino\walk_4.png" />
     <None Remove="Assets\Creatures\Rat\Albino\walk_5.png" />
+    <None Remove="Assets\Creatures\Rat\Appearance\Accessories\crown.png" />
+    <None Remove="Assets\Creatures\Rat\Appearance\Accessories\santa.png" />
+    <None Remove="Assets\Creatures\Rat\Appearance\Accessories\top_hat-2.png" />
+    <None Remove="Assets\Creatures\Rat\Appearance\Accessories\top_hat.png" />
+    <None Remove="Assets\Creatures\Rat\Appearance\Accessories\witch_hat.png" />
+    <None Remove="Assets\Creatures\Rat\Appearance\Appearances\birthday.json" />
+    <None Remove="Assets\Creatures\Rat\Appearance\Appearances\gerald.json" />
+    <None Remove="Assets\Creatures\Rat\Appearance\Appearances\ghost.json" />
+    <None Remove="Assets\Creatures\Rat\Appearance\Appearances\pumpkin.json" />
+    <None Remove="Assets\Creatures\Rat\Appearance\Appearances\rainbow.json" />
+    <None Remove="Assets\Creatures\Rat\Appearance\Appearances\sir_rattington.json" />
+    <None Remove="Assets\Creatures\Rat\Appearance\Appearances\valentines.json" />
+    <None Remove="Assets\Creatures\Rat\Appearance\Effects\rainbow_sparkles.png" />
+    <None Remove="Assets\Creatures\Rat\Appearance\Palettes\albino.json" />
+    <None Remove="Assets\Creatures\Rat\Appearance\Palettes\black.json" />
+    <None Remove="Assets\Creatures\Rat\Appearance\Palettes\chocolate.json" />
+    <None Remove="Assets\Creatures\Rat\Appearance\Palettes\cinnamon.json" />
+    <None Remove="Assets\Creatures\Rat\Appearance\Palettes\grey.json" />
+    <None Remove="Assets\Creatures\Rat\Appearance\Palettes\orange.json" />
+    <None Remove="Assets\Creatures\Rat\Appearance\Palettes\silver.json" />
+    <None Remove="Assets\Creatures\Rat\Appearance\Patterns\hooded.png" />
+    <None Remove="Assets\Creatures\Rat\Appearance\rat-regions.json" />
+    <None Remove="Assets\Creatures\Rat\Appearance\rat-regions.png" />
+    <None Remove="Assets\Creatures\Rat\Appearance\rat.png" />
     <None Remove="Assets\Creatures\Rat\Black\eat_0.png" />
     <None Remove="Assets\Creatures\Rat\Black\eat_1.png" />
     <None Remove="Assets\Creatures\Rat\Black\eat_10.png" />
@@ -584,6 +608,7 @@
     <None Remove="Assets\Creatures\Rat\Rainbow\walk_3.png" />
     <None Remove="Assets\Creatures\Rat\Rainbow\walk_4.png" />
     <None Remove="Assets\Creatures\Rat\Rainbow\walk_5.png" />
+    <None Remove="Assets\Creatures\Rat\rat.json" />
     <None Remove="Assets\Creatures\Rat\sleep_0.png" />
     <None Remove="Assets\Creatures\Rat\sleep_1.png" />
     <None Remove="Assets\Creatures\Rat\walk_2.png" />
@@ -645,6 +670,7 @@
     <None Remove="Assets\Fonts\font-MagicalStandard.json" />
     <None Remove="Assets\Fonts\font-MagicalStandard.png" />
     <None Remove="Assets\Fonts\Variants\font-MagicalStandard-Drunk.json" />
+    <None Remove="Assets\SpriteSheetTests\rat-master.png" />
     <None Remove="Assets\SpriteSheetTests\rat.json" />
     <None Remove="Assets\SpriteSheetTests\rat.png" />
     <None Remove="Assets\UI\button_always_on_top.png" />
@@ -836,6 +862,81 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Creatures\Rat\Albino\drink_9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Appearance\Accessories\crown.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Appearance\Accessories\santa.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Appearance\Accessories\top_hat-2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Appearance\Accessories\top_hat.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Appearance\Accessories\witch_hat.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Appearance\Appearances\birthday.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Appearance\Appearances\black.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Appearance\Appearances\gerald.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Appearance\Appearances\ghost.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Appearance\Appearances\pumpkin.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Appearance\Appearances\rainbow.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Appearance\Appearances\sir_rattington.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Appearance\Appearances\valentines.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Appearance\Effects\rainbow_sparkles.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Appearance\Palettes\albino.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Appearance\Palettes\black.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Appearance\Palettes\chocolate.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Appearance\Palettes\cinnamon.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Appearance\Palettes\grey.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Appearance\Palettes\orange.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Appearance\Palettes\silver.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Appearance\Patterns\hooded.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Appearance\rat-regions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Appearance\rat-regions.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Creatures\Rat\Appearance\rat.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Creatures\Rat\Black\drink_0.png">
@@ -1303,6 +1404,9 @@
     <Content Include="Assets\Creatures\Rat\Rainbow\drink_9.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Creatures\Rat\Appearance\rat.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Effects\Emotes\angry.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1472,6 +1576,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Fonts\Variants\font-MagicalStandard-Drunk.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\SpriteSheetTests\rat-master.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\SpriteSheetTests\rat.json">

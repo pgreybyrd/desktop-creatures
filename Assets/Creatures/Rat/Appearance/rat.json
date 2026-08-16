@@ -198,6 +198,24 @@
     "duration": 100
    },
    {
+    "filename": "fall_00",
+    "frame": { "x": 32, "y": 64, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "_23",
+    "frame": { "x": 128, "y": 32, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
     "filename": "eat_00",
     "frame": { "x": 0, "y": 0, "w": 32, "h": 32 },
     "rotated": false,
@@ -324,7 +342,7 @@
     "duration": 100
    },
    {
-    "filename": "_36",
+    "filename": "_38",
     "frame": { "x": 128, "y": 32, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -369,7 +387,7 @@
     "duration": 100
    },
    {
-    "filename": "_41",
+    "filename": "_43",
     "frame": { "x": 128, "y": 32, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -423,7 +441,7 @@
     "duration": 100
    },
    {
-    "filename": "_47",
+    "filename": "_49",
     "frame": { "x": 128, "y": 32, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -540,7 +558,7 @@
     "duration": 100
    },
    {
-    "filename": "_60",
+    "filename": "_62",
     "frame": { "x": 128, "y": 32, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -603,7 +621,7 @@
     "duration": 100
    },
    {
-    "filename": "_67",
+    "filename": "_69",
     "frame": { "x": 128, "y": 32, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -666,7 +684,7 @@
     "duration": 100
    },
    {
-    "filename": "_74",
+    "filename": "_76",
     "frame": { "x": 128, "y": 32, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -747,7 +765,7 @@
     "duration": 100
    },
    {
-    "filename": "_83",
+    "filename": "_85",
     "frame": { "x": 128, "y": 32, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -774,7 +792,7 @@
     "duration": 100
    },
    {
-    "filename": "_86",
+    "filename": "_88",
     "frame": { "x": 128, "y": 32, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -792,7 +810,7 @@
     "duration": 1
    },
    {
-    "filename": "_88",
+    "filename": "_90",
     "frame": { "x": 128, "y": 32, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -837,7 +855,7 @@
     "duration": 100
    },
    {
-    "filename": "_93",
+    "filename": "_95",
     "frame": { "x": 128, "y": 32, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -882,7 +900,7 @@
     "duration": 100
    },
    {
-    "filename": "_98",
+    "filename": "_100",
     "frame": { "x": 128, "y": 32, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -945,7 +963,7 @@
     "duration": 100
    },
    {
-    "filename": "_105",
+    "filename": "_107",
     "frame": { "x": 128, "y": 32, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -964,18 +982,19 @@
   "frameTags": [
    { "name": "drink", "from": 0, "to": 13, "direction": "forward", "color": "#000000ff" },
    { "name": "run", "from": 15, "to": 20, "direction": "forward", "color": "#000000ff" },
-   { "name": "eat", "from": 22, "to": 35, "direction": "forward", "color": "#000000ff" },
-   { "name": "idle_forward", "from": 37, "to": 40, "direction": "forward", "color": "#000000ff" },
-   { "name": "idle_left", "from": 42, "to": 46, "direction": "forward", "color": "#000000ff" },
-   { "name": "idle_right", "from": 48, "to": 59, "direction": "forward", "color": "#000000ff" },
-   { "name": "idle_up", "from": 61, "to": 66, "direction": "forward", "color": "#000000ff" },
-   { "name": "idle_back", "from": 68, "to": 73, "direction": "forward", "color": "#000000ff" },
-   { "name": "idle_front", "from": 75, "to": 82, "direction": "forward", "color": "#000000ff" },
-   { "name": "sleep", "from": 84, "to": 85, "direction": "forward", "color": "#000000ff" },
-   { "name": "sniff_up", "from": 87, "to": 87, "direction": "forward", "color": "#000000ff" },
-   { "name": "sniff_around", "from": 89, "to": 92, "direction": "forward", "color": "#000000ff" },
-   { "name": "sniff_walk", "from": 94, "to": 97, "direction": "forward", "color": "#000000ff" },
-   { "name": "walk", "from": 99, "to": 104, "direction": "forward", "color": "#000000ff" }
+   { "name": "fall", "from": 22, "to": 22, "direction": "forward", "color": "#000000ff" },
+   { "name": "eat", "from": 24, "to": 37, "direction": "forward", "color": "#000000ff" },
+   { "name": "idle_forward", "from": 39, "to": 42, "direction": "forward", "color": "#000000ff" },
+   { "name": "idle_left", "from": 44, "to": 48, "direction": "forward", "color": "#000000ff" },
+   { "name": "idle_right", "from": 50, "to": 61, "direction": "forward", "color": "#000000ff" },
+   { "name": "idle_up", "from": 63, "to": 68, "direction": "forward", "color": "#000000ff" },
+   { "name": "idle_back", "from": 70, "to": 75, "direction": "forward", "color": "#000000ff" },
+   { "name": "idle_front", "from": 77, "to": 84, "direction": "forward", "color": "#000000ff" },
+   { "name": "sleep", "from": 86, "to": 87, "direction": "forward", "color": "#000000ff" },
+   { "name": "sniff_up", "from": 89, "to": 89, "direction": "forward", "color": "#000000ff" },
+   { "name": "sniff_around", "from": 91, "to": 94, "direction": "forward", "color": "#000000ff" },
+   { "name": "sniff_walk", "from": 96, "to": 99, "direction": "forward", "color": "#000000ff" },
+   { "name": "walk", "from": 101, "to": 106, "direction": "forward", "color": "#000000ff" }
   ]
  }
 }

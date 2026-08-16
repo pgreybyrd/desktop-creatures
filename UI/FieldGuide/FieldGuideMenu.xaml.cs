@@ -1,12 +1,8 @@
-﻿using Desktop_Creatures.Assets;
-using Desktop_Creatures.Assets.UI;
-using Desktop_Creatures.Creatures;
+﻿using Desktop_Creatures.Tools.Images;
+using Desktop_Creatures.Graphics;
 using Desktop_Creatures.UI.FieldGuide;
 using System.IO;
-using System.Linq;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -14,8 +10,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using WpfButton = System.Windows.Controls.Button;
 using WpfImage = System.Windows.Controls.Image;
-using WpfMouseButtonEventArgs = System.Windows.Input.MouseButtonEventArgs;
-using WpfMouseButtonState = System.Windows.Input.MouseButtonState;
 using WpfMouseEventArgs = System.Windows.Input.MouseEventArgs;
 
 namespace Desktop_Creatures;

@@ -200,16 +200,35 @@ public partial class CreatureWindow : Window
         x = Math.Clamp(
             x,
             monitor.Left,
-            monitor.Right -
-                _creature.SpriteWidth);
+            monitor.Right - Width);
 
         y = Math.Clamp(
             y,
             monitor.Top,
-            monitor.Bottom -
-                _creature.SpriteHeight);
+            monitor.Bottom - Height);
 
-        _creature.DragTo(x, y);
+        double displayScale =
+            _creature.DisplayScale;
+
+        double extraWidth =
+            _creature.SpriteWidth *
+            (displayScale - 1);
+
+        double extraHeight =
+            _creature.CurrentFootY *
+            (displayScale - 1);
+
+        double creatureX =
+            x +
+            (extraWidth / 2.0);
+
+        double creatureY =
+            y +
+            extraHeight;
+
+        _creature.DragTo(
+            creatureX,
+            creatureY);
 
         Left = x;
         Top = y;

@@ -1,5 +1,4 @@
-﻿using Desktop_Creatures.Assets;
-using Desktop_Creatures.Assets.UI;
+﻿using Desktop_Creatures.Tools.Images;
 using Desktop_Creatures.Config;
 using Desktop_Creatures.Creatures;
 using Desktop_Creatures.Graphics.Animation;
@@ -7,16 +6,15 @@ using Desktop_Creatures.Persistence;
 using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
-using System.IO;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Forms = System.Windows.Forms;
 using Point = System.Windows.Point;
 using WpfMouseButtonEventArgs = System.Windows.Input.MouseButtonEventArgs;
 using WpfMouseButtonState = System.Windows.Input.MouseButtonState;
 using WpfMouseEventArgs = System.Windows.Input.MouseEventArgs;
+using Desktop_Creatures.Graphics;
 
 namespace Desktop_Creatures;
 
@@ -89,17 +87,17 @@ public partial class MainWindow : Window
         _workingArea = LoadSettings();
 
         //TEMP TEST_-------------------------
-        var testSheet =
-            SpriteSheetLoader.Load(
-                "Assets/SpriteSheetTests/rat.png",
-                "Assets/SpriteSheetTests/rat.json");
+        //var testSheet =
+        //    SpriteSheetLoader.Load(
+        //        "Assets/SpriteSheetTests/rat.png",
+        //        "Assets/SpriteSheetTests/rat.json");
 
-        var run =
-            testSheet.GetAnimation("run");
+        //var run =
+        //    testSheet.GetAnimation("run");
 
-        Logger.LogDebug(
-            DebugCategory.Animation,
-            $"SPRITESHEET TEST: Run has {run.FrameCount} frames.");
+        //Logger.LogDebug(
+        //    DebugCategory.Animation,
+        //    $"SPRITESHEET TEST: Run has {run.FrameCount} frames.");
         //---------------------------------
 
         _surfaceManager.Refresh();
@@ -207,50 +205,49 @@ public partial class MainWindow : Window
         }
     }
 
-    private void SpawnSpriteSheetTestRat()
-    {
-        var menuSurface =
-            _surfaceManager.MenuSurface
-            ?? throw new InvalidOperationException(
-                "Menu surface was not set.");
+    //private void SpawnSpriteSheetTestRat()
+    //{
+    //    var menuSurface =
+    //        _surfaceManager.MenuSurface
+    //        ?? throw new InvalidOperationException(
+    //            "Menu surface was not set.");
 
-        var ratSettings =
-            _creatureSettings.GetValueOrDefault(
-                "rat",
-                new CreatureSettings());
+    //    var ratSettings =
+    //        _creatureSettings.GetValueOrDefault(
+    //            "rat",
+    //            new CreatureSettings());
 
-        double spawnX =
-            menuSurface.Left + 20;
+    //    double spawnX =
+    //        menuSurface.Left + 20;
 
-        double spawnY =
-            menuSurface.Top -
-            (ratSettings.SpriteHeight *
-             ratSettings.Scale);
+    //    double spawnY =
+    //        menuSurface.Top -
+    //        (ratSettings.SpriteHeight *
+    //         ratSettings.Scale);
 
-        var rat =
-            new Rat(
-                spawnX,
-                spawnY,
-                ratSettings,
-                _pointOfInterestManager,
-                _surfaceManager,
-                variant: "Albino",
-                useSpriteSheetTest: true);
+    //    var rat =
+    //        new Rat(
+    //            spawnX,
+    //            spawnY,
+    //            ratSettings,
+    //            _pointOfInterestManager,
+    //            _surfaceManager,
+    //            variant: "Albino");
 
-        var ratWindow =
-            new CreatureWindow(
-                rat,
-                _surfaceManager)
-            {
-                Topmost =
-                    _creaturesAlwaysOnTop
-            };
+    //    var ratWindow =
+    //        new CreatureWindow(
+    //            rat,
+    //            _surfaceManager)
+    //        {
+    //            Topmost =
+    //                _creaturesAlwaysOnTop
+    //        };
 
-        ratWindow.Show();
+    //    ratWindow.Show();
 
-        _creatureWindows.Add(
-            ratWindow);
-    }
+    //    _creatureWindows.Add(
+    //        ratWindow);
+    //}
 
     private void CreateFoodBowl()
     {
@@ -507,6 +504,15 @@ public partial class MainWindow : Window
                 ratHeight;
         }
 
+        //var rat = new Rat(
+        //    spawnX,
+        //    spawnY,
+        //    ratSettings,
+        //    _pointOfInterestManager,
+        //    _surfaceManager,
+        //    id: saveData?.Id,
+        //    name: saveData?.Name,
+        //    variant: saveData?.Variant);
         var rat = new Rat(
             spawnX,
             spawnY,
@@ -515,7 +521,7 @@ public partial class MainWindow : Window
             _surfaceManager,
             id: saveData?.Id,
             name: saveData?.Name,
-            variant: saveData?.Variant);
+            variant: "black");
 
         var ratWindow =
             new CreatureWindow(

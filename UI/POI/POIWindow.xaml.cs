@@ -1,9 +1,7 @@
-﻿using Desktop_Creatures.Assets;
-using Desktop_Creatures.Utilities;
+﻿using Desktop_Creatures.Tools.Images;
 using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
 using PixelRecolor.Wpf;
-using System;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;

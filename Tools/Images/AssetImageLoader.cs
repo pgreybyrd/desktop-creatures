@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Windows.Media.Imaging;
 
-namespace Desktop_Creatures.Assets;
+namespace Desktop_Creatures.Tools.Images;
 
 public static class AssetImageLoader
 {

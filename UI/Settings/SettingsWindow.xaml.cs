@@ -1,13 +1,12 @@
-﻿using Desktop_Creatures.Assets;
-using Desktop_Creatures.Assets.UI;
+﻿using Desktop_Creatures.Tools.Images;
 using Desktop_Creatures.Config;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using WpfMouseButtonEventArgs = System.Windows.Input.MouseButtonEventArgs;
 using WpfMouseButtonState = System.Windows.Input.MouseButtonState;
 using WpfMouseEventArgs = System.Windows.Input.MouseEventArgs;
+using Desktop_Creatures.Graphics;
 
 namespace Desktop_Creatures
 {

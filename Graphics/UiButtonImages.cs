@@ -1,6 +1,6 @@
 ﻿using System.Windows.Media.Imaging;
 
-namespace Desktop_Creatures.Assets.UI
+namespace Desktop_Creatures.Graphics
 {
     public sealed class UiButtonImages
     {

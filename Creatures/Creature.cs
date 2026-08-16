@@ -1,4 +1,5 @@
-using Desktop_Creatures.Assets;
+using Desktop_Creatures.Tools.Images;
+using Desktop_Creatures.Tools.Text;
 using Desktop_Creatures.Behaviors;
 using Desktop_Creatures.Config;
 using Desktop_Creatures.Needs;
@@ -57,6 +58,11 @@ public abstract class Creature
     public int Scale => Settings.Scale;
     public int DisplayScale { get; private set; } = 1;
     public int SizeTier { get; init; }
+
+    public double DisplayWidth =>
+        SpriteWidth * DisplayScale;
+    public double DisplayFootY =>
+        CurrentFootY * DisplayScale;
 
     public bool SpriteFacesRight => Settings.SpriteFacesRight;
     public int SpriteWidth => Settings.SpriteWidth * Settings.Scale;
@@ -317,7 +323,10 @@ public abstract class Creature
             DebugCategory.Animation,
             "StartFalling");
 
-        SetAction(CreatureAction.Falling, "Fall");
+        SetAction(
+            CreatureAction.Falling,
+            "fall");
+
         SpeedX = 0;
         FallSpeed = 0;
     }
@@ -805,23 +814,38 @@ public abstract class Creature
 
     protected virtual void StartIdle()
     {
-        var animation = Idle.Animations[
-            Random.Next(Idle.Animations.Count)
-        ];
+        var idleAnimations =
+            Animations.Keys
+                .Where(name =>
+                    name.StartsWith(
+                        "idle_",
+                        StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
+        if (idleAnimations.Count == 0)
+        {
+            throw new InvalidOperationException(
+                "Creature has no loaded idle animations.");
+        }
+
+        string animationName =
+            idleAnimations[
+                Random.Next(idleAnimations.Count)];
 
         SetAction(
             CreatureAction.Idle,
-            animation.Name);
+            animationName);
 
         Logger.LogDebug(
             DebugCategory.Animation,
-            $"StartIdle selected animation={animation.Name}");
+            $"StartIdle selected animation={animationName}");
 
         SpeedX = 0;
 
-        StateTicksRemaining = Random.Next(
-            Idle.MinIdleTicks,
-            Idle.MaxIdleTicks);
+        StateTicksRemaining =
+            Random.Next(
+                Idle.MinIdleTicks,
+                Idle.MaxIdleTicks);
     }
 
     protected virtual void UpdateIdle()
@@ -946,8 +970,22 @@ public abstract class Creature
             return;
         }
 
-        SpeedX = dx / distance * (MovementSpeed * Settings.Scale);
-        double speedY = dy / distance * (MovementSpeed * Settings.Scale);
+        double moveSpeed =
+            MovementSpeed *
+            Settings.Scale;
+
+        double step =
+            Math.Min(
+                moveSpeed,
+                distance);
+
+        SpeedX =
+            dx / distance *
+            step;
+
+        double speedY =
+            dy / distance *
+            step;
 
         X += SpeedX;
         Y += speedY;

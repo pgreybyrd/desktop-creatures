@@ -20,6 +20,7 @@ namespace Desktop_Creatures.Creatures
             Perching,
             Sleeping
         }
+        public CreatureAppearance Appearance { get; }
 
         private DestinationType _targetType;
 

@@ -1,13 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Windows.Media.Imaging;
 
-namespace Desktop_Creatures.Creatures
+namespace Desktop_Creatures.Creatures;
+
+public sealed class CreatureAppearance
 {
-    public class CreatureAppearance
+    public string Variant { get; }
+
+    public BitmapSource SpriteSheet { get; }
+
+    public CreatureAppearance(
+        string variant,
+        BitmapSource spriteSheet)
     {
-        public string Variant { get; init; } = "";
+        Variant = variant;
+        SpriteSheet = spriteSheet;
     }
 }

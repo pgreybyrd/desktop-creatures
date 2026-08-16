@@ -17,9 +17,9 @@ namespace Desktop_Creatures.Creatures
             "Black",
             "Cinnamon"
         ];
-
-        public string Variant { get; }
-        private readonly bool _useSpriteSheetTest;
+        public CreatureAppearance Appearance { get; }
+        public string Variant =>
+            Appearance.Variant;
 
         public Rat(
             double x,
@@ -29,8 +29,7 @@ namespace Desktop_Creatures.Creatures
             SurfaceManager surfaceManager,
             Guid? id = null,
             string? name = null,
-            string? variant = null,
-            bool useSpriteSheetTest = false)
+            string? variant = null)
             : base(
                 settings,
                 pointOfInterestManager,
@@ -38,29 +37,26 @@ namespace Desktop_Creatures.Creatures
                 id,
                 name)
         {
-            _useSpriteSheetTest = useSpriteSheetTest;
-
-            Variant =
+            string selectedVariant =
                 variant ??
                 Variants[Random.Next(Variants.Length)];
 
-            LoadAssets(
-                $"Assets/Creatures/Rat/{Variant}");
+            Appearance =
+                CreatureAppearanceFactory.Create(
+                    "Rat",
+                    selectedVariant);
 
-            if (_useSpriteSheetTest)
+            var sheet = 
+                SpriteSheetLoader.Load(
+                Appearance.SpriteSheet,
+                "Assets/Creatures/Rat/Appearance/rat.json");
+
+            foreach (var animation in sheet.Animations)
             {
-                var sheet =
-                    SpriteSheetLoader.Load(
-                        "Assets/SpriteSheetTests/rat.png",
-                        "Assets/SpriteSheetTests/rat.json");
-
-                foreach (var animation in sheet.Animations)
-                {
-                    OverrideAnimation(
-                        animation.Key,
-                        animation.Value.Frames.Select(
-                            frame => frame.Image));
-                }
+                OverrideAnimation(
+                    animation.Key,
+                    animation.Value.Frames.Select(
+                        frame => frame.Image));
             }
 
             InitializeGroundCreature(

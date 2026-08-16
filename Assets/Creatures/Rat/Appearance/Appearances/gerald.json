@@ -1,0 +1,21 @@
+{
+  "id": "gerald",
+  "palette": "silver",
+  "patterns": [
+    {
+      "id": "hooded",
+      "recolor": {
+        "hue": 290,
+        "saturation": 0.85,
+        "brightness": 0.75
+      }
+    }
+  ],
+  "accessories": [],
+  "effects": [
+    {
+        "id": "rainbow_sparkles",
+        "recolor": null
+    }
+  ]
+}
