@@ -8,6 +8,7 @@ using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
 using PixelRecolor.Core;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
 using Forms = System.Windows.Forms;
@@ -59,8 +60,10 @@ public partial class MainWindow : Window
     private bool _uiAlwaysOnTop = false;
 
     private Rectangle _workingArea;
+
     private Dictionary<string, CreatureSettings> _creatureSettings = new();
     private Dictionary<string, PointOfInterestSettings> _pointOfInterestSettings = new();
+    private Dictionary<string, CreatureDefinition> _creatureDefinitions = new();
 
     private List<PointOfInterest> _pointsOfInterest = new();
     private PointOfInterestManager _pointOfInterestManager;
@@ -365,6 +368,12 @@ public partial class MainWindow : Window
         Width = MainCanvas.Width * _uiScale;
         Height = MainCanvas.Height * _uiScale;
 
+        _creatureDefinitions["rat"] =
+            CreatureDefinitionLoader.Load("rat");
+
+        _creatureDefinitions["eagle"] =
+            CreatureDefinitionLoader.Load("eagle");
+
         return area;
     }
 
@@ -438,20 +447,40 @@ public partial class MainWindow : Window
                 ratHeight;
         }
 
-        var rat = new Rat(
-            spawnX,
-            spawnY,
-            ratSettings,
-            _pointOfInterestManager,
-            _surfaceManager,
-            id: saveData?.Id,
-            name: saveData?.Name,
-            appearanceTraits:
-                saveData?.AppearanceId is null
-                    ? saveData?.AppearanceTraits
-                    : null,
-            appearanceId:
-                saveData?.AppearanceId);
+        //var rat = new Rat(
+        //    spawnX,
+        //    spawnY,
+        //    ratSettings,
+        //    _pointOfInterestManager,
+        //    _surfaceManager,
+        //    id: saveData?.Id,
+        //    name: saveData?.Name,
+        //    appearanceTraits:
+        //        saveData?.AppearanceId is null
+        //            ? saveData?.AppearanceTraits
+        //            : null,
+        //    appearanceId:
+        //        saveData?.AppearanceId);
+
+        CreatureDefinition ratDefinition =
+            _creatureDefinitions["rat"];
+
+        Creature rat =
+            CreatureFactory.Create(
+                ratDefinition,
+                spawnX,
+                spawnY,
+                ratSettings,
+                _pointOfInterestManager,
+                _surfaceManager,
+                id: saveData?.Id,
+                name: saveData?.Name,
+                appearanceTraits:
+                    saveData?.AppearanceId is null
+                        ? saveData?.AppearanceTraits
+                        : null,
+                appearanceId:
+                    saveData?.AppearanceId);
 
         var ratWindow =
             new CreatureWindow(

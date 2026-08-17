@@ -46,9 +46,6 @@ namespace Desktop_Creatures.Creatures
         {
             CreatureAppearanceTraits selectedTraits;
 
-            PlaySound(
-                CreatureSoundEvent.Spawn);
-
             AppearanceId = appearanceId;
 
             if (appearanceId is not null)

@@ -1,0 +1,19 @@
+{
+  "id": "eagle",
+  "displayName": "Eagle",
+
+  "movementCapabilities": [
+    "Flight"
+  ],
+
+  "assetFolder": "Assets/Creatures/Eagle",
+
+  "usesGeneratedAppearance": true,
+
+  "palettes": [
+    "bald"
+  ],
+
+  "pickupAnchorX": 33,
+  "pickupAnchorY": 11
+}
