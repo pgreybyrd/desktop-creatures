@@ -465,22 +465,33 @@ public partial class MainWindow : Window
         CreatureDefinition ratDefinition =
             _creatureDefinitions["rat"];
 
-        Creature rat =
-            CreatureFactory.Create(
-                ratDefinition,
-                spawnX,
-                spawnY,
-                ratSettings,
-                _pointOfInterestManager,
-                _surfaceManager,
-                id: saveData?.Id,
-                name: saveData?.Name,
-                appearanceTraits:
+        var context =
+            new CreatureSpawnContext
+            {
+                X = spawnX,
+                Y = spawnY,
+
+                Id = saveData?.Id,
+                Name = saveData?.Name,
+
+                AppearanceTraits =
                     saveData?.AppearanceId is null
                         ? saveData?.AppearanceTraits
                         : null,
-                appearanceId:
-                    saveData?.AppearanceId);
+
+                AppearanceId =
+                    saveData?.AppearanceId
+            };
+
+        var services =
+            CreateCreatureServices();
+
+        Creature rat =
+            CreatureFactory.Create(
+                ratDefinition,
+                context,
+                ratSettings,
+                services);
 
         var ratWindow =
             new CreatureWindow(
@@ -583,7 +594,8 @@ public partial class MainWindow : Window
         }
 
         _fieldGuideMenu = new FieldGuideMenu(
-            SpawnCreature,
+            creatureId =>
+                SpawnCreature(creatureId),
             _uiScale);
 
         _fieldGuideMenu.Topmost =
@@ -602,24 +614,185 @@ public partial class MainWindow : Window
         _fieldGuideMenu.Show();
     }
 
-    private void SpawnCreature(string creatureId)
+    //private void SpawnCreature(string creatureId)
+    //{
+    //    switch (creatureId)
+    //    {
+    //        case "rat":
+    //            SpawnRat();
+    //            break;
+
+    //        case "eagle":
+    //            SpawnEagle();
+    //            break;
+
+    //        default:
+    //            throw new ArgumentOutOfRangeException(
+    //                nameof(creatureId),
+    //                creatureId,
+    //                "Unknown creature.");
+    //    }
+    //}
+    private void SpawnCreature(
+        string creatureId,
+        CreatureSaveData? saveData = null)
     {
-        switch (creatureId)
+        var services =
+            new CreatureServices
+            {
+                PointOfInterestManager =
+                    _pointOfInterestManager,
+
+                SurfaceManager =
+                    _surfaceManager,
+
+                PointsOfInterest =
+                    _pointsOfInterest,
+
+                MonitorWorkingAreas =
+                    _surfaceManager.GetMonitorWorkingAreas()
+            };
+
+        CreatureDefinition definition =
+            _creatureDefinitions[creatureId];
+
+        CreatureSettings settings =
+            _creatureSettings.GetValueOrDefault(
+                creatureId,
+                new CreatureSettings());
+
+        CreatureSpawnContext context =
+            CreateSpawnContext(
+                definition,
+                settings,
+                saveData);
+
+        Creature creature =
+            CreatureFactory.Create(
+                definition,
+                context,
+                settings,
+                services);
+
+        var creatureWindow =
+            new CreatureWindow(
+                creature,
+                _surfaceManager)
+            {
+                Topmost =
+                    _creaturesAlwaysOnTop
+            };
+
+        creatureWindow.SetDisplayScale(
+            _settings.CreatureDisplayScale);
+
+        creatureWindow.Show();
+
+        _creatureWindows.Add(
+            creatureWindow);
+    }
+
+    private CreatureServices CreateCreatureServices()
+    {
+        return new CreatureServices
         {
-            case "rat":
-                SpawnRat();
-                break;
+            PointOfInterestManager =
+                _pointOfInterestManager,
 
-            case "eagle":
-                SpawnEagle();
-                break;
+            SurfaceManager =
+                _surfaceManager,
 
-            default:
-                throw new ArgumentOutOfRangeException(
-                    nameof(creatureId),
-                    creatureId,
-                    "Unknown creature.");
+            PointsOfInterest =
+                _pointsOfInterest,
+
+            MonitorWorkingAreas =
+                _surfaceManager.GetMonitorWorkingAreas()
+        };
+    }
+
+    private CreatureSpawnContext CreateSpawnContext(
+        CreatureDefinition definition,
+        CreatureSettings settings,
+        CreatureSaveData? saveData)
+    {
+        if (saveData is not null)
+        {
+            return new CreatureSpawnContext
+            {
+                X = saveData.X,
+                Y = saveData.Y,
+                Id = saveData.Id,
+                Name = saveData.Name,
+
+                AppearanceTraits =
+                    saveData.AppearanceId is null
+                        ? saveData.AppearanceTraits
+                        : null,
+
+                AppearanceId =
+                    saveData.AppearanceId
+            };
         }
+
+        return definition.MovementCapabilities.Contains(
+            MovementCapability.Flight)
+            ? CreateFlyingSpawnContext(
+                definition,
+                settings)
+            : CreateGroundSpawnContext(
+                definition,
+                settings);
+    }
+
+    private CreatureSpawnContext CreateGroundSpawnContext(
+        CreatureDefinition definition,
+        CreatureSettings settings)
+    {
+        var menuSurface =
+            _surfaceManager.MenuSurface
+            ?? throw new InvalidOperationException(
+                "Menu surface was not set.");
+
+        double width =
+            settings.SpriteWidth *
+            settings.Scale;
+
+        double height =
+            settings.SpriteHeight *
+            settings.Scale;
+
+        return new CreatureSpawnContext
+        {
+            X =
+                menuSurface.Left +
+                (menuSurface.Width - width) / 2.0,
+
+            Y =
+                menuSurface.Top -
+                height
+        };
+    }
+
+    private CreatureSpawnContext CreateFlyingSpawnContext(
+        CreatureDefinition definition,
+        CreatureSettings settings)
+    {
+        var areas =
+            _surfaceManager.GetMonitorWorkingAreas();
+
+        Rectangle area =
+            areas[
+                Random.Shared.Next(
+                    areas.Count)];
+
+        return new CreatureSpawnContext
+        {
+            X =
+                area.Left + 100,
+
+            Y =
+                area.Top + 300
+        };
     }
 
     private void ClearRats_Click(object sender, RoutedEventArgs e)

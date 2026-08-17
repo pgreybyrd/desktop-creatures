@@ -221,6 +221,16 @@ public class SurfaceManager
         }
     }
 
+    public IReadOnlyList<Rectangle>
+        GetMonitorWorkingAreas()
+    {
+        return Forms.Screen.AllScreens
+            .Select(screen =>
+                ToDipRectangle(
+                    screen.WorkingArea))
+            .ToList();
+    }
+
     private static IEnumerable<Rectangle>
         MergeHorizontalGroundSurfaces(
             IEnumerable<Rectangle> surfaces)

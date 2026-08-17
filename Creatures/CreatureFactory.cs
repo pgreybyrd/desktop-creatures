@@ -9,34 +9,37 @@ public static class CreatureFactory
 {
     public static Creature Create(
         CreatureDefinition definition,
-        double x,
-        double y,
+        CreatureSpawnContext context,
         CreatureSettings settings,
-        PointOfInterestManager pointOfInterestManager,
-        SurfaceManager surfaceManager,
-        Guid? id = null,
-        string? name = null,
-        CreatureAppearanceTraits? appearanceTraits = null,
-        string? appearanceId = null)
+        CreatureServices services)
     {
         return definition.Id.ToLowerInvariant() switch
         {
             "rat" =>
                 new Rat(
-                    x,
-                    y,
+                    context.X,
+                    context.Y,
                     settings,
-                    pointOfInterestManager,
-                    surfaceManager,
-                    id,
-                    name,
-                    appearanceTraits,
-                    appearanceId),
+                    services.PointOfInterestManager,
+                    services.SurfaceManager,
+                    id: context.Id,
+                    name: context.Name,
+                    appearanceTraits: context.AppearanceTraits,
+                    appearanceId: context.AppearanceId),
+
+            "eagle" =>
+                new Eagle(
+                    context.X,
+                    context.Y,
+                    services.PointsOfInterest,
+                    settings,
+                    services.PointOfInterestManager,
+                    services.MonitorWorkingAreas,
+                    services.SurfaceManager),
 
             _ =>
                 throw new NotSupportedException(
-                    $"Creature type '{definition.Id}' " +
-                    "is not supported.")
+                    $"Creature type '{definition.Id}' is not supported.")
         };
     }
 }
