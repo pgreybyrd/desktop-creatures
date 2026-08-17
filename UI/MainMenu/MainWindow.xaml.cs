@@ -620,16 +620,23 @@ public partial class MainWindow : Window
             return;
         }
 
-        var screen = Forms.Screen.PrimaryScreen!;
-        var area = screen.WorkingArea;
+        var areas =
+            Forms.Screen.AllScreens
+                .Select(screen =>
+                    screen.WorkingArea)
+                .ToList();
+
+        var spawnArea =
+            areas[Random.Shared.Next(
+                areas.Count)];
 
         var eagle = new Eagle(
-            area.Left + 100,
-            area.Top + 300,
+            spawnArea.Left + 100,
+            spawnArea.Top + 300,
             _pointsOfInterest,
             eagleSettings,
             _pointOfInterestManager,
-            area,
+            areas,
             _surfaceManager);
 
         var eagleWindow =

@@ -28,7 +28,7 @@ namespace Desktop_Creatures.Creatures
 
         private readonly CreatureSettings _settings;
 
-        private readonly Rectangle _workingArea;
+        private readonly IReadOnlyList<Rectangle> _workingAreas;
 
         private bool _isGliding = false;
         private int _flightModeTicksRemaining = 0;
@@ -55,12 +55,15 @@ namespace Desktop_Creatures.Creatures
             List<PointOfInterest> pointsOfInterest,
             CreatureSettings settings,
             PointOfInterestManager pointOfInterestManager,
-            Rectangle workingArea,
+            IReadOnlyList<Rectangle> workingAreas,
             SurfaceManager surfaceManager)
-            : base(settings, pointOfInterestManager, surfaceManager)
+            : base(
+                settings,
+                pointOfInterestManager,
+                surfaceManager)
         {
             _settings = settings;
-            _workingArea = workingArea;
+            _workingAreas = workingAreas;
 
             X = startX;
             Y = startY;
@@ -107,6 +110,29 @@ namespace Desktop_Creatures.Creatures
             _flightModeTicksRemaining = _random.Next(Flight.MinFlapTicks, Flight.MaxFlapTicks);
 
             PickNewTarget();
+        }
+
+        private void PickRandomFlyingTarget()
+        {
+            Rectangle area =
+                _workingAreas[
+                    _random.Next(
+                        _workingAreas.Count)];
+
+            _targetX =
+                _random.Next(
+                    area.Left,
+                    area.Right -
+                    Settings.SpriteWidth);
+
+            _targetY =
+                _random.Next(
+                    area.Top,
+                    area.Bottom -
+                    Settings.SpriteHeight);
+
+            _targetType =
+                DestinationType.Flying;
         }
 
         private void UpdateFlight()
@@ -266,19 +292,6 @@ namespace Desktop_Creatures.Creatures
             _targetType = DestinationType.Perching;
 
             return true;
-        }
-
-        private void PickRandomFlyingTarget()
-        {
-            _targetX = _random.Next(
-                _workingArea.Left, 
-                _workingArea.Right - Settings.SpriteWidth);
-
-            _targetY = _random.Next(
-                _workingArea.Top, 
-                _workingArea.Bottom - Settings.SpriteHeight);
-
-            _targetType = DestinationType.Flying;
         }
 
         protected override void PickPostInteractionTarget()
