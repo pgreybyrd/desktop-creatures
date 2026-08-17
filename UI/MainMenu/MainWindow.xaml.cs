@@ -40,7 +40,7 @@ public partial class MainWindow : Window
 
     private UiButtonImages _spawnRatImages = null!;
     private UiButtonImages _fieldGuideImages = null!;
-    private UiButtonImages _clearRatsImages = null!; 
+    private UiButtonImages _clearCreaturesImages = null!; 
     private UiButtonImages _settingsImages = null!;
     private UiButtonImages _exitImages = null!;
     private UiButtonImages _minimizeImages = null!;
@@ -99,14 +99,14 @@ public partial class MainWindow : Window
                 "Assets/UI/MainMenu/version.png");
 
         _fieldGuideImages = LoadButtonImages("field_guide");
-        _clearRatsImages = LoadButtonImages("clear_rats");
+        _clearCreaturesImages = LoadButtonImages("clear_creatures");
         _settingsImages = LoadButtonImages("settings");
         _exitImages = LoadButtonImages("exit");
         _minimizeImages = LoadButtonImages("minimize");
         _closeImages = LoadButtonImages("X");
 
         FieldGuideImage.Source = _fieldGuideImages.Normal;
-        ClearRatsImage.Source = _clearRatsImages.Normal;
+        ClearCreaturesImage.Source = _clearCreaturesImages.Normal;
         SettingsButtonImage.Source = _settingsImages.Normal;
         ExitImage.Source = _exitImages.Normal;
         MinimizeImage.Source = _minimizeImages.Normal;
@@ -134,13 +134,7 @@ public partial class MainWindow : Window
             //CreateFoodBowl(); 
             //CreateWaterDish();
 
-            bool loadedCreatures =
-                LoadSavedCreatures();
-
-            if (!loadedCreatures)
-            {
-                SpawnRat();
-            }
+            LoadSavedCreatures();
 
             ApplyTopmostSettings();
 
@@ -397,116 +391,6 @@ public partial class MainWindow : Window
         DragMove();
     }
 
-    private void SpawnRat(
-        CreatureSaveData? saveData = null)
-    {
-        var menuSurface = _surfaceManager.MenuSurface
-            ?? throw new InvalidOperationException("Menu surface was not set.");
-
-        int ratCount = _creatureWindows.Count(w =>
-        w.GetCreature() is Rat);
-
-        if (ratCount >= MaxRats)
-        {
-            System.Windows.MessageBox.Show(
-                $"Maximum rat count reached: {MaxRats}",
-                "Too many rats!");
-            return;
-        }
-
-        var ratSettings = _creatureSettings.GetValueOrDefault(
-            "rat",
-            new CreatureSettings());
-
-        double ratWidth =
-            ratSettings.SpriteWidth *
-            ratSettings.Scale;
-
-        double ratHeight =
-            ratSettings.SpriteHeight *
-            ratSettings.Scale;
-
-        double spawnX;
-        double spawnY;
-
-        if (saveData is not null)
-        {
-            spawnX = saveData.X;
-            spawnY = saveData.Y;
-        }
-        else
-        {
-            spawnX =
-                menuSurface.Left +
-                (menuSurface.Right -
-                 menuSurface.Left -
-                 ratWidth) / 2.0;
-
-            spawnY =
-                menuSurface.Top -
-                ratHeight;
-        }
-
-        //var rat = new Rat(
-        //    spawnX,
-        //    spawnY,
-        //    ratSettings,
-        //    _pointOfInterestManager,
-        //    _surfaceManager,
-        //    id: saveData?.Id,
-        //    name: saveData?.Name,
-        //    appearanceTraits:
-        //        saveData?.AppearanceId is null
-        //            ? saveData?.AppearanceTraits
-        //            : null,
-        //    appearanceId:
-        //        saveData?.AppearanceId);
-
-        CreatureDefinition ratDefinition =
-            _creatureDefinitions["rat"];
-
-        var context =
-            new CreatureSpawnContext
-            {
-                X = spawnX,
-                Y = spawnY,
-
-                Id = saveData?.Id,
-                Name = saveData?.Name,
-
-                AppearanceTraits =
-                    saveData?.AppearanceId is null
-                        ? saveData?.AppearanceTraits
-                        : null,
-
-                AppearanceId =
-                    saveData?.AppearanceId
-            };
-
-        var services =
-            CreateCreatureServices();
-
-        Creature rat =
-            CreatureFactory.Create(
-                ratDefinition,
-                context,
-                ratSettings,
-                services);
-
-        var ratWindow =
-            new CreatureWindow(
-                rat,
-                _surfaceManager)
-            {
-            Topmost = _creaturesAlwaysOnTop
-            };
-
-        ratWindow.SetDisplayScale(_settings.CreatureDisplayScale);
-        ratWindow.Show();
-
-        _creatureWindows.Add(ratWindow);
-    }
-
     private void SaveCreatures()
     {
         var saveData =
@@ -536,50 +420,16 @@ public partial class MainWindow : Window
             saveData);
     }
 
-    private bool LoadSavedCreatures()
+    private void LoadSavedCreatures()
     {
         var savedCreatures =
             CreatureSaveManager.Load();
 
-        bool loadedAny = false;
-
         foreach (var saveData in savedCreatures)
         {
-            switch (saveData.CreatureType.ToLowerInvariant())
-            {
-                case "rat":
-                    SpawnRat(saveData);
-                    loadedAny = true;
-                    break;
-            }
-        }
-
-        return loadedAny;
-    }
-
-    private void ClearRats()
-    {
-        var ratWindows = _creatureWindows
-            .Where(w => w.GetCreature() is Rat)
-            .ToList();
-
-        foreach (var window in ratWindows)
-        {
-            window.Close();
-            _creatureWindows.Remove(window);
-        }
-    }
-
-    private void ClearEagles()
-    {
-        var eagleWindows = _creatureWindows
-            .Where(w => w.GetCreature() is Eagle)
-            .ToList();
-
-        foreach (var window in eagleWindows)
-        {
-            window.Close();
-            _creatureWindows.Remove(window);
+            SpawnCreature(
+                saveData.CreatureType,
+                saveData);
         }
     }
 
@@ -614,25 +464,6 @@ public partial class MainWindow : Window
         _fieldGuideMenu.Show();
     }
 
-    //private void SpawnCreature(string creatureId)
-    //{
-    //    switch (creatureId)
-    //    {
-    //        case "rat":
-    //            SpawnRat();
-    //            break;
-
-    //        case "eagle":
-    //            SpawnEagle();
-    //            break;
-
-    //        default:
-    //            throw new ArgumentOutOfRangeException(
-    //                nameof(creatureId),
-    //                creatureId,
-    //                "Unknown creature.");
-    //    }
-    //}
     private void SpawnCreature(
         string creatureId,
         CreatureSaveData? saveData = null)
@@ -690,24 +521,6 @@ public partial class MainWindow : Window
 
         _creatureWindows.Add(
             creatureWindow);
-    }
-
-    private CreatureServices CreateCreatureServices()
-    {
-        return new CreatureServices
-        {
-            PointOfInterestManager =
-                _pointOfInterestManager,
-
-            SurfaceManager =
-                _surfaceManager,
-
-            PointsOfInterest =
-                _pointsOfInterest,
-
-            MonitorWorkingAreas =
-                _surfaceManager.GetMonitorWorkingAreas()
-        };
     }
 
     private CreatureSpawnContext CreateSpawnContext(
@@ -795,64 +608,20 @@ public partial class MainWindow : Window
         };
     }
 
-    private void ClearRats_Click(object sender, RoutedEventArgs e)
+    private void ClearCreatures_Click(
+        object sender,
+        RoutedEventArgs e)
     {
-        ClearRats();
-        //TEMP
-        ClearEagles();
+        ClearCreatures();
     }
-    private void ClearEagles_Click(object sender, RoutedEventArgs e)
-    {
-        ClearEagles();
-    }
-    private void SpawnEagle()
-    {
-        var eagleSettings = _creatureSettings.GetValueOrDefault(
-            "eagle",
-            new CreatureSettings());
 
-        int eagleCount = _creatureWindows.Count(w =>
-            w.GetCreature() is Eagle);
-
-        if (eagleCount >= MaxEagles)
+    private void ClearCreatures()
+    {
+        foreach (var window in _creatureWindows.ToList())
         {
-            System.Windows.MessageBox.Show(
-                $"Maximum eagle count reached: {MaxEagles}",
-                "Too many eagles!");
-            return;
+            window.Close();
+            _creatureWindows.Remove(window);
         }
-
-        var areas =
-            Forms.Screen.AllScreens
-                .Select(screen =>
-                    screen.WorkingArea)
-                .ToList();
-
-        var spawnArea =
-            areas[Random.Shared.Next(
-                areas.Count)];
-
-        var eagle = new Eagle(
-            spawnArea.Left + 100,
-            spawnArea.Top + 300,
-            _pointsOfInterest,
-            eagleSettings,
-            _pointOfInterestManager,
-            areas,
-            _surfaceManager);
-
-        var eagleWindow =
-            new CreatureWindow(
-                eagle,
-                _surfaceManager)
-            {
-            Topmost = _creaturesAlwaysOnTop
-        };
-
-        eagleWindow.SetDisplayScale(_settings.CreatureDisplayScale);
-        eagleWindow.Show();
-
-        _creatureWindows.Add(eagleWindow);
     }
 
     private void UpdateMenuSurface()
@@ -867,16 +636,6 @@ public partial class MainWindow : Window
                 surfaceY,
                 surfaceWidth,
                 1));
-    }
-
-    private void SpawnRat_Click(object sender, RoutedEventArgs e)
-    {
-        SpawnRat();
-    }
-
-    private void SpawnEagle_Click(object sender, RoutedEventArgs e)
-    {
-        SpawnEagle();
     }
 
     private void Exit_Click(object sender, RoutedEventArgs e)
@@ -930,17 +689,6 @@ public partial class MainWindow : Window
         }
     }
 
-    //private void EcosystemAlwaysOnTopToggle_Click(
-    //    object sender,
-    //    RoutedEventArgs e)
-    //{
-    //    _ecosystemAlwaysOnTop = !_ecosystemAlwaysOnTop;
-
-    //    SetCreaturesTopmost(_ecosystemAlwaysOnTop);
-
-    //    AlwaysOnTopToggleImage.Source =
-    //        GetEcosystemAlwaysOnTopImages().Hover;
-    //}
     private void UiAlwaysOnTopToggle_Click(
         object sender,
         RoutedEventArgs e)
@@ -1093,29 +841,29 @@ public partial class MainWindow : Window
         FieldGuideImage.Source = _fieldGuideImages.Hover;
     }
 
-    private void ClearRats_MouseEnter(
+    private void ClearCreatures_MouseEnter(
         object sender, 
         WpfMouseEventArgs e)
     {
-        ClearRatsImage.Source = _clearRatsImages.Hover;
+        ClearCreaturesImage.Source = _clearCreaturesImages.Hover;
     }
-    private void ClearRats_MouseLeave
+    private void ClearCreatures_MouseLeave
         (object sender, 
         WpfMouseEventArgs e)
     {
-        ClearRatsImage.Source = _clearRatsImages.Normal;
+        ClearCreaturesImage.Source = _clearCreaturesImages.Normal;
     }
-    private void ClearRats_MouseDown(
+    private void ClearCreatures_MouseDown(
         object sender,
         WpfMouseButtonEventArgs e)
     {
-        ClearRatsImage.Source = _clearRatsImages.Pressed;
+        ClearCreaturesImage.Source = _clearCreaturesImages.Pressed;
     }
-    private void ClearRats_MouseUp(
+    private void ClearCreatures_MouseUp(
         object sender,
         WpfMouseButtonEventArgs e)
     {
-        ClearRatsImage.Source = _clearRatsImages.Hover;
+        ClearCreaturesImage.Source = _clearCreaturesImages.Hover;
     }
 
     private void SettingsButton_MouseEnter(

@@ -868,7 +868,7 @@
     <Content Include="Assets\UI\MainMenu\Buttons\button_always_on_top_on.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\UI\MainMenu\Buttons\button_clear_rats.png">
+    <Content Include="Assets\UI\MainMenu\Buttons\button_clear_creatures.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\MainMenu\Buttons\button_exit.png">
@@ -883,7 +883,7 @@
     <Content Include="Assets\UI\MainMenu\Buttons\button_hover_always_on_top_on.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\UI\MainMenu\Buttons\button_hover_clear_rats.png">
+    <Content Include="Assets\UI\MainMenu\Buttons\button_hover_clear_creatures.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\MainMenu\Buttons\button_hover_exit.png">
@@ -913,7 +913,7 @@
     <Content Include="Assets\UI\MainMenu\Buttons\button_pressed_always_on_top_on.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\UI\MainMenu\Buttons\button_pressed_clear_rats.png">
+    <Content Include="Assets\UI\MainMenu\Buttons\button_pressed_clear_creatures.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\MainMenu\Buttons\button_pressed_exit.png">
