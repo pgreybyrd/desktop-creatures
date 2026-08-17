@@ -19,8 +19,6 @@ namespace Desktop_Creatures.Creatures
             "cinnamon"
         ];
 
-        private readonly CreatureSoundPlayer _sounds;
-
         public CreatureAppearance Appearance { get; }
         public string? AppearanceId { get; }
         public CreatureAppearanceTraits AppearanceTraits =>
@@ -47,6 +45,9 @@ namespace Desktop_Creatures.Creatures
                 name)
         {
             CreatureAppearanceTraits selectedTraits;
+
+            PlaySound(
+                CreatureSoundEvent.Spawn);
 
             AppearanceId = appearanceId;
 
@@ -86,10 +87,10 @@ namespace Desktop_Creatures.Creatures
             }
 
             var soundSet =
-                new CreatureSoundSet();
+                new SoundSet();
 
             soundSet.Add(
-                "squeak",
+                CreatureSoundEvent.Spawn,
                 "Assets/Creatures/Rat/Sounds/squeak_01.wav",
                 "Assets/Creatures/Rat/Sounds/squeak_02.wav",
                 "Assets/Creatures/Rat/Sounds/squeak_03.wav",
@@ -101,16 +102,28 @@ namespace Desktop_Creatures.Creatures
                 "Assets/Creatures/Rat/Sounds/squeak_09.wav",
                 "Assets/Creatures/Rat/Sounds/squeak_10.wav");
 
-            _sounds =
-                new CreatureSoundPlayer(
-                    soundSet);
+            soundSet.Add(
+                CreatureSoundEvent.Pickup,
+                "Assets/Creatures/Rat/Sounds/squeak_01.wav",
+                "Assets/Creatures/Rat/Sounds/squeak_02.wav",
+                "Assets/Creatures/Rat/Sounds/squeak_03.wav",
+                "Assets/Creatures/Rat/Sounds/squeak_04.wav",
+                "Assets/Creatures/Rat/Sounds/squeak_05.wav",
+                "Assets/Creatures/Rat/Sounds/squeak_06.wav",
+                "Assets/Creatures/Rat/Sounds/squeak_07.wav",
+                "Assets/Creatures/Rat/Sounds/squeak_08.wav",
+                "Assets/Creatures/Rat/Sounds/squeak_09.wav",
+                "Assets/Creatures/Rat/Sounds/squeak_10.wav");
+
+            SetSoundSet(
+                soundSet);
 
             InitializeGroundCreature(
                 x,
                 y);
 
-            // TEMP TEST
-            _sounds.PlayRandom("squeak");
+            PlaySound(
+                CreatureSoundEvent.Spawn);
         }
 
         private CreatureAppearanceTraits CreateRandomAppearanceTraits()
@@ -127,7 +140,8 @@ namespace Desktop_Creatures.Creatures
 
         public override void OnPickedUp()
         {
-            _sounds.PlayRandom("squeak");
+            PlaySound(
+                CreatureSoundEvent.Pickup);
 
             SetAction(
                 CreatureAction.Held,

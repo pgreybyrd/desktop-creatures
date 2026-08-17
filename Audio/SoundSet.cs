@@ -1,6 +1,6 @@
 ﻿namespace Desktop_Creatures.Audio;
 
-public sealed class CreatureSoundSet
+public sealed class SoundSet
 {
     private readonly Dictionary<string, string[]> _sounds =
         new(StringComparer.OrdinalIgnoreCase);

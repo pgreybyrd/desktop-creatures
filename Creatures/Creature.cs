@@ -1,5 +1,4 @@
 using Desktop_Creatures.Tools.Images;
-using Desktop_Creatures.Tools.Text;
 using Desktop_Creatures.Behaviors;
 using Desktop_Creatures.Config;
 using Desktop_Creatures.Needs;
@@ -8,6 +7,7 @@ using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
 using System.Windows.Media.Imaging;
+using Desktop_Creatures.Audio;
 using Point = System.Windows.Point;
 
 namespace Desktop_Creatures.Creatures;
@@ -37,6 +37,8 @@ public abstract class Creature
     public string Name { get; protected set; }
 
     protected readonly Random Random = new();
+
+    private CreatureSoundPlayer? _soundPlayer;
 
     private int _animationDirection = 1;
 
@@ -1199,6 +1201,21 @@ public abstract class Creature
             CurrentFrameIndex = 0;
             _animationDirection = 1;
         }
+    }
+
+    protected void SetSoundSet(
+        SoundSet soundSet)
+    {
+        _soundPlayer =
+            new CreatureSoundPlayer(
+                soundSet);
+    }
+
+    protected void PlaySound(
+        string soundEvent)
+    {
+        _soundPlayer?.PlayRandom(
+            soundEvent);
     }
 
     public virtual void OnPickedUp()

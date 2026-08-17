@@ -4,11 +4,11 @@ namespace Desktop_Creatures.Audio;
 
 public sealed class CreatureSoundPlayer
 {
-    private readonly CreatureSoundSet _soundSet;
+    private readonly SoundSet _soundSet;
     private readonly Random _random = new();
 
     public CreatureSoundPlayer(
-        CreatureSoundSet soundSet)
+        SoundSet soundSet)
     {
         _soundSet = soundSet;
     }
