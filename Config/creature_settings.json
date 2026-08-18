@@ -135,5 +135,95 @@
             "rate": 0.003
         }
     }
+    },
+
+      "ocelot":{
+      "spriteFacesRight": true,
+      "spriteWidth": 64,
+      "spriteHeight": 32,
+      "scale": 2,
+      "footOffsetY": 0,
+
+
+      "run": {
+        "runSpeed": 1.5,
+        "minRunTicks": 100,
+        "maxRunTicks": 300,
+        "runFrameCount": 12,
+        "runFrameTicks": 2
+      },
+      "idle": {
+        "idleChance": 0.8,
+        "minIdleTicks": 150,
+        "maxIdleTicks": 200,
+        "idleFrameTicks": 40,
+        "animations": [
+        {
+            "name": "idle_look_left",
+            "frameCount": 5
+        },
+        {
+            "name": "idle_look_right",
+            "frameCount": 12
+        },
+        {
+            "name": "idle_look_front",
+            "frameCount": 4
+        },
+        {
+            "name": "idle_look_up",
+            "frameCount": 6
+        },
+        {
+            "name": "idle_sit_front",
+            "frameCount": 8
+        },
+        {
+            "name": "idle_sit_back",
+            "frameCount": 6
+        }
+        ]
+      },
+      "sleep": {
+        "sleepFrameCount": 2,
+        "sleepFrameTicks": 40
+      },
+      "eat": {
+        "eatFrameCount": 14,
+        "eatFrameTicks": 4,
+        "eatingTicksRemaining": 100,
+        "foodSearchCooldownTicks": 120,
+        "leaveFoodDistance": 120,
+        "interactionReach": 20
+      },
+      "fall": {
+        "fallFrameCount": 1,
+        "fallFrameTicks": 5,
+        "landingTolerance": 12
+      },
+      "footOffsets": {
+        "run": [
+            { "x": 16, "y": 29 },
+            { "x": 16, "y": 27 },
+            { "x": 16, "y": 30 }
+            ],
+        "idle_look_left": [
+            { "x": 16, "y": 28 }
+            ]
+      },
+      "needs": {
+        "hunger": {
+            "threshold": 0.75,
+            "rate": 0.002
+        },
+        "energy": {
+            "threshold": 0.30,
+            "drainRate": 0.001
+        },
+        "curiosity": {
+            "threshold": 0.60,
+            "rate": 0.003
+        }
+    }
     }
 }

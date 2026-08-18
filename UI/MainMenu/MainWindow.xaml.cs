@@ -130,13 +130,13 @@ public partial class MainWindow : Window
 
             _surfaceManager.Refresh();
 
+            SpawnCreature("ocelot");
+
             // TODO: Re-enable when POIs are ready for release.
             //CreateFoodBowl(); 
             //CreateWaterDish();
 
             LoadSavedCreatures();
-
-            ApplyTopmostSettings();
 
             ApplyTopmostSettings();
         };
@@ -367,6 +367,9 @@ public partial class MainWindow : Window
 
         _creatureDefinitions["eagle"] =
             CreatureDefinitionLoader.Load("eagle");
+
+        _creatureDefinitions["ocelot"] =
+            CreatureDefinitionLoader.Load("ocelot");
 
         return area;
     }

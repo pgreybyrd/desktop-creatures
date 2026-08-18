@@ -11,6 +11,12 @@
       "creatureId": "eagle",
       "rightY": 50,
       "order": 1
+    },
+    {
+      "tab": "Yellow",
+      "creatureId": "ocelot",
+      "rightY": 60,
+      "order": 1
     }
   ]
 }

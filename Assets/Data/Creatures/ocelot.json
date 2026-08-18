@@ -1,0 +1,19 @@
+{
+  "id": "ocelot",
+  "displayName": "Ocelot",
+
+  "movementCapabilities": [
+    "Ground"
+  ],
+
+  "assetFolder": "Assets/Creatures/Feline/Ocelot",
+
+  "usesGeneratedAppearance": true,
+
+  "palettes": [
+    "ocelot"
+  ],
+
+  "pickupAnchorX": 33,
+  "pickupAnchorY": 11
+}

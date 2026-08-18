@@ -17,6 +17,7 @@ public static class CreatureFactory
         {
             "rat" =>
                 new Rat(
+                    definition,
                     context.X,
                     context.Y,
                     settings,
@@ -36,6 +37,19 @@ public static class CreatureFactory
                     services.PointOfInterestManager,
                     services.MonitorWorkingAreas,
                     services.SurfaceManager),
+
+            "ocelot" =>
+                new Ocelot(
+                    definition,
+                    context.X,
+                    context.Y,
+                    settings,
+                    services.PointOfInterestManager,
+                    services.SurfaceManager,
+                    id: context.Id,
+                    name: context.Name,
+                    appearanceTraits: context.AppearanceTraits,
+                    appearanceId: context.AppearanceId),
 
             _ =>
                 throw new NotSupportedException(

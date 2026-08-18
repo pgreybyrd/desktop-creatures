@@ -1,0 +1,15 @@
+{
+  "id": "eagle",
+  "name": "EAGLE",
+  "description": "A powerful bird of prey with keen eyesight and broad wings built for soaring.",
+  "habitat": "Cliffs",
+  "activity": "Day",
+  "diet": "Carnivore",
+  "fieldNotes": [
+    "Soars high above the desktop.",
+    "Prefers open space.",
+    "Very dramatic."
+  ],
+  "portrait": "Assets/Creatures/Eagle/fly_0.png",
+  "portraitFrame": "Assets/UI/FieldGuide/Creatures/Eagle/frame-eagle.png"
+}

@@ -9,14 +9,14 @@ namespace Desktop_Creatures.Creatures;
 public static class CreatureAppearanceFactory
 {
     public static CreatureAppearance Create(
-        string creatureType,
+        CreatureDefinition definition,
         CreatureAppearanceTraits traits)
     {
         string creatureFolder =
-            $"Assets/Creatures/{creatureType}/Appearance";
+            $"{definition.AssetFolder}/Appearance";
 
         string creatureId =
-            creatureType.ToLowerInvariant();
+            definition.Id;
 
         // Base grayscale spritesheet
         var source =
@@ -37,13 +37,18 @@ public static class CreatureAppearanceFactory
             RegionDefinitionLoader.Load(
                 regionsJson);
 
-        string paletteJson =
-            AssetTextLoader.Load(
-                $"{creatureFolder}/Palettes/{traits.Palette}.json");
+        RegionPalette? palette = null;
 
-        var palette =
-            RegionPaletteLoader.Load(
-                paletteJson);
+        if (!string.IsNullOrWhiteSpace(traits.Palette))
+        {
+            string paletteJson =
+                AssetTextLoader.Load(
+                    $"{creatureFolder}/Palettes/{traits.Palette}.json");
+
+            palette =
+                RegionPaletteLoader.Load(
+                    paletteJson);
+        }
 
         // BUILD THE BEAST.
         BitmapSource spriteSheet =
@@ -72,20 +77,20 @@ public static class CreatureAppearanceFactory
     }
 
     public static CreatureAppearanceTraits LoadTraits(
-        string creatureType,
+        CreatureDefinition definition,
         string appearanceId)
     {
         string creatureFolder =
-            $"Assets/Creatures/{creatureType}/Appearance";
+            $"{definition.AssetFolder}/Appearance";
 
         string appearanceJson =
             AssetTextLoader.Load(
                 $"{creatureFolder}/Appearances/{appearanceId}.json");
 
-        CreatureAppearanceDefinition definition =
+        CreatureAppearanceDefinition appearanceDefinition =
             CreatureAppearanceLoader.Load(
                 appearanceJson);
 
-        return definition.Traits;
+        return appearanceDefinition.Traits;
     }
 }
