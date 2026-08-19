@@ -131,8 +131,6 @@ public partial class MainWindow : Window
 
             _surfaceManager.Refresh();
 
-            SpawnCreature("ocelot");
-
             // TODO: Re-enable when POIs are ready for release.
             //CreateFoodBowl(); 
             //CreateWaterDish();
@@ -518,6 +516,9 @@ public partial class MainWindow : Window
                     _creaturesAlwaysOnTop
             };
 
+        creatureWindow.DespawnRequested +=
+            DespawnCreature;
+
         creatureWindow.SetDisplayScale(
             _settings.CreatureDisplayScale);
 
@@ -525,6 +526,18 @@ public partial class MainWindow : Window
 
         _creatureWindows.Add(
             creatureWindow);
+    }
+
+    private void DespawnCreature(
+        CreatureWindow creatureWindow)
+    {
+        creatureWindow.DespawnRequested -=
+            DespawnCreature;
+
+        _creatureWindows.Remove(
+            creatureWindow);
+
+        creatureWindow.Close();
     }
 
     private CreatureSpawnContext CreateSpawnContext(

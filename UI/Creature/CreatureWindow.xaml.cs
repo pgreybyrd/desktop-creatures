@@ -1,13 +1,10 @@
 ﻿using Desktop_Creatures.Config;
 using Desktop_Creatures.Creatures;
 using Desktop_Creatures.Utilities;
-using System.Threading;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Interop;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using Desktop_Creatures.World.Surfaces;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Desktop_Creatures;
 
@@ -21,6 +18,8 @@ public partial class CreatureWindow : Window
 
     public Creature GetCreature() => _creature;
 
+    public event Action<CreatureWindow>? DespawnRequested;
+
     public CreatureWindow(
         Creature creature,
         SurfaceManager surfaceManager)
@@ -30,6 +29,8 @@ public partial class CreatureWindow : Window
         MouseLeftButtonDown += OnMouseLeftButtonDown;
         MouseMove += OnMouseMove;
         MouseLeftButtonUp += OnMouseLeftButtonUp;
+
+        ContextMenu = CreateContextMenu();
 
         _creature = creature;
         _surfaceManager = surfaceManager;
@@ -68,6 +69,26 @@ public partial class CreatureWindow : Window
             }
         };
     }
+
+    private ContextMenu CreateContextMenu()
+    {
+        var menu = new ContextMenu();
+
+        var despawnItem = new MenuItem
+        {
+            Header = "Despawn"
+        };
+
+        despawnItem.Click += (_, _) =>
+        {
+            DespawnRequested?.Invoke(this);
+        };
+
+        menu.Items.Add(despawnItem);
+
+        return menu;
+    }
+
     public void UpdateCreature()
     {
         if (_isDragging)

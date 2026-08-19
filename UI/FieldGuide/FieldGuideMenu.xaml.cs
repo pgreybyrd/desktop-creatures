@@ -636,22 +636,8 @@ public partial class FieldGuideMenu : Window
             return;
         }
 
-        FieldGuideFamilyEntry clicked =
-            _familiesByTab[tab];
-
-        int destinationOrder =
-            clicked.Order - 1;
-
-        if (destinationOrder == FrontPageIndex)
-        {
-            await TurnBackwardToFrontPageAsync();
-            return;
-        }
-
         FieldGuideFamilyEntry destination =
-            _familiesByTab.Values
-                .Single(entry =>
-                    entry.Order == destinationOrder);
+            _familiesByTab[tab];
 
         await TurnBackwardToAsync(
             destination);
