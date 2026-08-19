@@ -231,9 +231,9 @@
     <None Remove="Assets\UI\FieldGuide\Common\close.png" />
     <None Remove="Assets\UI\FieldGuide\Common\frame-basic.png" />
     <None Remove="Assets\UI\FieldGuide\Common\tabs.png" />
-    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait.png" />
-    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_0.png" />
-    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait_1.png" />
+    <None Remove="Assets\UI\FieldGuide\Creatures\Ocelot\Portrait\portrait-ocelot.png" />
+    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\Portrait\ratPortrait_0.png" />
+    <None Remove="Assets\UI\FieldGuide\Creatures\Rat\Portrait\ratPortrait_1.png" />
     <None Remove="Assets\UI\FieldGuide\Creatures\Rat\spawn-icon-cheese.png" />
     <None Remove="Assets\UI\FieldGuide\opening_0.png" />
     <None Remove="Assets\UI\FieldGuide\opening_1.png" />
@@ -637,10 +637,19 @@
     <Content Include="Assets\UI\FieldGuide\Creatures\Eagle\frame-eagle.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\UI\FieldGuide\Creatures\Eagle\Portrait\portrait-eagle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Creatures\Ocelot\frame-ocelot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\FieldGuide\Creatures\Ocelot\Portrait\portrait-ocelot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\UI\FieldGuide\Creatures\Rat\frame-rat.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\UI\FieldGuide\Creatures\Rat\portrait\ratPortrait.png">
+    <Content Include="Assets\UI\FieldGuide\Creatures\Rat\Portrait\portrait-rat.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\FieldGuide\Creatures\Rat\spawn-icon-cheese.png">

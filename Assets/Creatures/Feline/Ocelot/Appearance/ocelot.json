@@ -1,6 +1,6 @@
 { "frames": [
    {
-    "filename": "run_00",
+    "filename": "walk_00",
     "frame": { "x": 0, "y": 0, "w": 48, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -9,7 +9,7 @@
     "duration": 100
    },
    {
-    "filename": "run_01",
+    "filename": "walk_01",
     "frame": { "x": 48, "y": 0, "w": 48, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -18,7 +18,7 @@
     "duration": 100
    },
    {
-    "filename": "run_02",
+    "filename": "walk_02",
     "frame": { "x": 96, "y": 0, "w": 48, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -27,7 +27,7 @@
     "duration": 100
    },
    {
-    "filename": "run_03",
+    "filename": "walk_03",
     "frame": { "x": 144, "y": 0, "w": 48, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -36,7 +36,7 @@
     "duration": 100
    },
    {
-    "filename": "run_04",
+    "filename": "walk_04",
     "frame": { "x": 192, "y": 0, "w": 48, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -45,7 +45,7 @@
     "duration": 100
    },
    {
-    "filename": "run_05",
+    "filename": "walk_05",
     "frame": { "x": 240, "y": 0, "w": 48, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -54,7 +54,7 @@
     "duration": 100
    },
    {
-    "filename": "run_06",
+    "filename": "walk_06",
     "frame": { "x": 288, "y": 0, "w": 48, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -63,7 +63,7 @@
     "duration": 100
    },
    {
-    "filename": "run_07",
+    "filename": "walk_07",
     "frame": { "x": 0, "y": 32, "w": 48, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -81,7 +81,7 @@
     "duration": 100
    },
    {
-    "filename": "walk_00",
+    "filename": "run_00",
     "frame": { "x": 96, "y": 32, "w": 48, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -90,7 +90,7 @@
     "duration": 100
    },
    {
-    "filename": "walk_01",
+    "filename": "run_01",
     "frame": { "x": 144, "y": 32, "w": 48, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -99,7 +99,7 @@
     "duration": 100
    },
    {
-    "filename": "walk_02",
+    "filename": "run_02",
     "frame": { "x": 192, "y": 32, "w": 48, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -108,7 +108,7 @@
     "duration": 100
    },
    {
-    "filename": "walk_03",
+    "filename": "run_03",
     "frame": { "x": 240, "y": 32, "w": 48, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -117,7 +117,7 @@
     "duration": 100
    },
    {
-    "filename": "walk_04",
+    "filename": "run_04",
     "frame": { "x": 288, "y": 32, "w": 48, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -126,7 +126,7 @@
     "duration": 100
    },
    {
-    "filename": "walk_05",
+    "filename": "run_05",
     "frame": { "x": 0, "y": 64, "w": 48, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -135,7 +135,7 @@
     "duration": 100
    },
    {
-    "filename": "walk_06",
+    "filename": "run_06",
     "frame": { "x": 48, "y": 64, "w": 48, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -144,7 +144,7 @@
     "duration": 100
    },
    {
-    "filename": "walk_07",
+    "filename": "run_07",
     "frame": { "x": 96, "y": 64, "w": 48, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -153,7 +153,7 @@
     "duration": 100
    },
    {
-    "filename": "walk_08",
+    "filename": "run_08",
     "frame": { "x": 144, "y": 64, "w": 48, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -162,7 +162,7 @@
     "duration": 100
    },
    {
-    "filename": "walk_09",
+    "filename": "run_09",
     "frame": { "x": 192, "y": 64, "w": 48, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -171,7 +171,7 @@
     "duration": 100
    },
    {
-    "filename": "walk_10",
+    "filename": "run_10",
     "frame": { "x": 240, "y": 64, "w": 48, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -180,7 +180,7 @@
     "duration": 100
    },
    {
-    "filename": "walk_11",
+    "filename": "run_11",
     "frame": { "x": 288, "y": 64, "w": 48, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -303,7 +303,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 32 },
     "sourceSize": { "w": 48, "h": 32 },
-    "duration": 100
+    "duration": 500
    },
    {
     "filename": "idle_sit_01",
@@ -312,7 +312,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 32 },
     "sourceSize": { "w": 48, "h": 32 },
-    "duration": 100
+    "duration": 450
    },
    {
     "filename": "idle_sit_02",
@@ -321,10 +321,10 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 32 },
     "sourceSize": { "w": 48, "h": 32 },
-    "duration": 100
+    "duration": 450
    },
    {
-    "filename": "idle_sit_03",
+    "filename": "sit_03",
     "frame": { "x": 240, "y": 128, "w": 48, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -333,7 +333,7 @@
     "duration": 100
    },
    {
-    "filename": "idle_sit_04",
+    "filename": "sit_04",
     "frame": { "x": 288, "y": 128, "w": 48, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -342,7 +342,7 @@
     "duration": 100
    },
    {
-    "filename": "idle_sit_05",
+    "filename": "sit_05",
     "frame": { "x": 0, "y": 160, "w": 48, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -351,7 +351,7 @@
     "duration": 100
    },
    {
-    "filename": "idle_sit_06",
+    "filename": "sit_06",
     "frame": { "x": 48, "y": 160, "w": 48, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -360,8 +360,44 @@
     "duration": 100
    },
    {
-    "filename": "idle_sit_07",
+    "filename": "sit_07",
     "frame": { "x": 96, "y": 160, "w": 48, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 32 },
+    "sourceSize": { "w": 48, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "_41",
+    "frame": { "x": 48, "y": 32, "w": 48, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 32 },
+    "sourceSize": { "w": 48, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "fall_00",
+    "frame": { "x": 240, "y": 0, "w": 48, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 32 },
+    "sourceSize": { "w": 48, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "_43",
+    "frame": { "x": 48, "y": 32, "w": 48, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 32 },
+    "sourceSize": { "w": 48, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "dangle_00",
+    "frame": { "x": 240, "y": 0, "w": 48, "h": 32 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 32 },
@@ -377,11 +413,14 @@
   "size": { "w": 336, "h": 192 },
   "scale": "1",
   "frameTags": [
-   { "name": "run", "from": 0, "to": 7, "direction": "forward", "color": "#000000ff" },
-   { "name": "walk", "from": 9, "to": 20, "direction": "forward", "color": "#000000ff" },
+   { "name": "walk", "from": 0, "to": 7, "direction": "forward", "color": "#000000ff" },
+   { "name": "run", "from": 9, "to": 20, "direction": "forward", "color": "#000000ff" },
    { "name": "sleep", "from": 22, "to": 28, "direction": "forward", "color": "#000000ff" },
    { "name": "wake_up", "from": 30, "to": 31, "direction": "forward", "color": "#000000ff" },
-   { "name": "idle_sit", "from": 33, "to": 40, "direction": "forward", "color": "#000000ff" }
+   { "name": "sit", "from": 33, "to": 40, "direction": "forward", "color": "#000000ff" },
+   { "name": "idle_sit", "from": 33, "to": 35, "direction": "pingpong", "color": "#000000ff" },
+   { "name": "fall", "from": 42, "to": 42, "direction": "forward", "color": "#000000ff" },
+   { "name": "dangle", "from": 44, "to": 44, "direction": "forward", "color": "#000000ff" }
   ]
  }
 }

@@ -139,11 +139,10 @@
 
       "ocelot":{
       "spriteFacesRight": true,
-      "spriteWidth": 64,
+      "spriteWidth": 48,
       "spriteHeight": 32,
       "scale": 2,
       "footOffsetY": 0,
-
 
       "run": {
         "runSpeed": 1.5,
@@ -159,33 +158,13 @@
         "idleFrameTicks": 40,
         "animations": [
         {
-            "name": "idle_look_left",
-            "frameCount": 5
-        },
-        {
-            "name": "idle_look_right",
-            "frameCount": 12
-        },
-        {
-            "name": "idle_look_front",
-            "frameCount": 4
-        },
-        {
-            "name": "idle_look_up",
-            "frameCount": 6
-        },
-        {
-            "name": "idle_sit_front",
-            "frameCount": 8
-        },
-        {
-            "name": "idle_sit_back",
-            "frameCount": 6
+            "name": "idle_sit",
+            "frameCount": 3
         }
         ]
       },
       "sleep": {
-        "sleepFrameCount": 2,
+        "sleepFrameCount": 7,
         "sleepFrameTicks": 40
       },
       "eat": {
@@ -203,12 +182,6 @@
       },
       "footOffsets": {
         "run": [
-            { "x": 16, "y": 29 },
-            { "x": 16, "y": 27 },
-            { "x": 16, "y": 30 }
-            ],
-        "idle_look_left": [
-            { "x": 16, "y": 28 }
             ]
       },
       "needs": {

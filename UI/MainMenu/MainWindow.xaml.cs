@@ -71,7 +71,8 @@ public partial class MainWindow : Window
     private readonly SurfaceManager _surfaceManager = new();
 
     private const int MaxRats = 20;
-    private const int MaxEagles = 10;
+    private const int MaxEagles = 20;
+    private const int MaxOcelots = 20;
 
     private int _uiScale = 1;
 

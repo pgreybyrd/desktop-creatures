@@ -1,15 +1,15 @@
 {
-  "id": "eagle",
-  "name": "EAGLE",
-  "description": "A powerful bird of prey with keen eyesight and broad wings built for soaring.",
-  "habitat": "Cliffs",
-  "activity": "Day",
+  "id": "ocelot",
+  "name": "OCELOT",
+  "description": "A small spotted wildcat with a big personality and absolutely no respect for personal space.",
+  "habitat": "Rainforest",
+  "activity": "Night",
   "diet": "Carnivore",
   "fieldNotes": [
-    "Soars high above the desktop.",
-    "Prefers open space.",
-    "Very dramatic."
+	  "An excellent climber with questionable respect for gravity.",
+	  "Prefers stalking to being stalked.",
+	  "May be watching you right now."
   ],
-  "portrait": "Assets/Creatures/Eagle/fly_0.png",
-  "portraitFrame": "Assets/UI/FieldGuide/Creatures/Eagle/frame-eagle.png"
+  "portrait": "Assets/UI/FieldGuide/Creatures/Ocelot/Portrait/portrait-ocelot.png",
+  "portraitFrame": "Assets/UI/FieldGuide/Creatures/Ocelot/frame-ocelot.png"
 }

@@ -92,8 +92,8 @@ namespace Desktop_Creatures.Creatures
 
         public override void OnPickedUp()
         {
-            PlaySound(
-                CreatureSoundEvent.Pickup);
+            //PlaySound(
+            //    CreatureSoundEvent.Pickup);
 
             SetAction(
                 CreatureAction.Held,

@@ -79,6 +79,8 @@ public partial class FieldGuideMenu : Window
     private readonly BitmapImage _exitButtonPressed;
 
     private readonly Dictionary<string, FieldGuideEntry> _creatureEntries;
+    private readonly Dictionary<FieldGuideTab, FieldGuideFamilyEntry>
+        _familiesByTab;
 
     private string? _currentCreatureId;
 
@@ -162,14 +164,6 @@ public partial class FieldGuideMenu : Window
                 $"Could not load Field Guide entry '{creatureId}'.");
     }
 
-    private readonly Dictionary<FieldGuideTab, FieldGuideTabEntry>
-        _tabsByColor;
-
-    private FieldGuideTabEntry GetTabEntry(
-        FieldGuideTab tab)
-    {
-        return _tabsByColor[tab];
-    }
     private void CenterCreatureName()
     {
         int titleCenterX =
@@ -196,13 +190,13 @@ public partial class FieldGuideMenu : Window
         FieldGuideDefinition guide =
             LoadFieldGuideDefinition();
 
-        _tabsByColor =
-            guide.Tabs.ToDictionary(
-                entry => entry.Tab);
+        _familiesByTab =
+            guide.Families.ToDictionary(
+                family => family.Tab);
 
         _creatureEntries =
-            guide.Tabs
-                .Select(entry => entry.CreatureId)
+            guide.Families
+                .SelectMany(family => family.CreatureIds)
                 .Distinct()
                 .ToDictionary(
                     id => id,
@@ -441,7 +435,7 @@ public partial class FieldGuideMenu : Window
             .ToArray();
 
         _tabTurnPaths =
-            _tabsByColor.Values
+            _familiesByTab.Values
                 .ToDictionary(
                     entry => entry.Tab,
                     entry => CreateTabTurnPath(
@@ -471,15 +465,15 @@ public partial class FieldGuideMenu : Window
 
     private void BuildTabs()
     {
-        foreach (FieldGuideTabEntry entry in
-                 _tabsByColor.Values.OrderBy(e => e.Order))
+        foreach (FieldGuideFamilyEntry entry in
+                 _familiesByTab.Values.OrderBy(e => e.Order))
         {
             var rightImage =
                 CreateTabImage(entry.Tab);
 
             var rightButton =
                 CreateTabButton(
-                    entry.Tab,
+                    entry,
                     RightTab_Click);
 
             var leftImage =
@@ -493,7 +487,7 @@ public partial class FieldGuideMenu : Window
 
             var leftButton =
                 CreateTabButton(
-                    entry.Tab,
+                    entry,
                     LeftTab_Click);
 
             Canvas.SetLeft(rightImage, RightTabX);
@@ -544,18 +538,36 @@ public partial class FieldGuideMenu : Window
         };
     }
 
+    private System.Windows.Controls.ToolTip CreateFieldGuideToolTip(
+        string text)
+    {
+        return new System.Windows.Controls.ToolTip
+        {
+            Content = new TextBlock
+            {
+                Text = text
+            }
+        };
+    }
+
     private WpfButton CreateTabButton(
-        FieldGuideTab tab,
+        FieldGuideFamilyEntry family,
         RoutedEventHandler clickHandler)
     {
         var button = new WpfButton
         {
             Width = TabWidth,
             Height = TabHeight,
-            Tag = tab,
+            Tag = family.Tab,
+            ToolTip = CreateFieldGuideToolTip(
+                family.Name),
             Style = (Style)FindResource(
                 "InvisibleTabButton")
         };
+
+        ToolTipService.SetInitialShowDelay(button, 200);
+        ToolTipService.SetBetweenShowDelay(button, 250);
+        ToolTipService.SetShowDuration(button, 5000);
 
         button.Click += clickHandler;
         button.MouseEnter += Tab_MouseEnter;
@@ -576,8 +588,8 @@ public partial class FieldGuideMenu : Window
             return;
         }
 
-        FieldGuideTabEntry destination =
-            _tabsByColor[tab];
+        FieldGuideFamilyEntry destination =
+            _familiesByTab[tab];
 
         await TurnForwardToAsync(
             destination);
@@ -593,8 +605,8 @@ public partial class FieldGuideMenu : Window
             return;
         }
 
-        FieldGuideTabEntry clicked =
-            _tabsByColor[tab];
+        FieldGuideFamilyEntry clicked =
+            _familiesByTab[tab];
 
         int destinationOrder =
             clicked.Order - 1;
@@ -605,8 +617,8 @@ public partial class FieldGuideMenu : Window
             return;
         }
 
-        FieldGuideTabEntry destination =
-            _tabsByColor.Values
+        FieldGuideFamilyEntry destination =
+            _familiesByTab.Values
                 .Single(entry =>
                     entry.Order == destinationOrder);
 
@@ -619,8 +631,8 @@ public partial class FieldGuideMenu : Window
         if (_isOpening || _isPageTurning)
             return;
 
-        FieldGuideTabEntry current =
-            _tabsByColor[_currentTab];
+        FieldGuideFamilyEntry current =
+            _familiesByTab[_currentTab];
 
         if (!_tabTurnPaths.TryGetValue(
             current.Tab,
@@ -977,8 +989,8 @@ public partial class FieldGuideMenu : Window
 
     private void UpdateRestingTabs()
     {
-        foreach (FieldGuideTabEntry entry in
-                 _tabsByColor.Values)
+        foreach (FieldGuideFamilyEntry entry in
+                 _familiesByTab.Values)
         {
             var controls =
                 _tabControls[entry.Tab];
@@ -1172,7 +1184,7 @@ public partial class FieldGuideMenu : Window
     }
 
     private async Task TurnBackwardToAsync(
-        FieldGuideTabEntry destination)
+        FieldGuideFamilyEntry destination)
     {
         if (_isOpening || _isPageTurning)
             return;
@@ -1180,8 +1192,8 @@ public partial class FieldGuideMenu : Window
         if (_currentCreatureId is null)
             return;
 
-        FieldGuideTabEntry current =
-            _tabsByColor[_currentTab];
+        FieldGuideFamilyEntry current =
+            _familiesByTab[_currentTab];
 
         if (!_tabTurnPaths.TryGetValue(
             current.Tab,
@@ -1246,13 +1258,16 @@ public partial class FieldGuideMenu : Window
             _currentTab =
                 destination.Tab;
 
+            string creatureId =
+                destination.CreatureIds[0];
+
             _currentCreatureId =
-                destination.CreatureId;
+                creatureId;
 
             UpdateRestingTabs();
 
             ShowCreatureEntry(
-                destination.CreatureId);
+                creatureId);
         }
         finally
         {
@@ -1267,7 +1282,7 @@ public partial class FieldGuideMenu : Window
     }
 
     private async Task TurnForwardToAsync(
-        FieldGuideTabEntry destination)
+        FieldGuideFamilyEntry destination)
     {
         if (_isOpening || _isPageTurning)
             return;
@@ -1346,13 +1361,16 @@ public partial class FieldGuideMenu : Window
             _currentTab =
                 destination.Tab;
 
+            string creatureId =
+                destination.CreatureIds[0];
+
             _currentCreatureId =
-                destination.CreatureId;
+                creatureId;
 
             UpdateRestingTabs();
 
             ShowCreatureEntry(
-                destination.CreatureId);
+                creatureId);
         }
         finally
         {
