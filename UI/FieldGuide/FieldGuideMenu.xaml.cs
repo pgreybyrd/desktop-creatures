@@ -572,8 +572,8 @@ public partial class FieldGuideMenu : Window
             Placement =
                 System.Windows.Controls.Primitives.PlacementMode.Right,
 
-            HorizontalOffset = 4,
-            VerticalOffset = 0
+            HorizontalOffset = _uiScale,
+            VerticalOffset = -1 *_uiScale
         };
     }
 
