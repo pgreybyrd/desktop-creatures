@@ -6,6 +6,8 @@
 
         public required string Name { get; init; }
 
+        public required string ToolTipAsset { get; init; }
+
         public required FieldGuideTab Tab { get; init; }
 
         public List<string> CreatureIds { get; init; } = [];

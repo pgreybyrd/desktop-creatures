@@ -8,6 +8,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using ToolTip = System.Windows.Controls.ToolTip;
+using Brushes = System.Windows.Media.Brushes;
 using WpfButton = System.Windows.Controls.Button;
 using WpfImage = System.Windows.Controls.Image;
 using WpfMouseEventArgs = System.Windows.Input.MouseEventArgs;
@@ -538,15 +540,40 @@ public partial class FieldGuideMenu : Window
         };
     }
 
-    private System.Windows.Controls.ToolTip CreateFieldGuideToolTip(
-        string text)
+    private ToolTip CreateFieldGuideToolTip(
+        FieldGuideFamilyEntry family,
+        WpfButton targetButton)
     {
-        return new System.Windows.Controls.ToolTip
+        var source =
+            AssetImageLoader.Load(
+                family.ToolTipAsset);
+
+        var tooltipImage = new WpfImage
         {
-            Content = new TextBlock
-            {
-                Text = text
-            }
+            Source = source,
+            Width = source.PixelWidth * _uiScale,
+            Height = source.PixelHeight * _uiScale,
+            Stretch = Stretch.Fill,
+            SnapsToDevicePixels = true
+        };
+
+        RenderOptions.SetBitmapScalingMode(
+            tooltipImage,
+            BitmapScalingMode.NearestNeighbor);
+
+        return new ToolTip
+        {
+            Content = tooltipImage,
+            Background = Brushes.Transparent,
+            BorderThickness = new Thickness(0),
+            Padding = new Thickness(0),
+
+            PlacementTarget = targetButton,
+            Placement =
+                System.Windows.Controls.Primitives.PlacementMode.Right,
+
+            HorizontalOffset = 4,
+            VerticalOffset = 0
         };
     }
 
@@ -559,15 +586,19 @@ public partial class FieldGuideMenu : Window
             Width = TabWidth,
             Height = TabHeight,
             Tag = family.Tab,
-            ToolTip = CreateFieldGuideToolTip(
-                family.Name),
             Style = (Style)FindResource(
                 "InvisibleTabButton")
         };
 
-        ToolTipService.SetInitialShowDelay(button, 200);
-        ToolTipService.SetBetweenShowDelay(button, 250);
+        button.ToolTip =
+            CreateFieldGuideToolTip(
+                family,
+                button);
+
+        ToolTipService.SetInitialShowDelay(button, 150);
+        ToolTipService.SetBetweenShowDelay(button, 150);
         ToolTipService.SetShowDuration(button, 5000);
+        ToolTipService.SetHasDropShadow(button, false);
 
         button.Click += clickHandler;
         button.MouseEnter += Tab_MouseEnter;

@@ -3,6 +3,7 @@
     {
       "id": "rodent",
       "name": "Rodents",
+      "toolTipAsset": "Assets/UI/FieldGuide/Common/ToolTip/label-rodent.png",
       "tab": "Red",
       "creatureIds": [
         "rat"
@@ -13,6 +14,7 @@
     {
       "id": "bird",
       "name": "Birds",
+      "toolTipAsset": "Assets/UI/FieldGuide/Common/ToolTip/label-bird.png",
       "tab": "Green",
       "creatureIds": [
         "eagle"
@@ -23,6 +25,7 @@
     {
       "id": "feline",
       "name": "Felines",
+      "toolTipAsset": "Assets/UI/FieldGuide/Common/ToolTip/label-feline.png",
       "tab": "Yellow",
       "creatureIds": [
         "ocelot"
