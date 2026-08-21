@@ -73,9 +73,9 @@
         <!-- Buttons now get +8 Y because panel starts at Y=8 -->
 
         <Button Canvas.Left="19"
-                Canvas.Top="109"
-                Width="23"
-                Height="23"
+                Canvas.Top="99"
+                Width="25"
+                Height="25"
                 Style="{StaticResource InvisibleImageButton}"
                 Click="Scale1_Click"
                 MouseEnter="Scale1_MouseEnter"
@@ -84,71 +84,100 @@
                 PreviewMouseLeftButtonUp="Scale1_MouseUp">
 
             <Image x:Name="Scale1Image"
-                   Width="23"
-                   Height="23"
+                   Width="25"
+                   Height="25"
                    Stretch="None"
                    IsHitTestVisible="False"/>
         </Button>
 
         <Button Canvas.Left="49"
-                Canvas.Top="109"
-                Width="23"
-                Height="23"
+                Canvas.Top="99"
+                Width="25"
+                Height="25"
                 Style="{StaticResource InvisibleImageButton}"
                 Click="Scale2_Click"
                 MouseEnter="Scale2_MouseEnter"
                 MouseLeave="Scale2_MouseLeave"
                 PreviewMouseLeftButtonDown="Scale2_MouseDown"
                 PreviewMouseLeftButtonUp="Scale2_MouseUp">
+            
             <Image x:Name="Scale2Image"
-                   Width="23"
-                   Height="23"
+                   Width="25"
+                   Height="25"
                    Stretch="None"
                    IsHitTestVisible="False"/>
         </Button>
 
         <Button Canvas.Left="79"
-                Canvas.Top="109"
-                Width="23"
-                Height="23"
+                Canvas.Top="99"
+                Width="25"
+                Height="25"
                 Style="{StaticResource InvisibleImageButton}"
                 Click="Scale3_Click"
                 MouseEnter="Scale3_MouseEnter"
                 MouseLeave="Scale3_MouseLeave"
                 PreviewMouseLeftButtonDown="Scale3_MouseDown"
                 PreviewMouseLeftButtonUp="Scale3_MouseUp">
+            
             <Image x:Name="Scale3Image"
-                   Width="23"
-                   Height="23"
+                   Width="25"
+                   Height="25"
                    Stretch="None"
                    IsHitTestVisible="False"/>
         </Button>
 
         <Button Canvas.Left="108"
-                Canvas.Top="109"
-                Width="23"
-                Height="23"
+                Canvas.Top="99"
+                Width="25"
+                Height="25"
                 Style="{StaticResource InvisibleImageButton}"
                 Click="Scale4_Click"
                 MouseEnter="Scale4_MouseEnter"
                 MouseLeave="Scale4_MouseLeave"
                 PreviewMouseLeftButtonDown="Scale4_MouseDown"
                 PreviewMouseLeftButtonUp="Scale4_MouseUp">
+            
             <Image x:Name="Scale4Image"
-                   Width="23"
+                   Width="25"
+                   Height="25"
+                   Stretch="None"
+                   IsHitTestVisible="False"/>
+        </Button>
+
+        <Button Canvas.Left="89"
+                Canvas.Top="159"
+                Width="44"
+                Height="23"
+                Style="{StaticResource InvisibleImageButton}"
+                Click="EcosystemAlwaysOnTop_Click"
+                MouseEnter="EcosystemAlwaysOnTop_MouseEnter"
+                MouseLeave="EcosystemAlwaysOnTop_MouseLeave"
+                MouseLeftButtonDown="EcosystemAlwaysOnTop_MouseDown"
+                MouseLeftButtonUp="EcosystemAlwaysOnTop_MouseUp">
+            
+            <Image x:Name="EcosystemAlwaysOnTopImage"
+                   Width="44"
                    Height="23"
                    Stretch="None"
                    IsHitTestVisible="False"/>
         </Button>
 
-        <Image x:Name="AlwaysOnTopImage"
-               Canvas.Left="52"
-               Canvas.Top="179"
-               Stretch="None"
-               MouseEnter="AlwaysOnTop_MouseEnter"
-               MouseLeave="AlwaysOnTop_MouseLeave"
-               MouseLeftButtonDown="AlwaysOnTop_MouseDown"
-               MouseLeftButtonUp="AlwaysOnTop_MouseUp"/>
+        <Button Canvas.Left="89"
+                Canvas.Top="187"
+                Width="44"
+                Height="23"
+                Style="{StaticResource InvisibleImageButton}"
+                Click="MenusAlwaysOnTop_Click"
+                MouseEnter="MenusAlwaysOnTop_MouseEnter"
+                MouseLeave="MenusAlwaysOnTop_MouseLeave"
+                MouseLeftButtonDown="MenusAlwaysOnTop_MouseDown"
+                MouseLeftButtonUp="MenusAlwaysOnTop_MouseUp">
 
+            <Image x:Name="MenusAlwaysOnTopImage"
+                   Width="44"
+                   Height="23"
+                   Stretch="None"
+                   IsHitTestVisible="False"/>
+        </Button>
     </Canvas>
 </Window>

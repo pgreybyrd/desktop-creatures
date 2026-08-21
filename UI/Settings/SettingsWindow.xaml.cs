@@ -15,6 +15,7 @@ namespace Desktop_Creatures
     {
         public event Action<int>? ScaleChanged;
         public event Action<bool>? EcosystemAlwaysOnTopChanged;
+        public event Action<bool>? MenusAlwaysOnTopChanged;
 
         private readonly AppSettings _settings;
         private readonly int _uiScale;
@@ -66,7 +67,8 @@ namespace Desktop_Creatures
             _toggleOffImages = LoadButtonImages("toggle_off");
 
             RefreshScaleButtons();
-            RefreshAlwaysOnTopButton();
+            RefreshEcosystemAlwaysOnTopButton();
+            RefreshMenusAlwaysOnTopButton();
         }
 
         private static UiButtonImages LoadButtonImages(string buttonName)
@@ -115,24 +117,66 @@ namespace Desktop_Creatures
                     : _scale4Images.Normal;
         }
 
-        private void ToggleAlwaysOnTop()
+        //private void ToggleAlwaysOnTop()
+        //{
+        //    _settings.EcosystemAlwaysOnTop =
+        //        !_settings.EcosystemAlwaysOnTop;
+
+        //    SettingsLoader.Save(
+        //        _settings);
+
+        //    RefreshAlwaysOnTopButton();
+
+        //    EcosystemAlwaysOnTopChanged?.Invoke(
+        //        _settings.EcosystemAlwaysOnTop);
+        //}
+
+        private void ToggleEcosystemAlwaysOnTop()
         {
             _settings.EcosystemAlwaysOnTop =
                 !_settings.EcosystemAlwaysOnTop;
 
-            SettingsLoader.Save(
-                _settings);
+            SettingsLoader.Save(_settings);
 
-            RefreshAlwaysOnTopButton();
+            RefreshEcosystemAlwaysOnTopButton();
 
             EcosystemAlwaysOnTopChanged?.Invoke(
                 _settings.EcosystemAlwaysOnTop);
         }
 
-        private void RefreshAlwaysOnTopButton()
+        private void ToggleMenusAlwaysOnTop()
         {
-            AlwaysOnTopImage.Source =
+            _settings.MenusAlwaysOnTop =
+                !_settings.MenusAlwaysOnTop;
+
+            SettingsLoader.Save(_settings);
+
+            RefreshMenusAlwaysOnTopButton();
+
+            MenusAlwaysOnTopChanged?.Invoke(
+                _settings.MenusAlwaysOnTop);
+        }
+
+        //private void RefreshAlwaysOnTopButton()
+        //{
+        //    AlwaysOnTopImage.Source =
+        //        _settings.EcosystemAlwaysOnTop
+        //            ? _toggleOnImages.Normal
+        //            : _toggleOffImages.Normal;
+        //}
+
+        private void RefreshEcosystemAlwaysOnTopButton()
+        {
+            EcosystemAlwaysOnTopImage.Source =
                 _settings.EcosystemAlwaysOnTop
+                    ? _toggleOnImages.Normal
+                    : _toggleOffImages.Normal;
+        }
+
+        private void RefreshMenusAlwaysOnTopButton()
+        {
+            MenusAlwaysOnTopImage.Source =
+                _settings.MenusAlwaysOnTop
                     ? _toggleOnImages.Normal
                     : _toggleOffImages.Normal;
         }
@@ -317,40 +361,92 @@ namespace Desktop_Creatures
             Close();
         }
 
-        private void AlwaysOnTop_MouseEnter(
+        private void EcosystemAlwaysOnTop_MouseEnter(
             object sender,
             WpfMouseEventArgs e)
         {
-            AlwaysOnTopImage.Source =
+            EcosystemAlwaysOnTopImage.Source =
                 _settings.EcosystemAlwaysOnTop
                     ? _toggleOnImages.Hover
                     : _toggleOffImages.Hover;
         }
 
-        private void AlwaysOnTop_MouseLeave(
+        private void EcosystemAlwaysOnTop_MouseLeave(
             object sender,
             WpfMouseEventArgs e)
         {
-            RefreshAlwaysOnTopButton();
+            RefreshEcosystemAlwaysOnTopButton();
         }
 
-        private void AlwaysOnTop_MouseDown(
+        private void EcosystemAlwaysOnTop_MouseDown(
             object sender,
             WpfMouseButtonEventArgs e)
         {
             UiSounds.PlayButtonClick();
 
-            AlwaysOnTopImage.Source =
+            EcosystemAlwaysOnTopImage.Source =
                 _settings.EcosystemAlwaysOnTop
                     ? _toggleOnImages.Pressed
                     : _toggleOffImages.Pressed;
         }
 
-        private void AlwaysOnTop_MouseUp(
+        private void EcosystemAlwaysOnTop_Click(
+            object sender,
+            RoutedEventArgs e)
+        {
+            UiSounds.PlayButtonClick();
+            ToggleEcosystemAlwaysOnTop();
+        }
+
+        private void EcosystemAlwaysOnTop_MouseUp(
             object sender,
             WpfMouseButtonEventArgs e)
         {
-            ToggleAlwaysOnTop();
+            RefreshMenusAlwaysOnTopButton();
+        }
+
+        private void MenusAlwaysOnTop_MouseEnter(
+            object sender,
+            WpfMouseEventArgs e)
+        {
+            MenusAlwaysOnTopImage.Source =
+                _settings.MenusAlwaysOnTop
+                    ? _toggleOnImages.Hover
+                    : _toggleOffImages.Hover;
+        }
+
+        private void MenusAlwaysOnTop_MouseLeave(
+            object sender,
+            WpfMouseEventArgs e)
+        {
+            RefreshMenusAlwaysOnTopButton();
+        }
+
+        private void MenusAlwaysOnTop_MouseDown(
+            object sender,
+            WpfMouseButtonEventArgs e)
+        {
+            UiSounds.PlayButtonClick();
+
+            MenusAlwaysOnTopImage.Source =
+                _settings.MenusAlwaysOnTop
+                    ? _toggleOnImages.Pressed
+                    : _toggleOffImages.Pressed;
+        }
+
+        private void MenusAlwaysOnTop_Click(
+            object sender,
+            RoutedEventArgs e)
+        {
+            UiSounds.PlayButtonClick();
+            ToggleMenusAlwaysOnTop();
+        }
+
+        private void MenusAlwaysOnTop_MouseUp(
+            object sender,
+            WpfMouseButtonEventArgs e)
+        {
+            RefreshMenusAlwaysOnTopButton();
         }
 
         private void DragArea_MouseLeftButtonDown(
