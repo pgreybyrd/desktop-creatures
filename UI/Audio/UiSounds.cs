@@ -18,6 +18,7 @@ public static class UiSounds
             AppContext.BaseDirectory,
             "Assets",
             "Sounds",
+            "UI",
             fileName);
 
         var player = new MediaPlayer();

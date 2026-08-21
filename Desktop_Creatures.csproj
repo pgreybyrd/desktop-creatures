@@ -1207,6 +1207,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="NAudio" Version="2.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PixelRecolor\PixelRecolor.Wpf\PixelRecolor.Wpf.csproj" />
     <ProjectReference Include="..\WpfBitmapFonts\WpfBitmapFonts.Core\WpfBitmapFonts.Core.csproj" />
   </ItemGroup>

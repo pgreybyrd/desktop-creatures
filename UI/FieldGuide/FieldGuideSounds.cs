@@ -49,11 +49,11 @@ namespace Desktop_Creatures.UI.FieldGuide
 
             string path = Path.Combine(
                 AppContext.BaseDirectory,
-                "Assets",
-                "UI",
-                "FieldGuide",
-                "Sounds",
-                file);
+                    "Assets",
+                    "Sounds",
+                    "UI",
+                    "FieldGuide",
+                    file);
 
             new SoundPlayer(path).Play();
         }
