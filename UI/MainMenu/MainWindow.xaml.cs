@@ -7,6 +7,7 @@ using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
 using Desktop_Creatures.Audio;
+using Desktop_Creatures.Windowing;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -22,11 +23,11 @@ public partial class MainWindow : Window
 {
     private readonly DispatcherTimer _timer;
 
-    private double _x;
-    private double _y;
+    //private double _x;
+    //private double _y;
 
     private bool _isDragging = false;
-    private Point _dragOffset;
+    //private Point _dragOffset;
 
     private AppSettings _settings = null!;
     private SettingsWindow? _settingsWindow;
@@ -37,13 +38,13 @@ public partial class MainWindow : Window
 
     private FieldGuideMenu? _fieldGuideMenu;
 
-    private UiButtonImages _spawnRatImages = null!;
-    private UiButtonImages _fieldGuideImages = null!;
-    private UiButtonImages _clearCreaturesImages = null!; 
-    private UiButtonImages _settingsImages = null!;
-    private UiButtonImages _exitImages = null!;
-    private UiButtonImages _minimizeImages = null!;
-    private UiButtonImages _closeImages = null!;
+    //private UiButtonImages _spawnRatImages = null!;
+    private readonly UiButtonImages _fieldGuideImages = null!;
+    private readonly UiButtonImages _clearCreaturesImages = null!;
+    private readonly UiButtonImages _settingsImages = null!;
+    private readonly UiButtonImages _exitImages = null!;
+    private readonly UiButtonImages _minimizeImages = null!;
+    private readonly UiButtonImages _closeImages = null!;
 
     private readonly List<POIWindow> _poiWindows = new();
     private readonly List<CreatureWindow> _creatureWindows = new();
@@ -61,6 +62,8 @@ public partial class MainWindow : Window
     private PointOfInterestManager _pointOfInterestManager;
 
     private readonly SurfaceManager _surfaceManager = new();
+
+    private readonly ZOrderManager _zOrderManager = new();
 
     private const int MaxRats = 20;
     private const int MaxEagles = 20;
@@ -82,6 +85,14 @@ public partial class MainWindow : Window
         };
 
         _workingArea = LoadSettings();
+
+        _zOrderManager.Register(
+            this,
+            ZOrderManager.WindowLayer.MainMenu);
+
+        _zOrderManager.SetPolicy(
+            _settings.EcosystemAlwaysOnTop,
+            _settings.MenusAlwaysOnTop);
 
         _surfaceManager.Refresh();
 
@@ -223,15 +234,16 @@ public partial class MainWindow : Window
         var bowlWindow =
             new POIWindow(
                 bowl,
-                _surfaceManager)
-            {
-            Topmost =
-                _settings.EcosystemAlwaysOnTop ||
-                _settings.MenusAlwaysOnTop
-        };
+                _surfaceManager);
 
         bowlWindow.Show();
-        _poiWindows.Add(bowlWindow);
+
+        _zOrderManager.Register(
+            bowlWindow,
+            ZOrderManager.WindowLayer.Ecosystem);
+
+        _poiWindows.Add(
+            bowlWindow);
     }
 
     private void CreateWaterDish()
@@ -291,14 +303,13 @@ public partial class MainWindow : Window
         var dishWindow =
             new POIWindow(
                 dish,
-                _surfaceManager)
-            {
-                Topmost =
-                    _settings.EcosystemAlwaysOnTop ||
-                    _settings.MenusAlwaysOnTop
-            };
+                _surfaceManager);
 
         dishWindow.Show();
+
+        _zOrderManager.Register(
+            dishWindow,
+            ZOrderManager.WindowLayer.Ecosystem);
 
         _poiWindows.Add(
             dishWindow);
@@ -325,14 +336,11 @@ public partial class MainWindow : Window
         _moniterIndex = Math.Clamp(
             _settings.WorkingMonitor,
             0,
-            Forms.Screen.AllScreens.Length - 1
+            Screen.AllScreens.Length - 1
         );
 
-        var screen = Forms.Screen.AllScreens[_moniterIndex];
+        var screen = Screen.AllScreens[_moniterIndex];
         var area = screen.WorkingArea;
-
-        Topmost =
-            _settings.EcosystemAlwaysOnTop;
 
         _uiScale = _settings.Scale;
 
@@ -431,15 +439,27 @@ public partial class MainWindow : Window
                 SpawnCreature(creatureId),
             _uiScale);
 
-        _fieldGuideMenu.Topmost =
-            _settings.MenusAlwaysOnTop;
-
         _fieldGuideMenu.Closed += (_, _) =>
         {
+            _surfaceManager.RemoveAppSurface(
+                "field-guide");
+
             _fieldGuideMenu = null;
         };
 
         _fieldGuideMenu.Show();
+
+        _surfaceManager.RegisterAppSurface(
+            "field-guide",
+            () =>
+                GetElementSurface(
+                    _fieldGuideMenu,
+                    _fieldGuideMenu
+                        .CreatureSurfaceAnchor));
+
+        _zOrderManager.Register(
+            _fieldGuideMenu,
+            ZOrderManager.WindowLayer.ToolWindow);
     }
 
     private void SpawnCreature(
@@ -486,11 +506,7 @@ public partial class MainWindow : Window
         var creatureWindow =
             new CreatureWindow(
                 creature,
-                _surfaceManager)
-            {
-                Topmost =
-                    _settings.EcosystemAlwaysOnTop
-            };
+                _surfaceManager);
 
         creatureWindow.DespawnRequested +=
             DespawnCreature;
@@ -499,6 +515,10 @@ public partial class MainWindow : Window
             _settings.CreatureDisplayScale);
 
         creatureWindow.Show();
+
+        _zOrderManager.Register(
+            creatureWindow,
+            ZOrderManager.WindowLayer.Ecosystem);
 
         _creatureWindows.Add(
             creatureWindow);
@@ -619,6 +639,63 @@ public partial class MainWindow : Window
         }
     }
 
+    private static Rectangle?
+        GetElementSurface(
+            Window window,
+            FrameworkElement element)
+    {
+        if (!window.IsVisible ||
+            window.WindowState ==
+                WindowState.Minimized ||
+            element.ActualWidth <= 0)
+        {
+            return null;
+        }
+
+        Point leftScreen =
+            element.PointToScreen(
+                new Point(0, 0));
+
+        Point rightScreen =
+            element.PointToScreen(
+                new Point(
+                    element.ActualWidth,
+                    0));
+
+        PresentationSource? source =
+            PresentationSource.FromVisual(
+                window);
+
+        if (source?.CompositionTarget is null)
+            return null;
+
+        Matrix transform =
+            source.CompositionTarget
+                .TransformFromDevice;
+
+        Point leftDip =
+            transform.Transform(
+                leftScreen);
+
+        Point rightDip =
+            transform.Transform(
+                rightScreen);
+
+        int width =
+            (int)Math.Round(
+                rightDip.X -
+                leftDip.X);
+
+        if (width <= 0)
+            return null;
+
+        return new Rectangle(
+            (int)Math.Round(leftDip.X),
+            (int)Math.Round(leftDip.Y),
+            width,
+            1);
+    }
+
     private void UpdateMenuSurface()
     {
         int surfaceX = (int)(Left + 111 * _uiScale);
@@ -640,75 +717,12 @@ public partial class MainWindow : Window
         System.Windows.Application.Current.Shutdown();
     }
 
-    private void SetCreaturesTopmost(bool isTopmost)
-    {
-        foreach (var creatureWindow in _creatureWindows)
-            creatureWindow.RefreshTopmost(isTopmost);
-    }
-
-    //private void AlwaysOnTopToggle_Click(
-    //    object sender,
-    //    RoutedEventArgs e)
-    //{
-    //    UiSounds.PlayButtonClick();
-
-    //    _creaturesAlwaysOnTop = !_creaturesAlwaysOnTop;
-
-    //    SetCreaturesTopmost(_creaturesAlwaysOnTop);
-
-    //}
-
     private void ApplyTopmostSettings()
     {
-        bool ecosystemTopmost =
-            _settings.EcosystemAlwaysOnTop;
-
-        bool menusTopmost =
-            _settings.MenusAlwaysOnTop;
-
-        // Main menu
-        Topmost =
-            menusTopmost;
-
-        // Creature windows
-        foreach (var creatureWindow in _creatureWindows)
-        {
-            creatureWindow.RefreshTopmost(
-                ecosystemTopmost);
-        }
-
-        // POIs
-        foreach (var poiWindow in _poiWindows)
-        {
-            poiWindow.Topmost =
-                ecosystemTopmost;
-        }
-
-        // Field Guide
-        if (_fieldGuideMenu is not null)
-        {
-            _fieldGuideMenu.Topmost =
-                menusTopmost;
-        }
-
-        // Settings
-        if (_settingsWindow is not null)
-        {
-            _settingsWindow.Topmost =
-                menusTopmost;
-        }
+        _zOrderManager.SetPolicy(
+            _settings.EcosystemAlwaysOnTop,
+            _settings.MenusAlwaysOnTop);
     }
-
-    //private void UiAlwaysOnTopToggle_Click(
-    //    object sender,
-    //    RoutedEventArgs e)
-    //{
-    //    UiSounds.PlayButtonClick();
-
-    //    _uiAlwaysOnTop = !_uiAlwaysOnTop;
-
-    //    Topmost = _uiAlwaysOnTop;
-    //}
 
     private void SettingsButton_Click(
         object sender,
@@ -727,9 +741,7 @@ public partial class MainWindow : Window
                 _settings,
                 _uiScale)
             {
-                Owner = this,
-                Topmost =
-                    _settings.MenusAlwaysOnTop
+                Owner = this
             };
 
         _settingsWindow.ScaleChanged +=
@@ -749,10 +761,25 @@ public partial class MainWindow : Window
 
         _settingsWindow.Closed += (_, _) =>
         {
+            _surfaceManager.RemoveAppSurface(
+                "settings");
+
             _settingsWindow = null;
         };
 
         _settingsWindow.Show();
+
+        _surfaceManager.RegisterAppSurface(
+            "settings",
+            () =>
+                GetElementSurface(
+                    _settingsWindow,
+                    _settingsWindow
+                        .CreatureSurfaceAnchor));
+
+        _zOrderManager.Register(
+            _settingsWindow,
+            ZOrderManager.WindowLayer.ToolWindow);
     }
 
     private void OnCreatureDisplayScaleChanged(
@@ -764,32 +791,6 @@ public partial class MainWindow : Window
                 scale);
         }
     }
-
-    //private void KeepCreaturesAboveMainMenu()
-    //{
-    //    if (!_settings.EcosystemAlwaysOnTop)
-    //        return;
-
-    //    Dispatcher.BeginInvoke(() =>
-    //    {
-    //        foreach (var creatureWindow in _creatureWindows)
-    //        {
-    //            creatureWindow.RefreshTopmost(true);
-    //        }
-
-    //        if (_fieldGuideMenu is not null)
-    //        {
-    //            _fieldGuideMenu.Topmost = false;
-    //            _fieldGuideMenu.Topmost = true;
-    //        }
-
-    //        if (_settingsWindow is not null)
-    //        {
-    //            _settingsWindow.Topmost = false;
-    //            _settingsWindow.Topmost = true;
-    //        }
-    //    });
-    //}
 
     private void OnEcosystemAlwaysOnTopChanged(
         bool isAlwaysOnTop)

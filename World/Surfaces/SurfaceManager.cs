@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using System.Drawing;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
 using Forms = System.Windows.Forms;
@@ -11,6 +9,12 @@ namespace Desktop_Creatures.World.Surfaces;
 public class SurfaceManager
 {
     private readonly List<Surface> _surfaces = new();
+
+    private readonly Dictionary<
+        string,
+        Func<Rectangle?>> _appSurfaces =
+            new();
+
     private int _ticksUntilRefresh = 180;
 
     public IReadOnlyList<Surface> Surfaces => _surfaces;
@@ -24,6 +28,7 @@ public class SurfaceManager
         AddMonitorGroundSurfaces();
         AddWindowSurfaces();
         AddMenuSurface();
+        AddAppSurfaces();
     }
 
     public void Update()
@@ -35,6 +40,42 @@ public class SurfaceManager
 
         Refresh();
         _ticksUntilRefresh = 30; // every ~0.5 sec at 60 FPS
+    }
+
+    public void RegisterAppSurface(
+        string id,
+        Func<Rectangle?> boundsProvider)
+    {
+        _appSurfaces[id] =
+            boundsProvider;
+
+        Refresh();
+    }
+
+    public void RemoveAppSurface(
+        string id)
+    {
+        _appSurfaces.Remove(id);
+
+        Refresh();
+    }
+
+    private void AddAppSurfaces()
+    {
+        foreach (var pair in
+            _appSurfaces)
+        {
+            Rectangle? bounds =
+                pair.Value();
+
+            if (bounds is null)
+                continue;
+
+            _surfaces.Add(
+                new Surface(
+                    bounds.Value,
+                    $"AppSurface: {pair.Key}"));
+        }
     }
 
     public Point? SnapToSurface(
@@ -401,26 +442,47 @@ public class SurfaceManager
         }, IntPtr.Zero);
     }
 
-    private static Rectangle ToDipRectangle(Rectangle pixelRect)
+    private static Rectangle ToDipRectangle(
+        Rectangle pixelRect)
     {
-        var source = PresentationSource.FromVisual(System.Windows.Application.Current.MainWindow);
+        Window? mainWindow =
+            System.Windows.Application.Current?.MainWindow;
+
+        if (mainWindow is null)
+            return pixelRect;
+
+        var source =
+            PresentationSource.FromVisual(
+                mainWindow);
 
         if (source?.CompositionTarget is null)
             return pixelRect;
 
-        var transform = source.CompositionTarget.TransformFromDevice;
+        var transform =
+            source.CompositionTarget
+                .TransformFromDevice;
 
-        var topLeft = transform.Transform(
-            new System.Windows.Point(pixelRect.Left, pixelRect.Top));
+        var topLeft =
+            transform.Transform(
+                new System.Windows.Point(
+                    pixelRect.Left,
+                    pixelRect.Top));
 
-        var bottomRight = transform.Transform(
-            new System.Windows.Point(pixelRect.Right, pixelRect.Bottom));
+        var bottomRight =
+            transform.Transform(
+                new System.Windows.Point(
+                    pixelRect.Right,
+                    pixelRect.Bottom));
 
         return new Rectangle(
             (int)Math.Round(topLeft.X),
             (int)Math.Round(topLeft.Y),
-            (int)Math.Round(bottomRight.X - topLeft.X),
-            (int)Math.Round(bottomRight.Y - topLeft.Y));
+            (int)Math.Round(
+                bottomRight.X -
+                topLeft.X),
+            (int)Math.Round(
+                bottomRight.Y -
+                topLeft.Y));
     }
 
     private static string GetWindowTitle(IntPtr hWnd)

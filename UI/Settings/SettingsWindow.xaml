@@ -44,6 +44,14 @@
             Width="171"
             Height="221">
 
+        <Border x:Name="CreatureSurfaceAnchor"
+                Canvas.Left="3"
+                Canvas.Top="30"
+                Width="145"
+                Height="1"
+                Background="Transparent"
+                IsHitTestVisible="False" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
         <Border
             Canvas.Top="30"
             Width="151"
@@ -100,7 +108,7 @@
                 MouseLeave="Scale2_MouseLeave"
                 PreviewMouseLeftButtonDown="Scale2_MouseDown"
                 PreviewMouseLeftButtonUp="Scale2_MouseUp">
-            
+
             <Image x:Name="Scale2Image"
                    Width="25"
                    Height="25"
@@ -118,7 +126,7 @@
                 MouseLeave="Scale3_MouseLeave"
                 PreviewMouseLeftButtonDown="Scale3_MouseDown"
                 PreviewMouseLeftButtonUp="Scale3_MouseUp">
-            
+
             <Image x:Name="Scale3Image"
                    Width="25"
                    Height="25"
@@ -136,7 +144,7 @@
                 MouseLeave="Scale4_MouseLeave"
                 PreviewMouseLeftButtonDown="Scale4_MouseDown"
                 PreviewMouseLeftButtonUp="Scale4_MouseUp">
-            
+
             <Image x:Name="Scale4Image"
                    Width="25"
                    Height="25"
@@ -154,7 +162,7 @@
                 MouseLeave="EcosystemAlwaysOnTop_MouseLeave"
                 MouseLeftButtonDown="EcosystemAlwaysOnTop_MouseDown"
                 MouseLeftButtonUp="EcosystemAlwaysOnTop_MouseUp">
-            
+
             <Image x:Name="EcosystemAlwaysOnTopImage"
                    Width="44"
                    Height="23"

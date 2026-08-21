@@ -1,98 +1,204 @@
 # Desktop Creatures Roadmap
-Current Release:
-Desktop Rat Alpha v0.1.0
 
-## Desktop Creatures Alpha v0.1.0 ✅
+Current Release:  
+**Desktop Rat Alpha v0.1.0**
 
-The first public release!
+---
 
-### Features
+# NOW — Core Game Foundation
 
-- [x] Pixel art forest menu
-- [x] Spawn multiple rats
-- [x] Drag and drop rats
-- [x] Rats walk across desktop windows
-- [x] Gravity and falling
-- [x] Multi-monitor support
-- [x] Menu is part of the world
-- [x] Custom button artwork
-- [x] Always-on-top toggle
-- [x] Clear rats
-- [x] Taskbar support
-- [x] Feet-based landing
+These are the immediate priorities. Finish these in order unless a genuinely blocking bug appears.
 
-## Version 0.2
+## 1. Window Layering / Z-Order Architecture
 
-- [ ] Jump between windows
-- [ ] Better hidden-window detection
-- [ ] Performance optimization (single render window)
-- [ ] Creature framework
-- [ ] Creature personalities
+- [x] Separate `EcosystemAlwaysOnTop` and `MenusAlwaysOnTop`
+- [x] Add separate Settings toggles for ecosystem and menus
+- [ ] Add centralized `ZOrderManager`
+- [ ] Enforce intended layer policy:
+  - ecosystem / creatures above menus
+  - menus above ordinary desktop windows when enabled
+- [ ] Remove remaining scattered / legacy topmost workarounds
+- [ ] Make POIs follow ecosystem topmost only
+- [ ] Make Main Menu / Settings / Field Guide follow menu topmost only
+- [ ] Stress-test activation, focus changes, minimizing, multiple monitors, and other applications
 
-## Prototype History
+## 2. Persistence v2 — Creature Records
 
-### Flying Eagle Prototype
+**Goal:** a creature existing in the player's collection must be separate from whether it is currently spawned on the desktop.
 
-## Version 0.1 - Flying Eagle ✅
+- [ ] Create persistent `CreatureRecord` / equivalent model
+- [ ] Permanent creature ID
+- [ ] Creature type
+- [ ] Name
+- [ ] Appearance traits / appearance ID
+- [ ] Favorite state
+- [ ] Saved / owned state
+- [ ] Last known position
+- [ ] Separate persistent creature records from runtime `CreatureWindow` instances
+- [ ] Save all supported creature types, not only rats
+- [ ] Load persistent creatures safely on startup
+- [ ] Define clear actions: Spawn, Despawn, Put Away, Save, Favorite
+- [ ] Handle missing / invalid save data gracefully
+- [ ] Prepare save format for future friendship, home, breeding, and progression data
 
-- [x] Transparent window
-- [x] Monitor placement
-- [x] Flying movement
-- [x] Target-based wandering
-- [x] Sprite flipping
+## 3. Creature Roster
+
+A central window for managing individual creatures.
+
+- [ ] Creature portrait
+- [ ] Creature name
+- [ ] Rename
+- [ ] Favorite
+- [ ] Spawn / Put Away
+- [ ] Saved / persistent status
+- [ ] Creature type / family
+- [ ] Appearance preview
+- [ ] Support many creatures cleanly
+- [ ] Later: sorting / filtering / family groups
+
+## 4. Creature Context Menu
+
+Initial menu exists with individual despawn support.
+
+- [x] Right-click creature
+- [x] Despawn individual creature
+- [x] Context-menu artwork designed
+
+### Near-term additions
+
+- [ ] Favorite
+- [ ] Rename
+- [ ] Put Away
+- [ ] Field Guide
+- [ ] Appearance submenu
+
+### Later additions
+
+- [ ] Pet
+- [ ] Go Home
+- [ ] Breeding submenu
+- [ ] Creature details
+- [ ] Other creature-specific actions
+
+---
+
+# NEXT — UI / Asset Architecture
+
+## UI Spritesheet Migration
+
+**Goal:** stop maintaining huge piles of individual normal / hover / pressed PNGs.
+
+- [x] Field Guide tabs migrated to spritesheet
+- [ ] Create reusable sprite-button loader
+- [ ] Standardize button state order: Normal / Hover / Pressed
+- [ ] Migrate Settings buttons
+- [ ] Migrate Main Menu buttons
+- [ ] Migrate Field Guide common buttons
+- [ ] Migrate creature context-menu buttons
+- [ ] Clean up inconsistent asset naming during migration
+- [ ] Keep individual PNGs only where a spritesheet provides no real benefit
+
+Spritesheet work can happen during artwork / low-energy time while core systems continue in code.
+
+## Audio System
+
+- [x] Add shared NAudio engine
+- [x] Cache UI sounds in memory
+- [x] Support overlapping rapid sound playback
+- [x] Universal responsive UI button click
+- [x] Field Guide page-flip variants
+- [x] Field Guide book-open variants
+- [x] Field Guide book-close variants
+- [ ] Migrate Field Guide sounds fully onto shared audio engine
+- [ ] Migrate creature sounds fully onto shared audio engine
+- [ ] Add future master / UI / creature volume controls
+
+---
+
+# CURRENT CREATURE FOUNDATION
+
+## Rat
+
+- [x] Multiple rats
 - [x] Drag and drop
-- [x] Flying animation
-- [x] Gliding behavior
+- [x] Walking / idle / sniff / sit animations
+- [x] Falling / gravity
+- [x] Window-surface traversal
+- [x] Multi-monitor ground traversal
+- [x] Pickup / dangling animation
+- [x] Spawn and pickup squeaks
+- [x] Appearance palettes
+- [x] Patterns
+- [x] Accessories
+- [x] Effects
+- [x] Gerald canonical appearance
+- [x] Field Guide page
+- [ ] Persistence v2 migration
+- [ ] Home / burrow behavior
 
----
+## Eagle
 
-~~## Version 0.2 - Eagle Behavior~~
-
+- [x] Flying
+- [x] Gliding
 - [x] Perching
-- [x] Looking left/right
+- [x] Looking left / right
 - [x] Feather ruffling
-- [ ] ~~Sleeping~~
-- [x] Perch duration randomness
-- [ ] Explore all monitors
-- [ ] Prefer specific monitor types
+- [x] Multiple POI support
+- [x] Field Guide page
+- [ ] Generalize full multi-monitor flight area
+- [ ] Persistence v2 migration
+- [ ] Nest / home behavior
 
-## Version 0.2.1
+## Ocelot
 
-- [x] Perch destinations
+- [x] Walk / run behavior using walk animation
+- [x] Idle animation
+- [x] Falling
+- [x] Pickup / dangling animation
+- [x] Appearance / region assets
+- [x] Field Guide page
+- [ ] Polish animation frames
+- [ ] Add sounds
+- [ ] Persistence v2 migration
+- [ ] Home / resting behavior
 
-## Version 0.2.2
+## Tiny Creatures / Bugs
 
-- [x] Multiple POIs
-
-## Version 0.2.3
-
-- [ ] Nest/Home Behavior
-
-## Version 0.2.4
-
-- [ ] Sleeping
-
----
-
-## Version 0.3 - Creature Framework
-
-- [ ] Creature base class
-- [ ] Eagle class
-- [ ] Rat class
-- [ ] Animation system
-- [ ] State system
-- [ ] Multiple creatures
-- [ ] Creature spawning
-- [ ] Creature save/load
-- [ ] Sleep destination
+- [x] Initial tiny beetle flight concept / artwork
+- [ ] Define insect scaling rules
+- [ ] Build first insect creature
+- [ ] Tiny-creature movement behavior
 
 ---
 
-## Version 0.4 - Habitat System
+# FIELD GUIDE
+
+- [x] Book opening animation
+- [x] Book closing animation
+- [x] Page-turn animation
+- [x] Dynamic creature-family tabs
+- [x] Left / right tab behavior
+- [x] Tab artwork spritesheet
+- [x] Custom family tooltips
+- [x] Rodent family
+- [x] Bird family
+- [x] Feline family
+- [x] Creature pages loaded from JSON
+- [x] Spawn from creature page
+- [x] Page-flip sound variants
+- [x] Book-open sound variants
+- [x] Book-close sound variants
+- [ ] More creature families
+- [ ] More creature entries
+- [ ] Integrate Roster / collection state
+
+---
+
+# HABITATS & WORLD INTERACTIONS
 
 The desktop becomes a living ecosystem.
 
-### Habitats
+## Habitats / POIs
 
 - [ ] Bird nests
 - [ ] Burrows
@@ -103,7 +209,7 @@ The desktop becomes a living ecosystem.
 - [ ] Research stations
 - [ ] Camera traps
 
-### Decorations
+## Decorations
 
 - [ ] Trees
 - [ ] Rocks
@@ -111,7 +217,7 @@ The desktop becomes a living ecosystem.
 - [ ] Logs
 - [ ] Seasonal decorations
 
-### Placement & Editing
+## Placement & Editing
 
 - [ ] Tiny placement menu
 - [ ] Spawn POIs from menu
@@ -119,26 +225,48 @@ The desktop becomes a living ecosystem.
 - [ ] Save POI positions
 - [ ] Load POI positions on startup
 - [ ] Delete POIs
-- [ ] Lock/unlock edit mode
+- [ ] Lock / unlock edit mode
 
 ---
 
-## Version 0.5 - Wildlife Simulation
+# CREATURE BEHAVIOR / WILDLIFE SIMULATION
 
 Creatures should feel alive.
 
-### Behaviors
-
-- [ ] Wander
-- [ ] Rest
+- [x] Wander
+- [x] Rest / idle foundations
+- [x] Window-aware movement
+- [ ] Drink behavior
+- [ ] Eat behavior
 - [ ] Sleep
 - [ ] Groom
 - [ ] Explore
 - [ ] Visit habitats
 - [ ] Socialize
+- [ ] Home behavior
+- [ ] Friendship progression
+- [ ] Personality traits
 - [ ] React to weather
 
-### Weather Reactions
+---
+
+# SAVE / COLLECTION GAMEPLAY
+
+- [ ] Friendship mode
+- [ ] Free Play mode
+- [ ] Creature rarity / variants
+- [ ] Collect appearances
+- [ ] Favorite creatures
+- [ ] Creature names
+- [ ] Persistent roster
+- [ ] Creature homes
+- [ ] Optional breeding
+- [ ] Predation toggle OFF by default
+- [ ] Collection completion tracking
+
+---
+
+# WEATHER / TIME REACTIONS
 
 - [ ] Rain
 - [ ] Wind
@@ -150,20 +278,19 @@ Creatures should feel alive.
 
 ---
 
-## Conservation Gameplay
+# CONSERVATION GAMEPLAY
 
-**Player Fantasy:**
-
+**Player fantasy:**  
 Build habitats, attract wildlife, help endangered species thrive, and release them back into the wild.
 
-### Conservation Points
+## Conservation Points
 
 - [ ] Habitat bonuses
 - [ ] Wildlife discoveries
 - [ ] Research rewards
 - [ ] Species milestones
 
-### Release System
+## Release System
 
 - [ ] Release creature
 - [ ] Conservation reward
@@ -172,22 +299,22 @@ Build habitats, attract wildlife, help endangered species thrive, and release th
 
 ---
 
-## Future Creature Packs
+# FUTURE CREATURE PACKS
 
-### Backyard Pack
+## Backyard Pack
 
 - [ ] Chickens
 - [ ] Ducks
 - [ ] Turkeys
 - [ ] Songbirds
 
-### Forest Pack
+## Forest Pack
 
 - [ ] Owls
 - [ ] Foxes
 - [ ] Deer
 
-### Conservation Pack
+## Conservation Pack
 
 - [ ] Pangolin
 - [ ] Red Panda
@@ -195,7 +322,7 @@ Build habitats, attract wildlife, help endangered species thrive, and release th
 - [ ] California Condor
 - [ ] Axolotl
 
-### Fantasy Pack
+## Fantasy Pack
 
 - [ ] Fairy
 - [ ] Sprite
@@ -204,7 +331,7 @@ Build habitats, attract wildlife, help endangered species thrive, and release th
 
 ---
 
-## Wallpaper Integration
+# WALLPAPER INTEGRATION
 
 Desktop Creatures + Dynamic Wallpaper
 
@@ -224,39 +351,39 @@ Desktop Creatures + Dynamic Wallpaper
 
 ---
 
-## Future Ideas
+# FUTURE SYSTEMS
 
-### Monitor Preferences
+## Monitor Preferences
 
 - [ ] Eagles prefer sky monitors
 - [ ] Chickens prefer bottom monitors
 - [ ] Fairies prefer moonlit areas
 - [ ] Creatures develop favorite locations
 
-### Research & Discovery
+## Research & Discovery
 
 - [ ] Discover new species
 - [ ] Wildlife journal
-- [ ] Creature encyclopedia
+- [x] Field Guide / creature encyclopedia foundation
 - [ ] Species statistics
 
-### Habitat Progression
+## Habitat Progression
 
 - [ ] Unlock larger habitats
 - [ ] Habitat upgrades
 - [ ] Rare creature attraction
 - [ ] Seasonal migrations
 
-### Idle Progression
+## Idle Progression
 
 - [ ] Creatures gather materials
 - [ ] Nest building
 - [ ] Habitat maintenance
 - [ ] Long-term ecosystem growth
 
-### Usability
+## Usability
 
-- [ ] Always-on-top toggle
+- [x] Separate ecosystem and menu always-on-top settings
 - [ ] Click-through mode
 - [ ] Edit mode toggle
 - [ ] Placement menu
@@ -264,8 +391,35 @@ Desktop Creatures + Dynamic Wallpaper
 
 ---
 
-## Version 1.0
+# RELEASE QUALITY / COMMERCIAL POLISH
 
-**A Living Desktop Ecosystem**
+These are requirements for a paid-quality release, not optional cleanup.
 
-Build habitats, attract wildlife, observe their behavior, assist endangered species, and create a living world that reacts to weather, seasons, time of day, and your desktop environment.
+- [ ] Stable save migration / versioning strategy
+- [ ] Clear error handling for missing or invalid assets
+- [ ] Consistent asset naming conventions
+- [ ] Centralized audio infrastructure
+- [ ] Centralized Z-order policy
+- [ ] Multi-monitor stress testing
+- [ ] Small-display stress testing
+- [ ] Performance testing with many creatures
+- [ ] Installer / packaging
+- [ ] Update strategy
+- [ ] Settings persistence
+- [ ] Volume controls
+- [ ] First-launch experience
+- [ ] README refresh
+- [ ] Screenshots / GIFs / trailer material
+- [ ] Release checklist
+
+---
+
+# VERSION 1.0
+
+## A Living Desktop Ecosystem
+
+Build habitats, attract wildlife, observe their behavior, develop friendships with individual creatures, collect variants, assist endangered species, and create a living world that reacts to weather, seasons, time of day, and your desktop environment.
+
+The guiding standard:
+
+**Cute outside. Boring, dependable engineering inside.**

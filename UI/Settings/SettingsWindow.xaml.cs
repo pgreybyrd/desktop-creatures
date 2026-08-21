@@ -382,8 +382,6 @@ namespace Desktop_Creatures
             object sender,
             WpfMouseButtonEventArgs e)
         {
-            UiSounds.PlayButtonClick();
-
             EcosystemAlwaysOnTopImage.Source =
                 _settings.EcosystemAlwaysOnTop
                     ? _toggleOnImages.Pressed
@@ -426,8 +424,6 @@ namespace Desktop_Creatures
             object sender,
             WpfMouseButtonEventArgs e)
         {
-            UiSounds.PlayButtonClick();
-
             MenusAlwaysOnTopImage.Source =
                 _settings.MenusAlwaysOnTop
                     ? _toggleOnImages.Pressed
