@@ -1,6 +1,6 @@
 ﻿using Desktop_Creatures.Tools.Images;
 using Desktop_Creatures.Config;
-using Desktop_Creatures.UI.Audio;
+using Desktop_Creatures.Audio;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -141,6 +141,8 @@ namespace Desktop_Creatures
             object sender,
             RoutedEventArgs e)
         {
+            UiSounds.PlayButtonClick();
+
             SetScale(1);
         }
 
@@ -162,24 +164,22 @@ namespace Desktop_Creatures
             object sender,
             MouseButtonEventArgs e)
         {
-            SetScale(1);
+            RefreshScaleButtons();
         }
 
         private void Scale1_MouseDown(
             object sender,
             WpfMouseButtonEventArgs e)
         {
-            UiSounds.PlayButtonClick();
-
             Scale1Image.Source = _scale1Images.Pressed;
-
-            Scale1_Click(sender, e);
         }
 
         private void Scale2_Click(
             object sender,
             RoutedEventArgs e)
         {
+            UiSounds.PlayButtonClick();
+
             SetScale(2);
         }
 
@@ -201,24 +201,22 @@ namespace Desktop_Creatures
             object sender,
             MouseButtonEventArgs e)
         {
-            SetScale(2);
+            RefreshScaleButtons();
         }
 
         private void Scale2_MouseDown(
             object sender,
             WpfMouseButtonEventArgs e)
         {
-            UiSounds.PlayButtonClick();
-
             Scale2Image.Source = _scale2Images.Pressed;
-
-            Scale2_Click(sender, e);
         }
 
         private void Scale3_Click(
             object sender,
             RoutedEventArgs e)
         {
+            UiSounds.PlayButtonClick();
+
             SetScale(3);
         }
 
@@ -240,24 +238,22 @@ namespace Desktop_Creatures
             object sender,
             MouseButtonEventArgs e)
         {
-            SetScale(3);
+            RefreshScaleButtons();
         }
 
         private void Scale3_MouseDown(
             object sender,
             WpfMouseButtonEventArgs e)
         {
-            UiSounds.PlayButtonClick();
-
             Scale3Image.Source = _scale3Images.Pressed;
-
-            Scale3_Click(sender, e);
         }
 
         private void Scale4_Click(
             object sender,
             RoutedEventArgs e)
         {
+            UiSounds.PlayButtonClick();
+
             SetScale(4);
         }
 
@@ -279,18 +275,14 @@ namespace Desktop_Creatures
             object sender,
             MouseButtonEventArgs e)
         {
-            SetScale(4);
+            RefreshScaleButtons();
         }
 
         private void Scale4_MouseDown(
             object sender,
             WpfMouseButtonEventArgs e)
         {
-            UiSounds.PlayButtonClick();
-
             Scale4Image.Source = _scale4Images.Pressed;
-
-            Scale4_Click(sender, e);
         }
 
         private void Exit_MouseEnter(

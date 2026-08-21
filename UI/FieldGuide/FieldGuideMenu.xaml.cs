@@ -1,7 +1,7 @@
 ﻿using Desktop_Creatures.Tools.Images;
 using Desktop_Creatures.Graphics;
 using Desktop_Creatures.UI.FieldGuide;
-using Desktop_Creatures.UI.Audio;
+using Desktop_Creatures.Audio;
 using System.IO;
 using System.Text.Json;
 using System.Windows;
@@ -866,6 +866,8 @@ public partial class FieldGuideMenu : Window
         object sender,
         RoutedEventArgs e)
     {
+        UiSounds.PlayButtonClick();
+
         Close();
     }
 
@@ -889,8 +891,6 @@ public partial class FieldGuideMenu : Window
         object sender,
         WpfMouseEventArgs e)
     {
-        UiSounds.PlayButtonClick();
-
         ExitButtonImage.Source =
             _exitButtonPressed;
     }
@@ -1177,10 +1177,10 @@ public partial class FieldGuideMenu : Window
         object sender,
         RoutedEventArgs e)
     {
+        UiSounds.PlayButtonClick();
+
         if (_currentCreatureId is null)
             return;
-
-        //UiSounds.PlayButtonClick();
 
         _spawnCreature(_currentCreatureId);
     }
@@ -1203,8 +1203,6 @@ public partial class FieldGuideMenu : Window
         object sender,
         WpfMouseEventArgs e)
     {
-        UiSounds.PlayButtonClick();
-
         SpawnButtonImage.Source = _spawnButtonPressed;
     }
 

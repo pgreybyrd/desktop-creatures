@@ -6,7 +6,7 @@ using Desktop_Creatures.Tools.Images;
 using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
-using Desktop_Creatures.UI.Audio;
+using Desktop_Creatures.Audio;
 using PixelRecolor.Core;
 using System.Windows;
 using System.Windows.Controls;
@@ -57,6 +57,7 @@ public partial class MainWindow : Window
     //when settings are implemented
     public bool EcosystemAlwaysOnTop { get; set; } = true;
     public bool UiAlwaysOnTop { get; set; } = false;
+
     private bool _ecosystemAlwaysOnTop = true;
     private bool _uiAlwaysOnTop = false;
 
@@ -80,6 +81,8 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+
+        UiSounds.Initialize();
 
         LocationChanged += MainWindow_LocationChanged;
 
@@ -630,6 +633,8 @@ public partial class MainWindow : Window
         object sender,
         RoutedEventArgs e)
     {
+        UiSounds.PlayButtonClick();
+
         ClearCreatures();
     }
 
@@ -658,6 +663,8 @@ public partial class MainWindow : Window
 
     private void Exit_Click(object sender, RoutedEventArgs e)
     {
+        UiSounds.PlayButtonClick();
+
         System.Windows.Application.Current.Shutdown();
     }
 
@@ -671,6 +678,8 @@ public partial class MainWindow : Window
         object sender,
         RoutedEventArgs e)
     {
+        UiSounds.PlayButtonClick();
+
         _creaturesAlwaysOnTop = !_creaturesAlwaysOnTop;
 
         SetCreaturesTopmost(_creaturesAlwaysOnTop);
@@ -711,6 +720,8 @@ public partial class MainWindow : Window
         object sender,
         RoutedEventArgs e)
     {
+        UiSounds.PlayButtonClick();
+
         _uiAlwaysOnTop = !_uiAlwaysOnTop;
 
         Topmost = _uiAlwaysOnTop;
@@ -720,6 +731,8 @@ public partial class MainWindow : Window
         object sender,
         RoutedEventArgs e)
     {
+        UiSounds.PlayButtonClick();
+
         if (_settingsWindow is not null)
         {
             _settingsWindow.Close();
@@ -812,7 +825,9 @@ public partial class MainWindow : Window
 
     private void Minimize_Click(object sender, RoutedEventArgs e)
     {
-       WindowState = WindowState.Minimized;
+        UiSounds.PlayButtonClick();
+
+        WindowState = WindowState.Minimized;
     }
 
     private void DragArea_MouseLeftButtonDown(
@@ -875,8 +890,6 @@ public partial class MainWindow : Window
         object sender,
         WpfMouseButtonEventArgs e)
     {
-        UiSounds.PlayButtonClick();
-
         ClearCreaturesImage.Source = _clearCreaturesImages.Pressed;
     }
     private void ClearCreatures_MouseUp(
@@ -906,8 +919,6 @@ public partial class MainWindow : Window
         object sender,
         WpfMouseButtonEventArgs e)
     {
-        UiSounds.PlayButtonClick();
-
         SettingsButtonImage.Source =
             _settingsImages.Pressed;
     }
@@ -938,8 +949,6 @@ public partial class MainWindow : Window
         object sender,
         WpfMouseButtonEventArgs e)
     {
-        UiSounds.PlayButtonClick();
-
         ExitImage.Source = _exitImages.Pressed;
     }
 
@@ -967,8 +976,6 @@ public partial class MainWindow : Window
         object sender,
         WpfMouseButtonEventArgs e)
     {
-        UiSounds.PlayButtonClick();
-
         MinimizeImage.Source = _minimizeImages.Pressed;
     }
 
@@ -997,8 +1004,6 @@ public partial class MainWindow : Window
         object sender,
         WpfMouseButtonEventArgs e)
     {
-        UiSounds.PlayButtonClick();
-
         XImage.Source = _closeImages.Pressed;
     }
 

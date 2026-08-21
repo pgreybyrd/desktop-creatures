@@ -10,6 +10,36 @@
         SnapsToDevicePixels="True"
         RenderOptions.BitmapScalingMode="NearestNeighbor">
 
+    <Window.Resources>
+        <Style x:Key="InvisibleImageButton"
+       TargetType="Button">
+
+            <Setter Property="Background"
+            Value="Transparent"/>
+
+            <Setter Property="BorderThickness"
+            Value="0"/>
+
+            <Setter Property="Padding"
+            Value="0"/>
+
+            <Setter Property="Focusable"
+            Value="False"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Canvas x:Name="SettingsCanvas"
             Width="171"
             Height="221">
@@ -42,55 +72,83 @@
 
         <!-- Buttons now get +8 Y because panel starts at Y=8 -->
 
-        <Image x:Name="Scale1Image"
-               Source="/Assets/UI/Settings/Buttons/scale_1x.png"
-               Canvas.Left="19"
-               Canvas.Top="109"
-               Stretch="None"
-               MouseUp= "Scale1_MouseUp"
-               MouseEnter="Scale1_MouseEnter"
-               MouseLeave="Scale1_MouseLeave"
-               MouseLeftButtonDown="Scale1_MouseDown"/>
+        <Button Canvas.Left="19"
+                Canvas.Top="109"
+                Width="23"
+                Height="23"
+                Style="{StaticResource InvisibleImageButton}"
+                Click="Scale1_Click"
+                MouseEnter="Scale1_MouseEnter"
+                MouseLeave="Scale1_MouseLeave"
+                PreviewMouseLeftButtonDown="Scale1_MouseDown"
+                PreviewMouseLeftButtonUp="Scale1_MouseUp">
 
-        <Image x:Name="Scale2Image"
-               Source="/Assets/UI/Settings/Buttons/scale_2x.png"
-               Canvas.Left="49"
-               Canvas.Top="109"
-               Stretch="None"
-               MouseUp= "Scale2_MouseUp"
-               MouseEnter="Scale2_MouseEnter"
-               MouseLeave="Scale2_MouseLeave"
-               MouseLeftButtonDown="Scale2_MouseDown" />
+            <Image x:Name="Scale1Image"
+                   Width="23"
+                   Height="23"
+                   Stretch="None"
+                   IsHitTestVisible="False"/>
+        </Button>
 
-        <Image x:Name="Scale3Image"
-               Source="/Assets/UI/Settings/Buttons/scale_3x.png"
-               Canvas.Left="79"
-               Canvas.Top="109"
-               Stretch="None"
-               MouseUp= "Scale3_MouseUp"
-               MouseEnter="Scale3_MouseEnter"
-               MouseLeave="Scale3_MouseLeave"
-               MouseLeftButtonDown="Scale3_MouseDown"/>
+        <Button Canvas.Left="49"
+                Canvas.Top="109"
+                Width="23"
+                Height="23"
+                Style="{StaticResource InvisibleImageButton}"
+                Click="Scale2_Click"
+                MouseEnter="Scale2_MouseEnter"
+                MouseLeave="Scale2_MouseLeave"
+                PreviewMouseLeftButtonDown="Scale2_MouseDown"
+                PreviewMouseLeftButtonUp="Scale2_MouseUp">
+            <Image x:Name="Scale2Image"
+                   Width="23"
+                   Height="23"
+                   Stretch="None"
+                   IsHitTestVisible="False"/>
+        </Button>
 
-        <Image x:Name="Scale4Image"
-               Source="/Assets/UI/Settings/Buttons/scale_4x.png"
-               Canvas.Left="108"
-               Canvas.Top="109"
-               Stretch="None"
-               MouseUp= "Scale4_MouseUp"
-               MouseEnter="Scale4_MouseEnter"
-               MouseLeave="Scale4_MouseLeave"
-               MouseLeftButtonDown="Scale4_MouseDown"/>
+        <Button Canvas.Left="79"
+                Canvas.Top="109"
+                Width="23"
+                Height="23"
+                Style="{StaticResource InvisibleImageButton}"
+                Click="Scale3_Click"
+                MouseEnter="Scale3_MouseEnter"
+                MouseLeave="Scale3_MouseLeave"
+                PreviewMouseLeftButtonDown="Scale3_MouseDown"
+                PreviewMouseLeftButtonUp="Scale3_MouseUp">
+            <Image x:Name="Scale3Image"
+                   Width="23"
+                   Height="23"
+                   Stretch="None"
+                   IsHitTestVisible="False"/>
+        </Button>
+
+        <Button Canvas.Left="108"
+                Canvas.Top="109"
+                Width="23"
+                Height="23"
+                Style="{StaticResource InvisibleImageButton}"
+                Click="Scale4_Click"
+                MouseEnter="Scale4_MouseEnter"
+                MouseLeave="Scale4_MouseLeave"
+                PreviewMouseLeftButtonDown="Scale4_MouseDown"
+                PreviewMouseLeftButtonUp="Scale4_MouseUp">
+            <Image x:Name="Scale4Image"
+                   Width="23"
+                   Height="23"
+                   Stretch="None"
+                   IsHitTestVisible="False"/>
+        </Button>
 
         <Image x:Name="AlwaysOnTopImage"
-               Source="/Assets/UI/Settings/Buttons/toggle_off.png"
                Canvas.Left="52"
                Canvas.Top="179"
                Stretch="None"
                MouseEnter="AlwaysOnTop_MouseEnter"
                MouseLeave="AlwaysOnTop_MouseLeave"
                MouseLeftButtonDown="AlwaysOnTop_MouseDown"
-               MouseLeftButtonUp="AlwaysOnTop_MouseUp" />
+               MouseLeftButtonUp="AlwaysOnTop_MouseUp"/>
 
     </Canvas>
 </Window>

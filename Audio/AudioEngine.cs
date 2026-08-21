@@ -41,7 +41,11 @@ public sealed class AudioEngine :
             };
 
         _output =
-            new WaveOutEvent();
+            new WaveOutEvent
+            {
+                DesiredLatency = 50,
+                NumberOfBuffers = 3
+            };
 
         _output.Init(
             _mixer);
