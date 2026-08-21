@@ -1,6 +1,7 @@
 ﻿using Desktop_Creatures.Tools.Images;
 using Desktop_Creatures.Graphics;
 using Desktop_Creatures.UI.FieldGuide;
+using Desktop_Creatures.UI.Audio;
 using System.IO;
 using System.Text.Json;
 using System.Windows;
@@ -43,6 +44,8 @@ public partial class FieldGuideMenu : Window
 {
     private const string FieldGuideAssetPath =
         "Assets/UI/FieldGuide";
+
+    private readonly FieldGuideSounds _sounds = new();
 
     private readonly Action<string> _spawnCreature;
 
@@ -660,6 +663,8 @@ public partial class FieldGuideMenu : Window
 
         _isPageTurning = true;
 
+        _sounds.PlayPageFlip();
+
         SetCreaturePageVisible(false);
 
         FieldGuideTabControl controls =
@@ -734,6 +739,8 @@ public partial class FieldGuideMenu : Window
             return;
 
         _isOpening = true;
+
+        _sounds.PlayBookClose();
 
         FrontPageCanvas.Visibility =
             Visibility.Collapsed;
@@ -856,8 +863,8 @@ public partial class FieldGuideMenu : Window
     }
 
     private void ExitFieldGuide_Click(
-    object sender,
-    RoutedEventArgs e)
+        object sender,
+        RoutedEventArgs e)
     {
         Close();
     }
@@ -882,6 +889,8 @@ public partial class FieldGuideMenu : Window
         object sender,
         WpfMouseEventArgs e)
     {
+        UiSounds.PlayButtonClick();
+
         ExitButtonImage.Source =
             _exitButtonPressed;
     }
@@ -1063,6 +1072,8 @@ public partial class FieldGuideMenu : Window
 
         _isOpening = true;
 
+        _sounds.PlayBookOpen();
+
         WindowControlsCanvas.Visibility =
             Visibility.Collapsed;
 
@@ -1169,6 +1180,8 @@ public partial class FieldGuideMenu : Window
         if (_currentCreatureId is null)
             return;
 
+        //UiSounds.PlayButtonClick();
+
         _spawnCreature(_currentCreatureId);
     }
 
@@ -1190,6 +1203,8 @@ public partial class FieldGuideMenu : Window
         object sender,
         WpfMouseEventArgs e)
     {
+        UiSounds.PlayButtonClick();
+
         SpawnButtonImage.Source = _spawnButtonPressed;
     }
 
@@ -1220,6 +1235,8 @@ public partial class FieldGuideMenu : Window
         }
 
         _isPageTurning = true;
+
+        _sounds.PlayPageFlip();
 
         FrontPageCanvas.Visibility =
             Visibility.Collapsed;
@@ -1320,6 +1337,8 @@ public partial class FieldGuideMenu : Window
         }
 
         _isPageTurning = true;
+
+        _sounds.PlayPageFlip();
 
         FrontPageCanvas.Visibility =
             Visibility.Collapsed;

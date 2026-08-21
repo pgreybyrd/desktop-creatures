@@ -6,6 +6,7 @@ using Desktop_Creatures.Tools.Images;
 using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
+using Desktop_Creatures.UI.Audio;
 using PixelRecolor.Core;
 using System.Windows;
 using System.Windows.Controls;
@@ -811,7 +812,7 @@ public partial class MainWindow : Window
 
     private void Minimize_Click(object sender, RoutedEventArgs e)
     {
-        WindowState = WindowState.Minimized;
+       WindowState = WindowState.Minimized;
     }
 
     private void DragArea_MouseLeftButtonDown(
@@ -874,6 +875,8 @@ public partial class MainWindow : Window
         object sender,
         WpfMouseButtonEventArgs e)
     {
+        UiSounds.PlayButtonClick();
+
         ClearCreaturesImage.Source = _clearCreaturesImages.Pressed;
     }
     private void ClearCreatures_MouseUp(
@@ -903,6 +906,8 @@ public partial class MainWindow : Window
         object sender,
         WpfMouseButtonEventArgs e)
     {
+        UiSounds.PlayButtonClick();
+
         SettingsButtonImage.Source =
             _settingsImages.Pressed;
     }
@@ -933,6 +938,8 @@ public partial class MainWindow : Window
         object sender,
         WpfMouseButtonEventArgs e)
     {
+        UiSounds.PlayButtonClick();
+
         ExitImage.Source = _exitImages.Pressed;
     }
 
@@ -960,6 +967,8 @@ public partial class MainWindow : Window
         object sender,
         WpfMouseButtonEventArgs e)
     {
+        UiSounds.PlayButtonClick();
+
         MinimizeImage.Source = _minimizeImages.Pressed;
     }
 
@@ -988,6 +997,8 @@ public partial class MainWindow : Window
         object sender,
         WpfMouseButtonEventArgs e)
     {
+        UiSounds.PlayButtonClick();
+
         XImage.Source = _closeImages.Pressed;
     }
 
