@@ -1202,6 +1202,7 @@
     <Folder Include="Assets\Items\" />
     <Folder Include="Assets\POI\WaterDish\" />
     <Folder Include="Logs\" />
+    <Folder Include="Persistence\Migrations\Legacy\" />
     <Folder Include="Rendering\Fonts\" />
     <Folder Include="UI\Controls\" />
   </ItemGroup>

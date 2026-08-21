@@ -5,6 +5,8 @@ namespace Desktop_Creatures.Persistence;
 
 public static class CreatureSaveManager
 {
+    public const int CurrentVersion = 2;
+
     private static readonly string SaveDirectory =
         Path.Combine(
             Environment.GetFolderPath(
@@ -16,39 +18,120 @@ public static class CreatureSaveManager
             SaveDirectory,
             "creatures.json");
 
+    private static readonly JsonSerializerOptions JsonOptions =
+        new()
+        {
+            WriteIndented = true,
+            PropertyNameCaseInsensitive = true
+        };
+
     public static void Save(
-        IEnumerable<CreatureSaveData> creatures)
+        IEnumerable<CreatureRecord> creatures)
     {
         Directory.CreateDirectory(
             SaveDirectory);
 
-        var options =
-            new JsonSerializerOptions
+        var saveFile =
+            new CreatureSaveFile
             {
-                WriteIndented = true
+                Version = CurrentVersion,
+                Creatures =
+                    creatures.ToList()
             };
 
         string json =
             JsonSerializer.Serialize(
-                creatures,
-                options);
+                saveFile,
+                JsonOptions);
 
         File.WriteAllText(
             SavePath,
             json);
     }
 
-    public static List<CreatureSaveData> Load()
+    public static CreatureSaveFile Load()
     {
         if (!File.Exists(SavePath))
-            return new List<CreatureSaveData>();
+        {
+            return new CreatureSaveFile
+            {
+                Version = CurrentVersion
+            };
+        }
 
         string json =
             File.ReadAllText(
                 SavePath);
 
-        return JsonSerializer.Deserialize<
-                   List<CreatureSaveData>>(json)
-               ?? new List<CreatureSaveData>();
+        try
+        {
+            CreatureSaveFile? saveFile =
+                JsonSerializer.Deserialize<
+                    CreatureSaveFile>(
+                    json,
+                    JsonOptions);
+
+            if (saveFile is not null &&
+                saveFile.Version > 0)
+            {
+                return saveFile;
+            }
+        }
+        catch (JsonException)
+        {
+            // It may be an old v1 array.
+        }
+
+        return MigrateLegacySave(json);
+    }
+
+    private static CreatureSaveFile MigrateLegacySave(
+        string json)
+    {
+        List<CreatureSaveData>? oldCreatures =
+            JsonSerializer.Deserialize<
+                List<CreatureSaveData>>(
+                json,
+                JsonOptions);
+
+        if (oldCreatures is null)
+        {
+            return new CreatureSaveFile
+            {
+                Version = CurrentVersion
+            };
+        }
+
+        return new CreatureSaveFile
+        {
+            Version = CurrentVersion,
+
+            Creatures =
+                oldCreatures
+                    .Select(old =>
+                        new CreatureRecord
+                        {
+                            Id = old.Id,
+
+                            CreatureType =
+                                old.CreatureType,
+
+                            Name =
+                                old.Name,
+
+                            AppearanceId =
+                                old.AppearanceId,
+
+                            AppearanceTraits =
+                                old.AppearanceTraits,
+
+                            LastX =
+                                old.X,
+
+                            LastY =
+                                old.Y
+                        })
+                    .ToList()
+        };
     }
 }

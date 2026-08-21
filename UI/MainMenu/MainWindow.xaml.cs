@@ -23,11 +23,11 @@ public partial class MainWindow : Window
 {
     private readonly DispatcherTimer _timer;
 
-    //private double _x;
-    //private double _y;
-
     private bool _isDragging = false;
-    //private Point _dragOffset;
+
+    public int _moniterIndex = 0;
+
+    private Rectangle _workingArea;
 
     private AppSettings _settings = null!;
     private SettingsWindow? _settingsWindow;
@@ -38,7 +38,6 @@ public partial class MainWindow : Window
 
     private FieldGuideMenu? _fieldGuideMenu;
 
-    //private UiButtonImages _spawnRatImages = null!;
     private readonly UiButtonImages _fieldGuideImages = null!;
     private readonly UiButtonImages _clearCreaturesImages = null!;
     private readonly UiButtonImages _settingsImages = null!;
@@ -48,21 +47,18 @@ public partial class MainWindow : Window
 
     private readonly List<POIWindow> _poiWindows = new();
     private readonly List<CreatureWindow> _creatureWindows = new();
-    //private Creature _activeCreature;
 
-    public int _moniterIndex = 0;
-
-    private Rectangle _workingArea;
+    private readonly Dictionary<Guid, CreatureRecord> _creatureRecords = new();
+    private Dictionary<string, CreatureDefinition> _creatureDefinitions = new();
 
     private Dictionary<string, CreatureSettings> _creatureSettings = new();
     private Dictionary<string, PointOfInterestSettings> _pointOfInterestSettings = new();
-    private Dictionary<string, CreatureDefinition> _creatureDefinitions = new();
 
     private List<PointOfInterest> _pointsOfInterest = new();
+
     private PointOfInterestManager _pointOfInterestManager;
 
     private readonly SurfaceManager _surfaceManager = new();
-
     private readonly ZOrderManager _zOrderManager = new();
 
     private const int MaxRats = 20;
@@ -384,43 +380,52 @@ public partial class MainWindow : Window
 
     private void SaveCreatures()
     {
-        var saveData =
-            _creatureWindows
-                .Select(window =>
-                    window.GetCreature())
-                .OfType<Rat>()
-                .Select(rat =>
-                    new CreatureSaveData
-                    {
-                        Id = rat.Id,
-                        CreatureType = "rat",
-                        Name = rat.Name,
+        foreach (CreatureWindow window in
+                 _creatureWindows)
+        {
+            Creature creature =
+                window.GetCreature();
 
-                        AppearanceId =
-                            rat.AppearanceId,
+            if (!_creatureRecords.TryGetValue(
+                    creature.Id,
+                    out CreatureRecord? record))
+            {
+                continue;
+            }
 
-                        AppearanceTraits =
-                            rat.AppearanceTraits,
+            record.Name =
+                creature.Name;
 
-                        X = rat.X,
-                        Y = rat.Y
-                    })
-                .ToList();
+            record.LastX =
+                creature.X;
+
+            record.LastY =
+                creature.Y;
+
+            // Expose appearance from Creature
+            // cleanly in the next step.
+        }
 
         CreatureSaveManager.Save(
-            saveData);
+            _creatureRecords.Values);
     }
 
     private void LoadSavedCreatures()
     {
-        var savedCreatures =
+        CreatureSaveFile saveFile =
             CreatureSaveManager.Load();
 
-        foreach (var saveData in savedCreatures)
+        _creatureRecords.Clear();
+
+        foreach (CreatureRecord record in
+                 saveFile.Creatures)
         {
+            _creatureRecords[record.Id] =
+                record;
+
             SpawnCreature(
-                saveData.CreatureType,
-                saveData);
+                record.CreatureType,
+                record);
         }
     }
 
@@ -464,7 +469,7 @@ public partial class MainWindow : Window
 
     private void SpawnCreature(
         string creatureId,
-        CreatureSaveData? saveData = null)
+        CreatureRecord? record = null)
     {
         var services =
             new CreatureServices
@@ -494,7 +499,7 @@ public partial class MainWindow : Window
             CreateSpawnContext(
                 definition,
                 settings,
-                saveData);
+                record);
 
         Creature creature =
             CreatureFactory.Create(
@@ -539,24 +544,25 @@ public partial class MainWindow : Window
     private CreatureSpawnContext CreateSpawnContext(
         CreatureDefinition definition,
         CreatureSettings settings,
-        CreatureSaveData? saveData)
+        CreatureRecord? record)
     {
-        if (saveData is not null)
+        if (record is not null)
         {
             return new CreatureSpawnContext
             {
-                X = saveData.X,
-                Y = saveData.Y,
-                Id = saveData.Id,
-                Name = saveData.Name,
+                X = record.LastX,
+                Y = record.LastY,
+
+                Id = record.Id,
+                Name = record.Name,
 
                 AppearanceTraits =
-                    saveData.AppearanceId is null
-                        ? saveData.AppearanceTraits
+                    record.AppearanceId is null
+                        ? record.AppearanceTraits
                         : null,
 
                 AppearanceId =
-                    saveData.AppearanceId
+                    record.AppearanceId
             };
         }
 
