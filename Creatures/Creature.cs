@@ -1,13 +1,15 @@
-using Desktop_Creatures.Tools.Images;
+using Desktop_Creatures.Audio;
 using Desktop_Creatures.Behaviors;
 using Desktop_Creatures.Config;
+using Desktop_Creatures.Graphics.Animation;
 using Desktop_Creatures.Needs;
 using Desktop_Creatures.Personality;
+using Desktop_Creatures.Tools.Images;
 using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
+using PixelRecolor.Core;
 using System.Windows.Media.Imaging;
-using Desktop_Creatures.Audio;
 using Point = System.Windows.Point;
 
 namespace Desktop_Creatures.Creatures;
@@ -33,8 +35,11 @@ public enum CreatureAction
 public abstract class Creature
 {
     public Guid Id { get; }
-
     public string Name { get; protected set; }
+    public CreatureAppearance? Appearance { get; protected set; }
+    public string? AppearanceId { get; protected set; }
+    public CreatureAppearanceTraits? AppearanceTraits =>
+        Appearance?.Traits;
 
     protected readonly Random Random = new();
 
@@ -108,22 +113,18 @@ public abstract class Creature
         Settings.Eat
         ?? throw new InvalidOperationException(
             "Creature requires EatSettings.");
-
     protected WalkSettings Walk =>
         Settings.Walk
         ?? throw new InvalidOperationException(
             "Creature requires WalkSettings.");
-
     protected IdleSettings Idle =>
         Settings.Idle
         ?? throw new InvalidOperationException(
             "Creature requires IdleSettings.");
-
     protected RunSettings Run =>
         Settings.Run
         ?? throw new InvalidOperationException(
             "Creature requires RunSettings.");
-
     protected FallSettings Fall =>
         Settings.Fall
         ?? throw new InvalidOperationException(
@@ -156,6 +157,101 @@ public abstract class Creature
         SurfaceManager = surfaceManager;
 
         ConfigureDefaultBehaviors();
+    }
+
+    protected void InitializeGeneratedAppearance(
+        CreatureDefinition definition,
+        CreatureAppearanceTraits? appearanceTraits = null,
+        string? appearanceId = null)
+    {
+        CreatureAppearanceTraits selectedTraits;
+
+        AppearanceId =
+            appearanceId;
+
+        if (appearanceId is not null)
+        {
+            selectedTraits =
+                CreatureAppearanceFactory.LoadTraits(
+                    definition,
+                    appearanceId);
+        }
+        else if (appearanceTraits is not null)
+        {
+            selectedTraits =
+                appearanceTraits;
+        }
+        else
+        {
+            selectedTraits =
+                CreateRandomAppearanceTraits(
+                    definition);
+        }
+
+        Appearance =
+            CreatureAppearanceFactory.Create(
+                definition,
+                selectedTraits);
+
+        LoadAppearanceAnimations(
+            definition,
+            Appearance);
+    }
+
+    protected virtual CreatureAppearanceTraits
+        CreateRandomAppearanceTraits(
+            CreatureDefinition definition)
+    {
+        string? palette =
+            definition.Palettes.Length > 0
+                ? definition.Palettes[
+                    Random.Next(
+                        definition.Palettes.Length)]
+                : null;
+
+        return new CreatureAppearanceTraits(
+            Palette: palette,
+            Patterns: [],
+            Accessories: [],
+            Effects: []);
+    }
+
+    protected void InitializeCreatureAssets(
+        CreatureDefinition definition,
+        CreatureAppearanceTraits? appearanceTraits = null,
+        string? appearanceId = null)
+    {
+        if (definition.UsesGeneratedAppearance)
+        {
+            InitializeGeneratedAppearance(
+                definition,
+                appearanceTraits,
+                appearanceId);
+
+            return;
+        }
+
+        LoadAssets(
+            definition.AssetFolder);
+    }
+
+    private void LoadAppearanceAnimations(
+        CreatureDefinition definition,
+        CreatureAppearance appearance)
+    {
+        var sheet =
+            SpriteSheetLoader.Load(
+                appearance.SpriteSheet,
+                $"{definition.AssetFolder}/Appearance/{definition.Id}.json");
+
+        foreach (var animation in
+                 sheet.Animations)
+        {
+            OverrideAnimation(
+                animation.Key,
+                animation.Value.Frames.Select(
+                    frame => frame.Image));
+        }
     }
 
     private void ConfigureDefaultBehaviors()

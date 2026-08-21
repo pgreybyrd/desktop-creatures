@@ -402,8 +402,11 @@ public partial class MainWindow : Window
             record.LastY =
                 creature.Y;
 
-            // Expose appearance from Creature
-            // cleanly in the next step.
+            record.AppearanceId =
+                creature.AppearanceId;
+
+            record.AppearanceTraits =
+                creature.AppearanceTraits;
         }
 
         CreatureSaveManager.Save(

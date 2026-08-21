@@ -8,8 +8,6 @@ using Desktop_Creatures.Utilities;
 
 namespace Desktop_Creatures.Creatures
 {
-
-
     public class Eagle : Creature
     {
         private readonly Random _random = new();
@@ -20,7 +18,6 @@ namespace Desktop_Creatures.Creatures
             Perching,
             Sleeping
         }
-        public CreatureAppearance Appearance { get; }
 
         private DestinationType _targetType;
 
@@ -43,7 +40,6 @@ namespace Desktop_Creatures.Creatures
         Settings.Flight
         ?? throw new InvalidOperationException(
             "Eagle requires FlightSettings.");
-
         private PerchSettings Perch =>
             Settings.Perch
             ?? throw new InvalidOperationException(
@@ -56,11 +52,15 @@ namespace Desktop_Creatures.Creatures
             CreatureSettings settings,
             PointOfInterestManager pointOfInterestManager,
             IReadOnlyList<Rectangle> workingAreas,
-            SurfaceManager surfaceManager)
+            SurfaceManager surfaceManager,
+            Guid? id = null,
+            string? name = null)
             : base(
                 settings,
                 pointOfInterestManager,
-                surfaceManager)
+                surfaceManager,
+                id,
+                name)
         {
             _settings = settings;
             _workingAreas = workingAreas;

@@ -10,20 +10,6 @@ namespace Desktop_Creatures.Creatures
 {
     public class Rat : Creature
     {
-        private static readonly string[] Palettes =
-        [
-            "chocolate",
-            "grey",
-            "albino",
-            "black",
-            "cinnamon"
-        ];
-
-        public CreatureAppearance Appearance { get; }
-        public string? AppearanceId { get; }
-        public CreatureAppearanceTraits AppearanceTraits =>
-            Appearance.Traits;
-
         public override Point PickupAnchor =>
             new(33, 11);
 
@@ -45,44 +31,10 @@ namespace Desktop_Creatures.Creatures
                 id,
                 name)
         {
-            CreatureAppearanceTraits selectedTraits;
-
-            AppearanceId = appearanceId;
-
-            if (appearanceId is not null)
-            {
-                selectedTraits =
-                    CreatureAppearanceFactory.LoadTraits(
-                        definition,
-                        appearanceId);
-            }
-            else if (appearanceTraits is not null)
-            {
-                selectedTraits = appearanceTraits;
-            }
-            else
-            {
-                selectedTraits =
-                    CreateRandomAppearanceTraits();
-            }
-
-            Appearance =
-                CreatureAppearanceFactory.Create(
-                    definition,
-                    selectedTraits);
-
-            var sheet = 
-                SpriteSheetLoader.Load(
-                Appearance.SpriteSheet,
-                $"{definition.AssetFolder}/Appearance/{definition.Id}.json");
-
-            foreach (var animation in sheet.Animations)
-            {
-                OverrideAnimation(
-                    animation.Key,
-                    animation.Value.Frames.Select(
-                        frame => frame.Image));
-            }
+            InitializeCreatureAssets(
+                definition,
+                appearanceTraits,
+                appearanceId);
 
             var soundSet =
                 new SoundSet();
@@ -113,8 +65,7 @@ namespace Desktop_Creatures.Creatures
                 "Assets/Creatures/Rat/Sounds/squeak_09.wav",
                 "Assets/Creatures/Rat/Sounds/squeak_10.wav");
 
-            SetSoundSet(
-                soundSet);
+            SetSoundSet(soundSet);
 
             InitializeGroundCreature(
                 x,
@@ -122,18 +73,6 @@ namespace Desktop_Creatures.Creatures
 
             PlaySound(
                 CreatureSoundEvent.Spawn);
-        }
-
-        private CreatureAppearanceTraits CreateRandomAppearanceTraits()
-        {
-            string palette =
-                Palettes[Random.Next(Palettes.Length)];
-
-            return new CreatureAppearanceTraits(
-                Palette: palette,
-                Patterns: [],
-                Accessories: [],
-                Effects: []);
         }
 
         public override void OnPickedUp()

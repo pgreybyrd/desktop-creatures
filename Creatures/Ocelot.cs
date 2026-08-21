@@ -10,11 +10,6 @@ namespace Desktop_Creatures.Creatures
 {
     public class Ocelot : Creature
     {
-        public CreatureAppearance Appearance { get; }
-        public string? AppearanceId { get; }
-        public CreatureAppearanceTraits AppearanceTraits =>
-            Appearance.Traits;
-
         public override Point PickupAnchor =>
             new(33, 11);
 
@@ -36,58 +31,14 @@ namespace Desktop_Creatures.Creatures
                 id,
                 name)
         {
-            CreatureAppearanceTraits selectedTraits;
-
-            AppearanceId = appearanceId;
-
-            if (appearanceId is not null)
-            {
-                selectedTraits =
-                    CreatureAppearanceFactory.LoadTraits(
-                        definition,
-                        appearanceId);
-            }
-            else if (appearanceTraits is not null)
-            {
-                selectedTraits = appearanceTraits;
-            }
-            else
-            {
-                selectedTraits =
-                    CreateRandomAppearanceTraits();
-            }
-
-            Appearance =
-                CreatureAppearanceFactory.Create(
-                    definition,
-                    selectedTraits);
-
-            var sheet = 
-                SpriteSheetLoader.Load(
-                Appearance.SpriteSheet,
-                $"{definition.AssetFolder}/Appearance/{definition.Id}.json");
-
-            foreach (var animation in sheet.Animations)
-            {
-                OverrideAnimation(
-                    animation.Key,
-                    animation.Value.Frames.Select(
-                        frame => frame.Image));
-            }
+            InitializeCreatureAssets(
+                definition,
+                appearanceTraits,
+                appearanceId);
 
             InitializeGroundCreature(
                 x,
                 y);
-
-        }
-
-        private CreatureAppearanceTraits CreateRandomAppearanceTraits()
-        {
-            return new CreatureAppearanceTraits(
-                Palette: null,
-                Patterns: [],
-                Accessories: [],
-                Effects: []);
         }
 
         public override void OnPickedUp()

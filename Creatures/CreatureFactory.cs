@@ -36,7 +36,9 @@ public static class CreatureFactory
                     settings,
                     services.PointOfInterestManager,
                     services.MonitorWorkingAreas,
-                    services.SurfaceManager),
+                    services.SurfaceManager,
+                    id: context.Id,
+                    name: context.Name),
 
             "ocelot" =>
                 new Ocelot(
