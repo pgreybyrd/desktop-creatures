@@ -4,8 +4,11 @@ using Desktop_Creatures.Tools.Images;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using WpfMouseEventArgs = System.Windows.Input.MouseEventArgs;
+using WpfMouseButtonState = System.Windows.Input.MouseButtonState;
+using WpfMouseButtonEventArgs = System.Windows.Input.MouseButtonEventArgs;
 
 namespace Desktop_Creatures.UI.CreatureRoster
 {
@@ -19,6 +22,8 @@ namespace Desktop_Creatures.UI.CreatureRoster
         private readonly Action<Guid, bool> _setFavorite;
 
         private int _currentIndex;
+
+        private readonly int _uiScale;
 
         private readonly BitmapSource _buttonNormal;
         private readonly BitmapSource _buttonHover;
@@ -44,6 +49,7 @@ namespace Desktop_Creatures.UI.CreatureRoster
 
         public CreatureRosterWindow(
             IReadOnlyList<CreatureRecord> records,
+            int uiScale,
             Func<Guid, bool> isSpawned,
             Action<Guid> spawn,
             Action<Guid> putAway,
@@ -51,6 +57,7 @@ namespace Desktop_Creatures.UI.CreatureRoster
         {
             InitializeComponent();
 
+            _uiScale = uiScale;
             _records = records;
             _isSpawned = isSpawned;
             _spawn = spawn;
@@ -60,6 +67,19 @@ namespace Desktop_Creatures.UI.CreatureRoster
             RosterBaseImage.Source =
                 AssetImageLoader.Load(
                     "Assets/UI/CreatureRoster/roster_base.png");
+
+            RosterCanvas.LayoutTransform =
+                new ScaleTransform(
+                    _uiScale,
+                    _uiScale);
+
+            Width =
+                RosterCanvas.Width *
+                _uiScale;
+
+            Height =
+                RosterCanvas.Height *
+                _uiScale;
 
             _buttonNormal =
                 AssetImageLoader.Load(
@@ -406,17 +426,24 @@ namespace Desktop_Creatures.UI.CreatureRoster
 
         private void UpdateScrollThumb()
         {
+            const double trackTop = 51;
+            const double trackBottom = 142;
+
             if (_records.Count <= 1)
             {
                 Canvas.SetTop(
                     ScrollThumb,
-                    43);
+                    trackTop);
 
                 return;
             }
 
-            const double trackTop = 43;
-            const double trackBottom = 103;
+            double thumbHeight =
+                ScrollThumb.ActualHeight;
+
+            double usableBottom =
+                trackBottom -
+                thumbHeight;
 
             double progress =
                 (double)_currentIndex /
@@ -424,12 +451,22 @@ namespace Desktop_Creatures.UI.CreatureRoster
 
             double top =
                 trackTop +
-                ((trackBottom - trackTop) *
+                ((usableBottom - trackTop) *
                  progress);
 
             Canvas.SetTop(
                 ScrollThumb,
                 top);
+        }
+
+        private void DragArea_MouseLeftButtonDown(
+            object sender,
+            WpfMouseButtonEventArgs e)
+        {
+            if (e.ButtonState != WpfMouseButtonState.Pressed)
+                return;
+
+            DragMove();
         }
     }
 }

@@ -651,6 +651,7 @@ public partial class MainWindow : Window
         _creatureRosterWindow =
             new CreatureRosterWindow(
                 _creatureRecords.Values.ToList(),
+                _uiScale,
                 IsCreatureSpawned,
                 SpawnCreatureRecord,
                 PutAwayCreature,

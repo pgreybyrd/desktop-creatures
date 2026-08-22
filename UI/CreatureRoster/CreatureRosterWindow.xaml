@@ -1,88 +1,110 @@
 ﻿<Window x:Class="Desktop_Creatures.UI.CreatureRoster.CreatureRosterWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        
         Title="Creature Roster"
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"
+        
         ResizeMode="NoResize"
         ShowInTaskbar="False"
-        SizeToContent="WidthAndHeight">
+        SizeToContent="WidthAndHeight"
+
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="True"
+        RenderOptions.BitmapScalingMode="NearestNeighbor">
 
     <Canvas x:Name="RosterCanvas"
-            Width="118"
-            Height="130">
+            Width="112"
+            Height="163">
 
         <Image x:Name="RosterBaseImage"
+               Source="/Assets/UI/CreatureRoster/roster_base.png"
                Canvas.Left="0"
                Canvas.Top="0"
                Stretch="None"/>
 
+        <Border
+            Canvas.Top="0"
+            Width="112"
+            Height="36"
+            Background="Transparent"
+            MouseLeftButtonDown="DragArea_MouseLeftButtonDown" />
+
         <!-- portrait goes here later -->
         <Image x:Name="PortraitImage"
-               Canvas.Left="20"
-               Canvas.Top="18"
-               Width="59"
-               Height="42"
-               Stretch="Uniform"/>
+               Canvas.Left="21"
+               Canvas.Top="30"
+               Width="49"
+               Height="32"
+               Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
         <TextBlock x:Name="NameText"
-                   Canvas.Left="26"
-                   Canvas.Top="64"
-                   Width="51"
+                   Canvas.Left="22"
+                   Canvas.Top="86"
+                   Width="47"
                    TextAlignment="Center"
                    FontSize="7"/>
 
         <TextBlock x:Name="SpeciesText"
-                   Canvas.Left="26"
-                   Canvas.Top="76"
-                   Width="51"
+                   Canvas.Left="22"
+                   Canvas.Top="98"
+                   Width="47"
                    TextAlignment="Center"
-                   FontSize="5"/>
+                   FontSize="5" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
         <!-- Favorite -->
         <Image x:Name="FavoriteImage"
-               Canvas.Left="83"
-               Canvas.Top="17"
+               Canvas.Left="77"
+               Canvas.Top="43"
+               Width="7"
+               Height="6"
                Stretch="None"
-               MouseLeftButtonDown="Favorite_MouseLeftButtonDown"/>
+               MouseLeftButtonDown="Favorite_MouseLeftButtonDown" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
         <!-- Main Spawn / Put Away button -->
         <Image x:Name="ActionButtonImage"
-               Canvas.Left="24"
-               Canvas.Top="87"
+               Canvas.Left="21"
+               Canvas.Top="107"
+               Width="49"
+               Height="21"
                Stretch="None"
                MouseEnter="ActionButton_MouseEnter"
                MouseLeave="ActionButton_MouseLeave"
                MouseLeftButtonDown="ActionButton_MouseLeftButtonDown"
-               MouseLeftButtonUp="ActionButton_MouseLeftButtonUp"/>
+               MouseLeftButtonUp="ActionButton_MouseLeftButtonUp" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
         <Image x:Name="ActionTextImage"
-               Canvas.Left="24"
-               Canvas.Top="87"
+               Canvas.Left="21"
+               Canvas.Top="107"
                IsHitTestVisible="False"
                Stretch="None"/>
 
         <!-- Rename -->
         <Image x:Name="RenameButtonImage"
-               Canvas.Left="24"
-               Canvas.Top="106"
+               Canvas.Left="21"
+               Canvas.Top="131"
+               Width="49"
+               Height="21"
                Stretch="None"
                MouseEnter="RenameButton_MouseEnter"
                MouseLeave="RenameButton_MouseLeave"
                MouseLeftButtonDown="RenameButton_MouseLeftButtonDown"
-               MouseLeftButtonUp="RenameButton_MouseLeftButtonUp"/>
+               MouseLeftButtonUp="RenameButton_MouseLeftButtonUp" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
         <Image x:Name="RenameTextImage"
-               Canvas.Left="24"
-               Canvas.Top="106"
+               Canvas.Left="21"
+               Canvas.Top="131"
                IsHitTestVisible="False"
                Stretch="None"/>
 
         <!-- Scroll controls -->
         <Image x:Name="ArrowUpImage"
-               Canvas.Left="94"
-               Canvas.Top="17"
+               Canvas.Left="88"
+               Canvas.Top="42"
+               Width="9"
+               Height="9"
                Stretch="None"
                MouseEnter="ArrowUp_MouseEnter"
                MouseLeave="ArrowUp_MouseLeave"
@@ -90,18 +112,20 @@
                MouseLeftButtonUp="ArrowUp_MouseLeftButtonUp"/>
 
         <Image x:Name="ArrowDownImage"
-               Canvas.Left="94"
-               Canvas.Top="111"
+               Canvas.Left="88"
+               Canvas.Top="142"
+               Width="9"
+               Height="9"
                Stretch="None"
                MouseEnter="ArrowDown_MouseEnter"
                MouseLeave="ArrowDown_MouseLeave"
                MouseLeftButtonDown="ArrowDown_MouseLeftButtonDown"
-               MouseLeftButtonUp="ArrowDown_MouseLeftButtonUp"/>
+               MouseLeftButtonUp="ArrowDown_MouseLeftButtonUp" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
         <!-- temporary scrollbar thumb; we'll make this truly proportional next -->
         <StackPanel x:Name="ScrollThumb"
-                    Canvas.Left="96"
-                    Canvas.Top="43">
+                    Canvas.Left="88"
+                    Canvas.Top="51">
             <Image x:Name="ScrollThumbTop"
                    Stretch="None"/>
             <Image x:Name="ScrollThumbMiddle"
