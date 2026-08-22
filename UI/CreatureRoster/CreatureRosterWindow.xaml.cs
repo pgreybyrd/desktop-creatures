@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Image = System.Windows.Controls.Image;
 using WpfMouseEventArgs = System.Windows.Input.MouseEventArgs;
 using WpfMouseButtonState = System.Windows.Input.MouseButtonState;
 using WpfMouseButtonEventArgs = System.Windows.Input.MouseButtonEventArgs;
@@ -14,8 +15,6 @@ namespace Desktop_Creatures.UI.CreatureRoster
 {
     public partial class CreatureRosterWindow : Window
     {
-        private readonly IReadOnlyList<CreatureRecord> _records;
-
         private readonly Func<Guid, bool> _isSpawned;
         private readonly Action<Guid> _spawn;
         private readonly Action<Guid> _putAway;
@@ -44,11 +43,19 @@ namespace Desktop_Creatures.UI.CreatureRoster
         private readonly BitmapSource _arrowDownHover;
         private readonly BitmapSource _arrowDownPressed;
 
+        private readonly BitmapSource _scrollThumbMiddle;
+
+        private readonly Func<IReadOnlyList<CreatureRecord>> _recordsProvider;
+
+        private IReadOnlyList<CreatureRecord>
+            Records =>
+                _recordsProvider();
+
         private CreatureRecord CurrentRecord =>
-            _records[_currentIndex];
+            Records[_currentIndex];
 
         public CreatureRosterWindow(
-            IReadOnlyList<CreatureRecord> records,
+            Func<IReadOnlyList<CreatureRecord>> recordsProvider,
             int uiScale,
             Func<Guid, bool> isSpawned,
             Action<Guid> spawn,
@@ -58,11 +65,11 @@ namespace Desktop_Creatures.UI.CreatureRoster
             InitializeComponent();
 
             _uiScale = uiScale;
-            _records = records;
             _isSpawned = isSpawned;
             _spawn = spawn;
             _putAway = putAway;
             _setFavorite = setFavorite;
+            _recordsProvider = recordsProvider;
 
             RosterBaseImage.Source =
                 AssetImageLoader.Load(
@@ -141,7 +148,7 @@ namespace Desktop_Creatures.UI.CreatureRoster
                 AssetImageLoader.Load(
                     "Assets/UI/CreatureRoster/scroll_thumb-top.png");
 
-            ScrollThumbMiddle.Source =
+            _scrollThumbMiddle =
                 AssetImageLoader.Load(
                     "Assets/UI/CreatureRoster/scroll_thumb-middle.png");
 
@@ -155,7 +162,7 @@ namespace Desktop_Creatures.UI.CreatureRoster
             MouseWheel +=
                 CreatureRosterWindow_MouseWheel;
 
-            if (_records.Count > 0)
+            if (Records.Count > 0)
             {
                 RefreshCreature();
             }
@@ -163,11 +170,20 @@ namespace Desktop_Creatures.UI.CreatureRoster
 
         private void RefreshCreature()
         {
-            if (_records.Count == 0)
+            IReadOnlyList<CreatureRecord> records =
+                Records;
+
+            if (records.Count == 0)
                 return;
 
+            _currentIndex =
+                Math.Clamp(
+                    _currentIndex,
+                    0,
+                    records.Count - 1);
+
             CreatureRecord record =
-                CurrentRecord;
+                records[_currentIndex];
 
             NameText.Text =
                 string.IsNullOrWhiteSpace(record.Name)
@@ -203,6 +219,11 @@ namespace Desktop_Creatures.UI.CreatureRoster
                 _arrowDownNormal;
 
             UpdateScrollThumb();
+        }
+
+        public void Refresh()
+        {
+            RefreshCreature();
         }
 
         private void ToggleSpawnState()
@@ -398,7 +419,10 @@ namespace Desktop_Creatures.UI.CreatureRoster
 
         private void MovePrevious()
         {
-            if (_records.Count <= 1)
+            IReadOnlyList<CreatureRecord> records =
+                Records;
+
+            if (records.Count <= 1)
                 return;
 
             _currentIndex--;
@@ -406,7 +430,7 @@ namespace Desktop_Creatures.UI.CreatureRoster
             if (_currentIndex < 0)
             {
                 _currentIndex =
-                    _records.Count - 1;
+                    records.Count - 1;
             }
 
             RefreshCreature();
@@ -414,49 +438,101 @@ namespace Desktop_Creatures.UI.CreatureRoster
 
         private void MoveNext()
         {
-            if (_records.Count <= 1)
+            IReadOnlyList<CreatureRecord> records =
+                Records;
+
+            if (records.Count <= 1)
                 return;
 
             _currentIndex =
                 (_currentIndex + 1) %
-                _records.Count;
+                records.Count;
 
             RefreshCreature();
         }
 
         private void UpdateScrollThumb()
         {
+            IReadOnlyList<CreatureRecord> records =
+                Records;
+
             const double trackTop = 51;
             const double trackBottom = 142;
 
-            if (_records.Count <= 1)
-            {
-                Canvas.SetTop(
-                    ScrollThumb,
-                    trackTop);
+            double trackHeight =
+                trackBottom -
+                trackTop;
 
+            if (records.Count == 0)
                 return;
+
+            double topHeight =
+                ((BitmapSource)ScrollThumbTop.Source)
+                    .PixelHeight;
+
+            double bottomHeight =
+                ((BitmapSource)ScrollThumbBottom.Source)
+                    .PixelHeight;
+
+            double middlePieceHeight =
+                _scrollThumbMiddle.PixelHeight;
+
+            double desiredThumbHeight =
+                Math.Clamp(
+                    trackHeight / records.Count,
+                    topHeight + bottomHeight,
+                    trackHeight);
+
+            double availableMiddleHeight =
+                desiredThumbHeight -
+                topHeight -
+                bottomHeight;
+
+            int middleCount =
+                Math.Max(
+                    0,
+                    (int)Math.Floor(
+                        availableMiddleHeight /
+                        middlePieceHeight));
+
+            ScrollThumbMiddleContainer
+                .Children
+                .Clear();
+
+            for (int i = 0;
+                 i < middleCount;
+                 i++)
+            {
+                ScrollThumbMiddleContainer
+                    .Children
+                    .Add(
+                        new Image
+                        {
+                            Source = _scrollThumbMiddle,
+                            Stretch = Stretch.None
+                        });
             }
 
-            double thumbHeight =
-                ScrollThumb.ActualHeight;
+            double actualThumbHeight =
+                topHeight +
+                bottomHeight +
+                (middleCount *
+                 middlePieceHeight);
 
-            double usableBottom =
-                trackBottom -
-                thumbHeight;
+            double usableTravel =
+                trackHeight -
+                actualThumbHeight;
 
             double progress =
-                (double)_currentIndex /
-                (_records.Count - 1);
-
-            double top =
-                trackTop +
-                ((usableBottom - trackTop) *
-                 progress);
+                records.Count <= 1
+                    ? 0
+                    : (double)_currentIndex /
+                      (records.Count - 1);
 
             Canvas.SetTop(
                 ScrollThumb,
-                top);
+                trackTop +
+                (usableTravel * progress));
         }
 
         private void DragArea_MouseLeftButtonDown(

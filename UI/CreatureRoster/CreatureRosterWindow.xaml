@@ -1,6 +1,7 @@
 ﻿<Window x:Class="Desktop_Creatures.UI.CreatureRoster.CreatureRosterWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:bitmapFonts="clr-namespace:WpfBitmapFonts.Core.Controls;assembly=WpfBitmapFonts.Core"
         
         Title="Creature Roster"
         WindowStyle="None"
@@ -40,19 +41,31 @@
                Height="32"
                Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
-        <TextBlock x:Name="NameText"
-                   Canvas.Left="22"
-                   Canvas.Top="86"
-                   Width="47"
-                   TextAlignment="Center"
-                   FontSize="7"/>
+        <Grid Canvas.Left="22"
+              Canvas.Top="87"
+              Width="48"
+              Height="9">
 
-        <TextBlock x:Name="SpeciesText"
-                   Canvas.Left="22"
-                   Canvas.Top="98"
-                   Width="47"
-                   TextAlignment="Center"
-                   FontSize="5" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <bitmapFonts:BitmapText
+                x:Name="NameText"
+                Foreground="#3A2C22"
+                LineSpacing="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"/>
+        </Grid>
+
+        <Grid Canvas.Left="22"
+              Canvas.Top="97"
+              Width="47"
+              Height="7">
+
+            <bitmapFonts:BitmapText
+                x:Name="SpeciesText"
+                Foreground="#3A2C22"
+                LineSpacing="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"/>
+        </Grid>
 
         <!-- Favorite -->
         <Image x:Name="FavoriteImage"
@@ -122,16 +135,17 @@
                MouseLeftButtonDown="ArrowDown_MouseLeftButtonDown"
                MouseLeftButtonUp="ArrowDown_MouseLeftButtonUp" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
-        <!-- temporary scrollbar thumb; we'll make this truly proportional next -->
         <StackPanel x:Name="ScrollThumb"
-                    Canvas.Left="88"
-                    Canvas.Top="51">
+            Canvas.Left="88"
+            Canvas.Top="51">
+
             <Image x:Name="ScrollThumbTop"
-                   Stretch="None"/>
-            <Image x:Name="ScrollThumbMiddle"
-                   Stretch="None"/>
+           Stretch="None"/>
+
+            <StackPanel x:Name="ScrollThumbMiddleContainer"/>
+
             <Image x:Name="ScrollThumbBottom"
-                   Stretch="None"/>
+           Stretch="None"/>
         </StackPanel>
     </Canvas>
 </Window>

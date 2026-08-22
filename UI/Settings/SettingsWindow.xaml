@@ -59,7 +59,7 @@
             Background="Transparent"
             MouseLeftButtonDown="DragArea_MouseLeftButtonDown" />
 
-        <!-- Actual 147x189 settings panel -->
+        <!-- Actual 151x191 settings panel -->
         <Image x:Name="SettingsBackgroundImage"
                Width="151"
                Height="191"

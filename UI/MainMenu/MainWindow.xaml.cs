@@ -174,6 +174,15 @@ public partial class MainWindow : Window
             _settingsWindow.Left += deltaX;
             _settingsWindow.Top += deltaY;
         }
+
+        if (_creatureRosterWindow is not null)
+        {
+            _creatureRosterWindow.Left +=
+                deltaX;
+
+            _creatureRosterWindow.Top +=
+                deltaY;
+        }
     }
 
     private void CreateFoodBowl()
@@ -456,6 +465,15 @@ public partial class MainWindow : Window
                 SpawnCreature(creatureId),
             _uiScale);
 
+        _fieldGuideMenu.Left =
+            Left +
+            ((Width -
+              _fieldGuideMenu.Width) / 2.0);
+
+        _fieldGuideMenu.Top =
+            Top +
+            (20 * _uiScale);
+
         _fieldGuideMenu.Closed += (_, _) =>
         {
             _surfaceManager.RemoveAppSurface(
@@ -538,6 +556,8 @@ public partial class MainWindow : Window
                 record;
 
             SaveCreatureRecords();
+
+            _creatureRosterWindow?.Refresh();
         }
 
         var creatureWindow =
@@ -621,6 +641,8 @@ public partial class MainWindow : Window
         creatureWindow.Close();
 
         SaveCreatureRecords();
+
+        _creatureRosterWindow?.Refresh();
     }
 
     private void SetCreatureFavorite(
@@ -650,12 +672,21 @@ public partial class MainWindow : Window
 
         _creatureRosterWindow =
             new CreatureRosterWindow(
-                _creatureRecords.Values.ToList(),
+                () => _creatureRecords.Values.ToList(),
                 _uiScale,
                 IsCreatureSpawned,
                 SpawnCreatureRecord,
                 PutAwayCreature,
                 SetCreatureFavorite);
+
+        _creatureRosterWindow.Left =
+            Left +
+            Width +
+            (8 * _uiScale);
+
+        _creatureRosterWindow.Top =
+            Top +
+            (42 * _uiScale);
 
         _creatureRosterWindow.Closed +=
             (_, _) =>
@@ -904,10 +935,13 @@ public partial class MainWindow : Window
             OnMenusAlwaysOnTopChanged;
 
         _settingsWindow.Left =
-            Left + (108 * _uiScale);
+            Left -
+            _settingsWindow.Width -
+            (8 * _uiScale);
 
         _settingsWindow.Top =
-            Top + (12 * _uiScale);
+            Top +
+            (12 * _uiScale);
 
         _settingsWindow.Closed += (_, _) =>
         {
