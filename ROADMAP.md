@@ -37,7 +37,7 @@ These are the immediate priorities. Finish these in order unless a genuinely blo
 - [ ] Separate persistent creature records from runtime `CreatureWindow` instances
 - [ ] Save all supported creature types, not only rats
 - [ ] Load persistent creatures safely on startup
-- [ ] Define clear actions: Spawn, Despawn, Put Away, Save, Favorite
+- [ ] Define clear actions: Spawn, Delete, Put Away, Save, Favorite
 - [ ] Handle missing / invalid save data gracefully
 - [ ] Prepare save format for future friendship, home, breeding, and progression data
 
@@ -58,10 +58,10 @@ A central window for managing individual creatures.
 
 ## 4. Creature Context Menu
 
-Initial menu exists with individual despawn support.
+Initial menu exists with individual "put away" support.
 
 - [x] Right-click creature
-- [x] Despawn individual creature
+- [x] Put Away individual creature
 - [x] Context-menu artwork designed
 
 ### Near-term additions

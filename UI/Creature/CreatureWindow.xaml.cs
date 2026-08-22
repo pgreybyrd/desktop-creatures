@@ -18,7 +18,7 @@ public partial class CreatureWindow : Window
 
     public Creature GetCreature() => _creature;
 
-    public event Action<CreatureWindow>? DespawnRequested;
+    public event Action<CreatureWindow>? PutAwayRequested;
 
     public CreatureWindow(
         Creature creature,
@@ -74,17 +74,17 @@ public partial class CreatureWindow : Window
     {
         var menu = new ContextMenu();
 
-        var despawnItem = new MenuItem
+        var putAwayItem = new MenuItem
         {
-            Header = "Despawn"
+            Header = "Put Away"
         };
 
-        despawnItem.Click += (_, _) =>
+        putAwayItem.Click += (_, _) =>
         {
-            DespawnRequested?.Invoke(this);
+            PutAwayRequested?.Invoke(this);
         };
 
-        menu.Items.Add(despawnItem);
+        menu.Items.Add(putAwayItem);
 
         return menu;
     }

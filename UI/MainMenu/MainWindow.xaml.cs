@@ -39,7 +39,7 @@ public partial class MainWindow : Window
     private FieldGuideMenu? _fieldGuideMenu;
 
     private readonly UiButtonImages _fieldGuideImages = null!;
-    private readonly UiButtonImages _clearCreaturesImages = null!;
+    private readonly UiButtonImages _clearDesktopImages = null!;
     private readonly UiButtonImages _settingsImages = null!;
     private readonly UiButtonImages _exitImages = null!;
     private readonly UiButtonImages _minimizeImages = null!;
@@ -101,14 +101,14 @@ public partial class MainWindow : Window
                 "Assets/UI/MainMenu/version.png");
 
         _fieldGuideImages = LoadButtonImages("field_guide");
-        _clearCreaturesImages = LoadButtonImages("clear_creatures");
+        _clearDesktopImages = LoadButtonImages("clear_desktop");
         _settingsImages = LoadButtonImages("settings");
         _exitImages = LoadButtonImages("exit");
         _minimizeImages = LoadButtonImages("minimize");
         _closeImages = LoadButtonImages("X");
 
         FieldGuideImage.Source = _fieldGuideImages.Normal;
-        ClearCreaturesImage.Source = _clearCreaturesImages.Normal;
+        ClearDesktopImage.Source = _clearDesktopImages.Normal;
         SettingsButtonImage.Source = _settingsImages.Normal;
         ExitImage.Source = _exitImages.Normal;
         MinimizeImage.Source = _minimizeImages.Normal;
@@ -383,34 +383,37 @@ public partial class MainWindow : Window
         foreach (CreatureWindow window in
                  _creatureWindows)
         {
-            Creature creature =
-                window.GetCreature();
-
-            if (!_creatureRecords.TryGetValue(
-                    creature.Id,
-                    out CreatureRecord? record))
-            {
-                continue;
-            }
-
-            record.Name =
-                creature.Name;
-
-            record.LastX =
-                creature.X;
-
-            record.LastY =
-                creature.Y;
-
-            record.AppearanceId =
-                creature.AppearanceId;
-
-            record.AppearanceTraits =
-                creature.AppearanceTraits;
+            UpdateCreatureRecord(
+                window.GetCreature());
         }
 
-        CreatureSaveManager.Save(
-            _creatureRecords.Values);
+        SaveCreatureRecords();
+    }
+
+    private void UpdateCreatureRecord(
+        Creature creature)
+    {
+        if (!_creatureRecords.TryGetValue(
+                creature.Id,
+                out CreatureRecord? record))
+        {
+            return;
+        }
+
+        record.Name =
+            creature.Name;
+
+        record.LastX =
+            creature.X;
+
+        record.LastY =
+            creature.Y;
+
+        record.AppearanceId =
+            creature.AppearanceId;
+
+        record.AppearanceTraits =
+            creature.AppearanceTraits;
     }
 
     private void LoadSavedCreatures()
@@ -511,13 +514,33 @@ public partial class MainWindow : Window
                 settings,
                 services);
 
+        if (record is null)
+        {
+            record =
+                new CreatureRecord
+                {
+                    Id = creature.Id,
+                    CreatureType = creatureId,
+                    Name = creature.Name,
+                    AppearanceId = creature.AppearanceId,
+                    AppearanceTraits = creature.AppearanceTraits,
+                    LastX = creature.X,
+                    LastY = creature.Y
+                };
+
+            _creatureRecords[record.Id] =
+                record;
+
+            SaveCreatureRecords();
+        }
+
         var creatureWindow =
             new CreatureWindow(
                 creature,
                 _surfaceManager);
 
-        creatureWindow.DespawnRequested +=
-            DespawnCreature;
+        creatureWindow.PutAwayRequested +=
+            PutAwayCreature;
 
         creatureWindow.SetDisplayScale(
             _settings.CreatureDisplayScale);
@@ -532,16 +555,30 @@ public partial class MainWindow : Window
             creatureWindow);
     }
 
-    private void DespawnCreature(
+    private void PutAwayCreature(
         CreatureWindow creatureWindow)
     {
-        creatureWindow.DespawnRequested -=
-            DespawnCreature;
+        Creature creature =
+            creatureWindow.GetCreature();
+
+        UpdateCreatureRecord(
+            creature);
+
+        creatureWindow.PutAwayRequested -=
+            PutAwayCreature;
 
         _creatureWindows.Remove(
             creatureWindow);
 
         creatureWindow.Close();
+
+        SaveCreatureRecords();
+    }
+
+    private void SaveCreatureRecords()
+    {
+        CreatureSaveManager.Save(
+            _creatureRecords.Values);
     }
 
     private CreatureSpawnContext CreateSpawnContext(
@@ -630,21 +667,30 @@ public partial class MainWindow : Window
         };
     }
 
-    private void ClearCreatures_Click(
-        object sender,
-        RoutedEventArgs e)
+    private void ClearDesktop()
     {
-        UiSounds.PlayButtonClick();
-
-        ClearCreatures();
+        PutAwayAllCreatures();
+        ClearActivePois();
     }
 
-    private void ClearCreatures()
+    private void PutAwayAllCreatures()
     {
-        foreach (var window in _creatureWindows.ToList())
+        foreach (CreatureWindow window in
+                 _creatureWindows.ToList())
+        {
+            PutAwayCreature(window);
+        }
+    }
+
+    private void ClearActivePois()
+    {
+        foreach (POIWindow window in
+                 _poiWindows.ToList())
         {
             window.Close();
-            _creatureWindows.Remove(window);
+
+            _poiWindows.Remove(
+                window);
         }
     }
 
@@ -862,29 +908,38 @@ public partial class MainWindow : Window
         FieldGuideImage.Source = _fieldGuideImages.Hover;
     }
 
-    private void ClearCreatures_MouseEnter(
+    private void ClearDesktop_MouseEnter(
         object sender, 
         WpfMouseEventArgs e)
     {
-        ClearCreaturesImage.Source = _clearCreaturesImages.Hover;
+        ClearDesktopImage.Source = _clearDesktopImages.Hover;
     }
-    private void ClearCreatures_MouseLeave
+    private void ClearDesktop_MouseLeave
         (object sender, 
         WpfMouseEventArgs e)
     {
-        ClearCreaturesImage.Source = _clearCreaturesImages.Normal;
+        ClearDesktopImage.Source = _clearDesktopImages.Normal;
     }
-    private void ClearCreatures_MouseDown(
+    private void ClearDesktop_MouseDown(
         object sender,
         WpfMouseButtonEventArgs e)
     {
-        ClearCreaturesImage.Source = _clearCreaturesImages.Pressed;
+        ClearDesktopImage.Source = _clearDesktopImages.Pressed;
     }
-    private void ClearCreatures_MouseUp(
+    private void ClearDesktop_MouseUp(
         object sender,
         WpfMouseButtonEventArgs e)
     {
-        ClearCreaturesImage.Source = _clearCreaturesImages.Hover;
+        ClearDesktopImage.Source = _clearDesktopImages.Hover;
+    }
+
+    private void ClearDesktop_Click(
+        object sender,
+        RoutedEventArgs e)
+    {
+        UiSounds.PlayButtonClick();
+
+        ClearDesktop();
     }
 
     private void SettingsButton_MouseEnter(

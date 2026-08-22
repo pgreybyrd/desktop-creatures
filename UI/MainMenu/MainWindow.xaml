@@ -80,14 +80,13 @@
                     PreviewMouseDown="FieldGuide_MouseLeftButtonDown"
                     PreviewMouseUp="FieldGuide_MouseUp"/>
 
-            <Image x:Name="ClearCreaturesImage"
-                   Source="Assets/UI/MainMenu/Buttons/button_clear_rats.png"
+            <Image x:Name="ClearDesktopImage"
                    Canvas.Left="114"
                    Canvas.Top="123"
                    Width="139"
                    Height="33"/>
 
-            <Button x:Name="ClearCreaturesButton"
+            <Button x:Name="ClearDesktopButton"
                     Canvas.Left="114"
                     Canvas.Top="123"
                     Width="139"
@@ -95,12 +94,11 @@
                     Background="Transparent"
                     BorderThickness="0"
                     Opacity="0"
-                    Click="ClearCreatures_Click"
-                    MouseEnter="ClearCreatures_MouseEnter"
-                    MouseLeave="ClearCreatures_MouseLeave"
-                    PreviewMouseDown="ClearCreatures_MouseDown"
-                    PreviewMouseUp="ClearCreatures_MouseUp"/>
-
+                    Click="ClearDesktop_Click"
+                    MouseEnter="ClearDesktop_MouseEnter"
+                    MouseLeave="ClearDesktop_MouseLeave"
+                    PreviewMouseDown="ClearDesktop_MouseDown"
+                    PreviewMouseUp="ClearDesktop_MouseUp"/>
             <Image x:Name="SettingsButtonImage"
                    Source="Assets/UI/MainMenu/Buttons/button_settings.png"
                    Canvas.Left="114"

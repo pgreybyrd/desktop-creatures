@@ -250,8 +250,11 @@
     <None Remove="Assets\UI\FieldGuide\PageTurnBase_8.png" />
     <None Remove="Assets\UI\FieldGuide\PageTurnBase_9.png" />
     <None Remove="Assets\UI\FieldGuide\tabs.png" />
+    <None Remove="Assets\UI\MainMenu\Buttons\button_clear_desktop.png" />
+    <None Remove="Assets\UI\MainMenu\Buttons\button_hover_clear_desktop.png" />
     <None Remove="Assets\UI\MainMenu\Buttons\button_hover_field_guide.png" />
     <None Remove="Assets\UI\MainMenu\Buttons\button_hover_settings.png" />
+    <None Remove="Assets\UI\MainMenu\Buttons\button_pressed_clear_desktop.png" />
     <None Remove="Assets\UI\MainMenu\Buttons\button_pressed_field_guide.png" />
     <None Remove="Assets\UI\MainMenu\Buttons\button_pressed_settings.png" />
     <None Remove="Assets\UI\MainMenu\Buttons\button_settings.png" />
@@ -269,7 +272,6 @@
     <None Remove="Assets\UI\RightClick\Buttons\button.png" />
     <None Remove="Assets\UI\RightClick\Icons\icon-appearance.png" />
     <None Remove="Assets\UI\RightClick\Icons\icon-breeding.png" />
-    <None Remove="Assets\UI\RightClick\Icons\icon-despawn.png" />
     <None Remove="Assets\UI\RightClick\Icons\icon-favorite.png" />
     <None Remove="Assets\UI\RightClick\Icons\icon-fieldguide.png" />
     <None Remove="Assets\UI\RightClick\Icons\icon-gohome.png" />
@@ -282,7 +284,7 @@
     <None Remove="Assets\UI\RightClick\Menu\menu-top.png" />
     <None Remove="Assets\UI\RightClick\Text\text-appearance.png" />
     <None Remove="Assets\UI\RightClick\Text\text-breeding.png" />
-    <None Remove="Assets\UI\RightClick\Text\text-despawn.png" />
+    <None Remove="Assets\UI\RightClick\Text\text-delete.png" />
     <None Remove="Assets\UI\RightClick\Text\text-favorite.png" />
     <None Remove="Assets\UI\RightClick\Text\text-fieldguide.png" />
     <None Remove="Assets\UI\RightClick\Text\text-gohome.png" />
@@ -770,6 +772,15 @@
     <Content Include="Assets\Sounds\UI\FieldGuide\page_flip_06.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\button_clear_desktop.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\button_hover_clear_desktop.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\MainMenu\Buttons\button_pressed_clear_desktop.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\UI\MainMenu\Buttons\toggle_off.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -806,7 +817,7 @@
     <Content Include="Assets\UI\RightClick\Icons\icon-breeding.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\UI\RightClick\Icons\icon-despawn.png">
+    <Content Include="Assets\UI\RightClick\Icons\icon-delete.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\RightClick\Icons\icon-favorite.png">
@@ -845,7 +856,7 @@
     <Content Include="Assets\UI\RightClick\Text\text-breeding.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\UI\RightClick\Text\text-despawn.png">
+    <Content Include="Assets\UI\RightClick\Text\text-delete.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\RightClick\Text\text-favorite.png">
@@ -1088,9 +1099,6 @@
     <Content Include="Assets\UI\MainMenu\Buttons\button_always_on_top_on.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\UI\MainMenu\Buttons\button_clear_creatures.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Assets\UI\MainMenu\Buttons\button_exit.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1101,9 +1109,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\MainMenu\Buttons\button_hover_always_on_top_on.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\MainMenu\Buttons\button_hover_clear_creatures.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\MainMenu\Buttons\button_hover_exit.png">
@@ -1131,9 +1136,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\MainMenu\Buttons\button_pressed_always_on_top_on.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\MainMenu\Buttons\button_pressed_clear_creatures.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\MainMenu\Buttons\button_pressed_exit.png">
