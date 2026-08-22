@@ -204,6 +204,24 @@
     <None Remove="Assets\UI\button_pressed_X.png" />
     <None Remove="Assets\UI\button_spawn_rat.png" />
     <None Remove="Assets\UI\button_X.png" />
+    <None Remove="Assets\UI\CreatureRoster\arrow_down-hover.png" />
+    <None Remove="Assets\UI\CreatureRoster\arrow_down-pressed.png" />
+    <None Remove="Assets\UI\CreatureRoster\arrow_down.png" />
+    <None Remove="Assets\UI\CreatureRoster\arrow_up-hover.png" />
+    <None Remove="Assets\UI\CreatureRoster\arrow_up-pressed.png" />
+    <None Remove="Assets\UI\CreatureRoster\arrow_up.png" />
+    <None Remove="Assets\UI\CreatureRoster\button_hover.png" />
+    <None Remove="Assets\UI\CreatureRoster\button_normal.png" />
+    <None Remove="Assets\UI\CreatureRoster\button_pressed.png" />
+    <None Remove="Assets\UI\CreatureRoster\favorite_off.png" />
+    <None Remove="Assets\UI\CreatureRoster\favorite_on.png" />
+    <None Remove="Assets\UI\CreatureRoster\roster_base.png" />
+    <None Remove="Assets\UI\CreatureRoster\scroll_thumb-bottom.png" />
+    <None Remove="Assets\UI\CreatureRoster\scroll_thumb-middle.png" />
+    <None Remove="Assets\UI\CreatureRoster\scroll_thumb-top.png" />
+    <None Remove="Assets\UI\CreatureRoster\text_put_away.png" />
+    <None Remove="Assets\UI\CreatureRoster\text_rename.png" />
+    <None Remove="Assets\UI\CreatureRoster\text_spawn.png" />
     <None Remove="Assets\UI\FieldGuide\BookBase.png" />
     <None Remove="Assets\UI\FieldGuide\Book\BookBase.png" />
     <None Remove="Assets\UI\FieldGuide\Book\exit-hover.png" />
@@ -677,6 +695,60 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\SpriteSheetTests\rat.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\CreatureRoster\arrow_down-hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\CreatureRoster\arrow_down-pressed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\CreatureRoster\arrow_down.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\CreatureRoster\arrow_up-hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\CreatureRoster\arrow_up-pressed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\CreatureRoster\arrow_up.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\CreatureRoster\button_hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\CreatureRoster\button_normal.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\CreatureRoster\button_pressed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\CreatureRoster\favorite_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\CreatureRoster\favorite_on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\CreatureRoster\roster_base.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\CreatureRoster\scroll_thumb-bottom.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\CreatureRoster\scroll_thumb-middle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\CreatureRoster\scroll_thumb-top.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\CreatureRoster\text_put_away.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\CreatureRoster\text_rename.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\CreatureRoster\text_spawn.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\FieldGuide\Book\close-hover.png">

@@ -1,13 +1,14 @@
-﻿using Desktop_Creatures.Config;
+﻿using Desktop_Creatures.Audio;
+using Desktop_Creatures.Config;
 using Desktop_Creatures.Creatures;
 using Desktop_Creatures.Graphics;
 using Desktop_Creatures.Persistence;
 using Desktop_Creatures.Tools.Images;
+using Desktop_Creatures.UI.CreatureRoster;
 using Desktop_Creatures.Utilities;
+using Desktop_Creatures.Windowing;
 using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
-using Desktop_Creatures.Audio;
-using Desktop_Creatures.Windowing;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -47,6 +48,8 @@ public partial class MainWindow : Window
 
     private readonly List<POIWindow> _poiWindows = new();
     private readonly List<CreatureWindow> _creatureWindows = new();
+
+    private CreatureRosterWindow? _creatureRosterWindow;
 
     private readonly Dictionary<Guid, CreatureRecord> _creatureRecords = new();
     private Dictionary<string, CreatureDefinition> _creatureDefinitions = new();
@@ -137,6 +140,9 @@ public partial class MainWindow : Window
             //CreateWaterDish();
 
             LoadSavedCreatures();
+
+            //temp for testing
+            OpenCreatureRoster();
 
             ApplyTopmostSettings();
         };
@@ -555,6 +561,48 @@ public partial class MainWindow : Window
             creatureWindow);
     }
 
+    private bool IsCreatureSpawned(
+        Guid creatureId)
+    {
+        return _creatureWindows.Any(
+            window =>
+                window.GetCreature().Id ==
+                creatureId);
+    }
+
+    private void SpawnCreatureRecord(
+        Guid creatureId)
+    {
+        if (!_creatureRecords.TryGetValue(
+                creatureId,
+                out CreatureRecord? record))
+        {
+            return;
+        }
+
+        if (IsCreatureSpawned(creatureId))
+            return;
+
+        SpawnCreature(
+            record.CreatureType,
+            record);
+    }
+
+    private void PutAwayCreature(
+        Guid creatureId)
+    {
+        CreatureWindow? window =
+            _creatureWindows.FirstOrDefault(
+                window =>
+                    window.GetCreature().Id ==
+                    creatureId);
+
+        if (window is null)
+            return;
+
+        PutAwayCreature(window);
+    }
+
     private void PutAwayCreature(
         CreatureWindow creatureWindow)
     {
@@ -573,6 +621,52 @@ public partial class MainWindow : Window
         creatureWindow.Close();
 
         SaveCreatureRecords();
+    }
+
+    private void SetCreatureFavorite(
+        Guid creatureId,
+        bool isFavorite)
+    {
+        if (!_creatureRecords.TryGetValue(
+                creatureId,
+                out CreatureRecord? record))
+        {
+            return;
+        }
+
+        record.IsFavorite =
+            isFavorite;
+
+        SaveCreatureRecords();
+    }
+
+    private void OpenCreatureRoster()
+    {
+        if (_creatureRosterWindow is not null)
+        {
+            _creatureRosterWindow.Activate();
+            return;
+        }
+
+        _creatureRosterWindow =
+            new CreatureRosterWindow(
+                _creatureRecords.Values.ToList(),
+                IsCreatureSpawned,
+                SpawnCreatureRecord,
+                PutAwayCreature,
+                SetCreatureFavorite);
+
+        _creatureRosterWindow.Closed +=
+            (_, _) =>
+            {
+                _creatureRosterWindow = null;
+            };
+
+        _creatureRosterWindow.Show();
+
+        _zOrderManager.Register(
+            _creatureRosterWindow,
+            ZOrderManager.WindowLayer.ToolWindow);
     }
 
     private void SaveCreatureRecords()
