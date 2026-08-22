@@ -1,4 +1,5 @@
 ﻿using Desktop_Creatures.Audio;
+using Desktop_Creatures.Graphics;
 using Desktop_Creatures.Persistence;
 using Desktop_Creatures.Tools.Images;
 using System.Windows;
@@ -7,9 +8,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Image = System.Windows.Controls.Image;
-using WpfMouseEventArgs = System.Windows.Input.MouseEventArgs;
-using WpfMouseButtonState = System.Windows.Input.MouseButtonState;
 using WpfMouseButtonEventArgs = System.Windows.Input.MouseButtonEventArgs;
+using WpfMouseButtonState = System.Windows.Input.MouseButtonState;
+using WpfMouseEventArgs = System.Windows.Input.MouseEventArgs;
 
 namespace Desktop_Creatures.UI.CreatureRoster
 {
@@ -42,6 +43,8 @@ namespace Desktop_Creatures.UI.CreatureRoster
         private readonly BitmapSource _arrowDownNormal;
         private readonly BitmapSource _arrowDownHover;
         private readonly BitmapSource _arrowDownPressed;
+
+        private readonly UiButtonImages _exitImages = null!;
 
         private readonly BitmapSource _scrollThumbMiddle;
 
@@ -87,6 +90,8 @@ namespace Desktop_Creatures.UI.CreatureRoster
             Height =
                 RosterCanvas.Height *
                 _uiScale;
+
+            _exitImages = LoadButtonImages("exit");
 
             _buttonNormal =
                 AssetImageLoader.Load(
@@ -156,6 +161,10 @@ namespace Desktop_Creatures.UI.CreatureRoster
                 AssetImageLoader.Load(
                     "Assets/UI/CreatureRoster/scroll_thumb-bottom.png");
 
+            ExitImage.Source =
+                AssetImageLoader.Load(
+                    "Assets/UI/Settings/Buttons/exit.png");
+
             RenameTextImage.Source =
                 _renameText;
 
@@ -166,6 +175,14 @@ namespace Desktop_Creatures.UI.CreatureRoster
             {
                 RefreshCreature();
             }
+        }
+
+        private static UiButtonImages LoadButtonImages(string buttonName)
+        {
+            return new UiButtonImages(
+                AssetImageLoader.Load($"Assets/UI/Settings/Buttons/{buttonName}.png"),
+                AssetImageLoader.Load($"Assets/UI/Settings/Buttons/{buttonName}_hover.png"),
+                AssetImageLoader.Load($"Assets/UI/Settings/Buttons/{buttonName}_pressed.png"));
         }
 
         private void RefreshCreature()
@@ -456,8 +473,8 @@ namespace Desktop_Creatures.UI.CreatureRoster
             IReadOnlyList<CreatureRecord> records =
                 Records;
 
-            const double trackTop = 51;
-            const double trackBottom = 142;
+            const double trackTop = 75;
+            const double trackBottom = 166;
 
             double trackHeight =
                 trackBottom -
@@ -533,6 +550,38 @@ namespace Desktop_Creatures.UI.CreatureRoster
                 ScrollThumb,
                 trackTop +
                 (usableTravel * progress));
+        }
+
+        private void Exit_MouseEnter(
+           object sender,
+           WpfMouseEventArgs e)
+        {
+            ExitImage.Source = _exitImages.Hover;
+        }
+
+        private void Exit_MouseLeave(
+            object sender,
+            WpfMouseEventArgs e)
+        {
+            ExitImage.Source = _exitImages.Normal;
+        }
+
+        private void Exit_MouseDown(
+            object sender,
+            WpfMouseButtonEventArgs e)
+        {
+            UiSounds.PlayButtonClick();
+
+            ExitImage.Source = _exitImages.Pressed;
+        }
+
+        private void Exit_MouseUp(
+            object sender,
+            WpfMouseButtonEventArgs e)
+        {
+            ExitImage.Source = _exitImages.Hover;
+
+            Close();
         }
 
         private void DragArea_MouseLeftButtonDown(

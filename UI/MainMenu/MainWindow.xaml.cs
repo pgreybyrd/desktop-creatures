@@ -686,7 +686,7 @@ public partial class MainWindow : Window
 
         _creatureRosterWindow.Top =
             Top +
-            (42 * _uiScale);
+            (18 * _uiScale);
 
         _creatureRosterWindow.Closed +=
             (_, _) =>

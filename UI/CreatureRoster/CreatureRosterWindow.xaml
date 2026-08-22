@@ -18,13 +18,22 @@
 
     <Canvas x:Name="RosterCanvas"
             Width="112"
-            Height="163">
+            Height="187">
 
         <Image x:Name="RosterBaseImage"
                Source="/Assets/UI/CreatureRoster/roster_base.png"
                Canvas.Left="0"
-               Canvas.Top="0"
+               Canvas.Top="24"
                Stretch="None"/>
+
+        <Image x:Name="ExitImage"
+               Canvas.Left="91"
+               Canvas.Top="0"
+               Stretch="None"
+               MouseEnter="Exit_MouseEnter"
+               MouseLeave="Exit_MouseLeave"
+               MouseLeftButtonDown="Exit_MouseDown"
+               MouseLeftButtonUp="Exit_MouseUp"/>
 
         <Border
             Canvas.Top="0"
@@ -36,32 +45,32 @@
         <!-- portrait goes here later -->
         <Image x:Name="PortraitImage"
                Canvas.Left="21"
-               Canvas.Top="30"
+               Canvas.Top="54"
                Width="49"
                Height="32"
                Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
         <Grid Canvas.Left="22"
-              Canvas.Top="87"
+              Canvas.Top="111"
               Width="48"
               Height="9">
 
             <bitmapFonts:BitmapText
                 x:Name="NameText"
-                Foreground="#3A2C22"
+                Foreground="#1c120e"
                 LineSpacing="1"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top"/>
         </Grid>
 
         <Grid Canvas.Left="22"
-              Canvas.Top="97"
+              Canvas.Top="121"
               Width="47"
               Height="7">
 
             <bitmapFonts:BitmapText
                 x:Name="SpeciesText"
-                Foreground="#3A2C22"
+                Foreground="#1c120e"
                 LineSpacing="1"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top"/>
@@ -70,7 +79,7 @@
         <!-- Favorite -->
         <Image x:Name="FavoriteImage"
                Canvas.Left="77"
-               Canvas.Top="43"
+               Canvas.Top="67"
                Width="7"
                Height="6"
                Stretch="None"
@@ -79,7 +88,7 @@
         <!-- Main Spawn / Put Away button -->
         <Image x:Name="ActionButtonImage"
                Canvas.Left="21"
-               Canvas.Top="107"
+               Canvas.Top="131"
                Width="49"
                Height="21"
                Stretch="None"
@@ -90,14 +99,14 @@
 
         <Image x:Name="ActionTextImage"
                Canvas.Left="21"
-               Canvas.Top="107"
+               Canvas.Top="131"
                IsHitTestVisible="False"
                Stretch="None"/>
 
         <!-- Rename -->
         <Image x:Name="RenameButtonImage"
                Canvas.Left="21"
-               Canvas.Top="131"
+               Canvas.Top="155"
                Width="49"
                Height="21"
                Stretch="None"
@@ -108,14 +117,14 @@
 
         <Image x:Name="RenameTextImage"
                Canvas.Left="21"
-               Canvas.Top="131"
+               Canvas.Top="155"
                IsHitTestVisible="False"
                Stretch="None"/>
 
         <!-- Scroll controls -->
         <Image x:Name="ArrowUpImage"
                Canvas.Left="88"
-               Canvas.Top="42"
+               Canvas.Top="66"
                Width="9"
                Height="9"
                Stretch="None"
@@ -126,7 +135,7 @@
 
         <Image x:Name="ArrowDownImage"
                Canvas.Left="88"
-               Canvas.Top="142"
+               Canvas.Top="166"
                Width="9"
                Height="9"
                Stretch="None"
@@ -137,7 +146,7 @@
 
         <StackPanel x:Name="ScrollThumb"
             Canvas.Left="88"
-            Canvas.Top="51">
+            Canvas.Top="75">
 
             <Image x:Name="ScrollThumbTop"
            Stretch="None"/>
