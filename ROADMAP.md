@@ -13,31 +13,34 @@ These are the immediate priorities. Finish these in order unless a genuinely blo
 
 - [x] Separate `EcosystemAlwaysOnTop` and `MenusAlwaysOnTop`
 - [x] Add separate Settings toggles for ecosystem and menus
-- [ ] Add centralized `ZOrderManager`
-- [ ] Enforce intended layer policy:
+- [x] Add centralized `ZOrderManager`
+- [x] Enforce intended layer policy:
   - ecosystem / creatures above menus
   - menus above ordinary desktop windows when enabled
 - [ ] Remove remaining scattered / legacy topmost workarounds
-- [ ] Make POIs follow ecosystem topmost only
-- [ ] Make Main Menu / Settings / Field Guide follow menu topmost only
+- [x] Make POIs follow ecosystem topmost only
+- [x] Make Main Menu / Settings / Field Guide follow menu topmost only
 - [ ] Stress-test activation, focus changes, minimizing, multiple monitors, and other applications
 
 ## 2. Persistence v2 — Creature Records
 
+**Status:** core record/runtime separation is working end-to-end. Gerald can be put away, respawned as the same individual, favorited, saved, and restored.
+
 **Goal:** a creature existing in the player's collection must be separate from whether it is currently spawned on the desktop.
 
-- [ ] Create persistent `CreatureRecord` / equivalent model
-- [ ] Permanent creature ID
-- [ ] Creature type
-- [ ] Name
-- [ ] Appearance traits / appearance ID
-- [ ] Favorite state
-- [ ] Saved / owned state
-- [ ] Last known position
-- [ ] Separate persistent creature records from runtime `CreatureWindow` instances
-- [ ] Save all supported creature types, not only rats
-- [ ] Load persistent creatures safely on startup
-- [ ] Define clear actions: Spawn, Delete, Put Away, Save, Favorite
+- [x] Create persistent `CreatureRecord` / equivalent model
+- [x] Permanent creature ID
+- [x] Creature type
+- [x] Name
+- [x] Appearance traits / appearance ID
+- [x] Favorite state
+- [x] Saved / owned state
+- [x] Last known position
+- [x] Separate persistent creature records from runtime `CreatureWindow` instances
+- [x] Save all supported creature types, not only rats
+- [x] Load persistent creatures safely on startup
+- [x] Define clear action semantics: Spawn, Put Away, Save, Favorite, Delete
+- [ ] Implement permanent Delete with double confirmation
 - [ ] Handle missing / invalid save data gracefully
 - [ ] Prepare save format for future friendship, home, breeding, and progression data
 
@@ -45,15 +48,24 @@ These are the immediate priorities. Finish these in order unless a genuinely blo
 
 A central window for managing individual creatures.
 
+- [x] Roster window shell / custom pixel UI
+- [x] Live roster updates while creatures are added
+- [x] Custom bitmap-font name / species labels
+- [x] Dynamic scrollbar thumb that shrinks as roster grows
+- [x] Mouse-wheel / arrow navigation
+- [x] Draggable roster window
+- [x] Roster follows Main Menu when Main Menu is dragged
+- [x] Default placement to the right of Main Menu
+
 - [ ] Creature portrait
 - [ ] Creature name
 - [ ] Rename
-- [ ] Favorite
-- [ ] Spawn / Put Away
-- [ ] Saved / persistent status
-- [ ] Creature type / family
+- [x] Favorite
+- [x] Spawn / Put Away
+- [x] Saved / persistent status
+- [x] Creature type / family
 - [ ] Appearance preview
-- [ ] Support many creatures cleanly
+- [x] Support many creatures cleanly
 - [ ] Later: sorting / filtering / family groups
 
 ## 4. Creature Context Menu
@@ -66,14 +78,16 @@ Initial menu exists with individual "put away" support.
 
 ### Near-term additions
 
-- [ ] Favorite
+- [ ] Delete with double-confirmation flow
+- [x] Favorite
 - [ ] Rename
-- [ ] Put Away
+- [x] Put Away
 - [ ] Field Guide
 - [ ] Appearance submenu
 
 ### Later additions
 
+- [ ] Dynamic menu assembly from top / middle / bottom / divider assets
 - [ ] Pet
 - [ ] Go Home
 - [ ] Breeding submenu
@@ -83,6 +97,16 @@ Initial menu exists with individual "put away" support.
 ---
 
 # NEXT — UI / Asset Architecture
+
+## Window Layout / Utility UI Polish
+
+- [x] Settings defaults to left of Main Menu
+- [x] Roster defaults to right of Main Menu
+- [x] Field Guide opens centered over Main Menu area
+- [ ] Persist utility-window positions after manual dragging
+- [ ] Final coordinated Main Menu / Settings / Roster art-layout pass
+- [ ] Replace temporary auto-open Roster test with real Main Menu button
+
 
 ## UI Spritesheet Migration
 
@@ -133,7 +157,7 @@ Spritesheet work can happen during artwork / low-energy time while core systems 
 - [x] Effects
 - [x] Gerald canonical appearance
 - [x] Field Guide page
-- [ ] Persistence v2 migration
+- [x] Persistence v2 migration
 - [ ] Home / burrow behavior
 
 ## Eagle
@@ -146,7 +170,7 @@ Spritesheet work can happen during artwork / low-energy time while core systems 
 - [x] Multiple POI support
 - [x] Field Guide page
 - [ ] Generalize full multi-monitor flight area
-- [ ] Persistence v2 migration
+- [x] Persistence v2 migration
 - [ ] Nest / home behavior
 
 ## Ocelot
@@ -159,7 +183,7 @@ Spritesheet work can happen during artwork / low-energy time while core systems 
 - [x] Field Guide page
 - [ ] Polish animation frames
 - [ ] Add sounds
-- [ ] Persistence v2 migration
+- [x] Persistence v2 migration
 - [ ] Home / resting behavior
 
 ## Tiny Creatures / Bugs
@@ -256,9 +280,9 @@ Creatures should feel alive.
 - [ ] Free Play mode
 - [ ] Creature rarity / variants
 - [ ] Collect appearances
-- [ ] Favorite creatures
-- [ ] Creature names
-- [ ] Persistent roster
+- [x] Favorite creatures
+- [x] Creature names
+- [x] Persistent roster
 - [ ] Creature homes
 - [ ] Optional breeding
 - [ ] Predation toggle OFF by default
@@ -398,8 +422,8 @@ These are requirements for a paid-quality release, not optional cleanup.
 - [ ] Stable save migration / versioning strategy
 - [ ] Clear error handling for missing or invalid assets
 - [ ] Consistent asset naming conventions
-- [ ] Centralized audio infrastructure
-- [ ] Centralized Z-order policy
+- [x] Centralized audio infrastructure
+- [x] Centralized Z-order policy
 - [ ] Multi-monitor stress testing
 - [ ] Small-display stress testing
 - [ ] Performance testing with many creatures
