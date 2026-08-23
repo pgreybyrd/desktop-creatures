@@ -289,6 +289,8 @@
     <None Remove="Assets\UI\RightClick\menu.png" />
     <None Remove="Assets\UI\RightClick\text.json" />
     <None Remove="Assets\UI\RightClick\text.png" />
+    <None Remove="Assets\UI\Settings\buttons.json" />
+    <None Remove="Assets\UI\Settings\buttons.png" />
     <None Remove="Assets\UI\Settings\Buttons\exit_hover.png" />
     <None Remove="Assets\UI\Settings\Buttons\exit_pressed.png" />
     <None Remove="Assets\UI\Settings\Buttons\scale_1x.png" />
@@ -309,7 +311,15 @@
     <None Remove="Assets\UI\Settings\Buttons\toggle_on.png" />
     <None Remove="Assets\UI\Settings\Buttons\toggle_on_hover.png" />
     <None Remove="Assets\UI\Settings\Buttons\toggle_on_pressed.png" />
+    <None Remove="Assets\UI\Settings\exit.json" />
+    <None Remove="Assets\UI\Settings\exit.png" />
     <None Remove="Assets\UI\Settings\settings_window.png" />
+    <None Remove="Assets\UI\Settings\text.json" />
+    <None Remove="Assets\UI\Settings\text.png" />
+    <None Remove="Assets\UI\Settings\toggleoff.json" />
+    <None Remove="Assets\UI\Settings\toggleoff.png" />
+    <None Remove="Assets\UI\Settings\toggleon.json" />
+    <None Remove="Assets\UI\Settings\toggleon.png" />
     <None Remove="Assets\World\Buildings\arch_0.png" />
     <None Remove="Assets\World\Food\bowl-food_empty.png" />
     <None Remove="Assets\World\Food\bowl-food_full.png" />
@@ -869,6 +879,12 @@
     <Content Include="Assets\UI\RightClick\text.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\UI\Settings\buttons.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\Settings\buttons.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\UI\Settings\Buttons\exit.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -932,7 +948,31 @@
     <Content Include="Assets\UI\Settings\Buttons\toggle_on_pressed.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\UI\Settings\exit.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\Settings\exit.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\UI\Settings\settings_window.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\Settings\text.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\Settings\text.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\Settings\toggleoff.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\Settings\toggleoff.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\Settings\toggleon.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\Settings\toggleon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\World\Buildings\arch_0.png">

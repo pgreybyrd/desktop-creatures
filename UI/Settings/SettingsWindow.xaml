@@ -91,11 +91,21 @@
                 PreviewMouseLeftButtonDown="Scale1_MouseDown"
                 PreviewMouseLeftButtonUp="Scale1_MouseUp">
 
-            <Image x:Name="Scale1Image"
-                   Width="25"
-                   Height="25"
-                   Stretch="None"
-                   IsHitTestVisible="False"/>
+            <Grid Width="25"
+                  Height="25">
+
+                <Image x:Name="Scale1Image"
+                       Width="25"
+                       Height="25"
+                       Stretch="None"
+                       IsHitTestVisible="False"/>
+
+                <Image x:Name="Scale1TextImage"
+                       Width="25"
+                       Height="25"
+                       Stretch="None"
+                       IsHitTestVisible="False"/>
+            </Grid>
         </Button>
 
         <Button Canvas.Left="49"
@@ -109,11 +119,21 @@
                 PreviewMouseLeftButtonDown="Scale2_MouseDown"
                 PreviewMouseLeftButtonUp="Scale2_MouseUp">
 
-            <Image x:Name="Scale2Image"
-                   Width="25"
-                   Height="25"
-                   Stretch="None"
-                   IsHitTestVisible="False"/>
+            <Grid Width="25"
+                  Height="25">
+
+                <Image x:Name="Scale2Image"
+                       Width="25"
+                       Height="25"
+                       Stretch="None"
+                       IsHitTestVisible="False"/>
+
+                <Image x:Name="Scale2TextImage"
+                       Width="25"
+                       Height="25"
+                       Stretch="None"
+                       IsHitTestVisible="False"/>
+            </Grid>
         </Button>
 
         <Button Canvas.Left="79"
@@ -127,11 +147,21 @@
                 PreviewMouseLeftButtonDown="Scale3_MouseDown"
                 PreviewMouseLeftButtonUp="Scale3_MouseUp">
 
-            <Image x:Name="Scale3Image"
-                   Width="25"
-                   Height="25"
-                   Stretch="None"
-                   IsHitTestVisible="False"/>
+            <Grid Width="25"
+                  Height="25">
+
+                <Image x:Name="Scale3Image"
+                       Width="25"
+                       Height="25"
+                       Stretch="None"
+                       IsHitTestVisible="False"/>
+
+                <Image x:Name="Scale3TextImage"
+                       Width="25"
+                       Height="25"
+                       Stretch="None"
+                       IsHitTestVisible="False"/>
+            </Grid>
         </Button>
 
         <Button Canvas.Left="108"
@@ -145,11 +175,21 @@
                 PreviewMouseLeftButtonDown="Scale4_MouseDown"
                 PreviewMouseLeftButtonUp="Scale4_MouseUp">
 
-            <Image x:Name="Scale4Image"
-                   Width="25"
-                   Height="25"
-                   Stretch="None"
-                   IsHitTestVisible="False"/>
+            <Grid Width="25"
+                  Height="25">
+
+                <Image x:Name="Scale4Image"
+                       Width="25"
+                       Height="25"
+                       Stretch="None"
+                       IsHitTestVisible="False"/>
+
+                <Image x:Name="Scale4TextImage"
+                       Width="25"
+                       Height="25"
+                       Stretch="None"
+                       IsHitTestVisible="False"/>
+                        </Grid>
         </Button>
 
         <Button Canvas.Left="89"
@@ -160,8 +200,8 @@
                 Click="EcosystemAlwaysOnTop_Click"
                 MouseEnter="EcosystemAlwaysOnTop_MouseEnter"
                 MouseLeave="EcosystemAlwaysOnTop_MouseLeave"
-                MouseLeftButtonDown="EcosystemAlwaysOnTop_MouseDown"
-                MouseLeftButtonUp="EcosystemAlwaysOnTop_MouseUp">
+                PreviewMouseLeftButtonDown="EcosystemAlwaysOnTop_MouseDown"
+                PreviewMouseLeftButtonUp="EcosystemAlwaysOnTop_MouseUp">
 
             <Image x:Name="EcosystemAlwaysOnTopImage"
                    Width="44"
@@ -178,8 +218,8 @@
                 Click="MenusAlwaysOnTop_Click"
                 MouseEnter="MenusAlwaysOnTop_MouseEnter"
                 MouseLeave="MenusAlwaysOnTop_MouseLeave"
-                MouseLeftButtonDown="MenusAlwaysOnTop_MouseDown"
-                MouseLeftButtonUp="MenusAlwaysOnTop_MouseUp">
+                PreviewMouseLeftButtonDown="MenusAlwaysOnTop_MouseDown"
+                PreviewMouseLeftButtonUp="MenusAlwaysOnTop_MouseUp">
 
             <Image x:Name="MenusAlwaysOnTopImage"
                    Width="44"

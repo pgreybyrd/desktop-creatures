@@ -82,12 +82,12 @@ Initial menu exists with individual "put away" support.
 - [x] Favorite
 - [ ] Rename
 - [x] Put Away
-- [ ] Field Guide
+- [x] Field Guide
 - [ ] Appearance submenu
 
 ### Later additions
 
-- [ ] Dynamic menu assembly from top / middle / bottom / divider assets
+- [x] Dynamic menu assembly from top / middle / bottom / divider assets
 - [ ] Pet
 - [ ] Go Home
 - [ ] Breeding submenu
@@ -113,12 +113,12 @@ Initial menu exists with individual "put away" support.
 **Goal:** stop maintaining huge piles of individual normal / hover / pressed PNGs.
 
 - [x] Field Guide tabs migrated to spritesheet
-- [ ] Create reusable sprite-button loader
-- [ ] Standardize button state order: Normal / Hover / Pressed
+- [x] Create reusable sprite-button loader
+- [x] Standardize button state order: Normal / Hover / Pressed
 - [ ] Migrate Settings buttons
 - [ ] Migrate Main Menu buttons
 - [ ] Migrate Field Guide common buttons
-- [ ] Migrate creature context-menu buttons
+- [x] Migrate creature context-menu buttons
 - [ ] Clean up inconsistent asset naming during migration
 - [ ] Keep individual PNGs only where a spritesheet provides no real benefit
 
