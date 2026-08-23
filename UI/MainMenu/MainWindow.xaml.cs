@@ -563,7 +563,8 @@ public partial class MainWindow : Window
         var creatureWindow =
             new CreatureWindow(
                 creature,
-                _surfaceManager);
+                _surfaceManager,
+                _uiScale);
 
         creatureWindow.PutAwayRequested +=
             PutAwayCreature;

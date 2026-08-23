@@ -1,10 +1,12 @@
-﻿using Desktop_Creatures.Config;
-using Desktop_Creatures.Creatures;
+﻿using Desktop_Creatures.Creatures;
 using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World.Surfaces;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Desktop_Creatures.UI.RightClick;
+using System.Windows.Media;
+using Point = System.Windows.Point;
 
 namespace Desktop_Creatures;
 
@@ -14,26 +16,34 @@ public partial class CreatureWindow : Window
     private readonly SurfaceManager _surfaceManager;
 
     private bool _isDragging;
-    private System.Windows.Point _dragOffset;
+    private Point _dragOffset;
+
+    private bool _isContextMenuOpen;
+
+    private int _uiScale;
 
     public Creature GetCreature() => _creature;
 
+    private CreatureContextMenuWindow? _contextMenuWindow;
+
     public event Action<CreatureWindow>? PutAwayRequested;
+    public event Action<CreatureWindow, CreatureContextMenuAction>? ContextActionRequested;
 
     public CreatureWindow(
         Creature creature,
-        SurfaceManager surfaceManager)
+        SurfaceManager surfaceManager,
+        int uiScale)
     {
         InitializeComponent();
+
+        _creature = creature;
+        _surfaceManager = surfaceManager;
+        _uiScale = uiScale;
 
         MouseLeftButtonDown += OnMouseLeftButtonDown;
         MouseMove += OnMouseMove;
         MouseLeftButtonUp += OnMouseLeftButtonUp;
-
-        ContextMenu = CreateContextMenu();
-
-        _creature = creature;
-        _surfaceManager = surfaceManager;
+        MouseRightButtonDown += OnMouseRightButtonDown;
 
         _creature.InteractionStarted +=
             BringCreatureToFront;
@@ -98,6 +108,11 @@ public partial class CreatureWindow : Window
             if (CreatureImage.Source != _creature.CurrentFrame)
                 CreatureImage.Source = _creature.CurrentFrame;
 
+            return;
+        }
+
+        if (_isContextMenuOpen)
+        {
             return;
         }
 
@@ -194,6 +209,169 @@ public partial class CreatureWindow : Window
         Topmost = true;
     }
 
+    private void RequestContextAction(
+        CreatureContextMenuAction action)
+    {
+        ContextActionRequested?.Invoke(
+            this,
+            action);
+    }
+
+    private void PositionContextMenu(
+        CreatureContextMenuWindow menu)
+    {
+        PresentationSource? source =
+            PresentationSource.FromVisual(this);
+
+        if (source?.CompositionTarget is null)
+            return;
+
+        System.Drawing.Point mousePixels =
+            System.Windows.Forms.Control.MousePosition;
+
+        System.Windows.Forms.Screen screen =
+            System.Windows.Forms.Screen.FromPoint(
+                mousePixels);
+
+        System.Drawing.Rectangle workPixels =
+            screen.WorkingArea;
+
+        Matrix fromDevice =
+            source.CompositionTarget
+                .TransformFromDevice;
+
+        Point mouseDip =
+            fromDevice.Transform(
+                new Point(
+                    mousePixels.X,
+                    mousePixels.Y));
+
+        Point workTopLeft =
+            fromDevice.Transform(
+                new Point(
+                    workPixels.Left,
+                    workPixels.Top));
+
+        Point workBottomRight =
+            fromDevice.Transform(
+                new Point(
+                    workPixels.Right,
+                    workPixels.Bottom));
+
+        double left =
+            mouseDip.X;
+
+        double top =
+            mouseDip.Y;
+
+        // Not enough room to the right:
+        // open toward the left.
+        if (left + menu.Width >
+            workBottomRight.X)
+        {
+            left =
+                mouseDip.X -
+                menu.Width;
+        }
+
+        // Not enough room below:
+        // open upward from cursor.
+        if (top + menu.Height >
+            workBottomRight.Y)
+        {
+            top =
+                mouseDip.Y -
+                menu.Height;
+        }
+
+        // Final safety clamp.
+        left =
+            Math.Clamp(
+                left,
+                workTopLeft.X,
+                workBottomRight.X -
+                    menu.Width);
+
+        top =
+            Math.Clamp(
+                top,
+                workTopLeft.Y,
+                workBottomRight.Y -
+                    menu.Height);
+
+        menu.Left = left;
+        menu.Top = top;
+    }
+
+    private void OpenContextMenu()
+    {
+        _contextMenuWindow?.Close();
+
+        IReadOnlyList<
+            CreatureContextMenuItem> items =
+            CreatureContextMenuBuilder.Build(
+                pet:
+                    () =>
+                        RequestContextAction(
+                            CreatureContextMenuAction.Pet),
+
+                favorite:
+                    () =>
+                        RequestContextAction(
+                            CreatureContextMenuAction.Favorite),
+
+                rename:
+                    () =>
+                        RequestContextAction(
+                            CreatureContextMenuAction.Rename),
+
+                goHome:
+                    () =>
+                        RequestContextAction(
+                            CreatureContextMenuAction.GoHome),
+
+                fieldGuide:
+                    () =>
+                        RequestContextAction(
+                            CreatureContextMenuAction.FieldGuide),
+
+                appearance:
+                    () =>
+                        RequestContextAction(
+                            CreatureContextMenuAction.Appearance),
+
+                breeding:
+                    () =>
+                        RequestContextAction(
+                            CreatureContextMenuAction.Breeding),
+
+                putAway:
+                    () =>
+                        PutAwayRequested?.Invoke(
+                            this));
+
+        _contextMenuWindow =
+            new CreatureContextMenuWindow(
+                items,
+                _uiScale);
+
+        _contextMenuWindow.ReadyToPosition +=
+            menu =>
+            {
+                PositionContextMenu(
+                    menu);
+            };
+
+        _contextMenuWindow.Closed +=
+            (_, _) =>
+            {
+                _contextMenuWindow = null;
+                _isContextMenuOpen = false;
+            };
+
+        _contextMenuWindow.Show();
+    }
+
     private void OnMouseLeftButtonDown(
         object sender,
         MouseButtonEventArgs e)
@@ -210,6 +388,15 @@ public partial class CreatureWindow : Window
         _creature.OnPickedUp();
 
         CaptureMouse();
+    }
+
+    private void OnMouseRightButtonDown(
+        object sender,
+        MouseButtonEventArgs e)
+    {
+        e.Handled = true;
+
+        OpenContextMenu();
     }
 
     private void OnMouseMove(object sender, System.Windows.Input.MouseEventArgs e)
