@@ -528,6 +528,57 @@ public partial class FieldGuideMenu : Window
         UpdateRestingTabs();
     }
 
+    public async Task NavigateToCreature(
+        string creatureId)
+    {
+        if (!_creatureEntries.ContainsKey(
+                creatureId))
+        {
+            return;
+        }
+
+        FieldGuideFamilyEntry? family =
+            _familiesByTab.Values
+                .FirstOrDefault(
+                    entry =>
+                        entry.CreatureIds.Contains(
+                            creatureId));
+
+        if (family is null)
+            return;
+
+        if (_isOpening)
+        {
+            while (_isOpening)
+            {
+                await Task.Delay(25);
+            }
+        }
+
+        if (!_isBookOpen)
+        {
+            await PlayOpeningAnimationAsync();
+            _isBookOpen = true;
+        }
+
+        _currentTabIndex =
+            family.Order;
+
+        _currentTab =
+            family.Tab;
+
+        _currentCreatureId =
+            creatureId;
+
+        FrontPageCanvas.Visibility =
+            Visibility.Collapsed;
+
+        UpdateRestingTabs();
+
+        ShowCreatureEntry(
+            creatureId);
+    }
+
     private WpfImage CreateTabImage(
         FieldGuideTab tab)
     {

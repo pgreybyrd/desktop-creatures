@@ -5,6 +5,7 @@ using Desktop_Creatures.Graphics;
 using Desktop_Creatures.Persistence;
 using Desktop_Creatures.Tools.Images;
 using Desktop_Creatures.UI.CreatureRoster;
+using Desktop_Creatures.UI.RightClick;
 using Desktop_Creatures.Utilities;
 using Desktop_Creatures.Windowing;
 using Desktop_Creatures.World;
@@ -454,16 +455,31 @@ public partial class MainWindow : Window
         object sender,
         RoutedEventArgs e)
     {
+        OpenFieldGuide();
+    }
+
+    private void OpenFieldGuideToCreature(
+        string creatureId)
+    {
+        OpenFieldGuide();
+
+        _fieldGuideMenu?.NavigateToCreature(
+            creatureId);
+    }
+
+    private void OpenFieldGuide()
+    {
         if (_fieldGuideMenu is not null)
         {
             _fieldGuideMenu.Activate();
             return;
         }
 
-        _fieldGuideMenu = new FieldGuideMenu(
-            creatureId =>
-                SpawnCreature(creatureId),
-            _uiScale);
+        _fieldGuideMenu =
+            new FieldGuideMenu(
+                creatureId =>
+                    SpawnCreature(creatureId),
+                _uiScale);
 
         _fieldGuideMenu.Left =
             Left +
@@ -569,6 +585,9 @@ public partial class MainWindow : Window
         creatureWindow.PutAwayRequested +=
             PutAwayCreature;
 
+        creatureWindow.ContextActionRequested +=
+            HandleCreatureContextAction;
+
         creatureWindow.SetDisplayScale(
             _settings.CreatureDisplayScale);
 
@@ -580,6 +599,22 @@ public partial class MainWindow : Window
 
         _creatureWindows.Add(
             creatureWindow);
+    }
+
+    private void HandleCreatureContextAction(
+        CreatureWindow creatureWindow,
+        CreatureContextMenuAction action)
+    {
+        Creature creature =
+            creatureWindow.GetCreature();
+
+        switch (action)
+        {
+            case CreatureContextMenuAction.FieldGuide:
+                OpenFieldGuideToCreature(
+                    creature.CreatureType);
+                break;
+        }
     }
 
     private bool IsCreatureSpawned(
@@ -635,6 +670,9 @@ public partial class MainWindow : Window
 
         creatureWindow.PutAwayRequested -=
             PutAwayCreature;
+
+        creatureWindow.ContextActionRequested -=
+            HandleCreatureContextAction;
 
         _creatureWindows.Remove(
             creatureWindow);

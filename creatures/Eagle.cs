@@ -46,6 +46,7 @@ namespace Desktop_Creatures.Creatures
                 "Eagle requires PerchSettings.");
 
         public Eagle(
+            CreatureDefinition definition,
             double startX,
             double startY,
             List<PointOfInterest> pointsOfInterest,
@@ -56,6 +57,7 @@ namespace Desktop_Creatures.Creatures
             Guid? id = null,
             string? name = null)
             : base(
+                definition,
                 settings,
                 pointOfInterestManager,
                 surfaceManager,

@@ -25,6 +25,7 @@ namespace Desktop_Creatures.Creatures
             CreatureAppearanceTraits? appearanceTraits = null,
             string? appearanceId = null)
             : base(
+                definition,
                 settings,
                 pointOfInterestManager,
                 surfaceManager,

@@ -30,6 +30,7 @@ public static class CreatureFactory
 
             "eagle" =>
                 new Eagle(
+                    definition,
                     context.X,
                     context.Y,
                     services.PointsOfInterest,

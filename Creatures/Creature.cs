@@ -36,6 +36,7 @@ public abstract class Creature
 {
     public Guid Id { get; }
     public string Name { get; protected set; }
+    public string CreatureType { get; }
     public CreatureAppearance? Appearance { get; protected set; }
     public string? AppearanceId { get; protected set; }
     public CreatureAppearanceTraits? AppearanceTraits =>
@@ -143,6 +144,7 @@ public abstract class Creature
     protected int AnimationTick;
 
     protected Creature(
+        CreatureDefinition definition,
         CreatureSettings settings,
         PointOfInterestManager pointOfInterestManager,
         SurfaceManager surfaceManager,
@@ -151,6 +153,7 @@ public abstract class Creature
     {
         Id = id ?? Guid.NewGuid();
         Name = name ?? string.Empty;
+        CreatureType = definition.Id;
 
         Settings = settings;
         PointOfInterestManager = pointOfInterestManager;
