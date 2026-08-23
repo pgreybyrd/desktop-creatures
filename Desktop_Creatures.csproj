@@ -287,40 +287,12 @@
     <None Remove="Assets\UI\menu_title.png" />
     <None Remove="Assets\UI\RightClick\buttons.json" />
     <None Remove="Assets\UI\RightClick\buttons.png" />
-    <None Remove="Assets\UI\RightClick\Buttons\button-hover.png" />
-    <None Remove="Assets\UI\RightClick\Buttons\button-pressed.png" />
-    <None Remove="Assets\UI\RightClick\Buttons\button.png" />
-    <None Remove="Assets\UI\RightClick\Buttons\buttons.json" />
-    <None Remove="Assets\UI\RightClick\Buttons\buttons.png" />
     <None Remove="Assets\UI\RightClick\Icons.json" />
     <None Remove="Assets\UI\RightClick\icons.png" />
-    <None Remove="Assets\UI\RightClick\Icons\icon-appearance.png" />
-    <None Remove="Assets\UI\RightClick\Icons\icon-breeding.png" />
-    <None Remove="Assets\UI\RightClick\Icons\icon-favorite.png" />
-    <None Remove="Assets\UI\RightClick\Icons\icon-fieldguide.png" />
-    <None Remove="Assets\UI\RightClick\Icons\icon-gohome.png" />
-    <None Remove="Assets\UI\RightClick\Icons\icon-pet.png" />
-    <None Remove="Assets\UI\RightClick\Icons\icon-putaway.png" />
-    <None Remove="Assets\UI\RightClick\Icons\icon-rename.png" />
-    <None Remove="Assets\UI\RightClick\Icons\Icons.json" />
-    <None Remove="Assets\UI\RightClick\Icons\icons.png" />
     <None Remove="Assets\UI\RightClick\menu.json" />
     <None Remove="Assets\UI\RightClick\menu.png" />
-    <None Remove="Assets\UI\RightClick\Menu\menu-bottom.png" />
-    <None Remove="Assets\UI\RightClick\Menu\menu-divider.png" />
-    <None Remove="Assets\UI\RightClick\Menu\menu-middle.png" />
-    <None Remove="Assets\UI\RightClick\Menu\menu-top.png" />
     <None Remove="Assets\UI\RightClick\text.json" />
     <None Remove="Assets\UI\RightClick\text.png" />
-    <None Remove="Assets\UI\RightClick\Text\text-appearance.png" />
-    <None Remove="Assets\UI\RightClick\Text\text-breeding.png" />
-    <None Remove="Assets\UI\RightClick\Text\text-delete.png" />
-    <None Remove="Assets\UI\RightClick\Text\text-favorite.png" />
-    <None Remove="Assets\UI\RightClick\Text\text-fieldguide.png" />
-    <None Remove="Assets\UI\RightClick\Text\text-gohome.png" />
-    <None Remove="Assets\UI\RightClick\Text\text-pet.png" />
-    <None Remove="Assets\UI\RightClick\Text\text-putaway.png" />
-    <None Remove="Assets\UI\RightClick\Text\text-rename.png" />
     <None Remove="Assets\UI\Settings\Buttons\exit_hover.png" />
     <None Remove="Assets\UI\Settings\Buttons\exit_pressed.png" />
     <None Remove="Assets\UI\Settings\Buttons\scale_1x.png" />
@@ -895,43 +867,10 @@
     <Content Include="Assets\UI\MainMenu\version.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\UI\RightClick\Buttons\button-hover.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\RightClick\Buttons\button-pressed.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\RightClick\Buttons\button.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Assets\UI\RightClick\buttons.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\RightClick\buttons.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\RightClick\Icons\icon-appearance.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\RightClick\Icons\icon-breeding.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\RightClick\Icons\icon-favorite.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\RightClick\Icons\icon-fieldguide.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\RightClick\Icons\icon-gohome.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\RightClick\Icons\icon-pet.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\RightClick\Icons\icon-putaway.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\RightClick\Icons\icon-rename.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\RightClick\icons.json">
@@ -946,46 +885,10 @@
     <Content Include="Assets\UI\RightClick\menu.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\UI\RightClick\Menu\menu-bottom.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\RightClick\Menu\menu-divider.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\RightClick\Menu\menu-middle.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\RightClick\Menu\menu-top.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Assets\UI\RightClick\text.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\RightClick\text.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\RightClick\Text\text-appearance.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\RightClick\Text\text-breeding.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\RightClick\Text\text-favorite.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\RightClick\Text\text-fieldguide.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\RightClick\Text\text-gohome.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\RightClick\Text\text-pet.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\RightClick\Text\text-putaway.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\RightClick\Text\text-rename.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\Settings\Buttons\exit.png">
