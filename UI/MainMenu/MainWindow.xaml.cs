@@ -683,7 +683,7 @@ public partial class MainWindow : Window
         _creatureRosterWindow.Left =
             Left +
             Width +
-            (8 * _uiScale);
+            (-3 * _uiScale);
 
         _creatureRosterWindow.Top =
             Top +
@@ -938,7 +938,7 @@ public partial class MainWindow : Window
         _settingsWindow.Left =
             Left -
             _settingsWindow.Width -
-            (8 * _uiScale);
+            (-20 * _uiScale);
 
         _settingsWindow.Top =
             Top +

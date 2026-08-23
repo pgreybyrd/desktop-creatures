@@ -80,25 +80,6 @@ public partial class CreatureWindow : Window
         };
     }
 
-    private ContextMenu CreateContextMenu()
-    {
-        var menu = new ContextMenu();
-
-        var putAwayItem = new MenuItem
-        {
-            Header = "Put Away"
-        };
-
-        putAwayItem.Click += (_, _) =>
-        {
-            PutAwayRequested?.Invoke(this);
-        };
-
-        menu.Items.Add(putAwayItem);
-
-        return menu;
-    }
-
     public void UpdateCreature()
     {
         if (_isDragging)
@@ -306,6 +287,8 @@ public partial class CreatureWindow : Window
     private void OpenContextMenu()
     {
         _contextMenuWindow?.Close();
+
+        _isContextMenuOpen = true;
 
         IReadOnlyList<
             CreatureContextMenuItem> items =

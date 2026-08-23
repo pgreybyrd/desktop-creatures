@@ -36,7 +36,7 @@
                MouseLeftButtonUp="Exit_MouseUp"/>
 
         <Border
-            Canvas.Top="0"
+            Canvas.Top="24"
             Width="112"
             Height="36"
             Background="Transparent"
