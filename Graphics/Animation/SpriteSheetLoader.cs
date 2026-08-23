@@ -110,7 +110,6 @@ public static class SpriteSheetLoader
             animations);
     }
 
-
     private static List<SpriteFrame> BuildFrames(
         BitmapSource sheetImage,
         SpriteSheetMetadata metadata)
@@ -325,7 +324,6 @@ public static class SpriteSheetLoader
     }
 }
 
-
 // ============================================================
 // Runtime sprite-sheet model
 // ============================================================
@@ -340,6 +338,10 @@ public sealed class SpriteSheet
         Animations
     { get; }
 
+    private readonly IReadOnlyDictionary<
+        string,
+        SpriteFrame> _framesByName;
+
     internal SpriteSheet(
         BitmapSource image,
         IReadOnlyList<SpriteFrame> frames,
@@ -348,6 +350,36 @@ public sealed class SpriteSheet
         Image = image;
         Frames = frames;
         Animations = animations;
+
+        _framesByName =
+            frames.ToDictionary(
+                frame => frame.Name,
+                StringComparer.OrdinalIgnoreCase);
+    }
+
+    public SpriteFrame GetFrame(
+        string name)
+    {
+        if (!_framesByName.TryGetValue(
+                name,
+                out SpriteFrame? frame))
+        {
+            throw new KeyNotFoundException(
+                $"Sprite frame '{name}' was not found. " +
+                $"Available frames: " +
+                $"{string.Join(", ", _framesByName.Keys)}");
+        }
+
+        return frame;
+    }
+
+    public bool TryGetFrame(
+        string name,
+        out SpriteFrame? frame)
+    {
+        return _framesByName.TryGetValue(
+            name,
+            out frame);
     }
 
     public SpriteAnimation GetAnimation(
@@ -376,7 +408,6 @@ public sealed class SpriteSheet
     }
 }
 
-
 public sealed class SpriteAnimation
 {
     public string Name { get; }
@@ -394,7 +425,6 @@ public sealed class SpriteAnimation
         Frames = frames;
     }
 }
-
 
 public sealed class SpriteFrame
 {
@@ -416,7 +446,6 @@ public sealed class SpriteFrame
     }
 }
 
-
 // ============================================================
 // JSON metadata model
 //
@@ -433,7 +462,6 @@ internal sealed class SpriteSheetMetadata
     [JsonPropertyName("meta")]
     public SpriteSheetMetaData Meta { get; set; } = new();
 }
-
 
 internal sealed class SpriteSheetFrameData
 {
@@ -453,7 +481,6 @@ internal sealed class SpriteSheetFrameData
     public int Duration { get; set; }
 }
 
-
 internal readonly record struct FrameRectangle
 {
     [JsonPropertyName("x")]
@@ -469,7 +496,6 @@ internal readonly record struct FrameRectangle
     public int Height { get; init; }
 }
 
-
 internal sealed class SpriteSheetMetaData
 {
     [JsonPropertyName("image")]
@@ -482,7 +508,6 @@ internal sealed class SpriteSheetMetaData
     public List<SpriteSheetTagData> FrameTags { get; set; } = [];
 }
 
-
 internal readonly record struct SpriteSheetSize
 {
     [JsonPropertyName("w")]
@@ -491,7 +516,6 @@ internal readonly record struct SpriteSheetSize
     [JsonPropertyName("h")]
     public int Height { get; init; }
 }
-
 
 internal sealed class SpriteSheetTagData
 {

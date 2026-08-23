@@ -288,6 +288,8 @@
     <None Remove="Assets\UI\RightClick\Buttons\button-hover.png" />
     <None Remove="Assets\UI\RightClick\Buttons\button-pressed.png" />
     <None Remove="Assets\UI\RightClick\Buttons\button.png" />
+    <None Remove="Assets\UI\RightClick\Buttons\buttons.json" />
+    <None Remove="Assets\UI\RightClick\Buttons\buttons.png" />
     <None Remove="Assets\UI\RightClick\Icons\icon-appearance.png" />
     <None Remove="Assets\UI\RightClick\Icons\icon-breeding.png" />
     <None Remove="Assets\UI\RightClick\Icons\icon-favorite.png" />
@@ -892,6 +894,12 @@
     <Content Include="Assets\UI\RightClick\Buttons\button.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\UI\RightClick\Buttons\buttons.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\RightClick\Buttons\buttons.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\UI\RightClick\Icons\icon-appearance.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1284,6 +1292,7 @@
     <Folder Include="Assets\Creatures\Feline\Ocelot\Sounds\" />
     <Folder Include="Assets\Items\" />
     <Folder Include="Assets\POI\WaterDish\" />
+    <Folder Include="Graphics\Sprites\" />
     <Folder Include="Logs\" />
     <Folder Include="Persistence\Migrations\Legacy\" />
     <Folder Include="Rendering\Fonts\" />

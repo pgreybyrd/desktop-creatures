@@ -1,4 +1,5 @@
 ﻿using Desktop_Creatures.Audio;
+using Desktop_Creatures.Graphics.Animation;
 using Desktop_Creatures.Tools.Images;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,7 +9,6 @@ using System.Windows.Media.Imaging;
 using Cursors = System.Windows.Input.Cursors;
 using Image = System.Windows.Controls.Image;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
-using Point = System.Windows.Point;
 
 namespace Desktop_Creatures.UI.RightClick
 {
@@ -32,6 +32,8 @@ namespace Desktop_Creatures.UI.RightClick
 
         private readonly IReadOnlyList<
             CreatureContextMenuItem> _items;
+
+        private readonly SpriteSheet _buttonSheet;
 
         private readonly BitmapSource _buttonNormal;
         private readonly BitmapSource _buttonHover;
@@ -60,18 +62,28 @@ namespace Desktop_Creatures.UI.RightClick
                     2,
                     uiScale - 1);
 
+            _buttonSheet =
+                SpriteSheetLoader.Load(
+                    "Assets/UI/RightClick/Buttons/buttons.png",
+                    "Assets/UI/RightClick/Buttons/buttons.json");
 
             _buttonNormal =
-                Load(
-                    "Buttons/button.png");
+                _buttonSheet
+                    .GetFrame(
+                        "normal")
+                    .Image;
 
             _buttonHover =
-                Load(
-                    "Buttons/button-hover.png");
+                _buttonSheet
+                    .GetFrame(
+                        "hover")
+                    .Image;
 
             _buttonPressed =
-                Load(
-                    "Buttons/button-pressed.png");
+                _buttonSheet
+                    .GetFrame(
+                        "pressed")
+                    .Image;
 
             _menuTop =
                 Load(
