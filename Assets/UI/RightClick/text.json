@@ -1,0 +1,98 @@
+{ "frames": [
+   {
+    "filename": "appearance",
+    "frame": { "x": 0, "y": 0, "w": 64, "h": 7 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 7 },
+    "sourceSize": { "w": 64, "h": 7 },
+    "duration": 100
+   },
+   {
+    "filename": "breeding",
+    "frame": { "x": 64, "y": 0, "w": 64, "h": 7 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 7 },
+    "sourceSize": { "w": 64, "h": 7 },
+    "duration": 100
+   },
+   {
+    "filename": "favorite",
+    "frame": { "x": 128, "y": 0, "w": 64, "h": 7 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 7 },
+    "sourceSize": { "w": 64, "h": 7 },
+    "duration": 100
+   },
+   {
+    "filename": "fieldguide",
+    "frame": { "x": 192, "y": 0, "w": 64, "h": 7 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 7 },
+    "sourceSize": { "w": 64, "h": 7 },
+    "duration": 100
+   },
+   {
+    "filename": "gohome",
+    "frame": { "x": 256, "y": 0, "w": 64, "h": 7 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 7 },
+    "sourceSize": { "w": 64, "h": 7 },
+    "duration": 100
+   },
+   {
+    "filename": "pet",
+    "frame": { "x": 320, "y": 0, "w": 64, "h": 7 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 7 },
+    "sourceSize": { "w": 64, "h": 7 },
+    "duration": 100
+   },
+   {
+    "filename": "putaway",
+    "frame": { "x": 384, "y": 0, "w": 64, "h": 7 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 7 },
+    "sourceSize": { "w": 64, "h": 7 },
+    "duration": 100
+   },
+   {
+    "filename": "rename",
+    "frame": { "x": 448, "y": 0, "w": 64, "h": 7 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 7 },
+    "sourceSize": { "w": 64, "h": 7 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.3.18.1-x64",
+  "image": "text.png",
+  "format": "RGBA8888",
+  "size": { "w": 512, "h": 7 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "appearance", "from": 0, "to": 0, "direction": "forward", "color": "#000000ff" },
+   { "name": "breeding", "from": 1, "to": 1, "direction": "forward", "color": "#000000ff" },
+   { "name": "favorite", "from": 2, "to": 2, "direction": "forward", "color": "#000000ff" },
+   { "name": "fieldguide", "from": 3, "to": 3, "direction": "forward", "color": "#000000ff" },
+   { "name": "gohome", "from": 4, "to": 4, "direction": "forward", "color": "#000000ff" },
+   { "name": "pet", "from": 5, "to": 5, "direction": "forward", "color": "#000000ff" },
+   { "name": "putaway", "from": 6, "to": 6, "direction": "forward", "color": "#000000ff" },
+   { "name": "rename", "from": 7, "to": 7, "direction": "forward", "color": "#000000ff" }
+  ],
+  "layers": [
+   { "name": "Layer", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}

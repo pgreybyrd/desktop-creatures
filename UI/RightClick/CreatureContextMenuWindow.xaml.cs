@@ -34,6 +34,9 @@ namespace Desktop_Creatures.UI.RightClick
             CreatureContextMenuItem> _items;
 
         private readonly SpriteSheet _buttonSheet;
+        private readonly SpriteSheet _iconSheet;
+        private readonly SpriteSheet _textSheet;
+        private readonly SpriteSheet _menuSheet;
 
         private readonly BitmapSource _buttonNormal;
         private readonly BitmapSource _buttonHover;
@@ -64,42 +67,47 @@ namespace Desktop_Creatures.UI.RightClick
 
             _buttonSheet =
                 SpriteSheetLoader.Load(
-                    "Assets/UI/RightClick/Buttons/buttons.png",
-                    "Assets/UI/RightClick/Buttons/buttons.json");
+                    "Assets/UI/RightClick/buttons.png",
+                    "Assets/UI/RightClick/buttons.json");
 
             _buttonNormal =
-                _buttonSheet
-                    .GetFrame(
-                        "normal")
-                    .Image;
+                _buttonSheet.GetFrame("normal").Image;
 
             _buttonHover =
-                _buttonSheet
-                    .GetFrame(
-                        "hover")
-                    .Image;
+                _buttonSheet.GetFrame("hover").Image;
 
             _buttonPressed =
-                _buttonSheet
-                    .GetFrame(
-                        "pressed")
-                    .Image;
+                _buttonSheet.GetFrame("pressed").Image;
+
+
+            _menuSheet =
+                SpriteSheetLoader.Load(
+                    "Assets/UI/RightClick/menu.png",
+                    "Assets/UI/RightClick/menu.json");
 
             _menuTop =
-                Load(
-                    "Menu/menu-top.png");
+                _menuSheet.GetFrame("top").Image;
 
             _menuMiddle =
-                Load(
-                    "Menu/menu-middle.png");
+                _menuSheet.GetFrame("middle").Image;
 
             _menuBottom =
-                Load(
-                    "Menu/menu-bottom.png");
+                _menuSheet.GetFrame("bottom").Image;
 
             _menuDivider =
-                Load(
-                    "Menu/menu-divider.png");
+                _menuSheet.GetFrame("divider").Image;
+
+
+            _iconSheet =
+                SpriteSheetLoader.Load(
+                    "Assets/UI/RightClick/icons.png",
+                    "Assets/UI/RightClick/icons.json");
+
+            _textSheet =
+                SpriteSheetLoader.Load(
+                    "Assets/UI/RightClick/text.png",
+                    "Assets/UI/RightClick/text.json");
+
 
             BuildMenu();
 
@@ -107,13 +115,6 @@ namespace Desktop_Creatures.UI.RightClick
                 new ScaleTransform(
                     _menuScale,
                     _menuScale);
-        }
-
-        private static BitmapSource Load(
-            string relativePath)
-        {
-            return AssetImageLoader.Load(
-                $"Assets/UI/RightClick/{relativePath}");
         }
 
         private void BuildMenu()
@@ -199,12 +200,14 @@ namespace Desktop_Creatures.UI.RightClick
                 rowY + ButtonY);
 
             BitmapSource icon =
-                Load(
-                    $"Icons/icon-{item.AssetName}.png");
+                _iconSheet
+                    .GetFrame(item.AssetName)
+                    .Image;
 
             BitmapSource text =
-                Load(
-                    $"Text/text-{item.AssetName}.png");
+                _textSheet
+                    .GetFrame(item.AssetName)
+                    .Image;
 
             var iconImage =
                 new Image

@@ -58,7 +58,7 @@ A central window for managing individual creatures.
 - [x] Default placement to the right of Main Menu
 
 - [ ] Creature portrait
-- [ ] Creature name
+- [x] Creature name
 - [ ] Rename
 - [x] Favorite
 - [x] Spawn / Put Away
