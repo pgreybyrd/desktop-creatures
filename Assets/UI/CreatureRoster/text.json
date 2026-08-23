@@ -1,0 +1,48 @@
+{ "frames": [
+   {
+    "filename": "putaway",
+    "frame": { "x": 0, "y": 0, "w": 49, "h": 21 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 49, "h": 21 },
+    "sourceSize": { "w": 49, "h": 21 },
+    "duration": 100
+   },
+   {
+    "filename": "rename",
+    "frame": { "x": 49, "y": 0, "w": 49, "h": 21 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 49, "h": 21 },
+    "sourceSize": { "w": 49, "h": 21 },
+    "duration": 100
+   },
+   {
+    "filename": "spawn",
+    "frame": { "x": 98, "y": 0, "w": 49, "h": 21 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 49, "h": 21 },
+    "sourceSize": { "w": 49, "h": 21 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.3.18.1-x64",
+  "image": "text.png",
+  "format": "RGBA8888",
+  "size": { "w": 147, "h": 21 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "putaway", "from": 0, "to": 0, "direction": "forward", "color": "#000000ff" },
+   { "name": "rename", "from": 1, "to": 1, "direction": "forward", "color": "#000000ff" },
+   { "name": "spawn", "from": 2, "to": 2, "direction": "forward", "color": "#000000ff" }
+  ],
+  "layers": [
+   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}

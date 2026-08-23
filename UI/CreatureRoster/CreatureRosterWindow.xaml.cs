@@ -1,5 +1,6 @@
 ﻿using Desktop_Creatures.Audio;
 using Desktop_Creatures.Graphics;
+using Desktop_Creatures.Graphics.Animation;
 using Desktop_Creatures.Persistence;
 using Desktop_Creatures.Tools.Images;
 using System.Windows;
@@ -25,6 +26,14 @@ namespace Desktop_Creatures.UI.CreatureRoster
 
         private readonly int _uiScale;
 
+        private readonly SpriteSheet _buttonSheet;
+        private readonly SpriteSheet _textSheet;
+        private readonly SpriteSheet _favoriteSheet;
+        private readonly SpriteSheet _arrowUpSheet;
+        private readonly SpriteSheet _arrowDownSheet;
+        private readonly SpriteSheet _scrollThumbSheet;
+        private readonly SpriteSheet _exitSheet;
+
         private readonly BitmapSource _buttonNormal;
         private readonly BitmapSource _buttonHover;
         private readonly BitmapSource _buttonPressed;
@@ -44,7 +53,9 @@ namespace Desktop_Creatures.UI.CreatureRoster
         private readonly BitmapSource _arrowDownHover;
         private readonly BitmapSource _arrowDownPressed;
 
-        private readonly UiButtonImages _exitImages = null!;
+        private readonly BitmapSource _exitNormal;
+        private readonly BitmapSource _exitHover;
+        private readonly BitmapSource _exitPressed;
 
         private readonly BitmapSource _scrollThumbMiddle;
 
@@ -91,79 +102,96 @@ namespace Desktop_Creatures.UI.CreatureRoster
                 RosterCanvas.Height *
                 _uiScale;
 
-            _exitImages = LoadButtonImages("exit");
+            _buttonSheet =
+                SpriteSheetLoader.Load(
+                    "Assets/UI/CreatureRoster/buttons.png",
+                    "Assets/UI/CreatureRoster/buttons.json");
 
             _buttonNormal =
-                AssetImageLoader.Load(
-                    "Assets/UI/CreatureRoster/button_normal.png");
-
+                _buttonSheet.GetFrame("normal").Image;
             _buttonHover =
-                AssetImageLoader.Load(
-                    "Assets/UI/CreatureRoster/button_hover.png");
-
+                _buttonSheet.GetFrame("hover").Image;
             _buttonPressed =
-                AssetImageLoader.Load(
-                    "Assets/UI/CreatureRoster/button_pressed.png");
+                _buttonSheet.GetFrame("pressed").Image;
+
+
+            _textSheet =
+                SpriteSheetLoader.Load(
+                    "Assets/UI/CreatureRoster/text.png",
+                    "Assets/UI/CreatureRoster/text.json");
 
             _spawnText =
-                AssetImageLoader.Load(
-                    "Assets/UI/CreatureRoster/text_spawn.png");
-
+                _textSheet.GetFrame("spawn").Image;
             _putAwayText =
-                AssetImageLoader.Load(
-                    "Assets/UI/CreatureRoster/text_put_away.png");
-
+                _textSheet.GetFrame("putaway").Image;
             _renameText =
-                AssetImageLoader.Load(
-                    "Assets/UI/CreatureRoster/text_rename.png");
+                _textSheet.GetFrame("rename").Image;
+
+
+            _favoriteSheet =
+                SpriteSheetLoader.Load(
+                    "Assets/UI/CreatureRoster/favorite.png",
+                    "Assets/UI/CreatureRoster/favorite.json");
 
             _favoriteOff =
-                AssetImageLoader.Load(
-                    "Assets/UI/CreatureRoster/favorite_off.png");
-
+                _favoriteSheet.GetFrame("off").Image;
             _favoriteOn =
-                AssetImageLoader.Load(
-                    "Assets/UI/CreatureRoster/favorite_on.png");
+                _favoriteSheet.GetFrame("on").Image;
+
+
+            _arrowUpSheet =
+                SpriteSheetLoader.Load(
+                    "Assets/UI/CreatureRoster/arrowup.png",
+                    "Assets/UI/CreatureRoster/arrowup.json");
 
             _arrowUpNormal =
-                AssetImageLoader.Load(
-                    "Assets/UI/CreatureRoster/arrow_up.png");
-
+                _arrowUpSheet.GetFrame("normal").Image;
             _arrowUpHover =
-                AssetImageLoader.Load(
-                    "Assets/UI/CreatureRoster/arrow_up-hover.png");
-
+                _arrowUpSheet.GetFrame("hover").Image;
             _arrowUpPressed =
-                AssetImageLoader.Load(
-                    "Assets/UI/CreatureRoster/arrow_up-pressed.png");
+                _arrowUpSheet.GetFrame("pressed").Image;
+
+
+            _arrowDownSheet =
+                SpriteSheetLoader.Load(
+                    "Assets/UI/CreatureRoster/arrowdown.png",
+                    "Assets/UI/CreatureRoster/arrowdown.json");
 
             _arrowDownNormal =
-                AssetImageLoader.Load(
-                    "Assets/UI/CreatureRoster/arrow_down.png");
-
+                _arrowDownSheet.GetFrame("normal").Image;
             _arrowDownHover =
-                AssetImageLoader.Load(
-                    "Assets/UI/CreatureRoster/arrow_down-hover.png");
-
+                _arrowDownSheet.GetFrame("hover").Image;
             _arrowDownPressed =
-                AssetImageLoader.Load(
-                    "Assets/UI/CreatureRoster/arrow_down-pressed.png");
+                _arrowDownSheet.GetFrame("pressed").Image;
+
+
+            _scrollThumbSheet =
+                SpriteSheetLoader.Load(
+                    "Assets/UI/CreatureRoster/scrollthumb.png",
+                    "Assets/UI/CreatureRoster/scrollthumb.json");
 
             ScrollThumbTop.Source =
-                AssetImageLoader.Load(
-                    "Assets/UI/CreatureRoster/scroll_thumb-top.png");
-
+                _scrollThumbSheet.GetFrame("top").Image;
             _scrollThumbMiddle =
-                AssetImageLoader.Load(
-                    "Assets/UI/CreatureRoster/scroll_thumb-middle.png");
-
+                _scrollThumbSheet.GetFrame("middle").Image;
             ScrollThumbBottom.Source =
-                AssetImageLoader.Load(
-                    "Assets/UI/CreatureRoster/scroll_thumb-bottom.png");
+                _scrollThumbSheet.GetFrame("bottom").Image;
 
-            ExitImage.Source =
-                AssetImageLoader.Load(
-                    "Assets/UI/Settings/Buttons/exit.png");
+
+            _exitSheet =
+                SpriteSheetLoader.Load(
+                    "Assets/UI/CreatureRoster/exit.png",
+                    "Assets/UI/CreatureRoster/exit.json");
+
+            _exitNormal =
+                _exitSheet.GetFrame("normal").Image;
+            _exitHover =
+                _exitSheet.GetFrame("hover").Image;
+            _exitPressed =
+                _exitSheet.GetFrame("pressed").Image;
+
+            ExitImage.Source = 
+                _exitNormal;
 
             RenameTextImage.Source =
                 _renameText;
@@ -175,14 +203,6 @@ namespace Desktop_Creatures.UI.CreatureRoster
             {
                 RefreshCreature();
             }
-        }
-
-        private static UiButtonImages LoadButtonImages(string buttonName)
-        {
-            return new UiButtonImages(
-                AssetImageLoader.Load($"Assets/UI/Settings/Buttons/{buttonName}.png"),
-                AssetImageLoader.Load($"Assets/UI/Settings/Buttons/{buttonName}_hover.png"),
-                AssetImageLoader.Load($"Assets/UI/Settings/Buttons/{buttonName}_pressed.png"));
         }
 
         private void RefreshCreature()
@@ -556,14 +576,14 @@ namespace Desktop_Creatures.UI.CreatureRoster
            object sender,
            WpfMouseEventArgs e)
         {
-            ExitImage.Source = _exitImages.Hover;
+            ExitImage.Source = _exitHover;
         }
 
         private void Exit_MouseLeave(
             object sender,
             WpfMouseEventArgs e)
         {
-            ExitImage.Source = _exitImages.Normal;
+            ExitImage.Source = _exitNormal;
         }
 
         private void Exit_MouseDown(
@@ -572,14 +592,14 @@ namespace Desktop_Creatures.UI.CreatureRoster
         {
             UiSounds.PlayButtonClick();
 
-            ExitImage.Source = _exitImages.Pressed;
+            ExitImage.Source = _exitPressed;
         }
 
         private void Exit_MouseUp(
             object sender,
             WpfMouseButtonEventArgs e)
         {
-            ExitImage.Source = _exitImages.Hover;
+            ExitImage.Source = _exitHover;
 
             Close();
         }
