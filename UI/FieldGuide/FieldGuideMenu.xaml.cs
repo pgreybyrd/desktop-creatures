@@ -777,6 +777,19 @@ public partial class FieldGuideMenu : Window
         }
     }
 
+    public async Task CloseWithAnimationAsync()
+    {
+        if (_isOpening || _isPageTurning)
+            return;
+
+        if (_isBookOpen)
+        {
+            await PlayClosingAnimationAsync();
+        }
+
+        Close();
+    }
+
     private async void CloseFieldGuide_Click(
         object sender,
         RoutedEventArgs e)
@@ -913,13 +926,13 @@ public partial class FieldGuideMenu : Window
             _closeButtonHover;
     }
 
-    private void ExitFieldGuide_Click(
+    private async void ExitFieldGuide_Click(
         object sender,
         RoutedEventArgs e)
     {
         UiSounds.PlayButtonClick();
 
-        Close();
+        await CloseWithAnimationAsync();
     }
 
     private void ExitFieldGuideButton_MouseEnter(

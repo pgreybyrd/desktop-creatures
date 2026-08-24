@@ -451,13 +451,17 @@ public partial class MainWindow : Window
         }
     }
 
-    private void FieldGuide_Click(
+    private async void FieldGuide_Click(
         object sender,
         RoutedEventArgs e)
     {
+        UiSounds.PlayButtonClick();
+
         if (_fieldGuideMenu is not null)
         {
-            _fieldGuideMenu.Close();
+            await _fieldGuideMenu
+                .CloseWithAnimationAsync();
+
             return;
         }
 
