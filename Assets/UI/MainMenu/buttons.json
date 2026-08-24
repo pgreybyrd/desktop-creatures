@@ -1,0 +1,68 @@
+{
+  "frames": [
+    {
+      "filename": "fieldguide_normal",
+      "frame": { "x": 0, "y": 0, "w": 139, "h": 27 }
+    },
+    {
+      "filename": "fieldguide_hover",
+      "frame": { "x": 139, "y": 0, "w": 139, "h": 27 }
+    },
+    {
+      "filename": "fieldguide_pressed",
+      "frame": { "x": 278, "y": 0, "w": 139, "h": 27 }
+    },
+
+    {
+      "filename": "roster_normal",
+      "frame": { "x": 0, "y": 27, "w": 139, "h": 27 }
+    },
+    {
+      "filename": "roster_hover",
+      "frame": { "x": 139, "y": 27, "w": 139, "h": 27 }
+    },
+    {
+      "filename": "roster_pressed",
+      "frame": { "x": 278, "y": 27, "w": 139, "h": 27 }
+    },
+
+    {
+      "filename": "clear_normal",
+      "frame": { "x": 0, "y": 54, "w": 139, "h": 27 }
+    },
+    {
+      "filename": "clear_hover",
+      "frame": { "x": 139, "y": 54, "w": 139, "h": 27 }
+    },
+    {
+      "filename": "clear_pressed",
+      "frame": { "x": 278, "y": 54, "w": 139, "h": 27 }
+    },
+
+    {
+      "filename": "settings_normal",
+      "frame": { "x": 0, "y": 81, "w": 139, "h": 27 }
+    },
+    {
+      "filename": "settings_hover",
+      "frame": { "x": 139, "y": 81, "w": 139, "h": 27 }
+    },
+    {
+      "filename": "settings_pressed",
+      "frame": { "x": 278, "y": 81, "w": 139, "h": 27 }
+    },
+
+    {
+      "filename": "quit_normal",
+      "frame": { "x": 0, "y": 108, "w": 139, "h": 27 }
+    },
+    {
+      "filename": "quit_hover",
+      "frame": { "x": 139, "y": 108, "w": 139, "h": 27 }
+    },
+    {
+      "filename": "quit_pressed",
+      "frame": { "x": 278, "y": 108, "w": 139, "h": 27 }
+    }
+  ]
+}

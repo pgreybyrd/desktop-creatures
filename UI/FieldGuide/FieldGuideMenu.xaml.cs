@@ -804,6 +804,18 @@ public partial class FieldGuideMenu : Window
 
         _isOpening = true;
 
+        ExitButtonImage.Visibility =
+            Visibility.Collapsed;
+
+        ExitFieldGuideButton.Visibility =
+            Visibility.Collapsed;
+
+        CloseButtonImage.Visibility =
+            Visibility.Collapsed;
+
+        CloseFieldGuideButton.Visibility =
+            Visibility.Collapsed;
+
         _sounds.PlayBookClose();
 
         FrontPageCanvas.Visibility =
@@ -846,11 +858,7 @@ public partial class FieldGuideMenu : Window
             _isOpening = false;
             _isBookOpen = false;
 
-            CloseButtonImage.Visibility =
-                Visibility.Collapsed;
 
-            CloseFieldGuideButton.Visibility =
-                Visibility.Collapsed;
 
             ExitButtonImage.Visibility =
                 Visibility.Visible;
@@ -1165,6 +1173,8 @@ public partial class FieldGuideMenu : Window
         {
             _isOpening = false;
 
+
+
             WindowControlsCanvas.Visibility =
                 Visibility.Visible;
 
@@ -1180,8 +1190,13 @@ public partial class FieldGuideMenu : Window
             BookBaseImage.Visibility =
                 Visibility.Visible;
 
+            LeftTabsCanvas.Visibility =
+                Visibility.Visible;
+
             RightTabsCanvas.Visibility =
-                Visibility.Visible;   
+                Visibility.Visible;
+
+            UpdateRestingTabs();
         }
     }
 
