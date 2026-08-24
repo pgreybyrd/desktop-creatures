@@ -12,12 +12,16 @@
   <ItemGroup>
     <Compile Remove="assets\Eagle\**" />
     <Compile Remove="Assets\UI\FieldGuide\Pages\**" />
+    <Compile Remove="Assets\UI\Settings\Buttons\**" />
     <EmbeddedResource Remove="assets\Eagle\**" />
     <EmbeddedResource Remove="Assets\UI\FieldGuide\Pages\**" />
+    <EmbeddedResource Remove="Assets\UI\Settings\Buttons\**" />
     <None Remove="assets\Eagle\**" />
     <None Remove="Assets\UI\FieldGuide\Pages\**" />
+    <None Remove="Assets\UI\Settings\Buttons\**" />
     <Page Remove="assets\Eagle\**" />
     <Page Remove="Assets\UI\FieldGuide\Pages\**" />
+    <Page Remove="Assets\UI\Settings\Buttons\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -272,12 +276,6 @@
     <None Remove="Assets\UI\MainMenu\Buttons\button_pressed_field_guide.png" />
     <None Remove="Assets\UI\MainMenu\Buttons\button_pressed_settings.png" />
     <None Remove="Assets\UI\MainMenu\Buttons\button_settings.png" />
-    <None Remove="Assets\UI\MainMenu\Buttons\toggle_off.png" />
-    <None Remove="Assets\UI\MainMenu\Buttons\toggle_off_hover.png" />
-    <None Remove="Assets\UI\MainMenu\Buttons\toggle_off_pressed.png" />
-    <None Remove="Assets\UI\MainMenu\Buttons\toggle_on.png" />
-    <None Remove="Assets\UI\MainMenu\Buttons\toggle_on_hover.png" />
-    <None Remove="Assets\UI\MainMenu\Buttons\toggle_on_pressed.png" />
     <None Remove="Assets\UI\MainMenu\version.png" />
     <None Remove="Assets\UI\menu_background.png" />
     <None Remove="Assets\UI\menu_title.png" />
@@ -291,26 +289,6 @@
     <None Remove="Assets\UI\RightClick\text.png" />
     <None Remove="Assets\UI\Settings\buttons.json" />
     <None Remove="Assets\UI\Settings\buttons.png" />
-    <None Remove="Assets\UI\Settings\Buttons\exit_hover.png" />
-    <None Remove="Assets\UI\Settings\Buttons\exit_pressed.png" />
-    <None Remove="Assets\UI\Settings\Buttons\scale_1x.png" />
-    <None Remove="Assets\UI\Settings\Buttons\scale_1x_hover.png" />
-    <None Remove="Assets\UI\Settings\Buttons\scale_1x_pressed.png" />
-    <None Remove="Assets\UI\Settings\Buttons\scale_2x.png" />
-    <None Remove="Assets\UI\Settings\Buttons\scale_2x_hover.png" />
-    <None Remove="Assets\UI\Settings\Buttons\scale_2x_pressed.png" />
-    <None Remove="Assets\UI\Settings\Buttons\scale_3x.png" />
-    <None Remove="Assets\UI\Settings\Buttons\scale_3x_hover.png" />
-    <None Remove="Assets\UI\Settings\Buttons\scale_3x_pressed.png" />
-    <None Remove="Assets\UI\Settings\Buttons\scale_4x.png" />
-    <None Remove="Assets\UI\Settings\Buttons\scale_4x_hover.png" />
-    <None Remove="Assets\UI\Settings\Buttons\scale_4x_pressed.png" />
-    <None Remove="Assets\UI\Settings\Buttons\toggle_off.png" />
-    <None Remove="Assets\UI\Settings\Buttons\toggle_off_hover.png" />
-    <None Remove="Assets\UI\Settings\Buttons\toggle_off_pressed.png" />
-    <None Remove="Assets\UI\Settings\Buttons\toggle_on.png" />
-    <None Remove="Assets\UI\Settings\Buttons\toggle_on_hover.png" />
-    <None Remove="Assets\UI\Settings\Buttons\toggle_on_pressed.png" />
     <None Remove="Assets\UI\Settings\exit.json" />
     <None Remove="Assets\UI\Settings\exit.png" />
     <None Remove="Assets\UI\Settings\settings_window.png" />
@@ -834,24 +812,6 @@
     <Content Include="Assets\UI\MainMenu\Buttons\button_pressed_clear_desktop.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\UI\MainMenu\Buttons\toggle_off.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\MainMenu\Buttons\toggle_off_hover.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\MainMenu\Buttons\toggle_off_pressed.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\MainMenu\Buttons\toggle_on.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\MainMenu\Buttons\toggle_on_hover.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\MainMenu\Buttons\toggle_on_pressed.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Assets\UI\MainMenu\version.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -883,69 +843,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\Settings\buttons.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\Settings\Buttons\exit.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\Settings\Buttons\exit_hover.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\Settings\Buttons\exit_pressed.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\Settings\Buttons\scale_1x.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\Settings\Buttons\scale_1x_hover.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\Settings\Buttons\scale_1x_pressed.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\Settings\Buttons\scale_2x.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\Settings\Buttons\scale_2x_hover.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\Settings\Buttons\scale_2x_pressed.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\Settings\Buttons\scale_3x.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\Settings\Buttons\scale_3x_hover.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\Settings\Buttons\scale_3x_pressed.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\Settings\Buttons\scale_4x.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\Settings\Buttons\scale_4x_hover.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\Settings\Buttons\scale_4x_pressed.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\Settings\Buttons\toggle_off.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\Settings\Buttons\toggle_off_hover.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\Settings\Buttons\toggle_off_pressed.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\Settings\Buttons\toggle_on.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\Settings\Buttons\toggle_on_hover.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\Settings\Buttons\toggle_on_pressed.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\Settings\exit.json">
@@ -1122,25 +1019,10 @@
     <Content Include="Assets\UI\FieldGuide\Common\tabs.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\UI\MainMenu\Buttons\button_always_on_top.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\MainMenu\Buttons\button_always_on_top_off.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\MainMenu\Buttons\button_always_on_top_on.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Assets\UI\MainMenu\Buttons\button_exit.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\MainMenu\Buttons\button_field_guide.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\MainMenu\Buttons\button_hover_always_on_top_off.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\MainMenu\Buttons\button_hover_always_on_top_on.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\MainMenu\Buttons\button_hover_exit.png">
@@ -1162,12 +1044,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\MainMenu\Buttons\button_minimize.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\MainMenu\Buttons\button_pressed_always_on_top_off.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\MainMenu\Buttons\button_pressed_always_on_top_on.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\MainMenu\Buttons\button_pressed_exit.png">

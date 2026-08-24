@@ -455,6 +455,12 @@ public partial class MainWindow : Window
         object sender,
         RoutedEventArgs e)
     {
+        if (_fieldGuideMenu is not null)
+        {
+            _fieldGuideMenu.Close();
+            return;
+        }
+
         OpenFieldGuide();
     }
 
@@ -1066,7 +1072,6 @@ public partial class MainWindow : Window
         WpfMouseButtonEventArgs e)
     {
         FieldGuideImage.Source = _fieldGuideImages.Pressed;
-        FieldGuide_Click(sender, e);
     }
 
     private void FieldGuide_MouseUp(
