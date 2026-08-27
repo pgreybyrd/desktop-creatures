@@ -99,17 +99,7 @@ public partial class CreatureWindow : Window
 
         _creature.Update();
 
-        if (Math.Abs(_creature.SpeedX) > 0.01)
-        {
-            bool movingRight = _creature.SpeedX > 0;
-
-            FlipTransform.ScaleX = _creature.SpriteFacesRight == movingRight
-                ? 1
-                : -1;
-        }
-
-        if (CreatureImage.Source != _creature.CurrentFrame)
-            CreatureImage.Source = _creature.CurrentFrame;
+        RefreshCreaturePresentation();
 
         Logger.LogDebug(
             DebugCategory.Window,
@@ -118,6 +108,28 @@ public partial class CreatureWindow : Window
             $"Window={Width}x{Height}, " +
             $"Image={CreatureImage.Width}x{CreatureImage.Height}, " +
             $"CurrentFrame hash = {_creature.CurrentFrame.GetHashCode()}");
+    }
+
+    private void RefreshCreaturePresentation()
+    {
+        if (Math.Abs(_creature.SpeedX) > 0.01)
+        {
+            bool movingRight =
+                _creature.SpeedX > 0;
+
+            FlipTransform.ScaleX =
+                _creature.SpriteFacesRight ==
+                movingRight
+                    ? 1
+                    : -1;
+        }
+
+        if (CreatureImage.Source !=
+            _creature.CurrentFrame)
+        {
+            CreatureImage.Source =
+                _creature.CurrentFrame;
+        }
 
         UpdateWindowPosition();
     }

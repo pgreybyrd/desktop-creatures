@@ -21,4 +21,13 @@ public sealed class CreatureManager
     {
         return _activeCreatures.Remove(creatureId);
     }
+
+    public void Update()
+    {
+        foreach (Creature creature in
+                 _activeCreatures.Values)
+        {
+            creature.Update();
+        }
+    }
 }
