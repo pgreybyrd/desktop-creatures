@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using Desktop_Creatures.Persistence;
+using System.IO;
 using System.Text.Json;
 
 namespace Desktop_Creatures.Config;
@@ -7,12 +8,22 @@ public static class SettingsLoader
 {
     public static AppSettings Load()
     {
-        const string path = "Config/app_settings.json";
+        string path =
+            AppDataPaths.SettingsPath;
 
         if (!File.Exists(path))
-            return new AppSettings();
+        {
+            path =
+                "Config/app_settings.json";
+        }
 
-        string json = File.ReadAllText(path);
+        if (!File.Exists(path))
+        {
+            return new AppSettings();
+        }
+
+        string json =
+            File.ReadAllText(path);
 
         return JsonSerializer.Deserialize<AppSettings>(
             json,
@@ -24,10 +35,13 @@ public static class SettingsLoader
     }
 
     public static void Save(
-    AppSettings settings)
+        AppSettings settings)
     {
-        const string path =
-            "Config/app_settings.json";
+        string path =
+            AppDataPaths.SettingsPath;
+
+        Directory.CreateDirectory(
+            AppDataPaths.RootDirectory);
 
         string json =
             JsonSerializer.Serialize(
