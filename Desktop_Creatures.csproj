@@ -268,6 +268,9 @@
     <None Remove="Assets\UI\FieldGuide\PageTurnBase_8.png" />
     <None Remove="Assets\UI\FieldGuide\PageTurnBase_9.png" />
     <None Remove="Assets\UI\FieldGuide\tabs.png" />
+    <None Remove="Assets\UI\MainMenu\base.png" />
+    <None Remove="Assets\UI\MainMenu\buttons.json" />
+    <None Remove="Assets\UI\MainMenu\buttons.png" />
     <None Remove="Assets\UI\MainMenu\Buttons\button_clear_desktop.png" />
     <None Remove="Assets\UI\MainMenu\Buttons\button_hover_clear_desktop.png" />
     <None Remove="Assets\UI\MainMenu\Buttons\button_hover_field_guide.png" />
@@ -276,6 +279,9 @@
     <None Remove="Assets\UI\MainMenu\Buttons\button_pressed_field_guide.png" />
     <None Remove="Assets\UI\MainMenu\Buttons\button_pressed_settings.png" />
     <None Remove="Assets\UI\MainMenu\Buttons\button_settings.png" />
+    <None Remove="Assets\UI\MainMenu\labels.json" />
+    <None Remove="Assets\UI\MainMenu\labels.png" />
+    <None Remove="Assets\UI\MainMenu\menu_background.png" />
     <None Remove="Assets\UI\MainMenu\version.png" />
     <None Remove="Assets\UI\menu_background.png" />
     <None Remove="Assets\UI\menu_title.png" />
@@ -803,6 +809,15 @@
     <Content Include="Assets\Sounds\UI\FieldGuide\page_flip_06.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\UI\MainMenu\base.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\MainMenu\buttons.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\MainMenu\buttons.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\UI\MainMenu\Buttons\button_clear_desktop.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -810,6 +825,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\MainMenu\Buttons\button_pressed_clear_desktop.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\MainMenu\labels.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\MainMenu\labels.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\MainMenu\menu_background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\MainMenu\version.png">
@@ -1071,9 +1095,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\MainMenu\Buttons\button_X.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\UI\MainMenu\menu_background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\MainMenu\menu_title.png">

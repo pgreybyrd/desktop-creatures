@@ -50,6 +50,8 @@ public partial class MainWindow : Window
     private readonly List<POIWindow> _poiWindows = new();
     private readonly List<CreatureWindow> _creatureWindows = new();
 
+    private readonly CreatureManager _creatureManager = new();
+
     private CreatureRosterWindow? _creatureRosterWindow;
 
     private readonly Dictionary<Guid, CreatureRecord> _creatureRecords = new();
