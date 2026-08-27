@@ -566,6 +566,8 @@ public partial class MainWindow : Window
                 settings,
                 services);
 
+        _creatureManager.Add(creature);
+
         if (record is null)
         {
             record =
@@ -632,10 +634,8 @@ public partial class MainWindow : Window
     private bool IsCreatureSpawned(
         Guid creatureId)
     {
-        return _creatureWindows.Any(
-            window =>
-                window.GetCreature().Id ==
-                creatureId);
+        return _creatureManager.IsActive(
+            creatureId);
     }
 
     private void SpawnCreatureRecord(
@@ -679,6 +679,8 @@ public partial class MainWindow : Window
 
         UpdateCreatureRecord(
             creature);
+
+        _creatureManager.Remove(creature.Id);
 
         creatureWindow.PutAwayRequested -=
             PutAwayCreature;
