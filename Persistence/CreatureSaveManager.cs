@@ -8,20 +8,10 @@ public static class CreatureSaveManager
     public const int CurrentVersion = 2;
 
     private static readonly string SaveDirectory =
-        Path.Combine(
-            Environment.GetFolderPath(
-                Environment.SpecialFolder.LocalApplicationData),
-#if DEBUG
-            "DesktopCreatures.Debug"
-#else
-            "DesktopCreatures"
-#endif
-        );
+        AppDataPaths.RootDirectory;
 
     private static readonly string SavePath =
-        Path.Combine(
-            SaveDirectory,
-            "creatures.json");
+        AppDataPaths.CreatureSavePath;
 
     private static readonly JsonSerializerOptions JsonOptions =
         new()
