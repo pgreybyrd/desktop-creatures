@@ -398,11 +398,11 @@ public partial class MainWindow : Window
 
     private void SaveCreatures()
     {
-        foreach (CreatureWindow window in
-                 _creatureWindows)
+        foreach (Creature creature in
+                 _creatureManager.ActiveCreatures)
         {
             UpdateCreatureRecord(
-                window.GetCreature());
+                creature);
         }
 
         SaveCreatureRecords();
