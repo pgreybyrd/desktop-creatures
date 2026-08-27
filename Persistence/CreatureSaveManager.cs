@@ -11,7 +11,12 @@ public static class CreatureSaveManager
         Path.Combine(
             Environment.GetFolderPath(
                 Environment.SpecialFolder.LocalApplicationData),
-            "DesktopCreatures");
+#if DEBUG
+            "DesktopCreatures.Debug"
+#else
+            "DesktopCreatures"
+#endif
+        );
 
     private static readonly string SavePath =
         Path.Combine(
