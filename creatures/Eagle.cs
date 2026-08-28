@@ -71,7 +71,7 @@ namespace Desktop_Creatures.Creatures
             Y = startY;
             _pointsOfInterest = pointsOfInterest;
 
-            LoadAssets("Assets/Creatures/Eagle");
+            InitializeCreatureAssets(definition);
 
             SetAction(CreatureAction.Flying, "Fly");
             PickNewTarget();

@@ -11,13 +11,6 @@ public enum MovementCapability
     Floating
 }
 
-public enum CreatureFamily
-{
-    Rodent,
-    Bird,
-    Feline
-}
-
 public sealed record CreatureAppearanceSettings
 {
     public bool Generated { get; init; }
@@ -33,16 +26,20 @@ public sealed record CreatureDefinition
 {
     public required string Id { get; init; }
 
-    public required string DisplayName { get; init; }
-
-    public required CreatureFamily Family { get; init; }
+    public string? DisplayName { get; init; }
 
     public MovementCapability[] MovementCapabilities { get; init; } = [];
 
-    public required string Category { get; init; }
+    //public required string Category { get; init; }
+    //temp
+    public string? Category { get; init; }
 
+    //public string AssetFolder =>
+    //    $"Assets/Creatures/{ToFolderName(Category)}/{ToFolderName(Id)}";
     public string AssetFolder =>
-    $"Assets/Creatures/{ToFolderName(Category)}/{ToFolderName(Id)}";
+        Category is not null
+            ? $"Assets/Creatures/{ToFolderName(Category)}/{ToFolderName(Id)}"
+            : $"Assets/Creatures/{ToFolderName(Id)}";
 
     private static string ToFolderName(string value)
     {
@@ -55,7 +52,8 @@ public sealed record CreatureDefinition
 
     public CreatureAppearanceSettings? Appearance { get; init; }
 
-    public required CreaturePickupAnchor PickupAnchor { get; init; }
+    //public required CreaturePickupAnchor PickupAnchor { get; init; }
+    public CreaturePickupAnchor? PickupAnchor { get; init; }
 
     public string[] Palettes { get; init; } = [];
 }

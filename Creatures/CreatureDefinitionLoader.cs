@@ -25,6 +25,7 @@ public static class CreatureDefinitionLoader
                 "Assets",
                 "Data",
                 "Creatures",
+                "Definitions",
                 $"{creatureId}.json");
 
         string json =

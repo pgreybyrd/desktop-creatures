@@ -1,19 +1,12 @@
 {
   "id": "eagle",
-  "displayName": "Eagle",
+  "category": "birds",
 
   "movementCapabilities": [
     "Flight"
   ],
 
-  "assetFolder": "Assets/Creatures/Eagle",
-
-  "usesGeneratedAppearance": true,
-
-  "palettes": [
-    "bald"
-  ],
-
-  "pickupAnchorX": 33,
-  "pickupAnchorY": 11
+  "appearance": {
+    "generated": true
+  }
 }

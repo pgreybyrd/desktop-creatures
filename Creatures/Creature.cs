@@ -85,12 +85,12 @@ public abstract class Creature
     public int CurrentFootY => GetCurrentFootY();
     public double LandingTolerance => Settings.LandingTolerance;
 
+    private readonly Point _pickupAnchor;
+
     protected virtual int FootOffsetY => SpriteHeight;
 
     public virtual Point PickupAnchor =>
-        new(
-            SpriteWidth / 2.0,
-            SpriteHeight / 4.0);
+        _pickupAnchor;
 
 
     protected PointOfInterest? TargetPoi;
@@ -155,7 +155,22 @@ public abstract class Creature
         Name = name ?? string.Empty;
         CreatureType = definition.Id;
 
+        //_pickupAnchor =
+        //    new Point(
+        //        definition.PickupAnchor.X,
+        //        definition.PickupAnchor.Y);
         Settings = settings;
+
+        _pickupAnchor =
+            definition.PickupAnchor is not null
+                ? new Point(
+                    definition.PickupAnchor.X,
+                    definition.PickupAnchor.Y)
+                : new Point(
+                    SpriteWidth / 2.0,
+                    SpriteHeight / 4.0);
+
+
         PointOfInterestManager = pointOfInterestManager;
         SurfaceManager = surfaceManager;
 

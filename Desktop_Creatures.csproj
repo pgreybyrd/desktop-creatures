@@ -25,6 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Creatures\Birds\Eagle\Appearance\eagle-regions.json" />
+    <None Remove="Assets\Creatures\Birds\Eagle\Appearance\eagle-regions.png" />
+    <None Remove="Assets\Creatures\Birds\Eagle\Appearance\eagle.json" />
+    <None Remove="Assets\Creatures\Birds\Eagle\Appearance\eagle.png" />
     <None Remove="Assets\Creatures\Birds\Eagle\eagle.png" />
     <None Remove="Assets\Creatures\Birds\Eagle\fly_0.png" />
     <None Remove="Assets\Creatures\Birds\Eagle\glide_0.png" />
@@ -1148,12 +1152,33 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Assets\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="NAudio" Version="2.3.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PixelRecolor\PixelRecolor.Wpf\PixelRecolor.Wpf.csproj" />
     <ProjectReference Include="..\WpfBitmapFonts\WpfBitmapFonts.Core\WpfBitmapFonts.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Assets\Creatures\Birds\Eagle\Appearance\eagle-regions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\Creatures\Birds\Eagle\Appearance\eagle-regions.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\Creatures\Birds\Eagle\Appearance\eagle.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\Creatures\Birds\Eagle\Appearance\eagle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
