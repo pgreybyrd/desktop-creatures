@@ -383,6 +383,19 @@ public partial class MainWindow : Window
 
         _surfaceManager.Update();
 
+        _creatureManager.Update(
+            creature =>
+            {
+                CreatureWindow? window =
+                    _creatureWindows.FirstOrDefault(
+                        candidate =>
+                            candidate.GetCreature() ==
+                            creature);
+
+                return window is null ||
+                       !window.IsSimulationPaused;
+            });
+
         foreach (var creatureWindow in _creatureWindows)
         {
             creatureWindow.UpdateCreature();

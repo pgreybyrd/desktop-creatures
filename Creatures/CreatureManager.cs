@@ -22,11 +22,18 @@ public sealed class CreatureManager
         return _activeCreatures.Remove(creatureId);
     }
 
-    public void Update()
+    public void Update(
+        Func<Creature, bool>? shouldUpdate = null)
     {
         foreach (Creature creature in
                  _activeCreatures.Values)
         {
+            if (shouldUpdate is not null &&
+                !shouldUpdate(creature))
+            {
+                continue;
+            }
+
             creature.Update();
         }
     }

@@ -19,12 +19,15 @@ public partial class CreatureWindow : Window
     private Point _dragOffset;
 
     private bool _isContextMenuOpen;
+    private CreatureContextMenuWindow? _contextMenuWindow;
 
     private int _uiScale;
 
     public Creature GetCreature() => _creature;
 
-    private CreatureContextMenuWindow? _contextMenuWindow;
+    public bool IsSimulationPaused =>
+        _isDragging ||
+        _isContextMenuOpen;
 
     public event Action<CreatureWindow>? PutAwayRequested;
     public event Action<CreatureWindow, CreatureContextMenuAction>? ContextActionRequested;
@@ -96,8 +99,6 @@ public partial class CreatureWindow : Window
         {
             return;
         }
-
-        _creature.Update();
 
         RefreshCreaturePresentation();
 
