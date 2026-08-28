@@ -224,7 +224,7 @@ public abstract class Creature
         CreatureAppearanceTraits? appearanceTraits = null,
         string? appearanceId = null)
     {
-        if (definition.UsesGeneratedAppearance)
+        if (definition.Appearance?.Generated == true)
         {
             InitializeGeneratedAppearance(
                 definition,

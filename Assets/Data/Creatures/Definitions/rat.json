@@ -1,0 +1,29 @@
+{
+  "id": "rat",
+  "category": "rodents",
+
+  "movementCapabilities": [
+    "Ground"
+  ],
+
+  "appearance": {
+    "generated": true
+  },
+
+  "sounds": {
+    "spawn": "squeaks",
+    "pickup": "squeaks"
+  },
+
+  "pickupAnchor": {
+    "x": 33,
+    "y": 11
+  },
+
+  "scale": {
+    "default": 2,
+    "min": 2,
+    "max": 3
+  }
+
+}

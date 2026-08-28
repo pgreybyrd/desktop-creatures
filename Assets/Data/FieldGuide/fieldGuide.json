@@ -1,15 +1,11 @@
 {
   "families": [
     {
-      "id": "rodent",
+      "id": "rodents",
       "name": "Rodents",
-      "toolTipAsset": "Assets/UI/FieldGuide/Common/ToolTip/label-rodent.png",
       "tab": "Red",
-      "creatureIds": [
-        "rat"
-      ],
-      "rightY": 40,
-      "order": 0
+      "order": 0,
+      "toolTipAsset": "label-rodent.png"
     },
     {
       "id": "bird",

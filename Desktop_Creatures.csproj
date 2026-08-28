@@ -25,109 +25,109 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Assets\Creatures\Eagle\eagle.png" />
-    <None Remove="Assets\Creatures\Eagle\fly_0.png" />
-    <None Remove="Assets\Creatures\Eagle\glide_0.png" />
-    <None Remove="Assets\Creatures\Eagle\perch_0.png" />
-    <None Remove="Assets\Creatures\Eagle\perch_left.png" />
-    <None Remove="Assets\Creatures\Eagle\perch_right.png" />
-    <None Remove="Assets\Creatures\Eagle\ruffle_0.png" />
-    <None Remove="Assets\Creatures\Feline\ocelot-regions.png" />
-    <None Remove="Assets\Creatures\Feline\ocelot.json" />
-    <None Remove="Assets\Creatures\Feline\ocelot.png" />
-    <None Remove="Assets\Creatures\Rat\Appearance\Accessories\crown.png" />
-    <None Remove="Assets\Creatures\Rat\Appearance\Accessories\santa.png" />
-    <None Remove="Assets\Creatures\Rat\Appearance\Accessories\top_hat-2.png" />
-    <None Remove="Assets\Creatures\Rat\Appearance\Accessories\top_hat.png" />
-    <None Remove="Assets\Creatures\Rat\Appearance\Accessories\witch_hat.png" />
-    <None Remove="Assets\Creatures\Rat\Appearance\Appearances\birthday.json" />
-    <None Remove="Assets\Creatures\Rat\Appearance\Appearances\gerald.json" />
-    <None Remove="Assets\Creatures\Rat\Appearance\Appearances\ghost.json" />
-    <None Remove="Assets\Creatures\Rat\Appearance\Appearances\pumpkin.json" />
-    <None Remove="Assets\Creatures\Rat\Appearance\Appearances\rainbow.json" />
-    <None Remove="Assets\Creatures\Rat\Appearance\Appearances\sir_rattington.json" />
-    <None Remove="Assets\Creatures\Rat\Appearance\Appearances\valentines.json" />
-    <None Remove="Assets\Creatures\Rat\Appearance\Palettes\albino.json" />
-    <None Remove="Assets\Creatures\Rat\Appearance\Palettes\black.json" />
-    <None Remove="Assets\Creatures\Rat\Appearance\Palettes\chocolate.json" />
-    <None Remove="Assets\Creatures\Rat\Appearance\Palettes\cinnamon.json" />
-    <None Remove="Assets\Creatures\Rat\Appearance\Palettes\grey.json" />
-    <None Remove="Assets\Creatures\Rat\Appearance\Palettes\orange.json" />
-    <None Remove="Assets\Creatures\Rat\Appearance\Palettes\silver.json" />
-    <None Remove="Assets\Creatures\Rat\Appearance\Patterns\hooded.png" />
-    <None Remove="Assets\Creatures\Rat\Appearance\rat-regions.json" />
-    <None Remove="Assets\Creatures\Rat\Appearance\rat-regions.png" />
-    <None Remove="Assets\Creatures\Rat\Appearance\rat.png" />
-    <None Remove="Assets\Creatures\Rat\eat_1.png" />
-    <None Remove="Assets\Creatures\Rat\eat_10.png" />
-    <None Remove="Assets\Creatures\Rat\eat_11.png" />
-    <None Remove="Assets\Creatures\Rat\eat_12.png" />
-    <None Remove="Assets\Creatures\Rat\eat_13.png" />
-    <None Remove="Assets\Creatures\Rat\eat_2.png" />
-    <None Remove="Assets\Creatures\Rat\eat_3.png" />
-    <None Remove="Assets\Creatures\Rat\eat_4.png" />
-    <None Remove="Assets\Creatures\Rat\eat_5.png" />
-    <None Remove="Assets\Creatures\Rat\eat_6.png" />
-    <None Remove="Assets\Creatures\Rat\eat_7.png" />
-    <None Remove="Assets\Creatures\Rat\eat_8.png" />
-    <None Remove="Assets\Creatures\Rat\eat_9.png" />
-    <None Remove="Assets\Creatures\Rat\fall_0.png" />
-    <None Remove="Assets\Creatures\Rat\idle_look_front_1.png" />
-    <None Remove="Assets\Creatures\Rat\idle_look_front_2.png" />
-    <None Remove="Assets\Creatures\Rat\idle_look_front_3.png" />
-    <None Remove="Assets\Creatures\Rat\idle_look_left_0.png" />
-    <None Remove="Assets\Creatures\Rat\idle_look_left_1.png" />
-    <None Remove="Assets\Creatures\Rat\idle_look_left_2.png" />
-    <None Remove="Assets\Creatures\Rat\idle_look_left_3.png" />
-    <None Remove="Assets\Creatures\Rat\idle_look_left_4.png" />
-    <None Remove="Assets\Creatures\Rat\idle_look_right_1.png" />
-    <None Remove="Assets\Creatures\Rat\idle_look_right_10.png" />
-    <None Remove="Assets\Creatures\Rat\idle_look_right_11.png" />
-    <None Remove="Assets\Creatures\Rat\idle_look_right_2.png" />
-    <None Remove="Assets\Creatures\Rat\idle_look_right_3.png" />
-    <None Remove="Assets\Creatures\Rat\idle_look_right_4.png" />
-    <None Remove="Assets\Creatures\Rat\idle_look_right_5.png" />
-    <None Remove="Assets\Creatures\Rat\idle_look_right_6.png" />
-    <None Remove="Assets\Creatures\Rat\idle_look_right_7.png" />
-    <None Remove="Assets\Creatures\Rat\idle_look_right_8.png" />
-    <None Remove="Assets\Creatures\Rat\idle_look_right_9.png" />
-    <None Remove="Assets\Creatures\Rat\idle_look_up_1.png" />
-    <None Remove="Assets\Creatures\Rat\idle_look_up_2.png" />
-    <None Remove="Assets\Creatures\Rat\idle_look_up_3.png" />
-    <None Remove="Assets\Creatures\Rat\idle_look_up_4.png" />
-    <None Remove="Assets\Creatures\Rat\idle_look_up_5.png" />
-    <None Remove="Assets\Creatures\Rat\idle_sit_back_1.png" />
-    <None Remove="Assets\Creatures\Rat\idle_sit_back_2.png" />
-    <None Remove="Assets\Creatures\Rat\idle_sit_back_3.png" />
-    <None Remove="Assets\Creatures\Rat\idle_sit_back_4.png" />
-    <None Remove="Assets\Creatures\Rat\idle_sit_back_5.png" />
-    <None Remove="Assets\Creatures\Rat\idle_sit_front_1.png" />
-    <None Remove="Assets\Creatures\Rat\idle_sit_front_2.png" />
-    <None Remove="Assets\Creatures\Rat\idle_sit_front_3.png" />
-    <None Remove="Assets\Creatures\Rat\idle_sit_front_4.png" />
-    <None Remove="Assets\Creatures\Rat\idle_sit_front_5.png" />
-    <None Remove="Assets\Creatures\Rat\idle_sit_front_6.png" />
-    <None Remove="Assets\Creatures\Rat\idle_sit_front_7.png" />
-    <None Remove="Assets\Creatures\Rat\idle_sniff_up_0.png" />
-    <None Remove="Assets\Creatures\Rat\rat.json" />
-    <None Remove="Assets\Creatures\Rat\sleep_0.png" />
-    <None Remove="Assets\Creatures\Rat\sleep_1.png" />
-    <None Remove="Assets\Creatures\Rat\Sounds\scamper_01.wav" />
-    <None Remove="Assets\Creatures\Rat\Sounds\scamper_02.wav" />
-    <None Remove="Assets\Creatures\Rat\Sounds\squeak_01.wav" />
-    <None Remove="Assets\Creatures\Rat\Sounds\squeak_02.wav" />
-    <None Remove="Assets\Creatures\Rat\Sounds\squeak_03.wav" />
-    <None Remove="Assets\Creatures\Rat\Sounds\squeak_04.wav" />
-    <None Remove="Assets\Creatures\Rat\Sounds\squeak_05.wav" />
-    <None Remove="Assets\Creatures\Rat\Sounds\squeak_06.wav" />
-    <None Remove="Assets\Creatures\Rat\Sounds\squeak_07.wav" />
-    <None Remove="Assets\Creatures\Rat\Sounds\squeak_08.wav" />
-    <None Remove="Assets\Creatures\Rat\Sounds\squeak_09.wav" />
-    <None Remove="Assets\Creatures\Rat\Sounds\squeak_10.wav" />
-    <None Remove="Assets\Creatures\Rat\walk_2.png" />
-    <None Remove="Assets\Creatures\Rat\walk_3.png" />
-    <None Remove="Assets\Creatures\Rat\walk_4.png" />
-    <None Remove="Assets\Creatures\Rat\walk_5.png" />
+    <None Remove="Assets\Creatures\Birds\Eagle\eagle.png" />
+    <None Remove="Assets\Creatures\Birds\Eagle\fly_0.png" />
+    <None Remove="Assets\Creatures\Birds\Eagle\glide_0.png" />
+    <None Remove="Assets\Creatures\Birds\Eagle\perch_0.png" />
+    <None Remove="Assets\Creatures\Birds\Eagle\perch_left.png" />
+    <None Remove="Assets\Creatures\Birds\Eagle\perch_right.png" />
+    <None Remove="Assets\Creatures\Birds\Eagle\ruffle_0.png" />
+    <None Remove="Assets\Creatures\Felines\ocelot-regions.png" />
+    <None Remove="Assets\Creatures\Felines\ocelot.json" />
+    <None Remove="Assets\Creatures\Felines\ocelot.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Appearance\Accessories\crown.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Appearance\Accessories\santa.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Appearance\Accessories\top_hat-2.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Appearance\Accessories\top_hat.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Appearance\Accessories\witch_hat.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Appearance\Appearances\birthday.json" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Appearance\Appearances\gerald.json" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Appearance\Appearances\ghost.json" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Appearance\Appearances\pumpkin.json" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Appearance\Appearances\rainbow.json" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Appearance\Appearances\sir_rattington.json" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Appearance\Appearances\valentines.json" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Appearance\Palettes\albino.json" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Appearance\Palettes\black.json" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Appearance\Palettes\chocolate.json" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Appearance\Palettes\cinnamon.json" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Appearance\Palettes\grey.json" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Appearance\Palettes\orange.json" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Appearance\Palettes\silver.json" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Appearance\Patterns\hooded.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Appearance\rat-regions.json" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Appearance\rat-regions.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Appearance\rat.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\eat_1.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\eat_10.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\eat_11.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\eat_12.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\eat_13.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\eat_2.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\eat_3.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\eat_4.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\eat_5.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\eat_6.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\eat_7.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\eat_8.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\eat_9.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\fall_0.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_look_front_1.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_look_front_2.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_look_front_3.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_look_left_0.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_look_left_1.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_look_left_2.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_look_left_3.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_look_left_4.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_look_right_1.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_look_right_10.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_look_right_11.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_look_right_2.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_look_right_3.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_look_right_4.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_look_right_5.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_look_right_6.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_look_right_7.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_look_right_8.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_look_right_9.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_look_up_1.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_look_up_2.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_look_up_3.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_look_up_4.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_look_up_5.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_sit_back_1.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_sit_back_2.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_sit_back_3.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_sit_back_4.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_sit_back_5.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_sit_front_1.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_sit_front_2.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_sit_front_3.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_sit_front_4.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_sit_front_5.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_sit_front_6.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_sit_front_7.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\idle_sniff_up_0.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\rat.json" />
+    <None Remove="Assets\Creatures\Rodents\Rat\sleep_0.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\sleep_1.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Sounds\scamper_01.wav" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Sounds\scamper_02.wav" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Sounds\squeak_01.wav" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Sounds\squeak_02.wav" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Sounds\squeak_03.wav" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Sounds\squeak_04.wav" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Sounds\squeak_05.wav" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Sounds\squeak_06.wav" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Sounds\squeak_07.wav" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Sounds\squeak_08.wav" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Sounds\squeak_09.wav" />
+    <None Remove="Assets\Creatures\Rodents\Rat\Sounds\squeak_10.wav" />
+    <None Remove="Assets\Creatures\Rodents\Rat\walk_2.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\walk_3.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\walk_4.png" />
+    <None Remove="Assets\Creatures\Rodents\Rat\walk_5.png" />
     <None Remove="Assets\Data\FieldGuide\fieldGuide.json" />
     <None Remove="Assets\Data\FieldGuide\rat.json" />
     <None Remove="assets\eagle.png" />
@@ -326,139 +326,139 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Assets\Creatures\Feline\Ocelot\Appearance\ocelot-regions.png">
+    <Content Include="Assets\Creatures\Felines\Ocelot\Appearance\ocelot-regions.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Feline\Ocelot\Appearance\ocelot.json">
+    <Content Include="Assets\Creatures\Felines\Ocelot\Appearance\ocelot.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Feline\Ocelot\Appearance\ocelot.png">
+    <Content Include="Assets\Creatures\Felines\Ocelot\Appearance\ocelot.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Feline\Ocelot\Appearance\ocelot-regions.json">
+    <Content Include="Assets\Creatures\Felines\Ocelot\Appearance\ocelot-regions.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Appearance\Accessories\crown.png">
+    <Content Include="Assets\Creatures\Felines\Ocelot\Appearance\Palettes\standard.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Appearance\Accessories\santa.png">
+    <Content Include="Assets\Creatures\Rodents\Rat\Appearance\Accessories\crown.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Appearance\Accessories\top_hat-2.png">
+    <Content Include="Assets\Creatures\Rodents\Rat\Appearance\Accessories\santa.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Appearance\Accessories\top_hat.png">
+    <Content Include="Assets\Creatures\Rodents\Rat\Appearance\Accessories\top_hat-2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Appearance\Accessories\witch_hat.png">
+    <Content Include="Assets\Creatures\Rodents\Rat\Appearance\Accessories\top_hat.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Appearance\Appearances\birthday.json">
+    <Content Include="Assets\Creatures\Rodents\Rat\Appearance\Accessories\witch_hat.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Appearance\Appearances\black.json">
+    <Content Include="Assets\Creatures\Rodents\Rat\Appearance\Appearances\birthday.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Appearance\Appearances\gerald.json">
+    <Content Include="Assets\Creatures\Rodents\Rat\Appearance\Appearances\gerald.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Appearance\Appearances\ghost.json">
+    <Content Include="Assets\Creatures\Rodents\Rat\Appearance\Appearances\ghost.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Appearance\Appearances\pumpkin.json">
+    <Content Include="Assets\Creatures\Rodents\Rat\Appearance\Appearances\pumpkin.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Appearance\Appearances\rainbow.json">
+    <Content Include="Assets\Creatures\Rodents\Rat\Appearance\Appearances\rainbow.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Appearance\Appearances\sir_rattington.json">
+    <Content Include="Assets\Creatures\Rodents\Rat\Appearance\Appearances\sir_rattington.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Appearance\Appearances\valentines.json">
+    <Content Include="Assets\Creatures\Rodents\Rat\Appearance\Appearances\valentines.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Appearance\Effects\sparkles-rainbow.png">
+    <Content Include="Assets\Creatures\Rodents\Rat\Appearance\Effects\sparkles-rainbow.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Appearance\Palettes\albino.json">
+    <Content Include="Assets\Creatures\Rodents\Rat\Appearance\Palettes\albino.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Appearance\Palettes\black.json">
+    <Content Include="Assets\Creatures\Rodents\Rat\Appearance\Palettes\black.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Appearance\Palettes\chocolate.json">
+    <Content Include="Assets\Creatures\Rodents\Rat\Appearance\Palettes\chocolate.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Appearance\Palettes\cinnamon.json">
+    <Content Include="Assets\Creatures\Rodents\Rat\Appearance\Palettes\cinnamon.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Appearance\Palettes\grey.json">
+    <Content Include="Assets\Creatures\Rodents\Rat\Appearance\Palettes\grey.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Appearance\Palettes\silver.json">
+    <Content Include="Assets\Creatures\Rodents\Rat\Appearance\Palettes\silver.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Appearance\Patterns\hooded.png">
+    <Content Include="Assets\Creatures\Rodents\Rat\Appearance\Patterns\hooded.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Appearance\rat-regions.json">
+    <Content Include="Assets\Creatures\Rodents\Rat\Appearance\rat-regions.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Appearance\rat-regions.png">
+    <Content Include="Assets\Creatures\Rodents\Rat\Appearance\rat-regions.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Appearance\rat.png">
+    <Content Include="Assets\Creatures\Rodents\Rat\Appearance\rat.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Appearance\rat.json">
+    <Content Include="Assets\Creatures\Rodents\Rat\Appearance\rat.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Sounds\scamper_01.wav">
+    <Content Include="Assets\Creatures\Rodents\Rat\Sounds\scamper_01.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Sounds\scamper_02.wav">
+    <Content Include="Assets\Creatures\Rodents\Rat\Sounds\scamper_02.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Sounds\squeak_01.wav">
+    <Content Include="Assets\Creatures\Rodents\Rat\Sounds\squeak_01.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Sounds\squeak_02.wav">
+    <Content Include="Assets\Creatures\Rodents\Rat\Sounds\squeak_02.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Sounds\squeak_03.wav">
+    <Content Include="Assets\Creatures\Rodents\Rat\Sounds\squeak_03.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Sounds\squeak_04.wav">
+    <Content Include="Assets\Creatures\Rodents\Rat\Sounds\squeak_04.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Sounds\squeak_05.wav">
+    <Content Include="Assets\Creatures\Rodents\Rat\Sounds\squeak_05.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Sounds\squeak_06.wav">
+    <Content Include="Assets\Creatures\Rodents\Rat\Sounds\squeak_06.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Sounds\squeak_07.wav">
+    <Content Include="Assets\Creatures\Rodents\Rat\Sounds\squeak_07.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Sounds\squeak_08.wav">
+    <Content Include="Assets\Creatures\Rodents\Rat\Sounds\squeak_08.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Sounds\squeak_09.wav">
+    <Content Include="Assets\Creatures\Rodents\Rat\Sounds\squeak_09.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Rat\Sounds\squeak_10.wav">
+    <Content Include="Assets\Creatures\Rodents\Rat\Sounds\squeak_10.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Data\Creatures\eagle.json">
+    <Content Include="Assets\Data\Creatures\Definitions\eagle.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Data\Creatures\ocelot.json">
+    <Content Include="Assets\Data\Creatures\Definitions\ocelot.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Data\Creatures\rat.json">
+    <Content Include="Assets\Data\Creatures\Definitions\rat.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Data\FieldGuide\ocelot.json">
+    <Content Include="Assets\Data\FieldGuide\Entries\ocelot.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Effects\Emotes\angry.png">
@@ -614,10 +614,10 @@
     <Content Include="Assets\Data\FieldGuide\fieldGuide.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Data\FieldGuide\eagle.json">
+    <Content Include="Assets\Data\FieldGuide\Entries\eagle.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Data\FieldGuide\rat.json">
+    <Content Include="Assets\Data\FieldGuide\Entries\rat.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Fonts\font-MagicalStandard.json">
@@ -734,13 +734,13 @@
     <Content Include="Assets\UI\FieldGuide\Book\exit.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\UI\FieldGuide\Common\ToolTip\label-bird.png">
+    <Content Include="Assets\UI\FieldGuide\Common\ToolTip\label-birds.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\UI\FieldGuide\Common\ToolTip\label-feline.png">
+    <Content Include="Assets\UI\FieldGuide\Common\ToolTip\label-felines.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\UI\FieldGuide\Common\ToolTip\label-rodent.png">
+    <Content Include="Assets\UI\FieldGuide\Common\ToolTip\label-rodents.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\FieldGuide\Creatures\Eagle\frame-eagle.png">
@@ -938,49 +938,49 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Assets\Creatures\Eagle\eagle.png">
+    <Content Include="Assets\Creatures\Birds\Eagle\eagle.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Eagle\fly_0.png">
+    <Content Include="Assets\Creatures\Birds\Eagle\fly_0.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Eagle\fly_1.png">
+    <Content Include="Assets\Creatures\Birds\Eagle\fly_1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Eagle\fly_2.png">
+    <Content Include="Assets\Creatures\Birds\Eagle\fly_2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Eagle\fly_3.png">
+    <Content Include="Assets\Creatures\Birds\Eagle\fly_3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Eagle\glide_0.png">
+    <Content Include="Assets\Creatures\Birds\Eagle\glide_0.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Eagle\perch_0.png">
+    <Content Include="Assets\Creatures\Birds\Eagle\perch_0.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Eagle\perch_1.png">
+    <Content Include="Assets\Creatures\Birds\Eagle\perch_1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Eagle\perch_left.png">
+    <Content Include="Assets\Creatures\Birds\Eagle\perch_left.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Eagle\perch_right.png">
+    <Content Include="Assets\Creatures\Birds\Eagle\perch_right.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Eagle\ruffle_0.png">
+    <Content Include="Assets\Creatures\Birds\Eagle\ruffle_0.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Eagle\ruffle_1.png">
+    <Content Include="Assets\Creatures\Birds\Eagle\ruffle_1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Eagle\ruffle_2.png">
+    <Content Include="Assets\Creatures\Birds\Eagle\ruffle_2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Eagle\ruffle_3.png">
+    <Content Include="Assets\Creatures\Birds\Eagle\ruffle_3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Creatures\Eagle\sleep_0.png">
+    <Content Include="Assets\Creatures\Birds\Eagle\sleep_0.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\UI\FieldGuide\Book\BookBase.png">
@@ -1124,16 +1124,24 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Assets\Creatures\Feline\Ocelot\Appearance\Accessories\" />
-    <Folder Include="Assets\Creatures\Feline\Ocelot\Appearance\Effects\" />
-    <Folder Include="Assets\Creatures\Feline\Ocelot\Appearance\Appearances\" />
-    <Folder Include="Assets\Creatures\Feline\Ocelot\Appearance\Patterns\" />
-    <Folder Include="Assets\Creatures\Feline\Ocelot\Appearance\Palettes\" />
-    <Folder Include="Assets\Creatures\Feline\Ocelot\Sounds\" />
+    <Folder Include="Assets\Creatures\Birds\Eagle\Appearance\Accessories\" />
+    <Folder Include="Assets\Creatures\Birds\Eagle\Appearance\Appearances\" />
+    <Folder Include="Assets\Creatures\Birds\Eagle\Appearance\Effects\" />
+    <Folder Include="Assets\Creatures\Birds\Eagle\Appearance\Patterns\" />
+    <Folder Include="Assets\Creatures\Birds\Eagle\Appearance\Palettes\" />
+    <Folder Include="Assets\Creatures\Birds\Eagle\Sounds\" />
+    <Folder Include="Assets\Creatures\Insects\Butterflies\" />
+    <Folder Include="Assets\Creatures\Felines\Ocelot\Appearance\Accessories\" />
+    <Folder Include="Assets\Creatures\Felines\Ocelot\Appearance\Effects\" />
+    <Folder Include="Assets\Creatures\Felines\Ocelot\Appearance\Appearances\" />
+    <Folder Include="Assets\Creatures\Felines\Ocelot\Appearance\Patterns\" />
+    <Folder Include="Assets\Creatures\Felines\Ocelot\Sounds\" />
+    <Folder Include="Assets\Creatures\Insects\" />
     <Folder Include="Assets\Items\" />
     <Folder Include="Assets\POI\WaterDish\" />
     <Folder Include="Graphics\Sprites\" />
     <Folder Include="Logs\" />
+    <Folder Include="Docs\" />
     <Folder Include="Persistence\Migrations\Legacy\" />
     <Folder Include="Rendering\Fonts\" />
     <Folder Include="UI\Controls\" />
