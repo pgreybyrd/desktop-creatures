@@ -21,7 +21,6 @@ public partial class CreatureWindow : Window
     private bool _isDragging;
     private Point _dragOffset;
 
-    private bool _isContextMenuOpen;
     private CreatureContextMenuWindow? _contextMenuWindow;
 
     private int _uiScale;
@@ -30,7 +29,7 @@ public partial class CreatureWindow : Window
 
     public bool IsSimulationPaused =>
         _isDragging ||
-        _isContextMenuOpen;
+        _contextMenuController.IsOpen;
 
     public event Action<CreatureWindow>? PutAwayRequested;
     public event Action<CreatureWindow, CreatureContextMenuAction>? ContextActionRequested;
@@ -98,7 +97,7 @@ public partial class CreatureWindow : Window
             return;
         }
 
-        if (_isContextMenuOpen)
+        if (_contextMenuController.IsOpen)
         {
             return;
         }
@@ -304,8 +303,6 @@ public partial class CreatureWindow : Window
     {
         _contextMenuWindow?.Close();
 
-        _isContextMenuOpen = true;
-
         IReadOnlyList<
             CreatureContextMenuItem> items =
             CreatureContextMenuBuilder.Build(
@@ -372,7 +369,6 @@ public partial class CreatureWindow : Window
             (_, _) =>
             {
                 _contextMenuWindow = null;
-                _isContextMenuOpen = false;
 
                 _contextMenuController.ClearWindow();
             };
