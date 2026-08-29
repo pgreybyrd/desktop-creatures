@@ -12,13 +12,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="assets\Eagle\**" />
     <Compile Remove="Assets\UI\FieldGuide\Pages\**" />
     <Compile Remove="Assets\UI\Settings\Buttons\**" />
-    <EmbeddedResource Remove="assets\Eagle\**" />
     <EmbeddedResource Remove="Assets\UI\FieldGuide\Pages\**" />
     <EmbeddedResource Remove="Assets\UI\Settings\Buttons\**" />
-    <Page Remove="assets\Eagle\**" />
     <Page Remove="Assets\UI\FieldGuide\Pages\**" />
     <Page Remove="Assets\UI\Settings\Buttons\**" />
   </ItemGroup>
@@ -100,33 +97,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Assets\**\*">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="NAudio" Version="2.3.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PixelRecolor\PixelRecolor.Wpf\PixelRecolor.Wpf.csproj" />
     <ProjectReference Include="..\WpfBitmapFonts\WpfBitmapFonts.Core\WpfBitmapFonts.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="Assets\Creatures\Birds\Eagle\Appearance\eagle-regions.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Assets\Creatures\Birds\Eagle\Appearance\eagle-regions.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Assets\Creatures\Birds\Eagle\Appearance\eagle.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Assets\Creatures\Birds\Eagle\Appearance\eagle.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
 </Project>
