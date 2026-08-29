@@ -1,33 +1,25 @@
 {
-  "families": [
+  "categories": [
     {
       "id": "rodents",
-      "name": "Rodents",
       "tab": "Red",
       "order": 0,
-      "toolTipAsset": "label-rodent.png"
+      "rightX": 0,
+      "rightY": 40
     },
     {
-      "id": "bird",
-      "name": "Birds",
-      "toolTipAsset": "Assets/UI/FieldGuide/Common/ToolTip/label-bird.png",
+      "id": "birds",
       "tab": "Green",
-      "creatureIds": [
-        "eagle"
-      ],
-      "rightY": 50,
-      "order": 1
+      "order": 1,
+      "rightX": 1,
+      "rightY": 50
     },
     {
-      "id": "feline",
-      "name": "Felines",
-      "toolTipAsset": "Assets/UI/FieldGuide/Common/ToolTip/label-feline.png",
+      "id": "felines",
       "tab": "Yellow",
-      "creatureIds": [
-        "ocelot"
-      ],
-      "rightY": 60,
-      "order": 2
+      "order": 2,
+      "rightX": 2,
+      "rightY": 60
     }
   ]
 }

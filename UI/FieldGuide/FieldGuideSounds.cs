@@ -50,9 +50,9 @@ namespace Desktop_Creatures.UI.FieldGuide
             string path = Path.Combine(
                 AppContext.BaseDirectory,
                     "Assets",
-                    "Sounds",
                     "UI",
                     "FieldGuide",
+                    "Sounds",
                     file);
 
             new SoundPlayer(path).Play();

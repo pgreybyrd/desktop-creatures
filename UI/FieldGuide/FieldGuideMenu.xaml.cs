@@ -1,7 +1,8 @@
-﻿using Desktop_Creatures.Tools.Images;
+﻿using Desktop_Creatures.Audio;
+using Desktop_Creatures.Creatures;
 using Desktop_Creatures.Graphics;
+using Desktop_Creatures.Tools.Images;
 using Desktop_Creatures.UI.FieldGuide;
-using Desktop_Creatures.Audio;
 using System.IO;
 using System.Text.Json;
 using System.Windows;
@@ -9,8 +10,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using ToolTip = System.Windows.Controls.ToolTip;
 using Brushes = System.Windows.Media.Brushes;
+using ToolTip = System.Windows.Controls.ToolTip;
 using WpfButton = System.Windows.Controls.Button;
 using WpfImage = System.Windows.Controls.Image;
 using WpfMouseEventArgs = System.Windows.Input.MouseEventArgs;
@@ -84,7 +85,7 @@ public partial class FieldGuideMenu : Window
     private readonly BitmapImage _exitButtonPressed;
 
     private readonly Dictionary<string, FieldGuideEntry> _creatureEntries;
-    private readonly Dictionary<FieldGuideTab, FieldGuideFamilyEntry>
+    private readonly Dictionary<FieldGuideTab, FieldGuideCategoryEntry>
         _familiesByTab;
 
     private string? _currentCreatureId;
@@ -155,6 +156,7 @@ public partial class FieldGuideMenu : Window
             "Assets",
             "Data",
             "FieldGuide",
+            "Entries",
             $"{creatureId}.json");
 
         string json = File.ReadAllText(path);
@@ -196,16 +198,24 @@ public partial class FieldGuideMenu : Window
             LoadFieldGuideDefinition();
 
         _familiesByTab =
-            guide.Families.ToDictionary(
-                family => family.Tab);
+            guide.Categories.ToDictionary(
+                category => category.Tab);
+
+        string entriesPath = Path.Combine(
+            AppContext.BaseDirectory,
+            "Assets",
+            "Data",
+            "FieldGuide",
+            "Entries");
 
         _creatureEntries =
-            guide.Families
-                .SelectMany(family => family.CreatureIds)
-                .Distinct()
+            Directory
+                .EnumerateFiles(entriesPath, "*.json")
+                .Select(Path.GetFileNameWithoutExtension)
+                .Where(id => id is not null)
                 .ToDictionary(
-                    id => id,
-                    LoadFieldGuideEntry);
+                    id => id!,
+                    id => LoadFieldGuideEntry(id!));
 
         BookCanvas.LayoutTransform =
             new ScaleTransform(_bookScale, _bookScale);
@@ -470,7 +480,7 @@ public partial class FieldGuideMenu : Window
 
     private void BuildTabs()
     {
-        foreach (FieldGuideFamilyEntry entry in
+        foreach (FieldGuideCategoryEntry entry in
                  _familiesByTab.Values.OrderBy(e => e.Order))
         {
             var rightImage =
@@ -537,14 +547,19 @@ public partial class FieldGuideMenu : Window
             return;
         }
 
-        FieldGuideFamilyEntry? family =
+        CreatureDefinition definition =
+            CreatureDefinitionLoader.Load(creatureId);
+
+        FieldGuideCategoryEntry? category =
             _familiesByTab.Values
                 .FirstOrDefault(
                     entry =>
-                        entry.CreatureIds.Contains(
-                            creatureId));
+                        string.Equals(
+                            entry.Id,
+                            definition.Category,
+                            StringComparison.OrdinalIgnoreCase));
 
-        if (family is null)
+        if (category is null)
             return;
 
         if (_isOpening)
@@ -562,10 +577,10 @@ public partial class FieldGuideMenu : Window
         }
 
         _currentTabIndex =
-            family.Order;
+            category.Order;
 
         _currentTab =
-            family.Tab;
+            category.Tab;
 
         _currentCreatureId =
             creatureId;
@@ -595,7 +610,7 @@ public partial class FieldGuideMenu : Window
     }
 
     private ToolTip CreateFieldGuideToolTip(
-        FieldGuideFamilyEntry family,
+        FieldGuideCategoryEntry family,
         WpfButton targetButton)
     {
         var source =
@@ -632,7 +647,7 @@ public partial class FieldGuideMenu : Window
     }
 
     private WpfButton CreateTabButton(
-        FieldGuideFamilyEntry family,
+        FieldGuideCategoryEntry family,
         RoutedEventHandler clickHandler)
     {
         var button = new WpfButton
@@ -673,7 +688,7 @@ public partial class FieldGuideMenu : Window
             return;
         }
 
-        FieldGuideFamilyEntry destination =
+        FieldGuideCategoryEntry destination =
             _familiesByTab[tab];
 
         await TurnForwardToAsync(
@@ -690,7 +705,7 @@ public partial class FieldGuideMenu : Window
             return;
         }
 
-        FieldGuideFamilyEntry destination =
+        FieldGuideCategoryEntry destination =
             _familiesByTab[tab];
 
         await TurnBackwardToAsync(
@@ -702,7 +717,7 @@ public partial class FieldGuideMenu : Window
         if (_isOpening || _isPageTurning)
             return;
 
-        FieldGuideFamilyEntry current =
+        FieldGuideCategoryEntry current =
             _familiesByTab[_currentTab];
 
         if (!_tabTurnPaths.TryGetValue(
@@ -1087,7 +1102,7 @@ public partial class FieldGuideMenu : Window
 
     private void UpdateRestingTabs()
     {
-        foreach (FieldGuideFamilyEntry entry in
+        foreach (FieldGuideCategoryEntry entry in
                  _familiesByTab.Values)
         {
             var controls =
@@ -1293,7 +1308,7 @@ public partial class FieldGuideMenu : Window
     }
 
     private async Task TurnBackwardToAsync(
-        FieldGuideFamilyEntry destination)
+        FieldGuideCategoryEntry destination)
     {
         if (_isOpening || _isPageTurning)
             return;
@@ -1301,7 +1316,7 @@ public partial class FieldGuideMenu : Window
         if (_currentCreatureId is null)
             return;
 
-        FieldGuideFamilyEntry current =
+        FieldGuideCategoryEntry current =
             _familiesByTab[_currentTab];
 
         if (!_tabTurnPaths.TryGetValue(
@@ -1369,8 +1384,11 @@ public partial class FieldGuideMenu : Window
             _currentTab =
                 destination.Tab;
 
-            string creatureId =
-                destination.CreatureIds[0];
+            string? creatureId =
+                GetFirstCreatureIdForCategory(destination.Id);
+
+            if (creatureId is null)
+                return;
 
             _currentCreatureId =
                 creatureId;
@@ -1392,8 +1410,41 @@ public partial class FieldGuideMenu : Window
         }
     }
 
+    private static string? GetFirstCreatureIdForCategory(
+        string categoryId)
+    {
+        string definitionsPath = Path.Combine(
+            AppContext.BaseDirectory,
+            "Assets",
+            "Data",
+            "Creatures",
+            "Definitions");
+
+        foreach (string file in
+                 Directory.EnumerateFiles(
+                     definitionsPath,
+                     "*.json"))
+        {
+            string creatureId =
+                Path.GetFileNameWithoutExtension(file);
+
+            CreatureDefinition definition =
+                CreatureDefinitionLoader.Load(creatureId);
+
+            if (string.Equals(
+                    definition.Category,
+                    categoryId,
+                    StringComparison.OrdinalIgnoreCase))
+            {
+                return creatureId;
+            }
+        }
+
+        return null;
+    }
+
     private async Task TurnForwardToAsync(
-        FieldGuideFamilyEntry destination)
+        FieldGuideCategoryEntry destination)
     {
         if (_isOpening || _isPageTurning)
             return;
@@ -1474,8 +1525,11 @@ public partial class FieldGuideMenu : Window
             _currentTab =
                 destination.Tab;
 
-            string creatureId =
-                destination.CreatureIds[0];
+            string? creatureId =
+                GetFirstCreatureIdForCategory(destination.Id);
+
+            if (creatureId is null)
+                return;
 
             _currentCreatureId =
                 creatureId;
@@ -1506,11 +1560,20 @@ public partial class FieldGuideMenu : Window
         CreatureContentCanvas.DataContext =
             entry;
 
+        string creatureFolder =
+            char.ToUpperInvariant(creatureId[0]) +
+            creatureId[1..];
+
+        string fieldGuideCreaturePath =
+            $"Assets/UI/FieldGuide/Creatures/{creatureFolder}";
+
         CreaturePortraitFrameImage.Source =
-            AssetImageLoader.Load(entry.PortraitFrame);
+            AssetImageLoader.Load(
+                $"{fieldGuideCreaturePath}/frame-{creatureId}.png");
 
         CreaturePortraitImage.Source =
-            AssetImageLoader.Load(entry.Portrait);
+            AssetImageLoader.Load(
+                $"{fieldGuideCreaturePath}/Portrait/portrait-{creatureId}.png");
 
 
         SetCreaturePageVisible(true);

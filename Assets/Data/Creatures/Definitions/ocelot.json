@@ -1,19 +1,17 @@
 {
   "id": "ocelot",
-  "displayName": "Ocelot",
+  "category": "felines",
 
   "movementCapabilities": [
     "Ground"
   ],
 
-  "assetFolder": "Assets/Creatures/Feline/Ocelot",
+  "appearance": {
+    "generated": true
+  },
 
-  "usesGeneratedAppearance": true,
-
-  "palettes": [
-    "ocelot"
-  ],
-
-  "pickupAnchorX": 33,
-  "pickupAnchorY": 11
+  "pickupAnchor": {
+    "x": 33,
+    "y": 11
+  }
 }

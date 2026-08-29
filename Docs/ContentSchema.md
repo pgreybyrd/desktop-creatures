@@ -341,7 +341,19 @@ for `category: rodents` and `id: rat` resolves to:
 - Creature Definitions reference sound set IDs and must not duplicate the filenames contained in those sets.
 - Creature-specific classes must not enumerate individual sound files.
 
-### Field Guide Category
+## Sound Asset Ownership
+
+- Creature-specific audio belongs inside that creature's derived asset directory:
+  `Assets/Creatures/{Category}/{Creature}/Sounds/`
+
+- Shared application audio belongs under:
+  `Assets/Sounds/`
+
+- Creature-specific sounds must not be duplicated under `Assets/Sounds/Creatures/`.
+
+- A sound file should have one canonical asset location.
+
+## Field Guide Category
 
 **Required**
 - `id` — Stable machine-readable category ID. Use lowercase plural names.

@@ -42,29 +42,29 @@ namespace Desktop_Creatures.Creatures
 
             soundSet.Add(
                 CreatureSoundEvent.Spawn,
-                "Assets/Creatures/Rat/Sounds/squeak_01.wav",
-                "Assets/Creatures/Rat/Sounds/squeak_02.wav",
-                "Assets/Creatures/Rat/Sounds/squeak_03.wav",
-                "Assets/Creatures/Rat/Sounds/squeak_04.wav",
-                "Assets/Creatures/Rat/Sounds/squeak_05.wav",
-                "Assets/Creatures/Rat/Sounds/squeak_06.wav",
-                "Assets/Creatures/Rat/Sounds/squeak_07.wav",
-                "Assets/Creatures/Rat/Sounds/squeak_08.wav",
-                "Assets/Creatures/Rat/Sounds/squeak_09.wav",
-                "Assets/Creatures/Rat/Sounds/squeak_10.wav");
+                $"{definition.AssetFolder}/Sounds/squeak_01.wav",
+                $"{definition.AssetFolder}/Sounds/squeak_02.wav",
+                $"{definition.AssetFolder}/Sounds/squeak_03.wav",
+                $"{definition.AssetFolder}/Sounds/squeak_04.wav",
+                $"{definition.AssetFolder}/Sounds/squeak_05.wav",
+                $"{definition.AssetFolder}/Sounds/squeak_06.wav",
+                $"{definition.AssetFolder}/Sounds/squeak_07.wav",
+                $"{definition.AssetFolder}/Sounds/squeak_08.wav",
+                $"{definition.AssetFolder}/Sounds/squeak_09.wav",
+                $"{definition.AssetFolder}/Sounds/squeak_10.wav");
 
             soundSet.Add(
                 CreatureSoundEvent.Pickup,
-                "Assets/Creatures/Rat/Sounds/squeak_01.wav",
-                "Assets/Creatures/Rat/Sounds/squeak_02.wav",
-                "Assets/Creatures/Rat/Sounds/squeak_03.wav",
-                "Assets/Creatures/Rat/Sounds/squeak_04.wav",
-                "Assets/Creatures/Rat/Sounds/squeak_05.wav",
-                "Assets/Creatures/Rat/Sounds/squeak_06.wav",
-                "Assets/Creatures/Rat/Sounds/squeak_07.wav",
-                "Assets/Creatures/Rat/Sounds/squeak_08.wav",
-                "Assets/Creatures/Rat/Sounds/squeak_09.wav",
-                "Assets/Creatures/Rat/Sounds/squeak_10.wav");
+                $"{definition.AssetFolder}/Sounds/squeak_01.wav",
+                $"{definition.AssetFolder}/Sounds/squeak_02.wav",
+                $"{definition.AssetFolder}/Sounds/squeak_03.wav",
+                $"{definition.AssetFolder}/Sounds/squeak_04.wav",
+                $"{definition.AssetFolder}/Sounds/squeak_05.wav",
+                $"{definition.AssetFolder}/Sounds/squeak_06.wav",
+                $"{definition.AssetFolder}/Sounds/squeak_07.wav",
+                $"{definition.AssetFolder}/Sounds/squeak_08.wav",
+                $"{definition.AssetFolder}/Sounds/squeak_09.wav",
+                $"{definition.AssetFolder}/Sounds/squeak_10.wav");
 
             SetSoundSet(soundSet);
 

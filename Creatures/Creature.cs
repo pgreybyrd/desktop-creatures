@@ -9,6 +9,7 @@ using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
 using PixelRecolor.Core;
+using System.IO;
 using System.Windows.Media.Imaging;
 using Point = System.Windows.Point;
 
@@ -220,11 +221,33 @@ public abstract class Creature
         CreateRandomAppearanceTraits(
             CreatureDefinition definition)
     {
+        string paletteFolder =
+            Path.Combine(
+                AppContext.BaseDirectory,
+                definition.AssetFolder,
+                "Appearance",
+                "Palettes");
+
+        string[] palettes =
+            Directory.Exists(paletteFolder)
+                ? Directory
+                    .EnumerateFiles(
+                        paletteFolder,
+                        "*.json")
+                    .Select(
+                        Path.GetFileNameWithoutExtension)
+                    .Where(
+                        name =>
+                            !string.IsNullOrWhiteSpace(name))
+                    .Select(name => name!)
+                    .ToArray()
+                : [];
+
         string? palette =
-            definition.Palettes.Length > 0
-                ? definition.Palettes[
+            palettes.Length > 0
+                ? palettes[
                     Random.Next(
-                        definition.Palettes.Length)]
+                        palettes.Length)]
                 : null;
 
         return new CreatureAppearanceTraits(

@@ -1,7 +1,6 @@
-﻿namespace Desktop_Creatures.UI.FieldGuide
+﻿using Desktop_Creatures.UI.FieldGuide;
+
+public sealed class FieldGuideDefinition
 {
-    public sealed class FieldGuideDefinition
-    {
-        public List<FieldGuideFamilyEntry> Families { get; init; } = [];
-    }
+    public List<FieldGuideCategoryEntry> Categories { get; init; } = [];
 }
