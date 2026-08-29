@@ -6,8 +6,8 @@
       "scale": 2,
 
       "flight": {
-        "flySpeed": 1.5,
-        "glideSpeed": 2.5,
+        "flySpeed": 5.0,
+        "glideSpeed": 5.0,
         "minDownwardGlideDy": 5,
         "glideChance": 0.5,
 

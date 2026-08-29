@@ -1,10 +1,7 @@
 ﻿using Desktop_Creatures.Config;
 using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
-using System.Diagnostics;
-using System.Windows.Media.Imaging;
-using Forms = System.Windows.Forms;
-using Desktop_Creatures.Utilities;
+using Point = System.Windows.Point;
 
 namespace Desktop_Creatures.Creatures
 {
@@ -24,6 +21,8 @@ namespace Desktop_Creatures.Creatures
         private readonly List<PointOfInterest> _pointsOfInterest;
 
         private readonly CreatureSettings _settings;
+
+        private readonly SurfaceManager _surfaceManager;
 
         private readonly IReadOnlyList<Rectangle> _workingAreas;
 
@@ -66,6 +65,7 @@ namespace Desktop_Creatures.Creatures
         {
             _settings = settings;
             _workingAreas = workingAreas;
+            _surfaceManager = surfaceManager;
 
             X = startX;
             Y = startY;
@@ -173,8 +173,35 @@ namespace Desktop_Creatures.Creatures
                 dy / distance *
                 _speed;
 
-            X += SpeedX;
-            Y += speedY;
+            double nextX =
+                X + SpeedX;
+
+            double nextY =
+                Y + speedY;
+
+            Point nextPosition =
+                new Point(
+                    nextX,
+                    nextY);
+
+            Point nextTop =
+                new Point(
+                    nextX,
+                    nextY -
+                    (DisplayFootY - CurrentFootY));
+
+            if (_surfaceManager.IsPointOnDesktop(
+                    nextPosition) &&
+                _surfaceManager.IsPointOnDesktop(
+                    nextTop))
+            {
+                X = nextX;
+                Y = nextY;
+            }
+            else
+            {
+                PickNewTarget();
+            }
         }
 
         private void ChooseFlightMode(double dy)
