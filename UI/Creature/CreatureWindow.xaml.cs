@@ -17,8 +17,7 @@ public partial class CreatureWindow : Window
     private readonly CreatureContextMenuController
         _contextMenuController = new();
 
-    private readonly CreatureDragController
-        _dragController = new();
+    private readonly CreatureDragController _dragController;
 
     private int _uiScale;
 
@@ -42,6 +41,10 @@ public partial class CreatureWindow : Window
         _surfaceManager = surfaceManager;
         _uiScale = uiScale;
 
+        _dragController =
+            new CreatureDragController(
+                _surfaceManager);
+
         MouseLeftButtonDown += OnMouseLeftButtonDown;
         MouseMove += OnMouseMove;
         MouseLeftButtonUp += OnMouseLeftButtonUp;
@@ -56,14 +59,8 @@ public partial class CreatureWindow : Window
                 BringCreatureToFront;
         };
 
-        //int scale = _creature.Scale;
-
-        //SizeToContent = SizeToContent.WidthAndHeight;
-
         CreatureImage.Width = _creature.SpriteWidth;
         CreatureImage.Height = _creature.SpriteHeight;
-
-        //CreatureImage.Stretch = Stretch.None;
 
         Width = _creature.SpriteWidth;// * scale;
         Height = _creature.SpriteHeight;// * scale;
@@ -107,7 +104,7 @@ public partial class CreatureWindow : Window
             $"Sprite={_creature.SpriteWidth}x{_creature.SpriteHeight}, " +
             $"Window={Width}x{Height}, " +
             $"Image={CreatureImage.Width}x{CreatureImage.Height}, " +
-            $"CurrentFrame hash = {_creature.CurrentFrame.GetHashCode()}");
+            $"CurrentFrame hash = {_creature.CurrentFrame?.GetHashCode()}");
     }
 
     private void RefreshCreaturePresentation()
@@ -274,16 +271,16 @@ public partial class CreatureWindow : Window
             _surfaceManager.GetMonitorBoundsUnderCursor();
 
         Point leftProbe =
-            new Point(
+            new (
                 x - 1,
                 mouseDip.Y);
 
         Point rightProbe =
-            new Point(
+            new (
                 x + Width + 1,
                 mouseDip.Y);
 
-        if (!_surfaceManager.IsPointOnDesktop(
+        if (!_dragController.IsOnDesktop(
                 leftProbe))
         {
             x = Math.Max(
@@ -291,7 +288,7 @@ public partial class CreatureWindow : Window
                 monitor.Left);
         }
 
-        if (!_surfaceManager.IsPointOnDesktop(
+        if (!_dragController.IsOnDesktop(
                 rightProbe))
         {
             x = Math.Min(
@@ -300,16 +297,16 @@ public partial class CreatureWindow : Window
         }
 
         Point topProbe =
-            new Point(
+            new (
                 mouseDip.X,
                 y - 1);
 
         Point bottomProbe =
-            new Point(
+            new (
                 mouseDip.X,
                 y + Height + 1);
 
-        if (!_surfaceManager.IsPointOnDesktop(
+        if (!_dragController.IsOnDesktop(
                 topProbe))
         {
             y = Math.Max(
@@ -317,7 +314,7 @@ public partial class CreatureWindow : Window
                 monitor.Top);
         }
 
-        if (!_surfaceManager.IsPointOnDesktop(
+        if (!_dragController.IsOnDesktop(
                 bottomProbe))
         {
             y = Math.Min(
