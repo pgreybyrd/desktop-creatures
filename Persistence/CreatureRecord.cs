@@ -20,6 +20,8 @@ public sealed class CreatureRecord
 
     public bool IsFavorite { get; set; }
 
+    public bool IsSpawned { get; set; } = true;
+
     public double LastX { get; set; }
 
     public double LastY { get; set; }

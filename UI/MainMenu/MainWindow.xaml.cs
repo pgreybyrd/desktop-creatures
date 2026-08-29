@@ -460,9 +460,12 @@ public partial class MainWindow : Window
             _creatureRecords[record.Id] =
                 record;
 
-            SpawnCreature(
-                record.CreatureType,
-                record);
+            if (record.IsSpawned)
+            {
+                SpawnCreature(
+                    record.CreatureType,
+                    record);
+            }
         }
     }
 
@@ -667,6 +670,10 @@ public partial class MainWindow : Window
         SpawnCreature(
             record.CreatureType,
             record);
+
+        record.IsSpawned = true;
+
+        SaveCreatureRecords();
     }
 
     private void PutAwayCreature(
@@ -692,6 +699,13 @@ public partial class MainWindow : Window
 
         UpdateCreatureRecord(
             creature);
+
+        if (_creatureRecords.TryGetValue(
+            creature.Id,
+            out CreatureRecord? record))
+        {
+            record.IsSpawned = false;
+        }
 
         _creatureManager.Remove(creature.Id);
 
