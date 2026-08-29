@@ -7,7 +7,7 @@
 
       "flight": {
         "flySpeed": 8.0,
-        "glideSpeed": 5.0,
+        "glideSpeed": 8.0,
         "minDownwardGlideDy": 5,
         "glideChance": 0.5,
 

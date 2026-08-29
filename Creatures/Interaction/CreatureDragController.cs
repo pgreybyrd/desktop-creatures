@@ -3,24 +3,17 @@ using Point = System.Windows.Point;
 
 namespace Desktop_Creatures.Creatures.Interaction;
 
-public sealed class CreatureDragController
+public sealed class CreatureDragController(
+    SurfaceManager surfaceManager)
 {
-    private readonly SurfaceManager _surfaceManager;
-
     public bool IsDragging { get; private set; }
 
     public Point DragOffset { get; private set; }
 
-    public CreatureDragController(
-        SurfaceManager surfaceManager)
-    {
-        _surfaceManager = surfaceManager;
-    }
-
     public bool IsOnDesktop(
         Point point)
     {
-        return _surfaceManager.IsPointOnDesktop(
+        return surfaceManager.IsPointOnDesktop(
             point);
     }
 
@@ -83,5 +76,41 @@ public sealed class CreatureDragController
         }
 
         return x;
+    }
+
+    public double ConstrainVerticalPosition(
+        double y,
+        double height,
+        double cursorX,
+        double monitorTop,
+        double monitorBottom)
+    {
+        Point topProbe =
+            new Point(
+                cursorX,
+                y - 1);
+
+        Point bottomProbe =
+            new Point(
+                cursorX,
+                y + height + 1);
+
+        if (!IsOnDesktop(
+            topProbe))
+        {
+            y = Math.Max(
+                y,
+                monitorTop);
+        }
+
+        if (!IsOnDesktop(
+            bottomProbe))
+        {
+            y = Math.Min(
+                y,
+                monitorBottom - height);
+        }
+
+        return y;
     }
 }

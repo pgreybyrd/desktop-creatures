@@ -252,7 +252,7 @@ public partial class CreatureWindow : Window
         if (source?.CompositionTarget is null)
             return;
 
-        var mousePixels = System.Windows.Forms.Control.MousePosition;
+        var mousePixels = Control.MousePosition;
 
         var mouseDip = source.CompositionTarget.TransformFromDevice.Transform(
             new Point(mousePixels.X, mousePixels.Y));
@@ -270,57 +270,21 @@ public partial class CreatureWindow : Window
         var monitor =
             _surfaceManager.GetMonitorBoundsUnderCursor();
 
-        Point leftProbe =
-            new (
-                x - 1,
-                mouseDip.Y);
-
-        Point rightProbe =
-            new (
-                x + Width + 1,
-                mouseDip.Y);
-
-        if (!_dragController.IsOnDesktop(
-                leftProbe))
-        {
-            x = Math.Max(
+        x =
+            _dragController.ConstrainHorizontalPosition(
                 x,
-                monitor.Left);
-        }
+                Width,
+                mouseDip.Y,
+                monitor.Left,
+                monitor.Right);
 
-        if (!_dragController.IsOnDesktop(
-                rightProbe))
-        {
-            x = Math.Min(
-                x,
-                monitor.Right - Width);
-        }
-
-        Point topProbe =
-            new (
-                mouseDip.X,
-                y - 1);
-
-        Point bottomProbe =
-            new (
-                mouseDip.X,
-                y + Height + 1);
-
-        if (!_dragController.IsOnDesktop(
-                topProbe))
-        {
-            y = Math.Max(
+        y =
+            _dragController.ConstrainVerticalPosition(
                 y,
-                monitor.Top);
-        }
-
-        if (!_dragController.IsOnDesktop(
-                bottomProbe))
-        {
-            y = Math.Min(
-                y,
-                monitor.Bottom - Height);
-        }
+                Height,
+                mouseDip.X,
+                monitor.Top,
+                monitor.Bottom);
 
         double displayScale =
             _creature.DisplayScale;
