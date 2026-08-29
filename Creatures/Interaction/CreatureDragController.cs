@@ -19,6 +19,26 @@ public sealed class CreatureDragController
         creature.OnPickedUp();
     }
 
+    public Point ClampPosition(
+        Point position,
+        double left,
+        double top,
+        double right,
+        double bottom,
+        double width,
+        double height)
+    {
+        return new Point(
+            Math.Clamp(
+                position.X,
+                left,
+                right - width),
+            Math.Clamp(
+                position.Y,
+                top,
+                bottom - height));
+    }
+
     public void End(Creature creature)
     {
         IsDragging = false;

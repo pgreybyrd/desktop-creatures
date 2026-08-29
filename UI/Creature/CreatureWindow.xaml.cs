@@ -250,8 +250,6 @@ public partial class CreatureWindow : Window
         if (!_dragController.IsDragging)
             return;
 
-        //_creature.OnPickedUp();
-
         var source = PresentationSource.FromVisual(this);
 
         if (source?.CompositionTarget is null)
@@ -271,15 +269,57 @@ public partial class CreatureWindow : Window
         var monitor =
             _surfaceManager.GetMonitorBoundsUnderCursor();
 
-        x = Math.Clamp(
-            x,
-            monitor.Left,
-            monitor.Right - Width);
+        Point leftProbe =
+            new Point(
+                x - 1,
+                mouseDip.Y);
 
-        y = Math.Clamp(
-            y,
-            monitor.Top,
-            monitor.Bottom - Height);
+        Point rightProbe =
+            new Point(
+                x + Width + 1,
+                mouseDip.Y);
+
+        if (!_surfaceManager.IsPointOnDesktop(
+                leftProbe))
+        {
+            x = Math.Max(
+                x,
+                monitor.Left);
+        }
+
+        if (!_surfaceManager.IsPointOnDesktop(
+                rightProbe))
+        {
+            x = Math.Min(
+                x,
+                monitor.Right - Width);
+        }
+
+        Point topProbe =
+            new Point(
+                mouseDip.X,
+                y - 1);
+
+        Point bottomProbe =
+            new Point(
+                mouseDip.X,
+                y + Height + 1);
+
+        if (!_surfaceManager.IsPointOnDesktop(
+                topProbe))
+        {
+            y = Math.Max(
+                y,
+                monitor.Top);
+        }
+
+        if (!_surfaceManager.IsPointOnDesktop(
+                bottomProbe))
+        {
+            y = Math.Min(
+                y,
+                monitor.Bottom - Height);
+        }
 
         double displayScale =
             _creature.DisplayScale;

@@ -272,6 +272,27 @@ public class SurfaceManager
             .ToList();
     }
 
+    public IReadOnlyList<Rectangle>
+        GetMonitorBounds()
+    {
+        return Forms.Screen.AllScreens
+            .Select(screen =>
+                ToDipRectangle(
+                    screen.Bounds))
+            .ToList();
+    }
+
+    public bool IsPointOnDesktop(
+        Point point)
+    {
+        return GetMonitorBounds()
+            .Any(bounds =>
+                point.X >= bounds.Left &&
+                point.X < bounds.Right &&
+                point.Y >= bounds.Top &&
+                point.Y < bounds.Bottom);
+    }
+
     private static IEnumerable<Rectangle>
         MergeHorizontalGroundSurfaces(
             IEnumerable<Rectangle> surfaces)
