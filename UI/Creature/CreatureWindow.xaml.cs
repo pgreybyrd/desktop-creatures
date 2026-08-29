@@ -286,28 +286,16 @@ public partial class CreatureWindow : Window
                 monitor.Top,
                 monitor.Bottom);
 
-        double displayScale =
-            _creature.DisplayScale;
-
-        double extraWidth =
-            _creature.SpriteWidth *
-            (displayScale - 1);
-
-        double extraHeight =
-            _creature.CurrentFootY *
-            (displayScale - 1);
-
-        double creatureX =
-            x +
-            (extraWidth / 2.0);
-
-        double creatureY =
-            y +
-            extraHeight;
+        Point creaturePosition =
+            _dragController.GetCreaturePosition(
+                _creature,
+                new Point(
+                    x,
+                    y));
 
         _creature.DragTo(
-            creatureX,
-            creatureY);
+            creaturePosition.X,
+            creaturePosition.Y);
 
         Left = x;
         Top = y;

@@ -180,12 +180,12 @@ namespace Desktop_Creatures.Creatures
                 Y + speedY;
 
             Point nextPosition =
-                new Point(
+                new (
                     nextX,
                     nextY);
 
             Point nextTop =
-                new Point(
+                new (
                     nextX,
                     nextY -
                     (DisplayFootY - CurrentFootY));

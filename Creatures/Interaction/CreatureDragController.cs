@@ -42,6 +42,28 @@ public sealed class CreatureDragController(
         creature.Release();
     }
 
+    public Point GetCreaturePosition(
+        Creature creature,
+        Point windowPosition)
+    {
+        double displayScale =
+            creature.DisplayScale;
+
+        double extraWidth =
+            creature.SpriteWidth *
+            (displayScale - 1);
+
+        double extraHeight =
+            creature.CurrentFootY *
+            (displayScale - 1);
+
+        return new Point(
+            windowPosition.X +
+                (extraWidth / 2.0),
+            windowPosition.Y +
+                extraHeight);
+    }
+
     public double ConstrainHorizontalPosition(
         double x,
         double width,
