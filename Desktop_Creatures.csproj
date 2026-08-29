@@ -12,11 +12,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Config\creature_settings.json" />
-    <None Remove="Config\point_of_interest_settings.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="Assets\**\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -35,30 +30,6 @@
     <Content Include="Config\app_settings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Assets\Creatures\Birds\Eagle\Appearance\Accessories\" />
-    <Folder Include="Assets\Creatures\Birds\Eagle\Appearance\Appearances\" />
-    <Folder Include="Assets\Creatures\Birds\Eagle\Appearance\Effects\" />
-    <Folder Include="Assets\Creatures\Birds\Eagle\Appearance\Patterns\" />
-    <Folder Include="Assets\Creatures\Birds\Eagle\Appearance\Palettes\" />
-    <Folder Include="Assets\Creatures\Birds\Eagle\Sounds\" />
-    <Folder Include="Assets\Creatures\Insects\Butterflies\" />
-    <Folder Include="Assets\Creatures\Felines\Ocelot\Appearance\Accessories\" />
-    <Folder Include="Assets\Creatures\Felines\Ocelot\Appearance\Effects\" />
-    <Folder Include="Assets\Creatures\Felines\Ocelot\Appearance\Appearances\" />
-    <Folder Include="Assets\Creatures\Felines\Ocelot\Appearance\Patterns\" />
-    <Folder Include="Assets\Creatures\Felines\Ocelot\Sounds\" />
-    <Folder Include="Assets\Creatures\Insects\" />
-    <Folder Include="Assets\Items\" />
-    <Folder Include="Assets\POI\WaterDish\" />
-    <Folder Include="Assets\UI\FieldGuide\Sounds\" />
-    <Folder Include="Graphics\Sprites\" />
-    <Folder Include="Logs\" />
-    <Folder Include="Persistence\Migrations\Legacy\" />
-    <Folder Include="Rendering\Fonts\" />
-    <Folder Include="UI\Controls\" />
   </ItemGroup>
 
   <ItemGroup>
