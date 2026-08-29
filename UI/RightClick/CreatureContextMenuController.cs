@@ -116,6 +116,59 @@ public sealed class CreatureContextMenuController
         menu.Top = top;
     }
 
+    public void Open(
+        int uiScale,
+        Visual relativeTo,
+        Action<CreatureContextMenuAction> actionRequested,
+        Action putAwayRequested)
+    {
+        IReadOnlyList<
+            CreatureContextMenuItem> items =
+            CreatureContextMenuBuilder.Build(
+                pet:
+                    () =>
+                        actionRequested(
+                            CreatureContextMenuAction.Pet),
+
+                favorite:
+                    () =>
+                        actionRequested(
+                            CreatureContextMenuAction.Favorite),
+
+                rename:
+                    () =>
+                        actionRequested(
+                            CreatureContextMenuAction.Rename),
+
+                goHome:
+                    () =>
+                        actionRequested(
+                            CreatureContextMenuAction.GoHome),
+
+                fieldGuide:
+                    () =>
+                        actionRequested(
+                            CreatureContextMenuAction.FieldGuide),
+
+                appearance:
+                    () =>
+                        actionRequested(
+                            CreatureContextMenuAction.Appearance),
+
+                breeding:
+                    () =>
+                        actionRequested(
+                            CreatureContextMenuAction.Breeding),
+
+                putAway:
+                    putAwayRequested);
+
+        Open(
+            items,
+            uiScale,
+            relativeTo);
+    }
+
     public CreatureContextMenuWindow Open(
         IReadOnlyList<CreatureContextMenuItem> items,
         int uiScale,

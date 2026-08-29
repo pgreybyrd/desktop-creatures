@@ -211,53 +211,13 @@ public partial class CreatureWindow : Window
 
     private void OpenContextMenu()
     {
-        IReadOnlyList<
-            CreatureContextMenuItem> items =
-            CreatureContextMenuBuilder.Build(
-                pet:
-                    () =>
-                        RequestContextAction(
-                            CreatureContextMenuAction.Pet),
-
-                favorite:
-                    () =>
-                        RequestContextAction(
-                            CreatureContextMenuAction.Favorite),
-
-                rename:
-                    () =>
-                        RequestContextAction(
-                            CreatureContextMenuAction.Rename),
-
-                goHome:
-                    () =>
-                        RequestContextAction(
-                            CreatureContextMenuAction.GoHome),
-
-                fieldGuide:
-                    () =>
-                        RequestContextAction(
-                            CreatureContextMenuAction.FieldGuide),
-
-                appearance:
-                    () =>
-                        RequestContextAction(
-                            CreatureContextMenuAction.Appearance),
-
-                breeding:
-                    () =>
-                        RequestContextAction(
-                            CreatureContextMenuAction.Breeding),
-
-                putAway:
-                    () =>
-                        PutAwayRequested?.Invoke(
-                            this));
-
         _contextMenuController.Open(
-            items,
             _uiScale,
-            this);
+            this,
+            RequestContextAction,
+            () =>
+                PutAwayRequested?.Invoke(
+                    this));
     }
 
     private void OnMouseLeftButtonDown(
