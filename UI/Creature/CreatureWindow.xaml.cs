@@ -15,6 +15,9 @@ public partial class CreatureWindow : Window
     private readonly Creature _creature;
     private readonly SurfaceManager _surfaceManager;
 
+    private readonly CreatureContextMenuController
+        _contextMenuController = new();
+
     private bool _isDragging;
     private Point _dragOffset;
 
@@ -351,11 +354,18 @@ public partial class CreatureWindow : Window
                 items,
                 _uiScale);
 
+        _contextMenuWindow.Opacity = 0;
+
+        _contextMenuController.SetWindow(
+            _contextMenuWindow);
+
         _contextMenuWindow.ReadyToPosition +=
             menu =>
             {
                 PositionContextMenu(
                     menu);
+
+                menu.Opacity = 1;
             };
 
         _contextMenuWindow.Closed +=
@@ -363,6 +373,8 @@ public partial class CreatureWindow : Window
             {
                 _contextMenuWindow = null;
                 _isContextMenuOpen = false;
+
+                _contextMenuController.ClearWindow();
             };
 
         _contextMenuWindow.Show();
