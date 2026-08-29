@@ -505,10 +505,14 @@ public partial class FieldGuideMenu : Window
                     entry,
                     LeftTab_Click);
 
-            Canvas.SetLeft(rightImage, RightTabX);
+            Canvas.SetLeft(
+                rightImage,
+                RightTabX + entry.RightX);
             Canvas.SetTop(rightImage, entry.RightY);
 
-            Canvas.SetLeft(rightButton, RightTabX);
+            Canvas.SetLeft(
+                rightButton,
+                RightTabX + entry.RightX);
             Canvas.SetTop(rightButton, entry.RightY);
 
             // For now use the final position from that tab's turn path.
