@@ -1,6 +1,5 @@
 ﻿using Desktop_Creatures.Audio;
 using Desktop_Creatures.Graphics.Animation;
-using Desktop_Creatures.Tools.Images;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -282,7 +281,7 @@ namespace Desktop_Creatures.UI.RightClick
                 textImage);
         }
 
-        private void CloseMenu()
+        public void CloseMenu()
         {
             if (_isClosing)
                 return;

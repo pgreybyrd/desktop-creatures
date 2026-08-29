@@ -21,8 +21,6 @@ public partial class CreatureWindow : Window
     private bool _isDragging;
     private Point _dragOffset;
 
-    private CreatureContextMenuWindow? _contextMenuWindow;
-
     private int _uiScale;
 
     public Creature GetCreature() => _creature;
@@ -301,7 +299,7 @@ public partial class CreatureWindow : Window
 
     private void OpenContextMenu()
     {
-        _contextMenuWindow?.Close();
+        _contextMenuController.Close();
 
         IReadOnlyList<
             CreatureContextMenuItem> items =
@@ -346,17 +344,17 @@ public partial class CreatureWindow : Window
                         PutAwayRequested?.Invoke(
                             this));
 
-        _contextMenuWindow =
+        CreatureContextMenuWindow menu =
             new CreatureContextMenuWindow(
                 items,
                 _uiScale);
 
-        _contextMenuWindow.Opacity = 0;
+        menu.Opacity = 0;
 
         _contextMenuController.SetWindow(
-            _contextMenuWindow);
+            menu);
 
-        _contextMenuWindow.ReadyToPosition +=
+        menu.ReadyToPosition +=
             menu =>
             {
                 PositionContextMenu(
@@ -365,15 +363,14 @@ public partial class CreatureWindow : Window
                 menu.Opacity = 1;
             };
 
-        _contextMenuWindow.Closed +=
+        menu.Closed +=
             (_, _) =>
             {
-                _contextMenuWindow = null;
-
-                _contextMenuController.ClearWindow();
+                _contextMenuController.ClearWindow(
+                    menu);
             };
 
-        _contextMenuWindow.Show();
+        menu.Show();
     }
 
     private void OnMouseLeftButtonDown(

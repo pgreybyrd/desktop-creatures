@@ -15,13 +15,19 @@ public sealed class CreatureContextMenuController
         _window = window;
     }
 
-    public void ClearWindow()
+    public void ClearWindow(
+        CreatureContextMenuWindow window)
     {
-        _window = null;
+        if (ReferenceEquals(
+                _window,
+                window))
+        {
+            _window = null;
+        }
     }
 
     public void Close()
     {
-        _window?.Close();
+        _window?.CloseMenu();
     }
 }
