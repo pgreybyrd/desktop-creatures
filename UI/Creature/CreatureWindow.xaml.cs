@@ -1,6 +1,7 @@
 ﻿using Desktop_Creatures.Creatures;
 using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World.Surfaces;
+using Desktop_Creatures.Creatures.Interaction;
 using System.Windows;
 using System.Windows.Input;
 using Desktop_Creatures.UI.RightClick;
@@ -16,7 +17,8 @@ public partial class CreatureWindow : Window
     private readonly CreatureContextMenuController
         _contextMenuController = new();
 
-    private bool _isDragging;
+    private readonly CreatureDragController
+        _dragController = new();
     private Point _dragOffset;
 
     private int _uiScale;
@@ -24,7 +26,7 @@ public partial class CreatureWindow : Window
     public Creature GetCreature() => _creature;
 
     public bool IsSimulationPaused =>
-        _isDragging ||
+        _dragController.IsDragging ||
         _contextMenuController.IsOpen;
 
     public event Action<CreatureWindow>? PutAwayRequested;
@@ -83,7 +85,7 @@ public partial class CreatureWindow : Window
 
     public void UpdateCreature()
     {
-        if (_isDragging)
+        if (_dragController.IsDragging)
         {
             _creature.UpdateHeldAnimation();
 
@@ -224,10 +226,10 @@ public partial class CreatureWindow : Window
         object sender,
         MouseButtonEventArgs e)
     {
-        _isDragging = true;
+        _dragController.Begin();
 
         _dragOffset =
-            new System.Windows.Point(
+            new Point(
                 _creature.PickupAnchor.X *
                     _creature.DisplayScale,
                 _creature.PickupAnchor.Y *
@@ -249,7 +251,7 @@ public partial class CreatureWindow : Window
 
     private void OnMouseMove(object sender, System.Windows.Input.MouseEventArgs e)
     {
-        if (!_isDragging)
+        if (!_dragController.IsDragging)
             return;
 
         //_creature.OnPickedUp();
@@ -262,7 +264,7 @@ public partial class CreatureWindow : Window
         var mousePixels = System.Windows.Forms.Control.MousePosition;
 
         var mouseDip = source.CompositionTarget.TransformFromDevice.Transform(
-            new System.Windows.Point(mousePixels.X, mousePixels.Y));
+            new Point(mousePixels.X, mousePixels.Y));
 
         double x = 
             mouseDip.X - _dragOffset.X;
@@ -312,7 +314,7 @@ public partial class CreatureWindow : Window
 
     private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
     {
-        _isDragging = false;
+        _dragController.End();
         ReleaseMouseCapture();
         _creature.Release();
     }
