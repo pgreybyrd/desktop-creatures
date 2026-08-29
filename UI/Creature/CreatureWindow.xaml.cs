@@ -226,13 +226,12 @@ public partial class CreatureWindow : Window
         MouseButtonEventArgs e)
     {
         _dragController.Begin(
+            _creature,
             new Point(
                 _creature.PickupAnchor.X *
                     _creature.DisplayScale,
                 _creature.PickupAnchor.Y *
                     _creature.DisplayScale));
-
-        _creature.OnPickedUp();
 
         CaptureMouse();
     }
@@ -311,9 +310,10 @@ public partial class CreatureWindow : Window
 
     private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
     {
-        _dragController.End();
+        _dragController.End(
+            _creature);
+
         ReleaseMouseCapture();
-        _creature.Release();
     }
 
 }

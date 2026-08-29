@@ -9,14 +9,20 @@ public sealed class CreatureDragController
 
     public Point DragOffset { get; private set; }
 
-    public void Begin(Point dragOffset)
+    public void Begin(
+        Creature creature,
+        Point dragOffset)
     {
         IsDragging = true;
         DragOffset = dragOffset;
+
+        creature.OnPickedUp();
     }
 
-    public void End()
+    public void End(Creature creature)
     {
         IsDragging = false;
+
+        creature.Release();
     }
 }
