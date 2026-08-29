@@ -19,7 +19,6 @@ public partial class CreatureWindow : Window
 
     private readonly CreatureDragController
         _dragController = new();
-    private Point _dragOffset;
 
     private int _uiScale;
 
@@ -226,14 +225,12 @@ public partial class CreatureWindow : Window
         object sender,
         MouseButtonEventArgs e)
     {
-        _dragController.Begin();
-
-        _dragOffset =
+        _dragController.Begin(
             new Point(
                 _creature.PickupAnchor.X *
                     _creature.DisplayScale,
                 _creature.PickupAnchor.Y *
-                    _creature.DisplayScale);
+                    _creature.DisplayScale));
 
         _creature.OnPickedUp();
 
@@ -266,11 +263,11 @@ public partial class CreatureWindow : Window
         var mouseDip = source.CompositionTarget.TransformFromDevice.Transform(
             new Point(mousePixels.X, mousePixels.Y));
 
-        double x = 
-            mouseDip.X - _dragOffset.X;
+        double x =
+            mouseDip.X - _dragController.DragOffset.X;
 
-        double y = 
-            mouseDip.Y - _dragOffset.Y;
+        double y =
+            mouseDip.Y - _dragController.DragOffset.Y;
 
         var monitor =
             _surfaceManager.GetMonitorBoundsUnderCursor();
