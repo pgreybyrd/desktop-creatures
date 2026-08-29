@@ -165,8 +165,13 @@ namespace Desktop_Creatures.Creatures
                     ? Flight.GlideSpeed
                     : Flight.FlySpeed;
 
-            SpeedX = dx / distance * (_speed * Settings.Scale * DisplayScale);
-            double speedY = dy / distance * (_speed * Settings.Scale * DisplayScale);
+            SpeedX =
+                dx / distance *
+                _speed;
+
+            double speedY =
+                dy / distance *
+                _speed;
 
             X += SpeedX;
             Y += speedY;
