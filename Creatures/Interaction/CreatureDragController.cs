@@ -19,6 +19,14 @@ public sealed class CreatureDragController
         creature.OnPickedUp();
     }
 
+    public Point GetPosition(
+        Point cursorPosition)
+    {
+        return new Point(
+            cursorPosition.X - DragOffset.X,
+            cursorPosition.Y - DragOffset.Y);
+    }
+
     public void End(Creature creature)
     {
         IsDragging = false;

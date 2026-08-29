@@ -260,11 +260,15 @@ public partial class CreatureWindow : Window
         var mouseDip = source.CompositionTarget.TransformFromDevice.Transform(
             new Point(mousePixels.X, mousePixels.Y));
 
+        Point position =
+            _dragController.GetPosition(
+                mouseDip);
+
         double x =
-            mouseDip.X - _dragController.DragOffset.X;
+            position.X;
 
         double y =
-            mouseDip.Y - _dragController.DragOffset.Y;
+            position.Y;
 
         var monitor =
             _surfaceManager.GetMonitorBoundsUnderCursor();
