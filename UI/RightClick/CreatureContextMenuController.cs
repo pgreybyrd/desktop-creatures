@@ -116,6 +116,45 @@ public sealed class CreatureContextMenuController
         menu.Top = top;
     }
 
+    public CreatureContextMenuWindow Open(
+        IReadOnlyList<CreatureContextMenuItem> items,
+        int uiScale,
+        Visual relativeTo)
+    {
+        Close();
+
+        CreatureContextMenuWindow menu =
+            new CreatureContextMenuWindow(
+                items,
+                uiScale);
+
+        menu.Opacity = 0;
+
+        SetWindow(
+            menu);
+
+        menu.ReadyToPosition +=
+            menu =>
+            {
+                Position(
+                    menu,
+                    relativeTo);
+
+                menu.Opacity = 1;
+            };
+
+        menu.Closed +=
+            (_, _) =>
+            {
+                ClearWindow(
+                    menu);
+            };
+
+        menu.Show();
+
+        return menu;
+    }
+
     public void Close()
     {
         _window?.CloseMenu();

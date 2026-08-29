@@ -211,8 +211,6 @@ public partial class CreatureWindow : Window
 
     private void OpenContextMenu()
     {
-        _contextMenuController.Close();
-
         IReadOnlyList<
             CreatureContextMenuItem> items =
             CreatureContextMenuBuilder.Build(
@@ -256,34 +254,10 @@ public partial class CreatureWindow : Window
                         PutAwayRequested?.Invoke(
                             this));
 
-        CreatureContextMenuWindow menu =
-            new CreatureContextMenuWindow(
-                items,
-                _uiScale);
-
-        menu.Opacity = 0;
-
-        _contextMenuController.SetWindow(
-            menu);
-
-        menu.ReadyToPosition +=
-            menu =>
-            {
-                _contextMenuController.Position(
-                    menu,
-                    this);
-
-                menu.Opacity = 1;
-            };
-
-        menu.Closed +=
-            (_, _) =>
-            {
-                _contextMenuController.ClearWindow(
-                    menu);
-            };
-
-        menu.Show();
+        _contextMenuController.Open(
+            items,
+            _uiScale,
+            this);
     }
 
     private void OnMouseLeftButtonDown(
