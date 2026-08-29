@@ -2,10 +2,8 @@
 using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World.Surfaces;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using Desktop_Creatures.UI.RightClick;
-using System.Windows.Media;
 using Point = System.Windows.Point;
 
 namespace Desktop_Creatures;
@@ -211,92 +209,6 @@ public partial class CreatureWindow : Window
             action);
     }
 
-    private void PositionContextMenu(
-        CreatureContextMenuWindow menu)
-    {
-        PresentationSource? source =
-            PresentationSource.FromVisual(this);
-
-        if (source?.CompositionTarget is null)
-            return;
-
-        System.Drawing.Point mousePixels =
-            System.Windows.Forms.Control.MousePosition;
-
-        System.Windows.Forms.Screen screen =
-            System.Windows.Forms.Screen.FromPoint(
-                mousePixels);
-
-        System.Drawing.Rectangle workPixels =
-            screen.WorkingArea;
-
-        Matrix fromDevice =
-            source.CompositionTarget
-                .TransformFromDevice;
-
-        Point mouseDip =
-            fromDevice.Transform(
-                new Point(
-                    mousePixels.X,
-                    mousePixels.Y));
-
-        Point workTopLeft =
-            fromDevice.Transform(
-                new Point(
-                    workPixels.Left,
-                    workPixels.Top));
-
-        Point workBottomRight =
-            fromDevice.Transform(
-                new Point(
-                    workPixels.Right,
-                    workPixels.Bottom));
-
-        double left =
-            mouseDip.X;
-
-        double top =
-            mouseDip.Y;
-
-        // Not enough room to the right:
-        // open toward the left.
-        if (left + menu.Width >
-            workBottomRight.X)
-        {
-            left =
-                mouseDip.X -
-                menu.Width;
-        }
-
-        // Not enough room below:
-        // open upward from cursor.
-        if (top + menu.Height >
-            workBottomRight.Y)
-        {
-            top =
-                mouseDip.Y -
-                menu.Height;
-        }
-
-        // Final safety clamp.
-        left =
-            Math.Clamp(
-                left,
-                workTopLeft.X,
-                workBottomRight.X -
-                    menu.Width);
-
-        top =
-            Math.Clamp(
-                top,
-                workTopLeft.Y,
-                workBottomRight.Y -
-                    menu.Height);
-
-        menu.Left = left;
-        menu.Top = top;
-    }
-
     private void OpenContextMenu()
     {
         _contextMenuController.Close();
@@ -357,8 +269,9 @@ public partial class CreatureWindow : Window
         menu.ReadyToPosition +=
             menu =>
             {
-                PositionContextMenu(
-                    menu);
+                _contextMenuController.Position(
+                    menu,
+                    this);
 
                 menu.Opacity = 1;
             };
