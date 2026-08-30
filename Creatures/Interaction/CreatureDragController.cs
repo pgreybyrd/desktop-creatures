@@ -74,6 +74,36 @@ public sealed class CreatureDragController(
         return surfaceManager.GetMonitorBoundsUnderCursor();
     }
 
+    public Point ConstrainPosition(
+        Point position,
+        double width,
+        double height,
+        Point cursorPosition)
+    {
+        var monitor =
+            GetMonitorBoundsUnderCursor();
+
+        double x =
+            ConstrainHorizontalPosition(
+                position.X,
+                width,
+                cursorPosition.Y,
+                monitor.Left,
+                monitor.Right);
+
+        double y =
+            ConstrainVerticalPosition(
+                position.Y,
+                height,
+                cursorPosition.X,
+                monitor.Top,
+                monitor.Bottom);
+
+        return new Point(
+            x,
+            y);
+    }
+
     public double ConstrainHorizontalPosition(
         double x,
         double width,

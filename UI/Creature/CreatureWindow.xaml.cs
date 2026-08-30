@@ -260,24 +260,17 @@ public partial class CreatureWindow : Window
         double y =
             position.Y;
 
-        var monitor =
-            _dragController.GetMonitorBoundsUnderCursor();
-
-        x =
-            _dragController.ConstrainHorizontalPosition(
-                x,
+        Point constrainedPosition =
+            _dragController.ConstrainPosition(
+                new Point(
+                    x,
+                    y),
                 Width,
-                mouseDip.Y,
-                monitor.Left,
-                monitor.Right);
-
-        y =
-            _dragController.ConstrainVerticalPosition(
-                y,
                 Height,
-                mouseDip.X,
-                monitor.Top,
-                monitor.Bottom);
+                mouseDip);
+
+        x = constrainedPosition.X;
+        y = constrainedPosition.Y;
 
         Point creaturePosition =
             _dragController.GetCreaturePosition(
