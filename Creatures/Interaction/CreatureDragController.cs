@@ -18,11 +18,16 @@ public sealed class CreatureDragController(
     }
 
     public void Begin(
-        Creature creature,
-        Point dragOffset)
+        Creature creature)
     {
         IsDragging = true;
-        DragOffset = dragOffset;
+
+        DragOffset =
+            new Point(
+                creature.PickupAnchor.X *
+                    creature.DisplayScale,
+                creature.PickupAnchor.Y *
+                    creature.DisplayScale);
 
         creature.OnPickedUp();
     }
