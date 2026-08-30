@@ -60,7 +60,6 @@
                     Click="SpawnEagle_Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>-->
 
             <Image x:Name="FieldGuideImage"
-                   Source="Assets/UI/MainMenu/Buttons/button_field_guide.png"
                    Canvas.Left="114"
                    Canvas.Top="90"
                    Width="139"
@@ -88,17 +87,53 @@
                     PreviewMouseDown="FieldGuide_MouseLeftButtonDown"
                     PreviewMouseUp="FieldGuide_MouseUp"/>
 
+            <Image x:Name="RosterImage"
+                   Canvas.Left="114"
+                   Canvas.Top="119"
+                   Width="139"
+                   Height="27"/>
+
+            <Image x:Name="RosterLabelImage"
+                   IsHitTestVisible="False"
+                   Stretch="None"
+                   Canvas.Left="114"
+                   Canvas.Top="119"
+                   Width="139"
+                   Height="27"/>
+
+            <Button x:Name="RosterButton"
+                    Canvas.Left="114"
+                    Canvas.Top="119"
+                    Width="139"
+                    Height="27"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Opacity="0"
+                    Click="Roster_Click" 
+                    MouseEnter="Roster_MouseEnter"
+                    MouseLeave="Roster_MouseLeave"
+                    PreviewMouseDown="Roster_MouseLeftButtonDown"
+                    PreviewMouseUp="Roster_MouseUp"/>
+
             <Image x:Name="ClearDesktopImage"
                    Canvas.Left="114"
-                   Canvas.Top="123"
+                   Canvas.Top="148"
                    Width="139"
-                   Height="33"/>
+                   Height="27"/>
+
+            <Image x:Name="ClearDesktopLabelImage"
+                   IsHitTestVisible="False"
+                   Stretch="None"
+                   Canvas.Left="114"
+                   Canvas.Top="148"
+                   Width="139"
+                   Height="27"/>
 
             <Button x:Name="ClearDesktopButton"
                     Canvas.Left="114"
-                    Canvas.Top="123"
+                    Canvas.Top="148"
                     Width="139"
-                    Height="33"
+                    Height="27"
                     Background="Transparent"
                     BorderThickness="0"
                     Opacity="0"
@@ -107,18 +142,19 @@
                     MouseLeave="ClearDesktop_MouseLeave"
                     PreviewMouseDown="ClearDesktop_MouseDown"
                     PreviewMouseUp="ClearDesktop_MouseUp"/>
+            
             <Image x:Name="SettingsButtonImage"
                    Source="Assets/UI/MainMenu/Buttons/button_settings.png"
                    Canvas.Left="114"
-                   Canvas.Top="161"
+                   Canvas.Top="177"
                    Width="139"
-                   Height="33"/>
+                   Height="27"/>
 
             <ToggleButton x:Name="SettingsButton"
                           Canvas.Left="114"
-                          Canvas.Top="161"
+                          Canvas.Top="177"
                           Width="139"
-                          Height="33"
+                          Height="27"
                           Background="Transparent"
                           BorderThickness="0"
                           Opacity="0"
@@ -130,7 +166,7 @@
 
             <Image x:Name="MouseHoleRatImage"
                    Canvas.Left="186"
-                   Canvas.Top="215"
+                   Canvas.Top="220"
                    Visibility="Collapsed"
                    IsHitTestVisible="False"
                    RenderOptions.BitmapScalingMode="NearestNeighbor"/>
@@ -138,15 +174,15 @@
             <Image x:Name="QuitImage"
                    Source="Assets/UI/MainMenu/Buttons/button_exit.png"
                    Canvas.Left="114"
-                   Canvas.Top="199"
+                   Canvas.Top="206"
                    Width="139"
-                   Height="33"/>
+                   Height="27"/>
 
             <Button x:Name="QuitButton"
                     Canvas.Left="114"
-                    Canvas.Top="199"
+                    Canvas.Top="206"
                     Width="139"
-                    Height="33"
+                    Height="27"
                     Background="Transparent"
                     BorderThickness="0"
                     Opacity="0"

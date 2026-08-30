@@ -50,6 +50,16 @@ public partial class MainWindow : Window
     private readonly BitmapSource _fieldGuidePressed;
     private readonly BitmapSource _fieldGuideLabel;
 
+    private readonly BitmapSource _rosterNormal;
+    private readonly BitmapSource _rosterHover;
+    private readonly BitmapSource _rosterPressed;
+    private readonly BitmapSource _rosterLabel;
+
+    private readonly BitmapSource _clearDesktopNormal;
+    private readonly BitmapSource _clearDesktopHover;
+    private readonly BitmapSource _clearDesktopPressed;
+    private readonly BitmapSource _clearDesktopLabel;
+
     private readonly UiButtonImages _rosterImages = null!;
     private readonly UiButtonImages _clearDesktopImages = null!;
     private readonly UiButtonImages _settingsImages = null!;
@@ -124,6 +134,7 @@ public partial class MainWindow : Window
                 "Assets/UI/MainMenu/labels.png",
                 "Assets/UI/MainMenu/labels.json");
 
+        //Field Guide
         _fieldGuideNormal =
             _mainMenuButtonSheet
                 .GetFrame("fieldguide_normal")
@@ -147,11 +158,63 @@ public partial class MainWindow : Window
         FieldGuideImage.Source = _fieldGuideNormal;
         FieldGuideLabelImage.Source = _fieldGuideLabel;
 
+        //Roster
+        _rosterNormal =
+            _mainMenuButtonSheet
+                .GetFrame("roster_normal")
+                .Image;
+
+        _rosterHover =
+            _mainMenuButtonSheet
+                .GetFrame("roster_hover")
+                .Image;
+
+        _rosterPressed =
+            _mainMenuButtonSheet
+                .GetFrame("roster_pressed")
+                .Image;
+
+        _rosterLabel =
+            _mainMenuLabelSheet
+                .GetFrame("roster")
+                .Image;
+
+        RosterImage.Source = _rosterNormal;
+        RosterLabelImage.Source = _rosterLabel;
+
+        //Clear Desktop
+        _clearDesktopNormal =
+            _mainMenuButtonSheet
+                .GetFrame("clear_normal")
+                .Image;
+
+        _clearDesktopHover =
+            _mainMenuButtonSheet
+                .GetFrame("clear_hover")
+                .Image;
+
+        _clearDesktopPressed =
+            _mainMenuButtonSheet
+                .GetFrame("clear_pressed")
+                .Image;
+
+        _clearDesktopLabel =
+            _mainMenuLabelSheet
+                .GetFrame("clear")
+                .Image;
+
+        ClearDesktopImage.Source = _clearDesktopNormal;
+        ClearDesktopLabelImage.Source = _clearDesktopLabel;
+
+        //Settings
+
+        //Quit
+
         _clearDesktopImages = LoadButtonImages("clear_desktop");
         _settingsImages = LoadButtonImages("settings");
         _quitImages = LoadButtonImages("exit");
 
-        ClearDesktopImage.Source = _clearDesktopImages.Normal;
+
         SettingsButtonImage.Source = _settingsImages.Normal;
         QuitImage.Source = _quitImages.Normal;
 
@@ -1152,29 +1215,69 @@ public partial class MainWindow : Window
             _fieldGuideHover;
     }
 
+    private void Roster_Click(
+        object sender,
+        RoutedEventArgs e)
+    {
+        UiSounds.PlayButtonClick();
+        OpenCreatureRoster();
+    }
+
+    private void Roster_MouseEnter(
+        object sender,
+        WpfMouseEventArgs e)
+    {
+        RosterImage.Source =
+            _rosterHover;
+    }
+
+    private void Roster_MouseLeave(
+        object sender,
+        WpfMouseEventArgs e)
+    {
+        RosterImage.Source =
+            _rosterNormal;
+    }
+
+    private void Roster_MouseLeftButtonDown(
+        object sender,
+        WpfMouseButtonEventArgs e)
+    {
+        RosterImage.Source =
+            _rosterPressed;
+    }
+
+    private void Roster_MouseUp(
+        object sender,
+        WpfMouseButtonEventArgs e)
+    {
+        RosterImage.Source =
+            _rosterHover;
+    }
+
     private void ClearDesktop_MouseEnter(
         object sender, 
         WpfMouseEventArgs e)
     {
-        ClearDesktopImage.Source = _clearDesktopImages.Hover;
+        ClearDesktopImage.Source = _clearDesktopHover;
     }
     private void ClearDesktop_MouseLeave
         (object sender, 
         WpfMouseEventArgs e)
     {
-        ClearDesktopImage.Source = _clearDesktopImages.Normal;
+        ClearDesktopImage.Source = _clearDesktopNormal;
     }
     private void ClearDesktop_MouseDown(
         object sender,
         WpfMouseButtonEventArgs e)
     {
-        ClearDesktopImage.Source = _clearDesktopImages.Pressed;
+        ClearDesktopImage.Source = _clearDesktopPressed;
     }
     private void ClearDesktop_MouseUp(
         object sender,
         WpfMouseButtonEventArgs e)
     {
-        ClearDesktopImage.Source = _clearDesktopImages.Hover;
+        ClearDesktopImage.Source = _clearDesktopHover;
     }
 
     private void ClearDesktop_Click(
