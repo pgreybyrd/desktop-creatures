@@ -23,7 +23,7 @@
                 RenderOptions.BitmapScalingMode="NearestNeighbor">
 
             <Image Name="MainCanvasImage"
-                   
+                   Source="/Assets/UI/MainMenu/menu_background.png"
                    Width="368"
                    Height="233"/>
 
@@ -62,15 +62,23 @@
             <Image x:Name="FieldGuideImage"
                    Source="Assets/UI/MainMenu/Buttons/button_field_guide.png"
                    Canvas.Left="114"
-                   Canvas.Top="85"
+                   Canvas.Top="90"
                    Width="139"
-                   Height="33"/>
+                   Height="27"/>
+
+            <Image x:Name="FieldGuideLabelImage"
+                   IsHitTestVisible="False"
+                   Stretch="None"
+                   Canvas.Left="114"
+                   Canvas.Top="90"
+                   Width="139"
+                   Height="27"/>
 
             <Button x:Name="FieldGuideButton"
                     Canvas.Left="114"
-                    Canvas.Top="85"
+                    Canvas.Top="90"
                     Width="139"
-                    Height="33"
+                    Height="27"
                     Background="Transparent"
                     BorderThickness="0"
                     Opacity="0"

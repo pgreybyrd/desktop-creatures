@@ -48,8 +48,8 @@ public partial class MainWindow : Window
     private readonly BitmapSource _fieldGuideNormal;
     private readonly BitmapSource _fieldGuideHover;
     private readonly BitmapSource _fieldGuidePressed;
+    private readonly BitmapSource _fieldGuideLabel;
 
-    private readonly UiButtonImages _fieldGuideImages = null!;
     private readonly UiButtonImages _rosterImages = null!;
     private readonly UiButtonImages _clearDesktopImages = null!;
     private readonly UiButtonImages _settingsImages = null!;
@@ -139,15 +139,18 @@ public partial class MainWindow : Window
                 .GetFrame("fieldguide_pressed")
                 .Image;
 
-        _fieldGuideImages =
-            LoadButtonImages(
-                "field_guide");
+        _fieldGuideLabel =
+            _mainMenuLabelSheet
+                .GetFrame("fieldguide")
+                .Image;
+
+        FieldGuideImage.Source = _fieldGuideNormal;
+        FieldGuideLabelImage.Source = _fieldGuideLabel;
 
         _clearDesktopImages = LoadButtonImages("clear_desktop");
         _settingsImages = LoadButtonImages("settings");
         _quitImages = LoadButtonImages("exit");
 
-        FieldGuideImage.Source = _fieldGuideNormal;
         ClearDesktopImage.Source = _clearDesktopImages.Normal;
         SettingsButtonImage.Source = _settingsImages.Normal;
         QuitImage.Source = _quitImages.Normal;
