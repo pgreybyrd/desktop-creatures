@@ -60,8 +60,6 @@ public partial class MainWindow : Window
     private readonly BitmapSource _clearDesktopPressed;
     private readonly BitmapSource _clearDesktopLabel;
 
-    private readonly UiButtonImages _rosterImages = null!;
-    private readonly UiButtonImages _clearDesktopImages = null!;
     private readonly UiButtonImages _settingsImages = null!;
     private readonly UiButtonImages _quitImages = null!;
 
@@ -210,7 +208,6 @@ public partial class MainWindow : Window
 
         //Quit
 
-        _clearDesktopImages = LoadButtonImages("clear_desktop");
         _settingsImages = LoadButtonImages("settings");
         _quitImages = LoadButtonImages("exit");
 
