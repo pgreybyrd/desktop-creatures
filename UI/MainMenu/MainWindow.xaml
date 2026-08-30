@@ -23,19 +23,19 @@
                 RenderOptions.BitmapScalingMode="NearestNeighbor">
 
             <Image Name="MainCanvasImage"
+                   
                    Width="368"
                    Height="233"/>
 
             <Image Name="VersionImage"
                    Width="45"
-                   Height="5" Canvas.Left="162" Canvas.Top="68"/>
-
+                   Height="5" Canvas.Left="162" Canvas.Top="77.4"/>
 
             <Border x:Name="DragArea"
-                    Canvas.Left="109"
+                    Canvas.Left="42"
                     Canvas.Top="10"
-                    Width="150"
-                    Height="75"
+                    Width="268"
+                    Height="77"
                     Background="#01000000"
                     MouseLeftButtonDown="DragArea_MouseLeftButtonDown" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
@@ -127,14 +127,14 @@
                    IsHitTestVisible="False"
                    RenderOptions.BitmapScalingMode="NearestNeighbor"/>
 
-            <Image x:Name="ExitImage"
+            <Image x:Name="QuitImage"
                    Source="Assets/UI/MainMenu/Buttons/button_exit.png"
                    Canvas.Left="114"
                    Canvas.Top="199"
                    Width="139"
                    Height="33"/>
 
-            <Button x:Name="ExitButton"
+            <Button x:Name="QuitButton"
                     Canvas.Left="114"
                     Canvas.Top="199"
                     Width="139"
@@ -142,53 +142,11 @@
                     Background="Transparent"
                     BorderThickness="0"
                     Opacity="0"
-                    Click="Exit_Click"
-                    MouseEnter="Exit_MouseEnter"
-                    MouseLeave="Exit_MouseLeave"
-                    PreviewMouseDown="Exit_MouseDown"
-                    PreviewMouseUp="Exit_MouseUp"/>
-
-            <Image x:Name="MinimizeImage"
-                   Source="Assets/UI/MainMenu/Buttons/button_minimize.png"
-                   Canvas.Left="238"
-                   Canvas.Top="46"
-                   Width="8"
-                   Height="8" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-
-            <Button x:Name="MinimizeButton"
-                    Canvas.Left="238"
-                    Canvas.Top="45"
-                    Width="8"
-                    Height="9"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    Opacity="0"
-                    Click="Minimize_Click" 
-                    MouseEnter="Minimize_MouseEnter"
-                    MouseLeave="Minimize_MouseLeave"
-                    PreviewMouseDown="Minimize_MouseDown"
-                    PreviewMouseUp="Minimize_MouseUp"/>
-
-            <Image x:Name="XImage"
-                   Source="Assets/UI/MainMenu/Buttons/button_X.png"
-                   Canvas.Left="244"
-                   Canvas.Top="45"
-                   Width="8"
-                   Height="8" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-
-            <Button x:Name="XButton"
-                    Canvas.Left="246"
-                    Canvas.Top="45"
-                    Width="8"
-                    Height="9"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    Opacity="0"
-                    Click="Exit_Click"
-                    MouseEnter="X_MouseEnter"
-                    MouseLeave="X_MouseLeave"
-                    PreviewMouseDown="X_MouseDown"
-                    PreviewMouseUp="X_MouseUp"/>
+                    Click="Quit_Click"
+                    MouseEnter="Quit_MouseEnter"
+                    MouseLeave="Quit_MouseLeave"
+                    PreviewMouseDown="Quit_MouseDown"
+                    PreviewMouseUp="Quit_MouseUp"/>
         </Canvas>
     </Grid>
 </Window>

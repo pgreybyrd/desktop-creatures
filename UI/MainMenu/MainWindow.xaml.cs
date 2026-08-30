@@ -2,6 +2,7 @@
 using Desktop_Creatures.Config;
 using Desktop_Creatures.Creatures;
 using Desktop_Creatures.Graphics;
+using Desktop_Creatures.Graphics.Animation;
 using Desktop_Creatures.Persistence;
 using Desktop_Creatures.Tools.Images;
 using Desktop_Creatures.UI.CreatureRoster;
@@ -12,6 +13,7 @@ using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Forms = System.Windows.Forms;
 using Point = System.Windows.Point;
@@ -40,12 +42,18 @@ public partial class MainWindow : Window
 
     private FieldGuideMenu? _fieldGuideMenu;
 
+    private readonly SpriteSheet _mainMenuButtonSheet;
+    private readonly SpriteSheet _mainMenuLabelSheet;
+
+    private readonly BitmapSource _fieldGuideNormal;
+    private readonly BitmapSource _fieldGuideHover;
+    private readonly BitmapSource _fieldGuidePressed;
+
     private readonly UiButtonImages _fieldGuideImages = null!;
+    private readonly UiButtonImages _rosterImages = null!;
     private readonly UiButtonImages _clearDesktopImages = null!;
     private readonly UiButtonImages _settingsImages = null!;
-    private readonly UiButtonImages _exitImages = null!;
-    private readonly UiButtonImages _minimizeImages = null!;
-    private readonly UiButtonImages _closeImages = null!;
+    private readonly UiButtonImages _quitImages = null!;
 
     private readonly List<POIWindow> _poiWindows = new();
     private readonly List<CreatureWindow> _creatureWindows = new();
@@ -106,19 +114,43 @@ public partial class MainWindow : Window
             AssetImageLoader.Load(
                 "Assets/UI/MainMenu/version.png");
 
-        _fieldGuideImages = LoadButtonImages("field_guide");
+        _mainMenuButtonSheet =
+            SpriteSheetLoader.Load(
+                "Assets/UI/MainMenu/buttons.png",
+                "Assets/UI/MainMenu/buttons.json");
+
+        _mainMenuLabelSheet =
+            SpriteSheetLoader.Load(
+                "Assets/UI/MainMenu/labels.png",
+                "Assets/UI/MainMenu/labels.json");
+
+        _fieldGuideNormal =
+            _mainMenuButtonSheet
+                .GetFrame("fieldguide_normal")
+                .Image;
+
+        _fieldGuideHover =
+            _mainMenuButtonSheet
+                .GetFrame("fieldguide_hover")
+                .Image;
+
+        _fieldGuidePressed =
+            _mainMenuButtonSheet
+                .GetFrame("fieldguide_pressed")
+                .Image;
+
+        _fieldGuideImages =
+            LoadButtonImages(
+                "field_guide");
+
         _clearDesktopImages = LoadButtonImages("clear_desktop");
         _settingsImages = LoadButtonImages("settings");
-        _exitImages = LoadButtonImages("exit");
-        _minimizeImages = LoadButtonImages("minimize");
-        _closeImages = LoadButtonImages("X");
+        _quitImages = LoadButtonImages("exit");
 
-        FieldGuideImage.Source = _fieldGuideImages.Normal;
+        FieldGuideImage.Source = _fieldGuideNormal;
         ClearDesktopImage.Source = _clearDesktopImages.Normal;
         SettingsButtonImage.Source = _settingsImages.Normal;
-        ExitImage.Source = _exitImages.Normal;
-        MinimizeImage.Source = _minimizeImages.Normal;
-        XImage.Source = _closeImages.Normal;
+        QuitImage.Source = _quitImages.Normal;
 
         _pointOfInterestManager = new PointOfInterestManager();
 
@@ -143,9 +175,6 @@ public partial class MainWindow : Window
             //CreateWaterDish();
 
             LoadSavedCreatures();
-
-            //temp for testing
-            OpenCreatureRoster();
 
             ApplyTopmostSettings();
         };
@@ -971,7 +1000,7 @@ public partial class MainWindow : Window
                 1));
     }
 
-    private void Exit_Click(object sender, RoutedEventArgs e)
+    private void Quit_Click(object sender, RoutedEventArgs e)
     {
         UiSounds.PlayButtonClick();
 
@@ -1092,28 +1121,32 @@ public partial class MainWindow : Window
         object sender,
         WpfMouseEventArgs e)
     {
-        FieldGuideImage.Source = _fieldGuideImages.Hover;
+        FieldGuideImage.Source =
+            _fieldGuideHover;
     }
 
     private void FieldGuide_MouseLeave(
-       object sender,
-       WpfMouseEventArgs e)
+        object sender,
+        WpfMouseEventArgs e)
     {
-        FieldGuideImage.Source = _fieldGuideImages.Normal;
+        FieldGuideImage.Source =
+            _fieldGuideNormal;
     }
 
     private void FieldGuide_MouseLeftButtonDown(
         object sender,
         WpfMouseButtonEventArgs e)
     {
-        FieldGuideImage.Source = _fieldGuideImages.Pressed;
+        FieldGuideImage.Source =
+            _fieldGuidePressed;
     }
 
     private void FieldGuide_MouseUp(
         object sender,
         WpfMouseButtonEventArgs e)
     {
-        FieldGuideImage.Source = _fieldGuideImages.Hover;
+        FieldGuideImage.Source =
+            _fieldGuideHover;
     }
 
     private void ClearDesktop_MouseEnter(
@@ -1182,86 +1215,31 @@ public partial class MainWindow : Window
             _settingsImages.Hover;
     }
 
-    private void Exit_MouseEnter(
+    private void Quit_MouseEnter(
         object sender,
         WpfMouseEventArgs e)
     {
-        ExitImage.Source = _exitImages.Hover;
+        QuitImage.Source = _quitImages.Hover;
     }
 
-    private void Exit_MouseLeave(
+    private void Quit_MouseLeave(
         object sender,
         WpfMouseEventArgs e)
     {
-        ExitImage.Source = _exitImages.Normal;
+        QuitImage.Source = _quitImages.Normal;
     }
 
-    private void Exit_MouseDown(
+    private void Quit_MouseDown(
         object sender,
         WpfMouseButtonEventArgs e)
     {
-        ExitImage.Source = _exitImages.Pressed;
+        QuitImage.Source = _quitImages.Pressed;
     }
 
-    private void Exit_MouseUp(
+    private void Quit_MouseUp(
         object sender,
         WpfMouseButtonEventArgs e)
     {
-        ExitImage.Source = _exitImages.Hover;
-    }
-    private void Minimize_MouseEnter(
-        object sender,
-        WpfMouseEventArgs e)
-    {
-        MinimizeImage.Source = _minimizeImages.Hover;
-    }
-
-    private void Minimize_MouseLeave(
-        object sender,
-        WpfMouseEventArgs e)
-    {
-        MinimizeImage.Source = _minimizeImages.Normal;
-    }
-
-    private void Minimize_MouseDown(
-        object sender,
-        WpfMouseButtonEventArgs e)
-    {
-        MinimizeImage.Source = _minimizeImages.Pressed;
-    }
-
-    private void Minimize_MouseUp(
-        object sender,
-        WpfMouseButtonEventArgs e)
-    {
-        MinimizeImage.Source = _minimizeImages.Hover;
-    }
-
-    private void X_MouseEnter(
-        object sender,
-        WpfMouseEventArgs e)
-    {
-        XImage.Source = _closeImages.Hover;
-    }
-
-    private void X_MouseLeave(
-        object sender,
-        WpfMouseEventArgs e)
-    {
-        XImage.Source = _closeImages.Normal;
-    }
-
-    private void X_MouseDown(
-        object sender,
-        WpfMouseButtonEventArgs e)
-    {
-        XImage.Source = _closeImages.Pressed;
-    }
-
-    private void X_MouseUp(
-        object sender,
-        WpfMouseButtonEventArgs e)
-    {
-        XImage.Source = _closeImages.Hover;
+        QuitImage.Source = _quitImages.Hover;
     }
 }

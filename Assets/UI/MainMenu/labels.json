@@ -1,6 +1,6 @@
 { "frames": [
    {
-    "filename": "",
+    "filename": "fieldguide",
     "frame": { "x": 0, "y": 0, "w": 139, "h": 27 },
     "rotated": false,
     "trimmed": false,
@@ -9,7 +9,7 @@
     "duration": 100
    },
    {
-    "filename": "",
+    "filename": "roster",
     "frame": { "x": 139, "y": 0, "w": 139, "h": 27 },
     "rotated": false,
     "trimmed": false,
@@ -18,7 +18,7 @@
     "duration": 100
    },
    {
-    "filename": "",
+    "filename": "clear",
     "frame": { "x": 278, "y": 0, "w": 139, "h": 27 },
     "rotated": false,
     "trimmed": false,
@@ -27,7 +27,7 @@
     "duration": 100
    },
    {
-    "filename": "",
+    "filename": "settings",
     "frame": { "x": 417, "y": 0, "w": 139, "h": 27 },
     "rotated": false,
     "trimmed": false,
@@ -36,7 +36,7 @@
     "duration": 100
    },
    {
-    "filename": "",
+    "filename": "quit",
     "frame": { "x": 556, "y": 0, "w": 139, "h": 27 },
     "rotated": false,
     "trimmed": false,
@@ -53,6 +53,11 @@
   "size": { "w": 695, "h": 27 },
   "scale": "1",
   "frameTags": [
+   { "name": "fieldguide", "from": 0, "to": 0, "direction": "forward", "color": "#000000ff" },
+   { "name": "roster", "from": 1, "to": 1, "direction": "forward", "color": "#000000ff" },
+   { "name": "clear", "from": 2, "to": 2, "direction": "forward", "color": "#000000ff" },
+   { "name": "settings", "from": 3, "to": 3, "direction": "forward", "color": "#000000ff" },
+   { "name": "quit", "from": 4, "to": 4, "direction": "forward", "color": "#000000ff" }
   ],
   "layers": [
    { "name": "Layer 1", "opacity": 255, "blendMode": "normal" }
