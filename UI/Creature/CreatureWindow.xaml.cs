@@ -251,7 +251,8 @@ public partial class CreatureWindow : Window
             new Point(mousePixels.X, mousePixels.Y));
 
         Point position =
-            _dragController.GetConstrainedPosition(
+            _dragController.UpdateDrag(
+                _creature,
                 mouseDip,
                 Width,
                 Height);
@@ -261,17 +262,6 @@ public partial class CreatureWindow : Window
 
         double y =
             position.Y;
-
-        Point creaturePosition =
-            _dragController.GetCreaturePosition(
-                _creature,
-                new Point(
-                    x,
-                    y));
-
-        _creature.DragTo(
-            creaturePosition.X,
-            creaturePosition.Y);
 
         Left = x;
         Top = y;

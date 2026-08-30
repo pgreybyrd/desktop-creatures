@@ -191,4 +191,28 @@ public sealed class CreatureDragController(
 
         return y;
     }
+
+    public Point UpdateDrag(
+        Creature creature,
+        Point cursorPosition,
+        double width,
+        double height)
+    {
+        Point position =
+            GetConstrainedPosition(
+                cursorPosition,
+                width,
+                height);
+
+        Point creaturePosition =
+            GetCreaturePosition(
+                creature,
+                position);
+
+        creature.DragTo(
+            creaturePosition.X,
+            creaturePosition.Y);
+
+        return position;
+    }
 }
