@@ -104,6 +104,22 @@ public sealed class CreatureDragController(
             y);
     }
 
+    public Point GetConstrainedPosition(
+        Point cursorPosition,
+        double width,
+        double height)
+    {
+        Point position =
+            GetPosition(
+                cursorPosition);
+
+        return ConstrainPosition(
+            position,
+            width,
+            height,
+            cursorPosition);
+    }
+
     public double ConstrainHorizontalPosition(
         double x,
         double width,
