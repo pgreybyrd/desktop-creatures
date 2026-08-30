@@ -12,7 +12,6 @@ namespace Desktop_Creatures;
 public partial class CreatureWindow : Window
 {
     private readonly Creature _creature;
-    private readonly SurfaceManager _surfaceManager;
 
     private readonly CreatureContextMenuController
         _contextMenuController = new();
@@ -38,12 +37,11 @@ public partial class CreatureWindow : Window
         InitializeComponent();
 
         _creature = creature;
-        _surfaceManager = surfaceManager;
         _uiScale = uiScale;
 
         _dragController =
             new CreatureDragController(
-                _surfaceManager);
+                surfaceManager);
 
         MouseLeftButtonDown += OnMouseLeftButtonDown;
         MouseMove += OnMouseMove;
@@ -263,7 +261,7 @@ public partial class CreatureWindow : Window
             position.Y;
 
         var monitor =
-            _surfaceManager.GetMonitorBoundsUnderCursor();
+            _dragController.GetMonitorBoundsUnderCursor();
 
         x =
             _dragController.ConstrainHorizontalPosition(

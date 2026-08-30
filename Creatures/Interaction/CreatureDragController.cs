@@ -69,6 +69,11 @@ public sealed class CreatureDragController(
                 extraHeight);
     }
 
+    public Rectangle GetMonitorBoundsUnderCursor()
+    {
+        return surfaceManager.GetMonitorBoundsUnderCursor();
+    }
+
     public double ConstrainHorizontalPosition(
         double x,
         double width,
@@ -113,12 +118,12 @@ public sealed class CreatureDragController(
         double monitorBottom)
     {
         Point topProbe =
-            new Point(
+            new (
                 cursorX,
                 y - 1);
 
         Point bottomProbe =
-            new Point(
+            new (
                 cursorX,
                 y + height + 1);
 
