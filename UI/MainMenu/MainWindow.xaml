@@ -19,23 +19,28 @@
     <Grid>
         <Canvas x:Name="MainCanvas"
                 Width="368" 
-                Height="233"
+                Height="249"
+                SnapsToDevicePixels="True"
+                UseLayoutRounding="True"
                 RenderOptions.BitmapScalingMode="NearestNeighbor">
 
             <Image Name="MainCanvasImage"
                    Source="/Assets/UI/MainMenu/menu_background.png"
+                   Stretch="Fill"
                    Width="368"
-                   Height="233"/>
+                   Height="249"/>
 
             <Image Name="VersionImage"
                    Width="45"
-                   Height="5" Canvas.Left="162" Canvas.Top="77.4"/>
+                   Height="5" 
+                   Canvas.Left="162" 
+                   Canvas.Top="83"/>
 
             <Border x:Name="DragArea"
                     Canvas.Left="42"
-                    Canvas.Top="10"
+                    Canvas.Top="11"
                     Width="268"
-                    Height="77"
+                    Height="82"
                     Background="#01000000"
                     MouseLeftButtonDown="DragArea_MouseLeftButtonDown" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
@@ -61,7 +66,7 @@
 
             <Image x:Name="FieldGuideImage"
                    Canvas.Left="114"
-                   Canvas.Top="90"
+                   Canvas.Top="97"
                    Width="139"
                    Height="27"/>
 
@@ -69,13 +74,13 @@
                    IsHitTestVisible="False"
                    Stretch="None"
                    Canvas.Left="114"
-                   Canvas.Top="90"
+                   Canvas.Top="97"
                    Width="139"
                    Height="27"/>
 
             <Button x:Name="FieldGuideButton"
                     Canvas.Left="114"
-                    Canvas.Top="90"
+                    Canvas.Top="97"
                     Width="139"
                     Height="27"
                     Background="Transparent"
@@ -89,7 +94,7 @@
 
             <Image x:Name="RosterImage"
                    Canvas.Left="114"
-                   Canvas.Top="119"
+                   Canvas.Top="128"
                    Width="139"
                    Height="27"/>
 
@@ -97,13 +102,13 @@
                    IsHitTestVisible="False"
                    Stretch="None"
                    Canvas.Left="114"
-                   Canvas.Top="119"
+                   Canvas.Top="128"
                    Width="139"
                    Height="27"/>
 
             <Button x:Name="RosterButton"
                     Canvas.Left="114"
-                    Canvas.Top="119"
+                    Canvas.Top="128"
                     Width="139"
                     Height="27"
                     Background="Transparent"
@@ -117,7 +122,7 @@
 
             <Image x:Name="ClearDesktopImage"
                    Canvas.Left="114"
-                   Canvas.Top="148"
+                   Canvas.Top="159"
                    Width="139"
                    Height="27"/>
 
@@ -125,13 +130,13 @@
                    IsHitTestVisible="False"
                    Stretch="None"
                    Canvas.Left="114"
-                   Canvas.Top="148"
+                   Canvas.Top="159"
                    Width="139"
                    Height="27"/>
 
             <Button x:Name="ClearDesktopButton"
                     Canvas.Left="114"
-                    Canvas.Top="148"
+                    Canvas.Top="159"
                     Width="139"
                     Height="27"
                     Background="Transparent"
@@ -143,16 +148,23 @@
                     PreviewMouseDown="ClearDesktop_MouseDown"
                     PreviewMouseUp="ClearDesktop_MouseUp"/>
             
-            <Image x:Name="SettingsButtonImage"
-                   Source="Assets/UI/MainMenu/Buttons/button_settings.png"
+            <Image x:Name="SettingsImage"
                    Canvas.Left="114"
-                   Canvas.Top="177"
+                   Canvas.Top="190"
+                   Width="139"
+                   Height="27"/>
+
+            <Image x:Name="SettingsLabelImage"
+                   IsHitTestVisible="False"
+                   Stretch="None"
+                   Canvas.Left="114"
+                   Canvas.Top="190"
                    Width="139"
                    Height="27"/>
 
             <ToggleButton x:Name="SettingsButton"
                           Canvas.Left="114"
-                          Canvas.Top="177"
+                          Canvas.Top="190"
                           Width="139"
                           Height="27"
                           Background="Transparent"
@@ -164,23 +176,24 @@
                           PreviewMouseDown="SettingsButton_MouseDown"
                           PreviewMouseUp="SettingsButton_MouseUp"/>
 
-            <Image x:Name="MouseHoleRatImage"
-                   Canvas.Left="186"
-                   Canvas.Top="220"
-                   Visibility="Collapsed"
-                   IsHitTestVisible="False"
-                   RenderOptions.BitmapScalingMode="NearestNeighbor"/>
-
             <Image x:Name="QuitImage"
                    Source="Assets/UI/MainMenu/Buttons/button_exit.png"
                    Canvas.Left="114"
-                   Canvas.Top="206"
+                   Canvas.Top="221"
+                   Width="139"
+                   Height="27"/>
+
+            <Image x:Name="QuitLabelImage"
+                   IsHitTestVisible="False"
+                   Stretch="None"
+                   Canvas.Left="114"
+                   Canvas.Top="221"
                    Width="139"
                    Height="27"/>
 
             <Button x:Name="QuitButton"
                     Canvas.Left="114"
-                    Canvas.Top="206"
+                    Canvas.Top="221"
                     Width="139"
                     Height="27"
                     Background="Transparent"
@@ -191,6 +204,13 @@
                     MouseLeave="Quit_MouseLeave"
                     PreviewMouseDown="Quit_MouseDown"
                     PreviewMouseUp="Quit_MouseUp"/>
+
+            <Image x:Name="MouseHoleRatImage"
+                   Canvas.Left="186"
+                   Canvas.Top="243"
+                   Visibility="Visible"
+                   IsHitTestVisible="False"
+                   RenderOptions.BitmapScalingMode="NearestNeighbor"/>
         </Canvas>
     </Grid>
 </Window>

@@ -60,7 +60,16 @@ public partial class MainWindow : Window
     private readonly BitmapSource _clearDesktopPressed;
     private readonly BitmapSource _clearDesktopLabel;
 
-    private readonly UiButtonImages _settingsImages = null!;
+    private readonly BitmapSource _settingsNormal;
+    private readonly BitmapSource _settingsHover;
+    private readonly BitmapSource _settingsPressed;
+    private readonly BitmapSource _settingsLabel;
+
+    private readonly BitmapSource _quitNormal;
+    private readonly BitmapSource _quitHover;
+    private readonly BitmapSource _quitPressed;
+    private readonly BitmapSource _quitLabel;
+
     private readonly UiButtonImages _quitImages = null!;
 
     private readonly List<POIWindow> _poiWindows = new();
@@ -205,15 +214,54 @@ public partial class MainWindow : Window
         ClearDesktopLabelImage.Source = _clearDesktopLabel;
 
         //Settings
+        _settingsNormal =
+            _mainMenuButtonSheet
+                .GetFrame("settings_normal")
+                .Image;
+
+        _settingsHover =
+            _mainMenuButtonSheet
+                .GetFrame("settings_hover")
+                .Image;
+
+        _settingsPressed =
+            _mainMenuButtonSheet
+                .GetFrame("settings_pressed")
+                .Image;
+
+        _settingsLabel =
+            _mainMenuLabelSheet
+                .GetFrame("settings")
+                .Image;
+
+        SettingsImage.Source = _settingsNormal;
+        SettingsLabelImage.Source = _settingsLabel;
 
         //Quit
+        _quitNormal =
+            _mainMenuButtonSheet
+                .GetFrame("quit_normal")
+                .Image;
 
-        _settingsImages = LoadButtonImages("settings");
-        _quitImages = LoadButtonImages("exit");
+        _quitHover =
+            _mainMenuButtonSheet
+                .GetFrame("quit_hover")
+                .Image;
 
+        _quitPressed =
+            _mainMenuButtonSheet
+                .GetFrame("quit_pressed")
+                .Image;
 
-        SettingsButtonImage.Source = _settingsImages.Normal;
-        QuitImage.Source = _quitImages.Normal;
+        _quitLabel =
+            _mainMenuLabelSheet
+                .GetFrame("quit")
+                .Image;
+
+        QuitImage.Source = _quitNormal;
+        QuitLabelImage.Source = _quitLabel;
+
+        //End of Images
 
         _pointOfInterestManager = new PointOfInterestManager();
 
@@ -1290,59 +1338,59 @@ public partial class MainWindow : Window
         object sender,
         WpfMouseEventArgs e)
     {
-        SettingsButtonImage.Source =
-            _settingsImages.Hover;
+        SettingsImage.Source =
+            _settingsHover;
     }
 
     private void SettingsButton_MouseLeave(
         object sender,
         WpfMouseEventArgs e)
     {
-        SettingsButtonImage.Source =
-            _settingsImages.Normal;
+        SettingsImage.Source =
+            _settingsNormal;
     }
 
     private void SettingsButton_MouseDown(
         object sender,
         WpfMouseButtonEventArgs e)
     {
-        SettingsButtonImage.Source =
-            _settingsImages.Pressed;
+        SettingsImage.Source =
+            _settingsPressed;
     }
 
     private void SettingsButton_MouseUp(
         object sender,
         WpfMouseButtonEventArgs e)
     {
-        SettingsButtonImage.Source =
-            _settingsImages.Hover;
+        SettingsImage.Source =
+            _settingsHover;
     }
 
     private void Quit_MouseEnter(
         object sender,
         WpfMouseEventArgs e)
     {
-        QuitImage.Source = _quitImages.Hover;
+        QuitImage.Source = _quitHover;
     }
 
     private void Quit_MouseLeave(
         object sender,
         WpfMouseEventArgs e)
     {
-        QuitImage.Source = _quitImages.Normal;
+        QuitImage.Source = _quitNormal;
     }
 
     private void Quit_MouseDown(
         object sender,
         WpfMouseButtonEventArgs e)
     {
-        QuitImage.Source = _quitImages.Pressed;
+        QuitImage.Source = _quitPressed;
     }
 
     private void Quit_MouseUp(
         object sender,
         WpfMouseButtonEventArgs e)
     {
-        QuitImage.Source = _quitImages.Hover;
+        QuitImage.Source = _quitHover;
     }
 }
