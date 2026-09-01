@@ -55,6 +55,11 @@ public partial class MainWindow : Window
     private readonly BitmapSource _rosterPressed;
     private readonly BitmapSource _rosterLabel;
 
+    private readonly BitmapSource _shopNormal;
+    private readonly BitmapSource _shopHover;
+    private readonly BitmapSource _shopPressed;
+    private readonly BitmapSource _shopLabel;
+
     private readonly BitmapSource _clearDesktopNormal;
     private readonly BitmapSource _clearDesktopHover;
     private readonly BitmapSource _clearDesktopPressed;
@@ -125,7 +130,7 @@ public partial class MainWindow : Window
 
         MainCanvasImage.Source =
             AssetImageLoader.Load(
-                "Assets/UI/MainMenu/menu_background.png");
+                "Assets/UI/MainMenu/main_menu.png");
 
         VersionImage.Source =
             AssetImageLoader.Load(
@@ -188,6 +193,27 @@ public partial class MainWindow : Window
 
         RosterImage.Source = _rosterNormal;
         RosterLabelImage.Source = _rosterLabel;
+
+        //Shop
+        _shopNormal =
+            _mainMenuButtonSheet
+                .GetFrame("shop_normal")
+                .Image;
+        _shopHover = 
+            _mainMenuButtonSheet
+                .GetFrame("shop_hover")
+                .Image; 
+        _shopPressed = 
+            _mainMenuButtonSheet
+                .GetFrame("shop_pressed")
+                .Image; 
+        _shopLabel =
+            _mainMenuLabelSheet
+                .GetFrame("shop")
+                .Image; 
+
+        ShopImage.Source = _shopNormal;
+        ShopLabelImage.Source = _shopLabel;
 
         //Clear Desktop
         _clearDesktopNormal =
@@ -1298,6 +1324,46 @@ public partial class MainWindow : Window
     {
         RosterImage.Source =
             _rosterHover;
+    }
+
+    private void Shop_Click(
+       object sender,
+       RoutedEventArgs e)
+    {
+        UiSounds.PlayButtonClick();
+        //OpenCreatureRoster();
+    }
+
+    private void Shop_MouseEnter(
+        object sender,
+        WpfMouseEventArgs e)
+    {
+        ShopImage.Source =
+            _shopHover;
+    }
+
+    private void Shop_MouseLeave(
+        object sender,
+        WpfMouseEventArgs e)
+    {
+        ShopImage.Source =
+            _shopNormal;
+    }
+
+    private void Shop_MouseLeftButtonDown(
+        object sender,
+        WpfMouseButtonEventArgs e)
+    {
+        ShopImage.Source =
+            _shopPressed;
+    }
+
+    private void Shop_MouseUp(
+        object sender,
+        WpfMouseButtonEventArgs e)
+    {
+        ShopImage.Source =
+            _shopHover;
     }
 
     private void ClearDesktop_MouseEnter(

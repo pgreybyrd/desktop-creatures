@@ -25,7 +25,7 @@
                 RenderOptions.BitmapScalingMode="NearestNeighbor">
 
             <Image Name="MainCanvasImage"
-                   Source="/Assets/UI/MainMenu/menu_background.png"
+                   Source="/Assets/UI/MainMenu/main_menu.png"
                    Stretch="Fill"
                    Width="368"
                    Height="249"/>
@@ -68,7 +68,8 @@
                    Canvas.Left="114"
                    Canvas.Top="97"
                    Width="139"
-                   Height="27"/>
+                   Height="27" 
+                   Stretch="None"/>
 
             <Image x:Name="FieldGuideLabelImage"
                    IsHitTestVisible="False"
@@ -96,8 +97,9 @@
                    Canvas.Left="114"
                    Canvas.Top="128"
                    Width="139"
-                   Height="27"/>
-
+                   Height="27" 
+                   Stretch="None"/>
+            
             <Image x:Name="RosterLabelImage"
                    IsHitTestVisible="False"
                    Stretch="None"
@@ -120,13 +122,14 @@
                     PreviewMouseDown="Roster_MouseLeftButtonDown"
                     PreviewMouseUp="Roster_MouseUp"/>
 
-            <Image x:Name="ClearDesktopImage"
+            <Image x:Name="ShopImage"
                    Canvas.Left="114"
                    Canvas.Top="159"
                    Width="139"
-                   Height="27"/>
+                   Height="27" 
+                   Stretch="None"/>
 
-            <Image x:Name="ClearDesktopLabelImage"
+            <Image x:Name="ShopLabelImage"
                    IsHitTestVisible="False"
                    Stretch="None"
                    Canvas.Left="114"
@@ -134,9 +137,38 @@
                    Width="139"
                    Height="27"/>
 
-            <Button x:Name="ClearDesktopButton"
+            <Button x:Name="ShopButton"
                     Canvas.Left="114"
                     Canvas.Top="159"
+                    Width="139"
+                    Height="27"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Opacity="0"
+                    Click="Shop_Click" 
+                    MouseEnter="Shop_MouseEnter"
+                    MouseLeave="Shop_MouseLeave"
+                    PreviewMouseDown="Shop_MouseLeftButtonDown"
+                    PreviewMouseUp="Shop_MouseUp"/>
+            
+            <Image x:Name="ClearDesktopImage"
+                   Canvas.Left="114"
+                   Canvas.Top="190"
+                   Width="139"
+                   Height="27" 
+                   Stretch="None"/>
+
+            <Image x:Name="ClearDesktopLabelImage"
+                   IsHitTestVisible="False"
+                   Stretch="None"
+                   Canvas.Left="114"
+                   Canvas.Top="190"
+                   Width="139"
+                   Height="27"/>
+
+            <Button x:Name="ClearDesktopButton"
+                    Canvas.Left="114"
+                    Canvas.Top="190"
                     Width="139"
                     Height="27"
                     Background="Transparent"
@@ -150,22 +182,22 @@
             
             <Image x:Name="SettingsImage"
                    Canvas.Left="114"
-                   Canvas.Top="190"
-                   Width="139"
+                   Canvas.Top="221"
+                   Width="73"
                    Height="27"/>
 
             <Image x:Name="SettingsLabelImage"
                    IsHitTestVisible="False"
                    Stretch="None"
                    Canvas.Left="114"
-                   Canvas.Top="190"
+                   Canvas.Top="221"
                    Width="139"
                    Height="27"/>
 
             <ToggleButton x:Name="SettingsButton"
                           Canvas.Left="114"
-                          Canvas.Top="190"
-                          Width="139"
+                          Canvas.Top="221"
+                          Width="73"
                           Height="27"
                           Background="Transparent"
                           BorderThickness="0"
@@ -178,9 +210,9 @@
 
             <Image x:Name="QuitImage"
                    Source="Assets/UI/MainMenu/Buttons/button_exit.png"
-                   Canvas.Left="114"
+                   Canvas.Left="188"
                    Canvas.Top="221"
-                   Width="139"
+                   Width="65"
                    Height="27"/>
 
             <Image x:Name="QuitLabelImage"
@@ -192,9 +224,9 @@
                    Height="27"/>
 
             <Button x:Name="QuitButton"
-                    Canvas.Left="114"
+                    Canvas.Left="188"
                     Canvas.Top="221"
-                    Width="139"
+                    Width="65"
                     Height="27"
                     Background="Transparent"
                     BorderThickness="0"
