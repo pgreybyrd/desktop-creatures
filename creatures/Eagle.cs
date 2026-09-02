@@ -269,7 +269,6 @@ namespace Desktop_Creatures.Creatures
             _isGliding = false;
             _flightModeTicksRemaining = _random.Next(Flight.MinTakeoffFlapTicks, Flight.MaxTakeoffFlapTicks);
 
-            AnimationTick = 0;
             CurrentFrameIndex = 0;
 
             PickNewTarget();
@@ -278,23 +277,6 @@ namespace Desktop_Creatures.Creatures
         private void UpdateSleeping()
         {
             //CurrentFrame = _sleepFrame;
-        }
-
-        protected override void UpdateAnimation()
-        {
-            if (CurrentAction == CreatureAction.Flying)
-            {
-                AdvanceAnimation(Flight.FlyingFrameTicks);
-            }
-            else if (CurrentAction == CreatureAction.Gliding)
-            {
-                // probably no animation yet, unless glide has multiple frames
-                AdvanceAnimation(Flight.FlyingFrameTicks);
-            }
-            else if (CurrentAction == CreatureAction.Perching)
-            {
-                AdvanceAnimation(Perch.PerchFrameTicks);
-            }
         }
 
         public override void PickNewTarget()

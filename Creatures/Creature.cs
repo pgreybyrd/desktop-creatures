@@ -11,6 +11,7 @@ using Desktop_Creatures.World.Surfaces;
 using PixelRecolor.Core;
 using System.IO;
 using System.Windows.Media.Imaging;
+using System.Diagnostics;
 using Point = System.Windows.Point;
 
 namespace Desktop_Creatures.Creatures;
@@ -143,7 +144,11 @@ public abstract class Creature
     protected SpriteFrame[] CurrentFrames = [];
 
     protected int CurrentFrameIndex;
-    protected int AnimationTick;
+
+    private long _lastAnimationTimestamp =
+        Stopwatch.GetTimestamp();
+
+    private double _animationElapsedMilliseconds;
 
     protected Creature(
         CreatureDefinition definition,
@@ -387,18 +392,49 @@ public abstract class Creature
         PickNewTarget();
     }
 
-    protected void AdvanceAnimation(int frameTicks)
+    protected void AdvanceAnimation()
     {
+        long now =
+            Stopwatch.GetTimestamp();
+
+        double elapsedMilliseconds =
+            (now - _lastAnimationTimestamp) *
+            1000.0 /
+            Stopwatch.Frequency;
+
+        _lastAnimationTimestamp = now;
+
         if (CurrentFrames.Length <= 1)
+        {
+            _animationElapsedMilliseconds = 0;
             return;
+        }
 
-        AnimationTick++;
+        _animationElapsedMilliseconds +=
+            elapsedMilliseconds;
 
-        if (AnimationTick < frameTicks)
-            return;
+        while (true)
+        {
+            int frameDuration =
+                Math.Max(
+                    1,
+                    CurrentFrames[
+                        CurrentFrameIndex]
+                        .DurationMilliseconds);
 
-        AnimationTick = 0;
-        CurrentFrameIndex = (CurrentFrameIndex + 1) % CurrentFrames.Length;
+            if (_animationElapsedMilliseconds <
+                frameDuration)
+            {
+                break;
+            }
+
+            _animationElapsedMilliseconds -=
+                frameDuration;
+
+            CurrentFrameIndex =
+                (CurrentFrameIndex + 1) %
+                CurrentFrames.Length;
+        }
     }
 
     protected void StartFalling()
@@ -440,8 +476,12 @@ public abstract class Creature
             CurrentFrameIndex = 0;
 
         CurrentFrameIndex = 0;
+
         _animationDirection = 1;
-        AnimationTick = 0;
+        _animationElapsedMilliseconds = 0;
+
+        _lastAnimationTimestamp =
+            Stopwatch.GetTimestamp();
     }
 
     protected virtual void UpdateTimers()
@@ -646,43 +686,7 @@ public abstract class Creature
 
     protected virtual void UpdateAnimation()
     {
-        int? frameTicks = CurrentAction switch
-        {
-            CreatureAction.Running when Settings.Run is not null
-                => Settings.Run.RunFrameTicks,
-
-            CreatureAction.Idle when Settings.Idle is not null
-                => Settings.Idle.IdleFrameTicks,
-
-            CreatureAction.Falling when Settings.Fall is not null
-                => Settings.Fall.FallFrameTicks,
-
-            CreatureAction.Held
-                => 8,
-
-            CreatureAction.Flying when Settings.Flight is not null
-                => Settings.Flight.FlyingFrameTicks,
-
-            CreatureAction.Gliding when Settings.Flight is not null
-                => Settings.Flight.FlyingFrameTicks,
-
-            CreatureAction.Perching when Settings.Perch is not null
-                => Settings.Perch.PerchFrameTicks,
-
-            CreatureAction.Eating when Settings.Eat is not null
-                => Settings.Eat.EatFrameTicks,
-
-            CreatureAction.Drinking when Settings.Eat is not null
-                => Settings.Eat.EatFrameTicks,
-
-            CreatureAction.Sleeping when Settings.Sleep is not null
-                => Settings.Sleep.SleepFrameTicks,
-
-            _ => null
-        };
-
-        if (frameTicks is not null)
-            AdvanceAnimation(frameTicks.Value);
+        AdvanceAnimation();
     }
 
     protected virtual bool CanSearchForInteraction()
@@ -1244,37 +1248,7 @@ public abstract class Creature
     public void UpdateHeldAnimation()
     {
         if (CurrentAction == CreatureAction.Held)
-            AdvanceAnimationPingPong(8);
-    }
-
-    protected void AdvanceAnimationPingPong(
-        int frameTicks)
-    {
-        if (CurrentFrames.Length <= 1)
-            return;
-
-        AnimationTick++;
-
-        if (AnimationTick < frameTicks)
-            return;
-
-        AnimationTick = 0;
-
-        CurrentFrameIndex +=
-            _animationDirection;
-
-        if (CurrentFrameIndex >= CurrentFrames.Length - 1)
-        {
-            CurrentFrameIndex =
-                CurrentFrames.Length - 1;
-
-            _animationDirection = -1;
-        }
-        else if (CurrentFrameIndex <= 0)
-        {
-            CurrentFrameIndex = 0;
-            _animationDirection = 1;
-        }
+            AdvanceAnimation();
     }
 
     private void LoadSpriteSheetAnimations(
