@@ -530,21 +530,8 @@ public partial class MainWindow : Window
         Width = MainCanvas.Width * _uiScale;
         Height = MainCanvas.Height * _uiScale;
 
-        _creatureDefinitions["rat"] =
-            CreatureDefinitionLoader.Load("rat");
-
-        _creatureDefinitions["squirrel"] =
-            CreatureDefinitionLoader.Load("squirrel");
-
-        _creatureDefinitions["skunk"] =
-            CreatureDefinitionLoader.Load("skunk");
-
-        _creatureDefinitions["eagle"] =
-            CreatureDefinitionLoader.Load("eagle");
-
-        _creatureDefinitions["ocelot"] =
-            CreatureDefinitionLoader.Load("ocelot");
-
+        _creatureDefinitions =
+            CreatureDefinitionLoader.LoadAll();
 
         return area;
     }

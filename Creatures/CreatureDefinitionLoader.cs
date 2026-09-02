@@ -37,4 +37,45 @@ public static class CreatureDefinitionLoader
             ?? throw new InvalidOperationException(
                 $"Could not load creature definition '{creatureId}'.");
     }
+
+    public static Dictionary<string, CreatureDefinition> LoadAll()
+    {
+        string directory =
+            Path.Combine(
+                AppContext.BaseDirectory,
+                "Assets",
+                "Data",
+                "Creatures",
+                "Definitions");
+
+        var definitions =
+            new Dictionary<string, CreatureDefinition>(
+                StringComparer.OrdinalIgnoreCase);
+
+        foreach (string path in
+                 Directory.EnumerateFiles(
+                     directory,
+                     "*.json"))
+        {
+            string json =
+                File.ReadAllText(path);
+
+            CreatureDefinition definition =
+                JsonSerializer.Deserialize<CreatureDefinition>(
+                    json,
+                    JsonOptions)
+                ?? throw new InvalidOperationException(
+                    $"Could not load creature definition '{path}'.");
+
+            if (!definitions.TryAdd(
+                    definition.Id,
+                    definition))
+            {
+                throw new InvalidOperationException(
+                    $"Duplicate creature definition ID '{definition.Id}'.");
+            }
+        }
+
+        return definitions;
+    }
 }
