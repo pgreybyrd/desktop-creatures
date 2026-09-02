@@ -74,6 +74,33 @@
         "frameCount": 5
       }
     ]
+  }
+},
+
+"skunk": {
+  "spriteFacesRight": true,
+  "spriteWidth": 32,
+  "spriteHeight": 32,
+  "scale": 1,
+  "footOffsetY": 0,
+
+  "run": {
+    "runSpeed": 2.0,
+    "minRunTicks": 100,
+    "maxRunTicks": 240
+  },
+
+  "idle": {
+    "idleChance": 0.8,
+    "minIdleTicks": 100,
+    "maxIdleTicks": 180,
+    "idleFrameTicks": 20,
+    "animations": [
+      {
+        "name": "idle",
+        "frameCount": 2
+      }
+    ]
   },
 
   "fall": {

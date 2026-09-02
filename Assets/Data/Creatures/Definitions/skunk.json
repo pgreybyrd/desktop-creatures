@@ -1,0 +1,28 @@
+{
+  "id": "skunk",
+
+  "movementCapabilities": [
+    "Ground"
+  ],
+
+  "appearance": {
+    "generated": false
+  },
+
+  "sounds": {
+    "spawn": "chatter",
+    "pickup": "chatter"
+  },
+
+  "pickupAnchor": {
+    "x": 31,
+    "y": 16
+  },
+
+  "scale": {
+    "default": 1,
+    "min": 1,
+    "max": 4
+  }
+
+}

@@ -1,0 +1,17 @@
+{
+  "id": "skunk",
+
+  "name": "SKUNK",
+
+  "description": "Skunks are small mammals known for their distinctive black and white coloring and their ability to spray a foul-smelling liquid as a defense mechanism.",
+  
+  "habitat": "Urban",
+  "activity": "Night",
+  "diet": "Vegetarian",
+
+  "fieldNotes": [
+    "Stinky.",
+    "Cute.",
+    "Skunk."
+  ]
+}

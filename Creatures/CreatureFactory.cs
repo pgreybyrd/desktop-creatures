@@ -41,6 +41,19 @@ public static class CreatureFactory
                     appearanceTraits: context.AppearanceTraits,
                     appearanceId: context.AppearanceId),
 
+            "skunk" =>
+                new Skunk(
+                    definition,
+                    context.X,
+                    context.Y,
+                    settings,
+                    services.PointOfInterestManager,
+                    services.SurfaceManager,
+                    id: context.Id,
+                    name: context.Name,
+                    appearanceTraits: context.AppearanceTraits,
+                    appearanceId: context.AppearanceId),
+
             "eagle" =>
                 new Eagle(
                     definition,

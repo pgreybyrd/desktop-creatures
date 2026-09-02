@@ -536,6 +536,9 @@ public partial class MainWindow : Window
         _creatureDefinitions["squirrel"] =
             CreatureDefinitionLoader.Load("squirrel");
 
+        _creatureDefinitions["skunk"] =
+            CreatureDefinitionLoader.Load("skunk");
+
         _creatureDefinitions["eagle"] =
             CreatureDefinitionLoader.Load("eagle");
 

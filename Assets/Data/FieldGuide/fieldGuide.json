@@ -26,6 +26,14 @@
       "rightX": 2,
       "rightY": 60,
       "creatures": ["ocelot"]
+    },
+    {
+      "id": "skunk",
+      "tab": "Emerald",
+      "order": 3,
+      "rightX": 3,
+      "rightY": 70,
+      "creatures": ["skunk"]
     }
   ]
 }
