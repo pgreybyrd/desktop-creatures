@@ -55,5 +55,8 @@ public sealed record CreatureDefinition
     //public required CreaturePickupAnchor PickupAnchor { get; init; }
     public CreaturePickupAnchor? PickupAnchor { get; init; }
 
+    public Dictionary<string, string> Sounds { get; init; } =
+        new(StringComparer.OrdinalIgnoreCase);
+
     public string[] Palettes { get; init; } = [];
 }

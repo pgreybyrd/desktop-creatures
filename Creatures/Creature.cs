@@ -1306,6 +1306,49 @@ public abstract class Creature
             soundEvent);
     }
 
+    protected void InitializeSounds(
+        CreatureDefinition definition)
+    {
+        var soundSet =
+            new SoundSet();
+
+        foreach (var sound in definition.Sounds)
+        {
+            string soundEvent =
+                sound.Key;
+
+            string soundFamily =
+                sound.Value;
+
+            string soundFolder =
+                Path.Combine(
+                    AppContext.BaseDirectory,
+                    definition.AssetFolder,
+                    "Sounds");
+
+            if (!Directory.Exists(soundFolder))
+                continue;
+
+            string[] paths =
+                Directory
+                    .EnumerateFiles(
+                        soundFolder,
+                        $"{soundFamily}_*.wav")
+                    .OrderBy(path => path)
+                    .ToArray();
+
+            if (paths.Length == 0)
+                continue;
+
+            soundSet.Add(
+                soundEvent,
+                paths);
+        }
+
+        SetSoundSet(
+            soundSet);
+    }
+
     public virtual void OnPickedUp()
     {
     }

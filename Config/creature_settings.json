@@ -74,6 +74,12 @@
         "frameCount": 5
       }
     ]
+  },
+
+    "fall": {
+    "fallFrameCount": 1,
+    "fallFrameTicks": 5,
+    "landingTolerance": 12
   }
 },
 
