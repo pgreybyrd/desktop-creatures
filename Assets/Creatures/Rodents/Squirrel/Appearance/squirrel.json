@@ -87,7 +87,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 32 },
     "sourceSize": { "w": 50, "h": 32 },
-    "duration": 175
+    "duration": 250
    },
    {
     "filename": "jump_00",

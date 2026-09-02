@@ -132,15 +132,16 @@ public abstract class Creature
         ?? throw new InvalidOperationException(
             "Creature requires FallSettings.");
 
-    protected Dictionary<string, BitmapSource[]> Animations { get; } =
+    protected Dictionary<string, SpriteFrame[]> Animations { get; } =
         new(StringComparer.OrdinalIgnoreCase);
 
     public BitmapSource? CurrentFrame =>
         CurrentFrames.Length > 0
-            ? CurrentFrames[CurrentFrameIndex]
+            ? CurrentFrames[CurrentFrameIndex].Image
             : null;
 
-    protected BitmapSource[] CurrentFrames = [];
+    protected SpriteFrame[] CurrentFrames = [];
+
     protected int CurrentFrameIndex;
     protected int AnimationTick;
 
@@ -290,8 +291,7 @@ public abstract class Creature
         {
             OverrideAnimation(
                 animation.Key,
-                animation.Value.Frames.Select(
-                    frame => frame.Image));
+                animation.Value.Frames);
         }
     }
 
@@ -345,7 +345,7 @@ public abstract class Creature
 
     protected void OverrideAnimation(
         string animationName,
-        IEnumerable<BitmapSource> frames)
+        IEnumerable<SpriteFrame> frames)
     {
         Animations[animationName] =
             frames.ToArray();
@@ -361,74 +361,6 @@ public abstract class Creature
             MovementSpeed =
                 Run.RunSpeed * DisplayScale;
         }
-    }
-
-    public void LoadAssets(string assetFolder)
-    {
-        if (Settings.Flight is not null)
-        {
-            Animations["Fly"] = LoadFrames(assetFolder, "fly", Settings.Flight.FlyFrameCount);
-
-            if (Settings.Flight.GlideFrameCount > 0)
-                Animations["Glide"] = LoadFrames(assetFolder, "glide", Settings.Flight.GlideFrameCount);
-        }
-
-        if (Settings.Walk is not null)
-            Animations["Walk"] = LoadFrames(assetFolder, "walk", Settings.Walk.WalkFrameCount);
-
-        if (Settings.Run is not null)
-            Animations["Run"] = LoadFrames(assetFolder, "run", Settings.Run.RunFrameCount);
-
-        if (Settings.Idle is not null)
-        {
-            foreach (var animation in Settings.Idle.Animations)
-            {
-                Animations[animation.Name] =
-                    LoadFrames(
-                        assetFolder,
-                        animation.Name,
-                        animation.FrameCount);
-            }
-        }
-
-        if (Settings.Swim is not null)
-            Animations["Swim"] = LoadFrames(assetFolder, "swim", Settings.Swim.SwimFrameCount);
-
-        if (Settings.Perch is not null)
-            Animations["Perch"] = LoadFrames(assetFolder, "perch", Settings.Perch.PerchFrameCount);
-
-        if (Settings.Sleep is not null)
-            Animations["Sleep"] = LoadFrames(assetFolder, "sleep", Settings.Sleep.SleepFrameCount);
-
-        if (Settings.Fall is not null)
-            Animations["Fall"] = LoadFrames(assetFolder, "fall", Settings.Fall.FallFrameCount);
-
-        if (Settings.Eat is not null)
-        {
-            Animations["Eat"] =
-                LoadFrames(
-                    assetFolder,
-                    "eat",
-                    Settings.Eat.EatFrameCount);
-
-            Animations["Drink"] =
-                LoadFrames(
-                    assetFolder,
-                    "drink",
-                    Settings.Eat.EatFrameCount);
-        }
-    }
-
-    protected static BitmapSource[] LoadFrames(
-        string assetFolder,
-        string animationName,
-        int frameCount)
-    {
-        return Enumerable.Range(0, frameCount)
-            .Select(i =>
-                AssetImageLoader.Load(
-                    $"{assetFolder}/{animationName}_{i}.png"))
-            .ToArray();
     }
 
     protected void InitializeGroundCreature(double startX, double startY)
@@ -1360,8 +1292,7 @@ public abstract class Creature
         {
             OverrideAnimation(
                 animation.Key,
-                animation.Value.Frames.Select(
-                    frame => frame.Image));
+                animation.Value.Frames);
         }
     }
 
