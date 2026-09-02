@@ -29,17 +29,11 @@ public static class CreatureFactory
                     appearanceId: context.AppearanceId),
 
             "squirrel" =>
-                new Squirrel(
+                new DataDrivenCreature(
                     definition,
-                    context.X,
-                    context.Y,
+                    context,
                     settings,
-                    services.PointOfInterestManager,
-                    services.SurfaceManager,
-                    id: context.Id,
-                    name: context.Name,
-                    appearanceTraits: context.AppearanceTraits,
-                    appearanceId: context.AppearanceId),
+                    services),
 
             "skunk" =>
                 new DataDrivenCreature(
