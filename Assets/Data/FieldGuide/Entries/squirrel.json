@@ -1,0 +1,17 @@
+{
+  "id": "squirrel",
+
+  "name": "SQUIRREL",
+
+  "description": "Squirrels are small mammals known for their agility and bushy tails. They are excellent climbers and are often seen gathering nuts and seeds.",
+  
+  "habitat": "Urban",
+  "activity": "Daytime",
+  "diet": "Vegetarian",
+
+  "fieldNotes": [
+    "Nut hunter.",
+    "Tree climber.",
+    "Territoial chatters."
+  ]
+}

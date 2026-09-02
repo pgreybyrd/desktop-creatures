@@ -1,6 +1,6 @@
 ﻿using Desktop_Creatures.Audio;
 using Desktop_Creatures.Creatures;
-using Desktop_Creatures.Graphics;
+using Desktop_Creatures.Graphics.Animation;
 using Desktop_Creatures.Tools.Images;
 using Desktop_Creatures.UI.FieldGuide;
 using System.IO;
@@ -20,18 +20,18 @@ namespace Desktop_Creatures;
 
 public enum FieldGuideTab
 {
-    Red,
-    Green,
-    Blue,
-    Yellow,
-    Purple,
-    LightGrey,
-    PaleBlue,
-    Orange,
-    LightBlue,
-    DarkGreen,
-    Pink,
-    DarkGrey
+    Crimson,
+    Moss,
+    Cobalt,
+    Marigold,
+    Amethyst,
+    Silver,
+    Aqua,
+    Tangerine,
+    Azure,
+    Emerald,
+    Raspberry,
+    Charcoal
 }
 
 public enum ButtonState
@@ -58,24 +58,41 @@ public partial class FieldGuideMenu : Window
     private readonly BitmapImage _bookBase;
     private readonly BitmapImage[] _pageTurnFrames;
 
-    private readonly TabSpriteSheet _tabSpriteSheet;
+    private readonly SpriteSheet _tabsSheet;
+    private readonly SpriteSheet _subTabsSheet;
+    private readonly SpriteSheet _toolTextSheet;
+    private readonly SpriteSheet _buttonsSheet;
+    private readonly SpriteSheet _framesSheet;
+
     private const int TabWidth = 7;
     private const int TabHeight = 8;
     private const int RightTabX = 181;
     private const int FrontPageIndex = -1;
     private int _currentTabIndex = -1;
 
+    private const int SubTabWidth = 10;
+    private const int SubTabHeight = 8;
+
+    private const int SubTabStartX = 31;
+    private const int SubTabY = 28;
+    private const int SubTabSpacing = 1;
+
+    private sealed record CreatureSubTabControl(
+        string CreatureId,
+        WpfImage Image,
+        WpfButton Button);
+
+    private readonly Dictionary<string, CreatureSubTabControl>
+        _creatureSubTabControls =
+            new(StringComparer.OrdinalIgnoreCase);
+
     private const int PageTurnFrameDelayMs = 40;
 
     private bool _isPageTurning;
     private bool _isBookOpen = true;
-    private FieldGuideTab _currentTab = FieldGuideTab.Red;
+    private FieldGuideTab _currentTab = FieldGuideTab.Crimson;
 
     //creature pages
-    private readonly BitmapImage _spawnButton;
-    private readonly BitmapImage _spawnButtonPressed;
-    private readonly BitmapImage _spawnButtonHover;
-
     private readonly BitmapImage _closeButton;
     private readonly BitmapImage _closeButtonHover;
     private readonly BitmapImage _closeButtonPressed;
@@ -86,7 +103,7 @@ public partial class FieldGuideMenu : Window
 
     private readonly Dictionary<string, FieldGuideEntry> _creatureEntries;
     private readonly Dictionary<FieldGuideTab, FieldGuideCategoryEntry>
-        _familiesByTab;
+        _categoriesByTab;
 
     private string? _currentCreatureId;
 
@@ -194,10 +211,30 @@ public partial class FieldGuideMenu : Window
         _titleScale = uiScale + 1;
         _bookScale = uiScale + 2;
 
+        _tabsSheet = SpriteSheetLoader.Load(
+            $"{FieldGuideAssetPath}/Common/tabs.png",
+            $"{FieldGuideAssetPath}/Common/tabs.json");
+
+        _subTabsSheet = SpriteSheetLoader.Load(
+            $"{FieldGuideAssetPath}/Common/subTabs.png",
+            $"{FieldGuideAssetPath}/Common/subTabs.json");
+
+        _toolTextSheet = SpriteSheetLoader.Load(
+            $"{FieldGuideAssetPath}/Common/tooltext.png",
+            $"{FieldGuideAssetPath}/Common/tooltext.json");
+
+        _buttonsSheet = SpriteSheetLoader.Load(
+            $"{FieldGuideAssetPath}/Common/buttons.png",
+            $"{FieldGuideAssetPath}/Common/buttons.json");
+
+        _framesSheet = SpriteSheetLoader.Load(
+            $"{FieldGuideAssetPath}/Common/frames.png",
+            $"{FieldGuideAssetPath}/Common/frames.json");
+
         FieldGuideDefinition guide =
             LoadFieldGuideDefinition();
 
-        _familiesByTab =
+        _categoriesByTab =
             guide.Categories.ToDictionary(
                 category => category.Tab);
 
@@ -289,20 +326,19 @@ public partial class FieldGuideMenu : Window
 
         SpawnButtonImage.Visibility = Visibility.Visible;
 
-        _spawnButton = AssetImageLoader.Load(
-            $"{FieldGuideAssetPath}/Common/button_spawn.png");
-        _spawnButtonPressed = AssetImageLoader.Load(
-            $"{FieldGuideAssetPath}/Common/button_pressed_spawn.png");
-        _spawnButtonHover = AssetImageLoader.Load(   
-            $"{FieldGuideAssetPath}/Common/button_hover_spawn.png");
+        SpawnButtonImage.Source =
+            _buttonsSheet
+                .GetFrame("spawn_normal")
+                .Image;
 
-        SpawnButtonImage.Source = _spawnButton;
+        SpriteFrame spawnFrame =
+            _buttonsSheet.GetFrame("spawn_normal");
 
         SpawnButtonImage.Width =
-            _spawnButton.PixelWidth * _uiScale;
+            spawnFrame.Image.PixelWidth * _uiScale;
 
         SpawnButtonImage.Height =
-            _spawnButton.PixelHeight * _uiScale;
+            spawnFrame.Image.PixelHeight * _uiScale;
 
         _closeButton = AssetImageLoader.Load(
             $"{FieldGuideAssetPath}/Book/close.png");
@@ -450,26 +486,21 @@ public partial class FieldGuideMenu : Window
             .ToArray();
 
         _tabTurnPaths =
-            _familiesByTab.Values
+            _categoriesByTab.Values
                 .ToDictionary(
                     entry => entry.Tab,
                     entry => CreateTabTurnPath(
                         entry.RightY));
 
-        _tabSpriteSheet = new TabSpriteSheet(
-            "Assets/UI/FieldGuide/Common/tabs.png",
-            TabWidth,
-            TabHeight);
-
         BuildTabs();
 
         BookBaseImage.Source = _openingFrames[0];
 
-        _currentTab = FieldGuideTab.Red;
+        _currentTab = FieldGuideTab.Crimson;
 
         TurningTabImage.Source =
-            _tabSpriteSheet.GetFrame(
-                FieldGuideTab.Red,
+            GetCategoryTabFrame(
+                FieldGuideTab.Crimson,
                 ButtonState.Normal);
 
         TurningTabImage.Visibility = 
@@ -481,7 +512,7 @@ public partial class FieldGuideMenu : Window
     private void BuildTabs()
     {
         foreach (FieldGuideCategoryEntry entry in
-                 _familiesByTab.Values.OrderBy(e => e.Order))
+                 _categoriesByTab.Values.OrderBy(e => e.Order))
         {
             var rightImage =
                 CreateTabImage(entry.Tab);
@@ -555,7 +586,7 @@ public partial class FieldGuideMenu : Window
             CreatureDefinitionLoader.Load(creatureId);
 
         FieldGuideCategoryEntry? category =
-            _familiesByTab.Values
+            _categoriesByTab.Values
                 .FirstOrDefault(
                     entry =>
                         string.Equals(
@@ -607,7 +638,7 @@ public partial class FieldGuideMenu : Window
             Height = TabHeight,
             Stretch = Stretch.None,
             IsHitTestVisible = false,
-            Source = _tabSpriteSheet.GetFrame(
+            Source = GetCategoryTabFrame(
                 tab,
                 ButtonState.Normal)
         };
@@ -618,8 +649,9 @@ public partial class FieldGuideMenu : Window
         WpfButton targetButton)
     {
         var source =
-            AssetImageLoader.Load(
-                family.ToolTipAsset);
+            _toolTextSheet
+                .GetFrame(family.Id)
+                .Image;
 
         var tooltipImage = new WpfImage
         {
@@ -647,6 +679,44 @@ public partial class FieldGuideMenu : Window
 
             HorizontalOffset = _uiScale,
             VerticalOffset = -1 *_uiScale
+        };
+    }
+
+    private ToolTip CreateCreatureSubTabToolTip(
+        string creatureId,
+        WpfButton targetButton)
+    {
+        BitmapSource source =
+            _toolTextSheet
+                .GetFrame(creatureId)
+                .Image;
+
+        WpfImage tooltipImage =
+            new()
+            {
+                Source = source,
+                Width = source.PixelWidth * _uiScale,
+                Height = source.PixelHeight * _uiScale,
+                Stretch = Stretch.Fill,
+                SnapsToDevicePixels = true
+            };
+
+        RenderOptions.SetBitmapScalingMode(
+            tooltipImage,
+            BitmapScalingMode.NearestNeighbor);
+
+        return new ToolTip
+        {
+            Content = tooltipImage,
+            Background = Brushes.Transparent,
+            BorderThickness = new Thickness(0),
+            Padding = new Thickness(0),
+            PlacementTarget = targetButton,
+            Placement =
+                System.Windows.Controls.Primitives
+                    .PlacementMode.Top,
+            HorizontalOffset = 0,
+            VerticalOffset = -_uiScale
         };
     }
 
@@ -693,7 +763,7 @@ public partial class FieldGuideMenu : Window
         }
 
         FieldGuideCategoryEntry destination =
-            _familiesByTab[tab];
+            _categoriesByTab[tab];
 
         await TurnForwardToAsync(
             destination);
@@ -710,10 +780,23 @@ public partial class FieldGuideMenu : Window
         }
 
         FieldGuideCategoryEntry destination =
-            _familiesByTab[tab];
+            _categoriesByTab[tab];
 
         await TurnBackwardToAsync(
             destination);
+    }
+
+    private BitmapSource GetCategoryTabFrame(
+        FieldGuideTab tab,
+        ButtonState state)
+    {
+        string frameName =
+            $"{tab.ToString().ToLowerInvariant()}_" +
+            $"{state.ToString().ToLowerInvariant()}";
+
+        return _tabsSheet
+            .GetFrame(frameName)
+            .Image;
     }
 
     private async Task TurnBackwardToFrontPageAsync()
@@ -722,7 +805,7 @@ public partial class FieldGuideMenu : Window
             return;
 
         FieldGuideCategoryEntry current =
-            _familiesByTab[_currentTab];
+            _categoriesByTab[_currentTab];
 
         if (!_tabTurnPaths.TryGetValue(
             current.Tab,
@@ -747,7 +830,7 @@ public partial class FieldGuideMenu : Window
             Visibility.Collapsed;
 
         TurningTabImage.Source =
-            _tabSpriteSheet.GetFrame(
+            GetCategoryTabFrame(
                 current.Tab,
                 ButtonState.Normal);
 
@@ -1014,7 +1097,7 @@ public partial class FieldGuideMenu : Window
                 : controls.RightImage;
 
         image.Source =
-            _tabSpriteSheet.GetFrame(
+            GetCategoryTabFrame(
                 tab.Value,
                 ButtonState.Hover);
     }
@@ -1039,7 +1122,7 @@ public partial class FieldGuideMenu : Window
                 : controls.RightImage;
 
         image.Source =
-            _tabSpriteSheet.GetFrame(
+            GetCategoryTabFrame(
                 tab.Value,
                 ButtonState.Normal);
     }
@@ -1064,7 +1147,7 @@ public partial class FieldGuideMenu : Window
                 : controls.RightImage;
 
         image.Source =
-            _tabSpriteSheet.GetFrame(
+            GetCategoryTabFrame(
                 tab.Value,
                 ButtonState.Pressed);
     }
@@ -1089,7 +1172,7 @@ public partial class FieldGuideMenu : Window
                 : controls.RightImage;
 
         image.Source =
-            _tabSpriteSheet.GetFrame(
+            GetCategoryTabFrame(
                 tab.Value,
                 ButtonState.Hover);
     }
@@ -1107,7 +1190,7 @@ public partial class FieldGuideMenu : Window
     private void UpdateRestingTabs()
     {
         foreach (FieldGuideCategoryEntry entry in
-                 _familiesByTab.Values)
+                 _categoriesByTab.Values)
         {
             var controls =
                 _tabControls[entry.Tab];
@@ -1287,28 +1370,40 @@ public partial class FieldGuideMenu : Window
         object sender,
         WpfMouseEventArgs e)
     {
-        SpawnButtonImage.Source = _spawnButtonHover;
+        SpawnButtonImage.Source =
+            _buttonsSheet
+                .GetFrame("spawn_hover")
+                .Image;
     }
 
     private void SpawnCreatureButton_MouseLeave(
         object sender,
         WpfMouseEventArgs e)
     {
-        SpawnButtonImage.Source = _spawnButton;
+        SpawnButtonImage.Source =
+            _buttonsSheet
+                .GetFrame("spawn_normal")
+                .Image;
     }
 
     private void SpawnCreatureButton_MouseLeftButtonDown(
         object sender,
         WpfMouseEventArgs e)
     {
-        SpawnButtonImage.Source = _spawnButtonPressed;
+        SpawnButtonImage.Source =
+            _buttonsSheet
+                .GetFrame("spawn_pressed")
+                .Image;
     }
 
     private void SpawnCreatureButton_MouseUp(
         object sender,
         WpfMouseEventArgs e)
     {
-        SpawnButtonImage.Source = _spawnButtonHover;
+        SpawnButtonImage.Source =
+            _buttonsSheet
+                .GetFrame("spawn_hover")
+                .Image;
     }
 
     private async Task TurnBackwardToAsync(
@@ -1321,7 +1416,7 @@ public partial class FieldGuideMenu : Window
             return;
 
         FieldGuideCategoryEntry current =
-            _familiesByTab[_currentTab];
+            _categoriesByTab[_currentTab];
 
         if (!_tabTurnPaths.TryGetValue(
             current.Tab,
@@ -1349,7 +1444,7 @@ public partial class FieldGuideMenu : Window
             Visibility.Collapsed;
 
         TurningTabImage.Source =
-            _tabSpriteSheet.GetFrame(
+            GetCategoryTabFrame(
                 current.Tab,
                 ButtonState.Normal);
 
@@ -1389,7 +1484,7 @@ public partial class FieldGuideMenu : Window
                 destination.Tab;
 
             string? creatureId =
-                GetFirstCreatureIdForCategory(destination.Id);
+                GetFirstCreatureIdForCategory(destination);
 
             if (creatureId is null)
                 return;
@@ -1415,37 +1510,43 @@ public partial class FieldGuideMenu : Window
     }
 
     private static string? GetFirstCreatureIdForCategory(
-        string categoryId)
+        FieldGuideCategoryEntry category)
     {
-        string definitionsPath = Path.Combine(
-            AppContext.BaseDirectory,
-            "Assets",
-            "Data",
-            "Creatures",
-            "Definitions");
-
-        foreach (string file in
-                 Directory.EnumerateFiles(
-                     definitionsPath,
-                     "*.json"))
-        {
-            string creatureId =
-                Path.GetFileNameWithoutExtension(file);
-
-            CreatureDefinition definition =
-                CreatureDefinitionLoader.Load(creatureId);
-
-            if (string.Equals(
-                    definition.Category,
-                    categoryId,
-                    StringComparison.OrdinalIgnoreCase))
-            {
-                return creatureId;
-            }
-        }
-
-        return null;
+        return category.Creatures.FirstOrDefault();
     }
+
+    //private static string? GetFirstCreatureIdForCategory(
+    //    string categoryId)
+    //{
+    //    string definitionsPath = Path.Combine(
+    //        AppContext.BaseDirectory,
+    //        "Assets",
+    //        "Data",
+    //        "Creatures",
+    //        "Definitions");
+
+    //    foreach (string file in
+    //             Directory.EnumerateFiles(
+    //                 definitionsPath,
+    //                 "*.json"))
+    //    {
+    //        string creatureId =
+    //            Path.GetFileNameWithoutExtension(file);
+
+    //        CreatureDefinition definition =
+    //            CreatureDefinitionLoader.Load(creatureId);
+
+    //        if (string.Equals(
+    //                definition.Category,
+    //                categoryId,
+    //                StringComparison.OrdinalIgnoreCase))
+    //        {
+    //            return creatureId;
+    //        }
+    //    }
+
+    //    return null;
+    //}
 
     private async Task TurnForwardToAsync(
         FieldGuideCategoryEntry destination)
@@ -1485,7 +1586,7 @@ public partial class FieldGuideMenu : Window
             Visibility.Collapsed;
 
         TurningTabImage.Source =
-            _tabSpriteSheet.GetFrame(
+            GetCategoryTabFrame(
                 destination.Tab,
                 ButtonState.Normal);
 
@@ -1530,7 +1631,7 @@ public partial class FieldGuideMenu : Window
                 destination.Tab;
 
             string? creatureId =
-                GetFirstCreatureIdForCategory(destination.Id);
+                GetFirstCreatureIdForCategory(destination);
 
             if (creatureId is null)
                 return;
@@ -1561,6 +1662,11 @@ public partial class FieldGuideMenu : Window
         FieldGuideEntry entry =
             _creatureEntries[creatureId];
 
+        FieldGuideCategoryEntry category =
+            _categoriesByTab[_currentTab];
+
+        BuildCreatureSubTabs(category);
+
         CreatureContentCanvas.DataContext =
             entry;
 
@@ -1572,8 +1678,9 @@ public partial class FieldGuideMenu : Window
             $"Assets/UI/FieldGuide/Creatures/{creatureFolder}";
 
         CreaturePortraitFrameImage.Source =
-            AssetImageLoader.Load(
-                $"{fieldGuideCreaturePath}/frame-{creatureId}.png");
+            _framesSheet
+                .GetFrame("basic")
+                .Image;
 
         CreaturePortraitImage.Source =
             AssetImageLoader.Load(
@@ -1600,5 +1707,191 @@ public partial class FieldGuideMenu : Window
         {
             DragMove();
         }
+    }
+
+    private void BuildCreatureSubTabs(
+        FieldGuideCategoryEntry category)
+    {
+        CreatureSubTabsCanvas.Children.Clear();
+        _creatureSubTabControls.Clear();
+
+        if (category.Creatures.Count <= 1)
+        {
+            CreatureSubTabsCanvas.Visibility =
+                Visibility.Collapsed;
+
+            return;
+        }
+
+        CreatureSubTabsCanvas.Visibility =
+            Visibility.Visible;
+
+        for (int i = 0;
+             i < category.Creatures.Count;
+             i++)
+        {
+            string creatureId =
+                category.Creatures[i];
+
+            bool isCurrent =
+                string.Equals(
+                    creatureId,
+                    _currentCreatureId,
+                    StringComparison.OrdinalIgnoreCase);
+
+            WpfImage image =
+                new()
+                {
+                    Width = SubTabWidth,
+                    Height = SubTabHeight,
+                    Stretch = Stretch.None,
+                    IsHitTestVisible = false,
+                    Source = _subTabsSheet
+                        .GetFrame(
+                            isCurrent
+                                ? "current"
+                                : "other_normal")
+                        .Image
+                };
+
+            WpfButton button =
+                new()
+                {
+                    Width = SubTabWidth,
+                    Height = SubTabHeight,
+                    Tag = creatureId,
+                    Style = (Style)FindResource(
+                        "InvisibleTabButton")
+                };
+
+            button.ToolTip =
+                CreateCreatureSubTabToolTip(
+                    creatureId,
+                    button);
+
+            ToolTipService.SetInitialShowDelay(button, 150);
+            ToolTipService.SetBetweenShowDelay(button, 150);
+            ToolTipService.SetShowDuration(button, 5000);
+            ToolTipService.SetHasDropShadow(button, false);
+
+            button.MouseEnter += CreatureSubTab_MouseEnter;
+            button.MouseLeave += CreatureSubTab_MouseLeave;
+            button.PreviewMouseLeftButtonDown += CreatureSubTab_MouseDown;
+            button.PreviewMouseLeftButtonUp += CreatureSubTab_MouseUp;
+            button.Click += CreatureSubTab_Click;
+
+            int x =
+                SubTabStartX +
+                (i * (SubTabWidth + SubTabSpacing));
+
+            Canvas.SetLeft(image, x);
+            Canvas.SetTop(image, SubTabY);
+
+            Canvas.SetLeft(button, x);
+            Canvas.SetTop(button, SubTabY);
+
+            CreatureSubTabsCanvas.Children.Add(image);
+            CreatureSubTabsCanvas.Children.Add(button);
+
+            _creatureSubTabControls[creatureId] =
+                new CreatureSubTabControl(
+                    creatureId,
+                    image,
+                    button);
+        }
+    }
+
+    private void CreatureSubTab_Click(
+        object sender,
+        RoutedEventArgs e)
+    {
+        if (sender is not WpfButton button ||
+            button.Tag is not string creatureId)
+        {
+            return;
+        }
+
+        if (string.Equals(
+                creatureId,
+                _currentCreatureId,
+                StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        UiSounds.PlayButtonClick();
+
+        _currentCreatureId = creatureId;
+
+        ShowCreatureEntry(creatureId);
+    }
+
+    private void CreatureSubTab_MouseEnter(
+        object sender,
+        WpfMouseEventArgs e)
+    {
+        SetCreatureSubTabState(
+            sender,
+            "other_hover");
+    }
+
+    private void CreatureSubTab_MouseLeave(
+        object sender,
+        WpfMouseEventArgs e)
+    {
+        SetCreatureSubTabState(
+            sender,
+            "other_normal");
+    }
+
+    private void CreatureSubTab_MouseDown(
+        object sender,
+        WpfMouseEventArgs e)
+    {
+        SetCreatureSubTabState(
+            sender,
+            "other_pressed");
+    }
+
+    private void CreatureSubTab_MouseUp(
+        object sender,
+        WpfMouseEventArgs e)
+    {
+        SetCreatureSubTabState(
+            sender,
+            "other_hover");
+    }
+
+    private void SetCreatureSubTabState(
+        object sender,
+        string frameName)
+    {
+        if (sender is not WpfButton button ||
+            button.Tag is not string creatureId ||
+            !_creatureSubTabControls.TryGetValue(
+                creatureId,
+                out CreatureSubTabControl? control))
+        {
+            return;
+        }
+
+        // Current tab always remains current.
+        if (string.Equals(
+                creatureId,
+                _currentCreatureId,
+                StringComparison.OrdinalIgnoreCase))
+        {
+            control.Image.Source =
+                _subTabsSheet
+                    .GetFrame("current")
+                    .Image;
+
+            return;
+        }
+
+        control.Image.Source =
+            _subTabsSheet
+                .GetFrame(frameName)
+                .Image;
     }
 }

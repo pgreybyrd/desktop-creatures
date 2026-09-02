@@ -41,6 +41,41 @@
       }
     },
 
+    "squirrel": {
+  "spriteFacesRight": true,
+  "spriteWidth": 50,
+  "spriteHeight": 32,
+  "scale": 1,
+  "footOffsetY": 0,
+
+  "run": {
+    "runSpeed": 2.0,
+    "minRunTicks": 80,
+    "maxRunTicks": 240,
+    "runFrameCount": 5,
+    "runFrameTicks": 3
+  },
+
+  "idle": {
+    "idleChance": 0.8,
+    "minIdleTicks": 100,
+    "maxIdleTicks": 180,
+    "idleFrameTicks": 20,
+    "animations": [
+      {
+        "name": "idle",
+        "frameCount": 5
+      }
+    ]
+  },
+
+  "fall": {
+    "fallFrameCount": 1,
+    "fallFrameTicks": 5,
+    "landingTolerance": 12
+  }
+},
+
     "rat":{
       "spriteFacesRight": false,
       "spriteWidth": 32,

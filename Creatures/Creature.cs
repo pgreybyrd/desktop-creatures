@@ -272,8 +272,8 @@ public abstract class Creature
             return;
         }
 
-        LoadAssets(
-            definition.AssetFolder);
+        LoadSpriteSheetAnimations(
+            definition);
     }
 
     private void LoadAppearanceAnimations(
@@ -990,6 +990,11 @@ public abstract class Creature
         var idleAnimations =
             Animations.Keys
                 .Where(name =>
+                    string.Equals(
+                        name,
+                        "idle",
+                        StringComparison.OrdinalIgnoreCase)
+                    ||
                     name.StartsWith(
                         "idle_",
                         StringComparison.OrdinalIgnoreCase))
@@ -1337,6 +1342,26 @@ public abstract class Creature
         {
             CurrentFrameIndex = 0;
             _animationDirection = 1;
+        }
+    }
+
+    private void LoadSpriteSheetAnimations(
+        CreatureDefinition definition)
+    {
+        string appearanceFolder =
+            $"{definition.AssetFolder}/Appearance";
+
+        var sheet =
+            SpriteSheetLoader.Load(
+                $"{appearanceFolder}/{definition.Id}.png",
+                $"{appearanceFolder}/{definition.Id}.json");
+
+        foreach (var animation in sheet.Animations)
+        {
+            OverrideAnimation(
+                animation.Key,
+                animation.Value.Frames.Select(
+                    frame => frame.Image));
         }
     }
 

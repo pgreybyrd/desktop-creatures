@@ -1,0 +1,50 @@
+{
+  "name": "cinnamon",
+  "regions": {
+    "nose": {
+      "hue": 20,
+      "saturation": 0.42,
+      "brightness": 0.56
+    },
+    "ears": {
+      "hue": 12,
+      "saturation": 0.31,
+      "brightness": 0.68
+    },
+    "eyes": {
+      "hue": 18,
+      "saturation": 0.98,
+      "brightness": 0.10
+    },
+    "paws": {
+      "hue": 18,
+      "saturation": 0.31,
+      "brightness": 0.68
+    },
+    "feet": {
+      "hue": 18,
+      "saturation": 0.31,
+      "brightness": 0.65
+    },
+    "head": {
+      "hue": 12,
+      "saturation": 0.78,
+      "brightness": 0.48
+    },
+    "body": {
+      "hue": 12,
+      "saturation": 0.78,
+      "brightness": 0.48
+    },
+    "belly": {
+      "hue": 15,
+      "saturation": 0.73,
+      "brightness": 0.52
+    },
+    "tail": {
+      "hue": 18,
+      "saturation": 0.54,
+      "brightness": 0.60
+    }
+  }
+}

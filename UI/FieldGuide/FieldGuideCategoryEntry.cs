@@ -12,10 +12,9 @@
 
         public int RightY { get; init; }
 
+        public List<string> Creatures { get; init; } = [];
+
         public string DisplayName =>
             char.ToUpperInvariant(Id[0]) + Id[1..];
-
-        public string ToolTipAsset =>
-            $"Assets/UI/FieldGuide/Common/ToolTip/label-{Id}.png";
     }
 }

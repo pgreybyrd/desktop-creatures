@@ -2,24 +2,30 @@
   "categories": [
     {
       "id": "rodents",
-      "tab": "Red",
+      "tab": "Crimson",
       "order": 0,
       "rightX": 0,
-      "rightY": 40
+      "rightY": 40,
+      "creatures": [
+        "rat",
+        "squirrel"
+      ]
     },
     {
       "id": "birds",
-      "tab": "Green",
+      "tab": "Moss",
       "order": 1,
       "rightX": 1,
-      "rightY": 50
+      "rightY": 50,
+      "creatures": ["eagle"]
     },
     {
       "id": "felines",
-      "tab": "Yellow",
+      "tab": "Marigold",
       "order": 2,
       "rightX": 2,
-      "rightY": 60
+      "rightY": 60,
+      "creatures": ["ocelot"]
     }
   ]
 }

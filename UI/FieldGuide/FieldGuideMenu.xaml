@@ -179,6 +179,11 @@
                     Width="201"
                     Height="166"/>
 
+            <Canvas x:Name="CreatureSubTabsCanvas"
+                    Width="200"
+                    Height="8"
+                    Panel.ZIndex="20" />
+
             <Image x:Name="TurningTabImage"
                    Width="7"
                    Height="8"

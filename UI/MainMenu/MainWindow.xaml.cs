@@ -533,11 +533,15 @@ public partial class MainWindow : Window
         _creatureDefinitions["rat"] =
             CreatureDefinitionLoader.Load("rat");
 
+        _creatureDefinitions["squirrel"] =
+            CreatureDefinitionLoader.Load("squirrel");
+
         _creatureDefinitions["eagle"] =
             CreatureDefinitionLoader.Load("eagle");
 
         _creatureDefinitions["ocelot"] =
             CreatureDefinitionLoader.Load("ocelot");
+
 
         return area;
     }
@@ -1261,7 +1265,6 @@ public partial class MainWindow : Window
         FieldGuideImage.Source =
             _fieldGuideHover;
     }
-
     private void FieldGuide_MouseLeave(
         object sender,
         WpfMouseEventArgs e)
@@ -1269,7 +1272,6 @@ public partial class MainWindow : Window
         FieldGuideImage.Source =
             _fieldGuideNormal;
     }
-
     private void FieldGuide_MouseLeftButtonDown(
         object sender,
         WpfMouseButtonEventArgs e)
@@ -1277,7 +1279,6 @@ public partial class MainWindow : Window
         FieldGuideImage.Source =
             _fieldGuidePressed;
     }
-
     private void FieldGuide_MouseUp(
         object sender,
         WpfMouseButtonEventArgs e)
@@ -1291,9 +1292,15 @@ public partial class MainWindow : Window
         RoutedEventArgs e)
     {
         UiSounds.PlayButtonClick();
+
+        if (_creatureRosterWindow is not null)
+        {
+            _creatureRosterWindow.Close();
+            return;
+        }
+
         OpenCreatureRoster();
     }
-
     private void Roster_MouseEnter(
         object sender,
         WpfMouseEventArgs e)
@@ -1301,7 +1308,6 @@ public partial class MainWindow : Window
         RosterImage.Source =
             _rosterHover;
     }
-
     private void Roster_MouseLeave(
         object sender,
         WpfMouseEventArgs e)
@@ -1309,7 +1315,6 @@ public partial class MainWindow : Window
         RosterImage.Source =
             _rosterNormal;
     }
-
     private void Roster_MouseLeftButtonDown(
         object sender,
         WpfMouseButtonEventArgs e)
@@ -1317,7 +1322,6 @@ public partial class MainWindow : Window
         RosterImage.Source =
             _rosterPressed;
     }
-
     private void Roster_MouseUp(
         object sender,
         WpfMouseButtonEventArgs e)
@@ -1333,7 +1337,6 @@ public partial class MainWindow : Window
         UiSounds.PlayButtonClick();
         //OpenCreatureRoster();
     }
-
     private void Shop_MouseEnter(
         object sender,
         WpfMouseEventArgs e)
@@ -1341,7 +1344,6 @@ public partial class MainWindow : Window
         ShopImage.Source =
             _shopHover;
     }
-
     private void Shop_MouseLeave(
         object sender,
         WpfMouseEventArgs e)
@@ -1349,7 +1351,6 @@ public partial class MainWindow : Window
         ShopImage.Source =
             _shopNormal;
     }
-
     private void Shop_MouseLeftButtonDown(
         object sender,
         WpfMouseButtonEventArgs e)
@@ -1357,7 +1358,6 @@ public partial class MainWindow : Window
         ShopImage.Source =
             _shopPressed;
     }
-
     private void Shop_MouseUp(
         object sender,
         WpfMouseButtonEventArgs e)
