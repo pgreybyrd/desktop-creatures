@@ -1095,9 +1095,30 @@ public abstract class Creature
             return;
         }
 
+        double frameMovement = 1.0;
+
+        if (CurrentFrames.Length > 0)
+        {
+            string frameName =
+                CurrentFrames[
+                    CurrentFrameIndex]
+                    .Name;
+
+            if (Run.FrameMovement.TryGetValue(
+                    frameName,
+                    out double configuredMovement))
+            {
+                frameMovement =
+                    Math.Max(
+                        0.0,
+                        configuredMovement);
+            }
+        }
+
         double moveSpeed =
             MovementSpeed *
-            Settings.Scale;
+            Settings.Scale *
+            frameMovement;
 
         double step =
             Math.Min(

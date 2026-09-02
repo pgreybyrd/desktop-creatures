@@ -15,7 +15,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 32 },
     "sourceSize": { "w": 50, "h": 32 },
-    "duration": 275
+    "duration": 175
    },
    {
     "filename": "idle_02",
@@ -24,7 +24,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 32 },
     "sourceSize": { "w": 50, "h": 32 },
-    "duration": 275
+    "duration": 175
    },
    {
     "filename": "idle_03",
@@ -33,7 +33,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 32 },
     "sourceSize": { "w": 50, "h": 32 },
-    "duration": 275
+    "duration": 175
    },
    {
     "filename": "idle_04",
@@ -51,7 +51,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 32 },
     "sourceSize": { "w": 50, "h": 32 },
-    "duration": 175
+    "duration": 90
    },
    {
     "filename": "run_01",
@@ -60,7 +60,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 32 },
     "sourceSize": { "w": 50, "h": 32 },
-    "duration": 175
+    "duration": 90
    },
    {
     "filename": "run_02",
@@ -69,7 +69,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 32 },
     "sourceSize": { "w": 50, "h": 32 },
-    "duration": 175
+    "duration": 90
    },
    {
     "filename": "run_03",
@@ -78,7 +78,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 32 },
     "sourceSize": { "w": 50, "h": 32 },
-    "duration": 175
+    "duration": 90
    },
    {
     "filename": "run_04",
@@ -87,7 +87,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 32 },
     "sourceSize": { "w": 50, "h": 32 },
-    "duration": 250
+    "duration": 300
    },
    {
     "filename": "jump_00",

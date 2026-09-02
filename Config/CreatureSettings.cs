@@ -11,6 +11,9 @@ public class CreatureSettings
     public int FootOffsetY { get; set; } = 0;
     public double LandingTolerance { get; set; } = 5.0;
 
+    public Dictionary<string, double> FrameMovement { get; set; } =
+        new(StringComparer.OrdinalIgnoreCase);
+
     public FlightSettings? Flight { get; set; }
     public WalkSettings? Walk { get; set; }
     public RunSettings? Run { get; set; }
@@ -68,6 +71,9 @@ public class RunSettings
     public int RunningFrameTicks { get; set; } = 6; 
     public int ArrivalDistance { get; set; } = 5;
     public int RunFrameTicks { get; set; } = 6;
+
+    public Dictionary<string, double> FrameMovement { get; set; } =
+        new(StringComparer.OrdinalIgnoreCase);
 }
 public class IdleSettings
 {
