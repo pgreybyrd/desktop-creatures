@@ -26,12 +26,29 @@ public sealed class DataDrivenCreature : Creature
         InitializeSounds(
             definition);
 
-        InitializeGroundCreature(
+        InitializePosition(
             context.X,
             context.Y);
 
+        InitializeMovement(
+            definition);
+
         PlaySound(
             CreatureSoundEvent.Spawn);
+    }
+
+    private void InitializeMovement(
+        CreatureDefinition definition)
+    {
+        if (definition.MovementCapabilities.Contains(
+                MovementCapability.Ground))
+        {
+            InitializeGroundMovement();
+            return;
+        }
+
+        throw new NotSupportedException(
+            $"Creature '{definition.Id}' has no supported movement capability.");
     }
 
     public override void OnPickedUp()

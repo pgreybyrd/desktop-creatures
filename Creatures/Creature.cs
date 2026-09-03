@@ -368,11 +368,41 @@ public abstract class Creature
         }
     }
 
-    protected void InitializeGroundCreature(double startX, double startY)
+    protected void InitializePosition(
+        double startX,
+        double startY)
     {
         X = startX;
         Y = startY;
+    }
 
+    private void InitializeMovement(
+        CreatureDefinition definition)
+    {
+        if (definition.MovementCapabilities.Contains(
+                MovementCapability.Ground))
+        {
+            InitializeGroundMovement();
+            return;
+        }
+
+        throw new NotSupportedException(
+            $"Creature '{definition.Id}' has no supported movement capability.");
+    }
+
+    protected void InitializeGroundCreature(
+        double startX,
+        double startY)
+    {
+        InitializePosition(
+            startX,
+            startY);
+
+        InitializeGroundMovement();
+    }
+
+    protected void InitializeGroundMovement()
+    {
         CurrentSurface = SurfaceManager.FindSurfaceBelow(
             X,
             Y,
@@ -388,7 +418,10 @@ public abstract class Creature
             $"FeetY={Y + GetCurrentFootY():F1}, " +
             $"MenuTop={SurfaceManager.MenuSurface?.Top}");
 
-        SetAction(CreatureAction.Running, "Run");
+        SetAction(
+            CreatureAction.Running,
+            "Run");
+
         PickNewTarget();
     }
 
