@@ -4,10 +4,10 @@ using Desktop_Creatures.Config;
 using Desktop_Creatures.Graphics.Animation;
 using Desktop_Creatures.Needs;
 using Desktop_Creatures.Personality;
-using Desktop_Creatures.Tools.Images;
 using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
+using Desktop_Creatures.Creatures.Movement;
 using PixelRecolor.Core;
 using System.IO;
 using System.Windows.Media.Imaging;
@@ -182,6 +182,66 @@ public abstract class Creature
         SurfaceManager = surfaceManager;
 
         ConfigureDefaultBehaviors();
+    }
+
+    protected CreatureMovementContext CreateMovementContext()
+    {
+        return new CreatureMovementContext
+        {
+            SetTargetX =
+                value => TargetX = value,
+
+            SetTargetY =
+                value => TargetY = value,
+
+            SetMovementSpeed =
+                value => MovementSpeed = value,
+
+            SetStateTicksRemaining =
+                value => StateTicksRemaining = value,
+
+            GetDisplayScale =
+                () => DisplayScale,
+
+            NextRandom =
+                (min, max) => Random.Next(min, max),
+
+            GetX =
+                () => X,
+
+            SetX =
+                value => X = value,
+
+            GetY =
+                () => Y,
+
+            SetY =
+                value => Y = value,
+
+            GetSpeedX =
+                () => SpeedX,
+
+            SetSpeedX =
+                value => SpeedX = value,
+
+            GetSpriteWidth =
+                () => SpriteWidth,
+
+            GetSpriteHeight =
+                () => SpriteHeight,
+
+            GetFootY =
+                () => GetCurrentFootY(),
+
+            GetAction =
+                () => CurrentAction,
+
+            SetAction =
+                (action, animationName) =>
+                    SetAction(
+                        action,
+                        animationName)
+        };
     }
 
     protected void InitializeGeneratedAppearance(
@@ -374,20 +434,6 @@ public abstract class Creature
     {
         X = startX;
         Y = startY;
-    }
-
-    private void InitializeMovement(
-        CreatureDefinition definition)
-    {
-        if (definition.MovementCapabilities.Contains(
-                MovementCapability.Ground))
-        {
-            InitializeGroundMovement();
-            return;
-        }
-
-        throw new NotSupportedException(
-            $"Creature '{definition.Id}' has no supported movement capability.");
     }
 
     protected void InitializeGroundCreature(

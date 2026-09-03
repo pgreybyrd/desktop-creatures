@@ -1,10 +1,13 @@
 ﻿using Desktop_Creatures.Audio;
 using Desktop_Creatures.Config;
+using Desktop_Creatures.Creatures.Movement;
 
 namespace Desktop_Creatures.Creatures;
 
 public sealed class DataDrivenCreature : Creature
 {
+    private readonly List<ICreatureMovement> _movements = [];
+
     public DataDrivenCreature(
         CreatureDefinition definition,
         CreatureSpawnContext context,
@@ -30,25 +33,45 @@ public sealed class DataDrivenCreature : Creature
             context.X,
             context.Y);
 
-        InitializeMovement(
-            definition);
+        InitializeMovementCapabilities(
+            definition,
+            services);
 
         PlaySound(
             CreatureSoundEvent.Spawn);
     }
 
-    private void InitializeMovement(
-        CreatureDefinition definition)
+    private void InitializeMovementCapabilities(
+        CreatureDefinition definition,
+        CreatureServices services)
     {
         if (definition.MovementCapabilities.Contains(
                 MovementCapability.Ground))
         {
-            InitializeGroundMovement();
-            return;
+            var groundMovement =
+                new GroundMovement(
+                    CreateMovementContext(),
+                    services.SurfaceManager,
+                    Settings.Run
+                        ?? throw new InvalidOperationException(
+                            $"Ground creature '{definition.Id}' requires RunSettings."));
+
+            _movements.Add(
+                groundMovement);
+
+            groundMovement.Initialize();
+
+            CurrentSurface =
+                groundMovement.CurrentSurface;
+
+            groundMovement.PickNewTarget();
         }
 
-        throw new NotSupportedException(
-            $"Creature '{definition.Id}' has no supported movement capability.");
+        if (_movements.Count == 0)
+        {
+            throw new NotSupportedException(
+                $"Creature '{definition.Id}' has no supported movement capability.");
+        }
     }
 
     public override void OnPickedUp()
