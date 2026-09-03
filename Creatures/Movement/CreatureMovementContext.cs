@@ -25,12 +25,33 @@ public sealed class CreatureMovementContext
 
     public required Action<int> SetStateTicksRemaining { get; init; }
 
+    public required Func<int> GetStateTicksRemaining { get; init; }
+
     public required Func<int> GetDisplayScale { get; init; }
 
     public required Func<int, int, int> NextRandom { get; init; }
+
+    public required Func<double> GetTargetX { get; init; }
+    public required Func<double> GetTargetY { get; init; }
+
+    public required Func<double> GetMovementSpeed { get; init; }
+
+    public required Func<int> GetScale { get; init; }
+
+    public required Func<double> GetFrameMovement { get; init; }
 
     public required Action<
         CreatureAction,
         string> SetAction
     { get; init; }
+
+    public required Func<bool> HasInteractionTarget { get; init; }
+
+    public required Action OnOrdinaryTargetReached { get; init; }
+
+    public required Action OnInteractionTargetReached { get; init; }
+
+    public required Func<bool> IsStillOnSurface { get; init; }
+
+    public required Action StartFalling { get; init; }
 }

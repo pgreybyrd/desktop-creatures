@@ -188,6 +188,77 @@ public abstract class Creature
     {
         return new CreatureMovementContext
         {
+            IsStillOnSurface =
+                () => IsStillOnSurface(),
+
+            StartFalling =
+                () => StartFalling(),
+
+            HasInteractionTarget =
+                () => TargetInteraction is not null,
+
+            OnOrdinaryTargetReached =
+                () => StartIdle(),
+
+            OnInteractionTargetReached =
+                () =>
+                {
+                    if (TargetInteraction is null)
+                        return;
+
+                    if (!CanInteractWithTarget())
+                        return;
+
+                    switch (TargetInteraction.InteractionPoint.Type)
+                    {
+                        case WorldInteractionPointType.Eat:
+                            StartEating(TargetPoi!);
+                            break;
+
+                        case WorldInteractionPointType.Drink:
+                            StartDrinking(TargetPoi!);
+                            break;
+
+                        default:
+                            StartIdle();
+                            break;
+                    }
+                },
+            GetTargetX =
+                () => TargetX,
+
+            GetTargetY =
+                () => TargetY,
+
+            GetMovementSpeed =
+                () => MovementSpeed,
+
+            GetScale =
+                () => Settings.Scale,
+
+            GetFrameMovement =
+                () =>
+                {
+                    if (CurrentFrames.Length == 0)
+                        return 1.0;
+
+                    string frameName =
+                        CurrentFrames[
+                            CurrentFrameIndex]
+                            .Name;
+
+                    if (!Run.FrameMovement.TryGetValue(
+                            frameName,
+                            out double configuredMovement))
+                    {
+                        return 1.0;
+                    }
+
+                    return Math.Max(
+                        0.0,
+                        configuredMovement);
+                },
+
             SetTargetX =
                 value => TargetX = value,
 
@@ -199,6 +270,9 @@ public abstract class Creature
 
             SetStateTicksRemaining =
                 value => StateTicksRemaining = value,
+
+            GetStateTicksRemaining =
+                () => StateTicksRemaining,
 
             GetDisplayScale =
                 () => DisplayScale,

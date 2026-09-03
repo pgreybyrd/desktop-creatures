@@ -14,6 +14,12 @@ public sealed class GroundMovement : ICreatureMovement
 
     public Surface? CurrentSurface { get; private set; }
 
+    public void SetCurrentSurface(
+        Surface? surface)
+    {
+        CurrentSurface = surface;
+    }
+
     public GroundMovement(
         CreatureMovementContext context,
         SurfaceManager surfaceManager,
@@ -50,12 +56,49 @@ public sealed class GroundMovement : ICreatureMovement
     {
         return action is
             CreatureAction.Running or
-            CreatureAction.Idle or
-            CreatureAction.Falling;
+            CreatureAction.Idle;
+        //CreatureAction.Running or
+        //CreatureAction.Idle or
+        //CreatureAction.Falling;
     }
 
     public void Update()
     {
+        switch (_context.GetAction())
+        {
+            case CreatureAction.Running:
+                UpdateRunning();
+                break;
+
+            case CreatureAction.Idle:
+                UpdateIdle();
+                break;
+        }
+    }
+
+    private void UpdateRunning()
+    {
+        if (!_context.IsStillOnSurface())
+        {
+            _context.StartFalling();
+            return;
+        }
+
+        MoveTowardsTarget();
+    }
+
+    private void UpdateIdle()
+    {
+        if (!_context.IsStillOnSurface())
+        {
+            _context.StartFalling();
+            return;
+        }
+
+        if (_context.GetStateTicksRemaining() <= 0)
+        {
+            PickNewTarget();
+        }
     }
 
     public void Release()
@@ -104,5 +147,83 @@ public sealed class GroundMovement : ICreatureMovement
         _context.SetAction(
             CreatureAction.Running,
             "Run");
+    }
+
+    private void MoveTowardsTarget()
+    {
+        if (CurrentSurface is null)
+            return;
+
+        double dx =
+            _context.GetTargetX() -
+            _context.GetX();
+
+        double dy =
+            _context.GetTargetY() -
+            _context.GetY();
+
+        double distance =
+            Math.Sqrt(
+                dx * dx +
+                dy * dy);
+
+        if (distance < _run.ArrivalDistance)
+        {
+            if (_context.HasInteractionTarget())
+            {
+                _context.OnInteractionTargetReached();
+            }
+            else
+            {
+                _context.OnOrdinaryTargetReached();
+            }
+
+            return;
+        }
+
+        if (distance <= 0)
+            return;
+
+        double moveSpeed =
+            _context.GetMovementSpeed() *
+            _context.GetScale() *
+            _context.GetFrameMovement();
+
+        double step =
+            Math.Min(
+                moveSpeed,
+                distance);
+
+        double speedX =
+            dx / distance *
+            step;
+
+        double speedY =
+            dy / distance *
+            step;
+
+        _context.SetSpeedX(
+            speedX);
+
+        double nextX =
+            _context.GetX() +
+            speedX;
+
+        double nextY =
+            _context.GetY() +
+            speedY;
+
+        nextX =
+            Math.Clamp(
+                nextX,
+                CurrentSurface.Left,
+                CurrentSurface.Right -
+                _context.GetSpriteWidth());
+
+        _context.SetX(
+            nextX);
+
+        _context.SetY(
+            nextY);
     }
 }

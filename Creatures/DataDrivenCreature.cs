@@ -41,6 +41,29 @@ public sealed class DataDrivenCreature : Creature
             CreatureSoundEvent.Spawn);
     }
 
+    protected override void UpdateState()
+    {
+        ICreatureMovement? movement =
+            _movements.FirstOrDefault(
+                movement =>
+                    movement.HandlesAction(
+                        CurrentAction));
+
+        if (movement is null)
+        {
+            base.UpdateState();
+            return;
+        }
+
+        if (movement is GroundMovement groundMovement)
+        {
+            groundMovement.SetCurrentSurface(
+                CurrentSurface);
+        }
+
+        movement.Update();
+    }
+
     private void InitializeMovementCapabilities(
         CreatureDefinition definition,
         CreatureServices services)
