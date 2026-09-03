@@ -55,12 +55,6 @@ public sealed class DataDrivenCreature : Creature
             return;
         }
 
-        if (movement is GroundMovement groundMovement)
-        {
-            groundMovement.SetCurrentSurface(
-                CurrentSurface);
-        }
-
         movement.Update();
     }
 
@@ -77,16 +71,15 @@ public sealed class DataDrivenCreature : Creature
                     services.SurfaceManager,
                     Settings.Run
                         ?? throw new InvalidOperationException(
-                            $"Ground creature '{definition.Id}' requires RunSettings."));
+                            $"Ground creature '{definition.Id}' requires RunSettings."),
+                    Settings.Fall
+                        ?? throw new InvalidOperationException(
+                            $"Ground creature '{definition.Id}' requires FallSettings."));
 
             _movements.Add(
                 groundMovement);
 
             groundMovement.Initialize();
-
-            CurrentSurface =
-                groundMovement.CurrentSurface;
-
             groundMovement.PickNewTarget();
         }
 

@@ -191,8 +191,23 @@ public abstract class Creature
             IsStillOnSurface =
                 () => IsStillOnSurface(),
 
+            GetCurrentSurface =
+                () => CurrentSurface,
+
+            SetCurrentSurface =
+                surface => CurrentSurface = surface,
+
             StartFalling =
                 () => StartFalling(),
+
+            GetFallSpeed =
+                () => FallSpeed,
+
+            SetFallSpeed =
+                value => FallSpeed = value,
+
+            GetDisplayCenterX =
+                () => DisplayCenterX,
 
             HasInteractionTarget =
                 () => TargetInteraction is not null,

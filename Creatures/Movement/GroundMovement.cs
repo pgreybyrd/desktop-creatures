@@ -8,41 +8,39 @@ public sealed class GroundMovement : ICreatureMovement
     private readonly CreatureMovementContext _context;
     private readonly SurfaceManager _surfaceManager;
     private readonly RunSettings _run;
+    private readonly FallSettings _fall;
 
     public MovementCapability Capability =>
         MovementCapability.Ground;
 
-    public Surface? CurrentSurface { get; private set; }
-
-    public void SetCurrentSurface(
-        Surface? surface)
-    {
-        CurrentSurface = surface;
-    }
-
     public GroundMovement(
         CreatureMovementContext context,
         SurfaceManager surfaceManager,
-        RunSettings run)
+        RunSettings run,
+        FallSettings fall)
     {
         _context = context;
         _surfaceManager = surfaceManager;
         _run = run;
+        _fall = fall;
     }
 
     public void Initialize()
     {
-        CurrentSurface =
+        Surface? surface =
             _surfaceManager.FindSurfaceBelow(
                 _context.GetX(),
                 _context.GetY(),
                 _context.GetSpriteWidth(),
                 _context.GetFootY());
 
-        if (CurrentSurface is not null)
+        _context.SetCurrentSurface(
+            surface);
+
+        if (surface is not null)
         {
             _context.SetY(
-                CurrentSurface.Top -
+                surface.Top -
                 _context.GetFootY());
         }
 
@@ -56,10 +54,8 @@ public sealed class GroundMovement : ICreatureMovement
     {
         return action is
             CreatureAction.Running or
-            CreatureAction.Idle;
-        //CreatureAction.Running or
-        //CreatureAction.Idle or
-        //CreatureAction.Falling;
+            CreatureAction.Idle or
+            CreatureAction.Falling;
     }
 
     public void Update()
@@ -72,6 +68,10 @@ public sealed class GroundMovement : ICreatureMovement
 
             case CreatureAction.Idle:
                 UpdateIdle();
+                break;
+
+            case CreatureAction.Falling:
+                UpdateFalling();
                 break;
         }
     }
@@ -101,20 +101,72 @@ public sealed class GroundMovement : ICreatureMovement
         }
     }
 
+    private void UpdateFalling()
+    {
+        double previousFeetY =
+            _context.GetY() +
+            _context.GetFootY();
+
+        double fallSpeed =
+            Math.Min(
+                _context.GetFallSpeed() +
+                _fall.Gravity,
+                _fall.MaxFallSpeed);
+
+        _context.SetFallSpeed(
+            fallSpeed);
+
+        _context.SetY(
+            _context.GetY() +
+            fallSpeed);
+
+        double currentFeetY =
+            _context.GetY() +
+            _context.GetFootY();
+
+        Surface? surface =
+            _surfaceManager.Surfaces
+                .Where(surface =>
+                    _context.GetDisplayCenterX() >= surface.Left &&
+                    _context.GetDisplayCenterX() <= surface.Right &&
+                    previousFeetY <= surface.Top &&
+                    currentFeetY >= surface.Top)
+                .OrderBy(surface => surface.Top)
+                .FirstOrDefault();
+
+        if (surface is null)
+            return;
+
+        _context.SetCurrentSurface(
+            surface);
+
+        _context.SetY(
+            surface.Top -
+            _context.GetFootY());
+
+        _context.SetFallSpeed(
+            0);
+
+        _context.OnOrdinaryTargetReached();
+    }
+
     public void Release()
     {
     }
 
     public void PickNewTarget()
     {
-        if (CurrentSurface is null)
+        Surface? surface =
+            _context.GetCurrentSurface();
+
+        if (surface is null)
             return;
 
         int minX =
-            CurrentSurface.Left;
+            surface.Left;
 
         int maxX =
-            CurrentSurface.Right -
+            surface.Right -
             _context.GetSpriteWidth();
 
         if (maxX <= minX)
@@ -126,7 +178,7 @@ public sealed class GroundMovement : ICreatureMovement
                 maxX);
 
         double targetY =
-            CurrentSurface.Top -
+            surface.Top -
             _context.GetFootY();
 
         _context.SetTargetX(
@@ -151,7 +203,10 @@ public sealed class GroundMovement : ICreatureMovement
 
     private void MoveTowardsTarget()
     {
-        if (CurrentSurface is null)
+        Surface? surface =
+            _context.GetCurrentSurface();
+
+        if (surface is null)
             return;
 
         double dx =
@@ -216,8 +271,8 @@ public sealed class GroundMovement : ICreatureMovement
         nextX =
             Math.Clamp(
                 nextX,
-                CurrentSurface.Left,
-                CurrentSurface.Right -
+                surface.Left,
+                surface.Right -
                 _context.GetSpriteWidth());
 
         _context.SetX(

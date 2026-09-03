@@ -1,4 +1,5 @@
 ﻿namespace Desktop_Creatures.Creatures.Movement;
+using Desktop_Creatures.World.Surfaces;
 
 public sealed class CreatureMovementContext
 {
@@ -24,7 +25,6 @@ public sealed class CreatureMovementContext
     public required Action<double> SetMovementSpeed { get; init; }
 
     public required Action<int> SetStateTicksRemaining { get; init; }
-
     public required Func<int> GetStateTicksRemaining { get; init; }
 
     public required Func<int> GetDisplayScale { get; init; }
@@ -35,6 +35,11 @@ public sealed class CreatureMovementContext
     public required Func<double> GetTargetY { get; init; }
 
     public required Func<double> GetMovementSpeed { get; init; }
+
+    public required Func<double> GetFallSpeed { get; init; }
+    public required Action<double> SetFallSpeed { get; init; }
+
+    public required Func<double> GetDisplayCenterX { get; init; }
 
     public required Func<int> GetScale { get; init; }
 
@@ -52,6 +57,10 @@ public sealed class CreatureMovementContext
     public required Action OnInteractionTargetReached { get; init; }
 
     public required Func<bool> IsStillOnSurface { get; init; }
+
+    public required Func<Surface?> GetCurrentSurface { get; init; }
+
+    public required Action<Surface?> SetCurrentSurface { get; init; }
 
     public required Action StartFalling { get; init; }
 }
