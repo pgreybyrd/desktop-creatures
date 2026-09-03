@@ -79,6 +79,7 @@ public sealed class DataDrivenCreature : Creature
             _movements.Add(
                 groundMovement);
 
+
             groundMovement.Initialize();
             groundMovement.PickNewTarget();
         }

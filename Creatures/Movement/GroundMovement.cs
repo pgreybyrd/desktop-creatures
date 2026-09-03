@@ -85,6 +85,18 @@ public sealed class GroundMovement : ICreatureMovement
         }
 
         MoveTowardsTarget();
+
+        if (_context.GetAction() !=
+            CreatureAction.Running)
+        {
+            return;
+        }
+
+        if (!_context.HasInteractionTarget() &&
+            _context.GetStateTicksRemaining() <= 0)
+        {
+            _context.OnOrdinaryTargetReached();
+        }
     }
 
     private void UpdateIdle()
