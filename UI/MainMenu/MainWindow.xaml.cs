@@ -308,7 +308,7 @@ public partial class MainWindow : Window
             _surfaceManager.Refresh();
 
             // TODO: Re-enable when POIs are ready for release.
-            //CreateFoodBowl(); 
+            CreateFoodBowl(); 
             //CreateWaterDish();
 
             LoadSavedCreatures();

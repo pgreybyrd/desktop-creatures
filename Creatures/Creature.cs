@@ -200,6 +200,9 @@ public abstract class Creature
             StartFalling =
                 () => StartFalling(),
 
+            GetLandingTolerance =
+                () => LandingTolerance,
+
             GetFallSpeed =
                 () => FallSpeed,
 
@@ -219,10 +222,19 @@ public abstract class Creature
                 () =>
                 {
                     if (TargetInteraction is null)
+                    {
+                        StartIdle();
                         return;
+                    }
 
                     if (!CanInteractWithTarget())
+                    {
+                        ReleaseTargetInteraction();
+                        TargetPoi = null;
+
+                        StartIdle();
                         return;
+                    }
 
                     switch (TargetInteraction.InteractionPoint.Type)
                     {
@@ -235,6 +247,9 @@ public abstract class Creature
                             break;
 
                         default:
+                            ReleaseTargetInteraction();
+                            TargetPoi = null;
+
                             StartIdle();
                             break;
                     }
@@ -710,6 +725,45 @@ public abstract class Creature
         return true;
     }
 
+    protected virtual bool TrySetMovementDestination(
+        MovementDestination destination)
+    {
+        // Legacy ground path for Rat/Ocelot until they migrate.
+        Point? snappedPosition =
+            SurfaceManager.SnapToSurface(
+                new Point(
+                    destination.X,
+                    destination.Y),
+                SpriteWidth,
+                GetCurrentFootY(),
+                10);
+
+        if (snappedPosition is null)
+            return false;
+
+        if (!CanReachInteractionTarget(
+                snappedPosition.Value))
+        {
+            return false;
+        }
+
+        TargetX =
+            snappedPosition.Value.X;
+
+        TargetY =
+            snappedPosition.Value.Y;
+
+        MovementSpeed =
+            Run.RunSpeed *
+            DisplayScale;
+
+        SetAction(
+            CreatureAction.Running,
+            "Run");
+
+        return true;
+    }
+
     protected bool TryPickTargetPoi(PointOfInterestType type)
     {
         return false;
@@ -868,32 +922,69 @@ public abstract class Creature
     protected virtual bool TrySetInteractionTarget(
         WorldInteractionTarget target)
     {
+        Logger.LogDebug(
+            DebugCategory.Behavior,
+            $"INTERACTION REQUEST: " +
+            $"creature={CreatureType} " +
+            $"id={Id} " +
+            $"action={CurrentAction} " +
+            $"type={target.InteractionPoint.Type} " +
+            $"position=({target.Position.X:F1},{target.Position.Y:F1})");
+
         if (!CanSearchForInteraction())
-            return false;
-
-        if (!target.IsValid)
-            return false;
-
-        if (!target.InteractionPoint.TryReserve())
-            return false;
-
-        Point? snappedPosition =
-            SurfaceManager.SnapToSurface(
-                target.Position,
-                SpriteWidth,
-                GetCurrentFootY(),
-                10);
-
-        if (snappedPosition is null)
         {
-            target.InteractionPoint.Release();
+            Logger.LogDebug(
+                DebugCategory.Behavior,
+                $"INTERACTION REJECTED: cannot search " +
+                $"creature={CreatureType} " +
+                $"action={CurrentAction} " +
+                $"surface={(CurrentSurface is null ? "none" : CurrentSurface.Top.ToString())}");
+
             return false;
         }
 
-        if (!CanReachInteractionTarget(
-                snappedPosition.Value))
+        if (!target.IsValid)
         {
+            Logger.LogDebug(
+                DebugCategory.Behavior,
+                $"INTERACTION REJECTED: target invalid " +
+                $"creature={CreatureType}");
+
+            return false;
+        }
+
+        if (!target.InteractionPoint.TryReserve())
+        {
+            Logger.LogDebug(
+                DebugCategory.Behavior,
+                $"INTERACTION REJECTED: reservation failed " +
+                $"creature={CreatureType}");
+
+            return false;
+        }
+
+        Logger.LogDebug(
+            DebugCategory.Behavior,
+            $"INTERACTION RESERVED: " +
+            $"creature={CreatureType} " +
+            $"type={target.InteractionPoint.Type}");
+
+        var destination =
+            new MovementDestination(
+                target.Position.X,
+                target.Position.Y);
+
+        if (!TrySetMovementDestination(
+                destination))
+        {
+            Logger.LogDebug(
+                DebugCategory.Behavior,
+                $"INTERACTION REJECTED: no movement route " +
+                $"creature={CreatureType} " +
+                $"destination=({destination.X:F1},{destination.Y:F1})");
+
             target.InteractionPoint.Release();
+
             return false;
         }
 
@@ -903,18 +994,12 @@ public abstract class Creature
         TargetInteraction =
             target;
 
-        TargetX =
-            snappedPosition.Value.X;
-
-        TargetY =
-            snappedPosition.Value.Y;
-
-        MovementSpeed =
-            Run.RunSpeed * DisplayScale;
-
-        SetAction(
-            CreatureAction.Running,
-            "Run");
+        Logger.LogDebug(
+            DebugCategory.Behavior,
+            $"INTERACTION ACCEPTED: " +
+            $"creature={CreatureType} " +
+            $"type={target.InteractionPoint.Type} " +
+            $"destination=({destination.X:F1},{destination.Y:F1})");
 
         return true;
     }

@@ -6,7 +6,7 @@
   "animation": true,
   "pointOfInterest": false,
   "needs": false,
-  "movement": false,
+  "movement": true,
   "physics": false,
   "window": false,
   "assetLoading": false,

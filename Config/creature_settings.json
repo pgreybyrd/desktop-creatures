@@ -76,6 +76,15 @@
     ]
   },
 
+  "eat": {
+  "eatFrameCount": 2,
+  "eatFrameTicks": 5,
+  "eatingTicksRemaining": 50,
+  "foodSearchCooldownTicks": 120,
+  "leaveFoodDistance": 50,
+  "interactionReach": 20
+},
+
     "fall": {
     "fallFrameCount": 1,
     "fallFrameTicks": 5,
@@ -108,6 +117,15 @@
       }
     ]
   },
+
+  "eat": {
+  "eatFrameCount": 2,
+  "eatFrameTicks": 5,
+  "eatingTicksRemaining": 50,
+  "foodSearchCooldownTicks": 120,
+  "leaveFoodDistance": 50,
+  "interactionReach": 20
+},
 
   "fall": {
     "fallFrameCount": 1,

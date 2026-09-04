@@ -63,4 +63,6 @@ public sealed class CreatureMovementContext
     public required Action<Surface?> SetCurrentSurface { get; init; }
 
     public required Action StartFalling { get; init; }
+
+    public required Func<double> GetLandingTolerance { get; init; }
 }

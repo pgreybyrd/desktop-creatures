@@ -1,6 +1,7 @@
 ﻿using Desktop_Creatures.Audio;
 using Desktop_Creatures.Config;
 using Desktop_Creatures.Creatures.Movement;
+using Desktop_Creatures.Utilities;
 
 namespace Desktop_Creatures.Creatures;
 
@@ -89,6 +90,57 @@ public sealed class DataDrivenCreature : Creature
             throw new NotSupportedException(
                 $"Creature '{definition.Id}' has no supported movement capability.");
         }
+    }
+
+    protected override bool TrySetMovementDestination(
+        MovementDestination destination)
+    {
+        Logger.LogDebug(
+            DebugCategory.Movement,
+            $"MOVEMENT REQUEST: " +
+            $"creature={CreatureType} " +
+            $"destination=({destination.X:F1},{destination.Y:F1}) " +
+            $"capabilities={string.Join(",", _movements.Select(m => m.Capability))}");
+
+        foreach (ICreatureMovement movement in
+                 _movements)
+        {
+            bool canReach =
+                movement.CanReach(
+                    destination);
+
+            Logger.LogDebug(
+                DebugCategory.Movement,
+                $"CAPABILITY CHECK: " +
+                $"creature={CreatureType} " +
+                $"capability={movement.Capability} " +
+                $"canReach={canReach}");
+
+            if (!canReach)
+                continue;
+
+            bool accepted =
+                movement.TrySetDestination(
+                    destination);
+
+            Logger.LogDebug(
+                DebugCategory.Movement,
+                $"CAPABILITY DESTINATION: " +
+                $"creature={CreatureType} " +
+                $"capability={movement.Capability} " +
+                $"accepted={accepted}");
+
+            if (accepted)
+                return true;
+        }
+
+        Logger.LogDebug(
+            DebugCategory.Movement,
+            $"MOVEMENT FAILED: " +
+            $"creature={CreatureType} " +
+            $"destination=({destination.X:F1},{destination.Y:F1})");
+
+        return false;
     }
 
     public override void OnPickedUp()

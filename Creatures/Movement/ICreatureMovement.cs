@@ -14,4 +14,10 @@ public interface ICreatureMovement
     void Release();
 
     void PickNewTarget();
+
+    bool CanReach(
+        MovementDestination destination);
+
+    bool TrySetDestination(
+        MovementDestination destination);
 }

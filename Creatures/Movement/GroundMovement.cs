@@ -1,5 +1,7 @@
-﻿using Desktop_Creatures.World.Surfaces;
-using Desktop_Creatures.Config;
+﻿using Desktop_Creatures.Config;
+using Desktop_Creatures.Utilities;
+using Desktop_Creatures.World.Surfaces;
+using Point = System.Windows.Point;
 
 namespace Desktop_Creatures.Creatures.Movement;
 
@@ -84,6 +86,16 @@ public sealed class GroundMovement : ICreatureMovement
             return;
         }
 
+        if (_context.HasInteractionTarget())
+        {
+            Logger.LogDebug(
+                DebugCategory.Movement,
+                $"INTERACTION TRAVEL: " +
+                $"position=({_context.GetX():F1},{_context.GetY():F1}) " +
+                $"target=({_context.GetTargetX():F1},{_context.GetTargetY():F1}) " +
+                $"surfaceTop={_context.GetCurrentSurface()?.Top.ToString("F1") ?? "none"}");
+        }
+
         if (!_context.HasInteractionTarget() &&
             !TargetStillOnCurrentSurface())
         {
@@ -154,7 +166,36 @@ public sealed class GroundMovement : ICreatureMovement
                 .FirstOrDefault();
 
         if (surface is null)
+        {
+            int? lowestSurfaceTop =
+                _surfaceManager.Surfaces.Count > 0
+                    ? _surfaceManager.Surfaces.Max(
+                        surface => surface.Top)
+                    : null;
+
+            if (lowestSurfaceTop is null ||
+                currentFeetY >
+                lowestSurfaceTop.Value + 100)
+            {
+                Logger.LogDebug(
+                    DebugCategory.Surface,
+                    $"FALLING BELOW KNOWN SURFACES: " +
+                    $"position=({_context.GetX():F1},{_context.GetY():F1}) " +
+                    $"feetY={currentFeetY:F1} " +
+                    $"centerX={_context.GetDisplayCenterX():F1} " +
+                    $"lowestSurfaceTop={lowestSurfaceTop?.ToString() ?? "none"} " +
+                    $"surfaceCount={_surfaceManager.Surfaces.Count}");
+            }
+
             return;
+        }
+
+        Logger.LogDebug(
+            DebugCategory.Surface,
+            $"GROUND LANDING: " +
+            $"position=({_context.GetX():F1},{_context.GetY():F1}) " +
+            $"surface=[{surface.Left},{surface.Right}] top={surface.Top} " +
+            $"centerX={_context.GetDisplayCenterX():F1}");
 
         _context.SetCurrentSurface(
             surface);
@@ -226,6 +267,140 @@ public sealed class GroundMovement : ICreatureMovement
             "Run");
     }
 
+    public bool TrySetDestination(
+        MovementDestination destination)
+    {
+        Surface? currentSurface =
+            _context.GetCurrentSurface();
+
+        if (currentSurface is null)
+            return false;
+
+        MovementDestination? resolved =
+            ResolveDestination(
+                destination);
+
+        if (resolved is null)
+            return false;
+
+        double destinationFeetY =
+            resolved.Y +
+            _context.GetFootY();
+
+        if (destinationFeetY <
+            currentSurface.Top -
+            _context.GetLandingTolerance())
+        {
+            return false;
+        }
+
+        _context.SetTargetX(
+            resolved.X);
+
+        _context.SetTargetY(
+            resolved.Y);
+
+        _context.SetMovementSpeed(
+            _run.RunSpeed *
+            _context.GetDisplayScale());
+
+        Logger.LogDebug(
+            DebugCategory.Movement,
+            $"GROUND DESTINATION SET: " +
+            $"from=({_context.GetX():F1},{_context.GetY():F1}) " +
+            $"to=({resolved.X:F1},{resolved.Y:F1}) " +
+            $"surfaceTop={currentSurface.Top:F1}");
+
+        _context.SetAction(
+            CreatureAction.Running,
+            "Run");
+
+        return true;
+    }
+
+    private MovementDestination? ResolveDestination(
+        MovementDestination destination)
+    {
+        Point? snappedPosition =
+            _surfaceManager.SnapToSurface(
+                new Point(
+                    destination.X,
+                    destination.Y),
+                _context.GetSpriteWidth(),
+                _context.GetFootY(),
+                10);
+
+        if (snappedPosition is null)
+        {
+            Logger.LogDebug(
+                DebugCategory.Movement,
+                $"GROUND RESOLVE FAILED: " +
+                $"raw=({destination.X:F1},{destination.Y:F1})");
+
+            return null;
+        }
+
+        Logger.LogDebug(
+            DebugCategory.Movement,
+            $"GROUND RESOLVED: " +
+            $"raw=({destination.X:F1},{destination.Y:F1}) " +
+            $"snapped=({snappedPosition.Value.X:F1},{snappedPosition.Value.Y:F1})");
+
+        return new MovementDestination(
+            snappedPosition.Value.X,
+            snappedPosition.Value.Y);
+    }
+
+    public bool CanReach(
+        MovementDestination destination)
+    {
+        Surface? currentSurface =
+            _context.GetCurrentSurface();
+
+        if (currentSurface is null)
+        {
+            Logger.LogDebug(
+                DebugCategory.Movement,
+                "GROUND CANREACH: false - no current surface");
+
+            return false;
+        }
+
+        MovementDestination? resolved =
+            ResolveDestination(
+                destination);
+
+        if (resolved is null)
+        {
+            Logger.LogDebug(
+                DebugCategory.Movement,
+                "GROUND CANREACH: false - destination could not resolve");
+
+            return false;
+        }
+
+        double destinationFeetY =
+            resolved.Y +
+            _context.GetFootY();
+
+        double minimumReachableY =
+            currentSurface.Top -
+            _context.GetLandingTolerance();
+
+        bool reachable =
+            destinationFeetY >=
+            minimumReachableY;
+
+        Logger.LogDebug(
+            DebugCategory.Movement,
+            $"GROUND CANREACH: {reachable} " +
+            $"surfaceTop={currentSurface.Top:F1} " +
+            $"destinationFeetY={destinationFeetY:F1} " +
+            $"minimum={minimumReachableY:F1}");
+
+        return reachable;
+    }
+
     private bool TargetStillOnCurrentSurface()
     {
         Surface? surface =
@@ -265,8 +440,27 @@ public sealed class GroundMovement : ICreatureMovement
                 dx * dx +
                 dy * dy);
 
-        if (distance < _run.ArrivalDistance)
+        double currentStep =
+            _context.GetMovementSpeed() *
+            _context.GetScale() *
+            _context.GetFrameMovement();
+
+        double arrivalDistance =
+            Math.Max(
+                _run.ArrivalDistance,
+                currentStep);
+
+        if (distance <= arrivalDistance)
         {
+            _context.SetX(
+                _context.GetTargetX());
+
+            _context.SetY(
+                _context.GetTargetY());
+
+            _context.SetSpeedX(
+                0);
+
             if (_context.HasInteractionTarget())
             {
                 _context.OnInteractionTargetReached();
@@ -278,9 +472,6 @@ public sealed class GroundMovement : ICreatureMovement
 
             return;
         }
-
-        if (distance <= 0)
-            return;
 
         double moveSpeed =
             _context.GetMovementSpeed() *
