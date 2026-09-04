@@ -100,4 +100,21 @@ public sealed class DataDrivenCreature : Creature
             CreatureAction.Held,
             "dangle");
     }
+
+    public override void Release()
+    {
+        ICreatureMovement? movement =
+            _movements.FirstOrDefault(
+                movement =>
+                    movement.Capability ==
+                    MovementCapability.Ground);
+
+        if (movement is null)
+        {
+            base.Release();
+            return;
+        }
+
+        movement.Release();
+    }
 }

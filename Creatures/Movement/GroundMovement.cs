@@ -171,6 +171,12 @@ public sealed class GroundMovement : ICreatureMovement
 
     public void Release()
     {
+        _surfaceManager.Refresh();
+
+        _context.SetCurrentSurface(
+            null);
+
+        _context.StartFalling();
     }
 
     public void PickNewTarget()
