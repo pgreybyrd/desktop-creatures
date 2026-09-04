@@ -84,6 +84,13 @@ public sealed class GroundMovement : ICreatureMovement
             return;
         }
 
+        if (!_context.HasInteractionTarget() &&
+            !TargetStillOnCurrentSurface())
+        {
+            PickNewTarget();
+            return;
+        }
+
         MoveTowardsTarget();
 
         if (_context.GetAction() !=
@@ -211,6 +218,24 @@ public sealed class GroundMovement : ICreatureMovement
         _context.SetAction(
             CreatureAction.Running,
             "Run");
+    }
+
+    private bool TargetStillOnCurrentSurface()
+    {
+        Surface? surface =
+            _context.GetCurrentSurface();
+
+        if (surface is null)
+            return false;
+
+        double targetX =
+            _context.GetTargetX();
+
+        return
+            targetX >= surface.Left &&
+            targetX <=
+                surface.Right -
+                _context.GetSpriteWidth();
     }
 
     private void MoveTowardsTarget()
