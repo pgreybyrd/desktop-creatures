@@ -97,7 +97,7 @@ public sealed class GroundMovement : ICreatureMovement
         }
 
         if (!_context.HasInteractionTarget() &&
-            !TargetStillOnCurrentSurface())
+            !TargetStillOnWalkableSpan())
         {
             PickNewTarget();
             return;
@@ -311,7 +311,7 @@ public sealed class GroundMovement : ICreatureMovement
 
         Rectangle walkableBounds =
             _surfaceManager
-                .GetConnectedWalkableBounds(
+                .GetWalkableSpan(
                     surface,
                     _context.GetLandingTolerance());
 
@@ -488,7 +488,7 @@ public sealed class GroundMovement : ICreatureMovement
         return reachable;
     }
 
-    private bool TargetStillOnCurrentSurface()
+    private bool TargetStillOnWalkableSpan()
     {
         Surface? surface =
             _context.GetCurrentSurface();
@@ -498,7 +498,7 @@ public sealed class GroundMovement : ICreatureMovement
 
         Rectangle walkableBounds =
             _surfaceManager
-                .GetConnectedWalkableBounds(
+                .GetWalkableSpan(
                     surface,
                     _context.GetLandingTolerance());
 
@@ -597,7 +597,7 @@ public sealed class GroundMovement : ICreatureMovement
 
         Rectangle walkableBounds =
             _surfaceManager
-                .GetConnectedWalkableBounds(
+                .GetWalkableSpan(
                     surface,
                     _context.GetLandingTolerance());
 
@@ -630,7 +630,7 @@ public sealed class GroundMovement : ICreatureMovement
 
         Surface? supportingSurface =
             _surfaceManager
-                .FindConnectedWalkableSurfaceAt(
+                .FindSupportingSurfaceAt(
                     surface,
                     nextX,
                     _context.GetSpriteWidth(),

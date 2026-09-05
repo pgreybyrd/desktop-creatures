@@ -31,7 +31,7 @@ public class SurfaceManager
         AddMonitorGroundSurfaces(
             previousSurfaces);
 
-        AddTaskbarSurface(
+        AddTaskbarGround(
             previousSurfaces);
 
         AddWindowSurfaces();
@@ -87,7 +87,7 @@ public class SurfaceManager
         }
     }
 
-    private void AddTaskbarSurface(
+    private void AddTaskbarGround(
         IReadOnlyList<Surface> previousSurfaces)
     {
         if (IsTaskbarAutoHideEnabled())
@@ -120,7 +120,7 @@ public class SurfaceManager
         _surfaces.Add(
             ReuseOrCreateSurface(
                 bounds,
-                "TaskbarSurface",
+                "TaskbarGround",
                 previousSurfaces));
     }
 
@@ -247,8 +247,6 @@ public class SurfaceManager
         _surfaces.Add(new Surface(bounds));
     }
 
-    //private Surface? _menuSurface;
-
     public void SetMenuSurface(Rectangle bounds)
     {
         MenuSurface = new Surface(bounds);
@@ -323,7 +321,7 @@ public class SurfaceManager
         }
     }
 
-    public Rectangle GetConnectedWalkableBounds(
+    public Rectangle GetWalkableSpan(
         Surface origin,
         double verticalTolerance)
     {
@@ -347,7 +345,7 @@ public class SurfaceManager
             1);
     }
 
-    public Surface? FindConnectedWalkableSurfaceAt(
+    public Surface? FindSupportingSurfaceAt(
         Surface origin,
         double creatureX,
         int creatureWidth,
@@ -477,88 +475,6 @@ public class SurfaceManager
                 point.X < bounds.Right &&
                 point.Y >= bounds.Top &&
                 point.Y < bounds.Bottom);
-    }
-
-    private static IEnumerable<Rectangle>
-        MergeHorizontalGroundSurfaces(
-            IEnumerable<Rectangle> surfaces)
-    {
-        var remaining =
-            surfaces
-                .OrderBy(rect => rect.Top)
-                .ThenBy(rect => rect.Left)
-                .ToList();
-
-        while (remaining.Count > 0)
-        {
-            Rectangle current =
-                remaining[0];
-
-            remaining.RemoveAt(0);
-
-            bool merged;
-
-            do
-            {
-                merged = false;
-
-                for (int i = 0;
-                     i < remaining.Count;
-                     i++)
-                {
-                    Rectangle candidate =
-                        remaining[i];
-
-                    // Must be the exact same floor level.
-                    if (candidate.Top != current.Top)
-                        continue;
-
-                    // Must actually touch or overlap horizontally.
-                    const int edgeTolerance = 2;
-
-                    bool touches =
-                        candidate.Left <=
-                            current.Right + edgeTolerance &&
-                        candidate.Right >=
-                            current.Left - edgeTolerance;
-
-                    if (Math.Abs(
-                        candidate.Top -
-                        current.Top) > 2)
-                    {
-                        continue;
-                    }
-
-                    if (!touches)
-                        continue;
-
-                    int left =
-                        Math.Min(
-                            current.Left,
-                            candidate.Left);
-
-                    int right =
-                        Math.Max(
-                            current.Right,
-                            candidate.Right);
-
-                    current =
-                        new Rectangle(
-                            left,
-                            current.Top,
-                            right - left,
-                            1);
-
-                    remaining.RemoveAt(i);
-
-                    merged = true;
-                    break;
-                }
-            }
-            while (merged);
-
-            yield return current;
-        }
     }
 
     public Rectangle GetMonitorBoundsUnderCursor()
