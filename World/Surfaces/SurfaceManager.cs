@@ -23,11 +23,19 @@ public class SurfaceManager
 
     public void Refresh()
     {
+        List<Surface> previousSurfaces =
+            _surfaces.ToList();
+
         _surfaces.Clear();
 
-        AddMonitorGroundSurfaces();
-        AddTaskbarSurface();
+        AddMonitorGroundSurfaces(
+            previousSurfaces);
+
+        AddTaskbarSurface(
+            previousSurfaces);
+
         AddWindowSurfaces();
+
         AddMenuSurface();
         AddAppSurfaces();
     }
@@ -79,7 +87,8 @@ public class SurfaceManager
         }
     }
 
-    private void AddTaskbarSurface()
+    private void AddTaskbarSurface(
+        IReadOnlyList<Surface> previousSurfaces)
     {
         if (IsTaskbarAutoHideEnabled())
             return;
@@ -95,18 +104,42 @@ public class SurfaceManager
             ToDipRectangle(
                 primaryScreen.WorkingArea);
 
-        // No bottom taskbar occupying desktop space.
-        if (workArea.Bottom >= screenArea.Bottom)
+        if (workArea.Bottom >=
+            screenArea.Bottom)
+        {
             return;
+        }
+
+        Rectangle bounds =
+            new(
+                screenArea.Left,
+                workArea.Bottom - 1,
+                screenArea.Width,
+                1);
 
         _surfaces.Add(
+            ReuseOrCreateSurface(
+                bounds,
+                "TaskbarSurface",
+                previousSurfaces));
+    }
+
+    private Surface ReuseOrCreateSurface(
+        Rectangle bounds,
+        string kind,
+        IReadOnlyList<Surface> previousSurfaces)
+    {
+        Surface? existing =
+            previousSurfaces
+                .FirstOrDefault(
+                    surface =>
+                        surface.Kind == kind &&
+                        surface.Bounds == bounds);
+
+        return existing ??
             new Surface(
-                new Rectangle(
-                    screenArea.Left,
-                    workArea.Bottom - 1,
-                    screenArea.Width,
-                    1),
-                "TaskbarSurface"));
+                bounds,
+                kind);
     }
 
     public Point? SnapToSurface(
@@ -265,22 +298,28 @@ public class SurfaceManager
             .FirstOrDefault();
     }
 
-    private void AddMonitorGroundSurfaces()
+    private void AddMonitorGroundSurfaces(
+        IReadOnlyList<Surface> previousSurfaces)
     {
-        foreach (var screen in Forms.Screen.AllScreens)
+        foreach (var screen in
+                 Forms.Screen.AllScreens)
         {
             Rectangle screenArea =
                 ToDipRectangle(
                     screen.Bounds);
 
+            Rectangle bounds =
+                new(
+                    screenArea.Left,
+                    screenArea.Bottom - 1,
+                    screenArea.Width,
+                    1);
+
             _surfaces.Add(
-                new Surface(
-                    new Rectangle(
-                        screenArea.Left,
-                        screenArea.Bottom - 1,
-                        screenArea.Width,
-                        1),
-                    "MonitorGround"));
+                ReuseOrCreateSurface(
+                    bounds,
+                    "MonitorGround",
+                    previousSurfaces));
         }
     }
 
