@@ -155,16 +155,85 @@ public sealed class GroundMovement : ICreatureMovement
             _context.GetY() +
             _context.GetFootY();
 
+        double centerX =
+            _context.GetDisplayCenterX();
+
+        // First look for ordinary world surfaces.
+        // MonitorGround is handled separately because it represents
+        // a monitor boundary, not an ordinary infinitely relevant
+        // horizontal platform.
         Surface? surface =
             _surfaceManager.Surfaces
                 .Where(surface =>
-                    _context.GetDisplayCenterX() >= surface.Left &&
-                    _context.GetDisplayCenterX() <= surface.Right &&
+                    surface.Kind != "MonitorGround" &&
+                    centerX >= surface.Left &&
+                    centerX <= surface.Right &&
                     previousFeetY <= surface.Top &&
                     currentFeetY >= surface.Top)
-                .OrderBy(surface => surface.Top)
+                .OrderBy(surface =>
+                    surface.Top)
                 .FirstOrDefault();
 
+        if (surface is not null)
+        {
+            Logger.LogDebug(
+                DebugCategory.Surface,
+                $"GROUND FALL: ordinary surface crossed " +
+                $"feet={previousFeetY:F1}->{currentFeetY:F1} " +
+                $"centerX={centerX:F1} " +
+                $"surface={surface.Kind} " +
+                $"[{surface.Left},{surface.Right}] " +
+                $"top={surface.Top}");
+        }
+
+        // If no ordinary surface was crossed, ask SurfaceManager
+        // for the monitor floor that is relevant to this fall.
+        if (surface is null)
+        {
+            Surface? monitorGround =
+                _surfaceManager.FindMonitorGroundBelow(
+                    centerX,
+                    previousFeetY,
+                    _context.GetLandingTolerance());
+
+            if (monitorGround is not null)
+            {
+                Logger.LogDebug(
+                    DebugCategory.Surface,
+                    $"GROUND FALL: monitor candidate " +
+                    $"feet={previousFeetY:F1}->{currentFeetY:F1} " +
+                    $"centerX={centerX:F1} " +
+                    $"surface=[{monitorGround.Left},{monitorGround.Right}] " +
+                    $"top={monitorGround.Top}");
+
+                if (previousFeetY <=
+                        monitorGround.Top +
+                        _context.GetLandingTolerance() &&
+                    currentFeetY >=
+                        monitorGround.Top)
+                {
+                    surface =
+                        monitorGround;
+
+                    Logger.LogDebug(
+                        DebugCategory.Surface,
+                        $"GROUND FALL: monitor floor crossed " +
+                        $"feet={previousFeetY:F1}->{currentFeetY:F1} " +
+                        $"centerX={centerX:F1} " +
+                        $"top={monitorGround.Top}");
+                }
+            }
+            else
+            {
+                Logger.LogDebug(
+                    DebugCategory.Surface,
+                    $"GROUND FALL: no monitor candidate " +
+                    $"feet={previousFeetY:F1}->{currentFeetY:F1} " +
+                    $"centerX={centerX:F1}");
+            }
+        }
+
+        // Nothing was crossed this frame.
         if (surface is null)
         {
             int? lowestSurfaceTop =
@@ -177,14 +246,23 @@ public sealed class GroundMovement : ICreatureMovement
                 currentFeetY >
                 lowestSurfaceTop.Value + 100)
             {
+                string surfaces =
+                    string.Join(
+                        " | ",
+                        _surfaceManager.Surfaces.Select(
+                            s =>
+                                $"{s.Kind} " +
+                                $"[{s.Left},{s.Right}] " +
+                                $"top={s.Top}"));
+
                 Logger.LogDebug(
                     DebugCategory.Surface,
                     $"FALLING BELOW KNOWN SURFACES: " +
                     $"position=({_context.GetX():F1},{_context.GetY():F1}) " +
                     $"feetY={currentFeetY:F1} " +
-                    $"centerX={_context.GetDisplayCenterX():F1} " +
-                    $"lowestSurfaceTop={lowestSurfaceTop?.ToString() ?? "none"} " +
-                    $"surfaceCount={_surfaceManager.Surfaces.Count}");
+                    $"previousFeetY={previousFeetY:F1} " +
+                    $"centerX={centerX:F1} " +
+                    $"surfaces={surfaces}");
             }
 
             return;
@@ -194,8 +272,11 @@ public sealed class GroundMovement : ICreatureMovement
             DebugCategory.Surface,
             $"GROUND LANDING: " +
             $"position=({_context.GetX():F1},{_context.GetY():F1}) " +
-            $"surface=[{surface.Left},{surface.Right}] top={surface.Top} " +
-            $"centerX={_context.GetDisplayCenterX():F1}");
+            $"feet={previousFeetY:F1}->{currentFeetY:F1} " +
+            $"surface={surface.Kind} " +
+            $"[{surface.Left},{surface.Right}] " +
+            $"top={surface.Top} " +
+            $"centerX={centerX:F1}");
 
         _context.SetCurrentSurface(
             surface);
@@ -208,7 +289,7 @@ public sealed class GroundMovement : ICreatureMovement
             0);
 
         _context.OnOrdinaryTargetReached();
-    }
+    } 
 
     public void Release()
     {
@@ -228,11 +309,17 @@ public sealed class GroundMovement : ICreatureMovement
         if (surface is null)
             return;
 
+        Rectangle walkableBounds =
+            _surfaceManager
+                .GetConnectedWalkableBounds(
+                    surface,
+                    _context.GetLandingTolerance());
+
         int minX =
-            surface.Left;
+            walkableBounds.Left;
 
         int maxX =
-            surface.Right -
+            walkableBounds.Right -
             _context.GetSpriteWidth();
 
         if (maxX <= minX)
@@ -409,13 +496,19 @@ public sealed class GroundMovement : ICreatureMovement
         if (surface is null)
             return false;
 
+        Rectangle walkableBounds =
+            _surfaceManager
+                .GetConnectedWalkableBounds(
+                    surface,
+                    _context.GetLandingTolerance());
+
         double targetX =
             _context.GetTargetX();
 
         return
-            targetX >= surface.Left &&
+            targetX >= walkableBounds.Left &&
             targetX <=
-                surface.Right -
+                walkableBounds.Right -
                 _context.GetSpriteWidth();
     }
 
@@ -502,17 +595,64 @@ public sealed class GroundMovement : ICreatureMovement
             _context.GetY() +
             speedY;
 
+        Rectangle walkableBounds =
+            _surfaceManager
+                .GetConnectedWalkableBounds(
+                    surface,
+                    _context.GetLandingTolerance());
+
+        double unclampedX =
+            nextX;
+
         nextX =
             Math.Clamp(
                 nextX,
-                surface.Left,
-                surface.Right -
+                walkableBounds.Left,
+                walkableBounds.Right -
                 _context.GetSpriteWidth());
+
+        if (Math.Abs(
+                nextX -
+                unclampedX) > 0.001)
+        {
+            Logger.LogDebug(
+                DebugCategory.Surface,
+                $"X CLAMPED TO WALKABLE SPAN: " +
+                $"{unclampedX:F1} -> {nextX:F1} " +
+                $"span=[{walkableBounds.Left},{walkableBounds.Right}]");
+        }
 
         _context.SetX(
             nextX);
 
         _context.SetY(
             nextY);
+
+        Surface? supportingSurface =
+            _surfaceManager
+                .FindConnectedWalkableSurfaceAt(
+                    surface,
+                    nextX,
+                    _context.GetSpriteWidth(),
+                    _context.GetLandingTolerance());
+
+        if (supportingSurface is not null &&
+            !ReferenceEquals(
+                supportingSurface,
+                surface))
+        {
+            Logger.LogDebug(
+                DebugCategory.Surface,
+                $"GROUND SURFACE HANDOFF: " +
+                $"from={surface.Kind} " +
+                $"[{surface.Left},{surface.Right}] " +
+                $"top={surface.Top} " +
+                $"to={supportingSurface.Kind} " +
+                $"[{supportingSurface.Left},{supportingSurface.Right}] " +
+                $"top={supportingSurface.Top}");
+
+            _context.SetCurrentSurface(
+                supportingSurface);
+        }
     }
 }

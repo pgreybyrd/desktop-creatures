@@ -26,6 +26,7 @@ public class SurfaceManager
         _surfaces.Clear();
 
         AddMonitorGroundSurfaces();
+        AddTaskbarSurface();
         AddWindowSurfaces();
         AddMenuSurface();
         AddAppSurfaces();
@@ -78,6 +79,36 @@ public class SurfaceManager
         }
     }
 
+    private void AddTaskbarSurface()
+    {
+        if (IsTaskbarAutoHideEnabled())
+            return;
+
+        Forms.Screen primaryScreen =
+            Forms.Screen.PrimaryScreen!;
+
+        Rectangle screenArea =
+            ToDipRectangle(
+                primaryScreen.Bounds);
+
+        Rectangle workArea =
+            ToDipRectangle(
+                primaryScreen.WorkingArea);
+
+        // No bottom taskbar occupying desktop space.
+        if (workArea.Bottom >= screenArea.Bottom)
+            return;
+
+        _surfaces.Add(
+            new Surface(
+                new Rectangle(
+                    screenArea.Left,
+                    workArea.Bottom - 1,
+                    screenArea.Width,
+                    1),
+                "TaskbarSurface"));
+    }
+
     public Point? SnapToSurface(
         Point desiredFeetPosition,
         int creatureWidth,
@@ -117,6 +148,22 @@ public class SurfaceManager
         double creatureY = surface.Top - footOffsetY;
 
         return new Point(creatureX, creatureY);
+    }
+
+    public Surface? FindMonitorGroundBelow(
+     double x,
+     double y,
+     double tolerance)
+    {
+        return _surfaces
+            .Where(surface =>
+                surface.Kind == "MonitorGround" &&
+                x >= surface.Left &&
+                x <= surface.Right &&
+                surface.Top >= y - tolerance)
+            .OrderBy(surface =>
+                surface.Top)
+            .FirstOrDefault();
     }
 
     public Point? SnapPoiToSurface(
@@ -220,46 +267,146 @@ public class SurfaceManager
 
     private void AddMonitorGroundSurfaces()
     {
-        var groundRects =
-            new List<Rectangle>();
-
         foreach (var screen in Forms.Screen.AllScreens)
         {
-            var workArea =
-                ToDipRectangle(screen.WorkingArea);
+            Rectangle screenArea =
+                ToDipRectangle(
+                    screen.Bounds);
 
-            var screenArea =
-                ToDipRectangle(screen.Bounds);
-
-            groundRects.Add(
-                new Rectangle(
-                    workArea.Left,
-                    workArea.Bottom - 1,
-                    workArea.Width,
-                    1));
-
-            // Keep safety floors separate.
-            if (screenArea.Bottom != workArea.Bottom)
-            {
-                _surfaces.Add(
-                    new Surface(
-                        new Rectangle(
-                            screenArea.Left,
-                            screenArea.Bottom - 1,
-                            screenArea.Width,
-                            1),
-                        "MonitorSafetyGround"));
-            }
-        }
-
-        foreach (Rectangle merged in
-                 MergeHorizontalGroundSurfaces(groundRects))
-        {
             _surfaces.Add(
                 new Surface(
-                    merged,
+                    new Rectangle(
+                        screenArea.Left,
+                        screenArea.Bottom - 1,
+                        screenArea.Width,
+                        1),
                     "MonitorGround"));
         }
+    }
+
+    public Rectangle GetConnectedWalkableBounds(
+        Surface origin,
+        double verticalTolerance)
+    {
+        List<Surface> connected =
+            GetConnectedWalkableSurfaces(
+                origin,
+                verticalTolerance);
+
+        int left =
+            connected.Min(
+                surface => surface.Left);
+
+        int right =
+            connected.Max(
+                surface => surface.Right);
+
+        return new Rectangle(
+            left,
+            origin.Top,
+            right - left,
+            1);
+    }
+
+    public Surface? FindConnectedWalkableSurfaceAt(
+        Surface origin,
+        double creatureX,
+        int creatureWidth,
+        double verticalTolerance)
+    {
+        double feetCenterX =
+            creatureX +
+            creatureWidth / 2.0;
+
+        return GetConnectedWalkableSurfaces(
+                origin,
+                verticalTolerance)
+            .Where(surface =>
+                feetCenterX >= surface.Left &&
+                feetCenterX <= surface.Right)
+            .OrderBy(surface =>
+                Math.Abs(
+                    surface.Top -
+                    origin.Top))
+            .FirstOrDefault();
+    }
+
+    private List<Surface> GetConnectedWalkableSurfaces(
+        Surface origin,
+        double verticalTolerance)
+    {
+        const int horizontalTolerance = 2;
+
+        var connected =
+            new List<Surface>
+            {
+            origin
+            };
+
+        bool added;
+
+        do
+        {
+            added = false;
+
+            foreach (Surface candidate in
+                     _surfaces)
+            {
+                if (connected.Contains(
+                        candidate))
+                {
+                    continue;
+                }
+
+                if (Math.Abs(
+                        candidate.Top -
+                        origin.Top) >
+                    verticalTolerance)
+                {
+                    continue;
+                }
+
+                bool touchesConnectedSurface =
+                    connected.Any(
+                        existing =>
+                            candidate.Left <=
+                                existing.Right +
+                                horizontalTolerance &&
+                            candidate.Right >=
+                                existing.Left -
+                                horizontalTolerance);
+
+                if (!touchesConnectedSurface)
+                    continue;
+
+                connected.Add(
+                    candidate);
+
+                added = true;
+            }
+        }
+        while (added);
+
+        return connected;
+    }
+
+    private static bool IsTaskbarAutoHideEnabled()
+    {
+        var appBarData =
+            new APPBARDATA
+            {
+                cbSize =
+                    (uint)Marshal.SizeOf<
+                        APPBARDATA>()
+            };
+
+        uint state =
+            SHAppBarMessage(
+                ABM_GETSTATE,
+                ref appBarData);
+
+        return
+            (state & ABS_AUTOHIDE) != 0;
     }
 
     public IReadOnlyList<Rectangle>
@@ -533,8 +680,8 @@ public class SurfaceManager
     }
 
     private static bool IsTopEdgeExposed(
-    IntPtr hWnd,
-    RECT rect)
+        IntPtr hWnd,
+        RECT rect)
     {
         int width =
             rect.Right - rect.Left;
@@ -590,6 +737,26 @@ public class SurfaceManager
         return false;
     }
     //Phantom window detection code included!! rawr
+    private const uint ABM_GETSTATE = 0x00000004;
+    private const uint ABS_AUTOHIDE = 0x00000001;
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct APPBARDATA
+    {
+        public uint cbSize;
+        public IntPtr hWnd;
+        public uint uCallbackMessage;
+        public uint uEdge;
+        public RECT rc;
+        public IntPtr lParam;
+    }
+
+    [DllImport(
+        "shell32.dll",
+        SetLastError = true)]
+    private static extern uint SHAppBarMessage(
+        uint dwMessage,
+        ref APPBARDATA pData);
 
     [DllImport("dwmapi.dll")]
     private static extern int DwmGetWindowAttribute(
