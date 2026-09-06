@@ -25,7 +25,7 @@
   },
 
   "hummingbird": {
-    "spriteFacesRight": true,
+    "spriteFacesRight": false,
     "spriteWidth": 32,
     "spriteHeight": 32,
     "scale": 1,

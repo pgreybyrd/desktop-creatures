@@ -85,6 +85,26 @@ public sealed class DataDrivenCreature : Creature
             groundMovement.PickNewTarget();
         }
 
+        if (definition.MovementCapabilities.Contains(
+                MovementCapability.Flight))
+        {
+            var flightMovement =
+                new FlightMovement(
+                    CreateMovementContext(),
+                    services.SurfaceManager,
+                    Settings.Flight
+                        ?? throw new InvalidOperationException(
+                            $"Flying creature '{definition.Id}' requires FlightSettings."),
+                    Settings.Hover,
+                    Settings.Glide);
+
+            _movements.Add(
+                flightMovement);
+
+            flightMovement.Initialize();
+            flightMovement.PickNewTarget();
+        }
+
         if (_movements.Count == 0)
         {
             throw new NotSupportedException(

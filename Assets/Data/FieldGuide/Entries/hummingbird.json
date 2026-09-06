@@ -1,0 +1,15 @@
+{
+  "id": "hummingbird",
+  "name": "HUMMINGBIRD",
+  "description": "A small bird known for its rapid wing flapping and ability to hover in place.",
+  "habitat": "Gardens",
+  "activity": "Day",
+  "diet": "Flowers",
+  "fieldNotes": [
+    "Hovers.",
+    "Quick darts.",
+    "Super cute."
+  ],
+  "portrait": "Assets/UI/FieldGuide/Creatures/Hummingbird/Portrait/portrait-hummingbird.png",
+  "portraitFrame": "Assets/UI/FieldGuide/Creatures/Hummingbird/frame-hummingbird.png"
+}

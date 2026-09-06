@@ -1,0 +1,12 @@
+{
+  "id": "hummingbird",
+  "category": "birds",
+
+  "movementCapabilities": [
+    "Flight"
+  ],
+
+  "appearance": {
+    "generated": false
+  }
+}

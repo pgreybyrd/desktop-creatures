@@ -32,4 +32,8 @@
     <ProjectReference Include="..\WpfBitmapFonts\WpfBitmapFonts.Core\WpfBitmapFonts.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Assets\Creatures\Birds\Hummingbird\Appearance\" />
+  </ItemGroup>
+
 </Project>
