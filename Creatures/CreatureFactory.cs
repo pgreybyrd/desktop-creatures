@@ -42,6 +42,13 @@ public static class CreatureFactory
                     settings,
                     services),
 
+            "hummingbird" =>
+                new DataDrivenCreature(
+                    definition,
+                    context,
+                    settings,
+                    services),
+
             "eagle" =>
                 new Eagle(
                     definition,

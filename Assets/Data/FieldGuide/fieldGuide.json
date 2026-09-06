@@ -13,7 +13,7 @@
     },
     {
       "id": "birds",
-      "tab": "Moss",
+      "tab": "Emerald",
       "order": 1,
       "rightX": 1,
       "rightY": 50,
@@ -32,7 +32,7 @@
     },
     {
       "id": "skunk",
-      "tab": "Emerald",
+      "tab": "Azure",
       "order": 3,
       "rightX": 3,
       "rightY": 70,

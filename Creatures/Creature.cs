@@ -278,16 +278,25 @@ public abstract class Creature
                             CurrentFrameIndex]
                             .Name;
 
-                    if (!Run.FrameMovement.TryGetValue(
+                    if (Settings.FrameMovement.TryGetValue(
                             frameName,
                             out double configuredMovement))
                     {
-                        return 1.0;
+                        return Math.Max(
+                            0.0,
+                            configuredMovement);
                     }
 
-                    return Math.Max(
-                        0.0,
-                        configuredMovement);
+                    if (Settings.Run?.FrameMovement.TryGetValue(
+                            frameName,
+                            out configuredMovement) == true)
+                    {
+                        return Math.Max(
+                            0.0,
+                            configuredMovement);
+                    }
+
+                    return 1.0;
                 },
 
             SetTargetX =

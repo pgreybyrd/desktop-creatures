@@ -176,10 +176,7 @@ public sealed class DataDrivenCreature : Creature
     public override void Release()
     {
         ICreatureMovement? movement =
-            _movements.FirstOrDefault(
-                movement =>
-                    movement.Capability ==
-                    MovementCapability.Ground);
+            _movements.FirstOrDefault();
 
         if (movement is null)
         {
