@@ -43,6 +43,10 @@ namespace Desktop_Creatures.Creatures
             Settings.Perch
             ?? throw new InvalidOperationException(
                 "Eagle requires PerchSettings.");
+        private GlideSettings Glide =>
+            Settings.Glide
+            ?? throw new InvalidOperationException(
+                "Eagle requires GlideSettings.");
 
         public Eagle(
             CreatureDefinition definition,
@@ -109,7 +113,7 @@ namespace Desktop_Creatures.Creatures
 
             _isGliding = false;
             
-            _flightModeTicksRemaining = _random.Next(Flight.MinFlapTicks, Flight.MaxFlapTicks);
+            _flightModeTicksRemaining = _random.Next(Flight.MinFlyTicks, Flight.MaxFlyTicks);
 
             PickNewTarget();
         }
@@ -162,7 +166,7 @@ namespace Desktop_Creatures.Creatures
             }
 
             _speed = _isGliding
-                    ? Flight.GlideSpeed
+                    ? Glide.GlideSpeed
                     : Flight.FlySpeed;
 
             SpeedX =
@@ -206,18 +210,18 @@ namespace Desktop_Creatures.Creatures
 
         private void ChooseFlightMode(double dy)
         {
-            if (dy > Flight.MinDownwardGlideDy)
+            if (dy > Glide.MinDownwardGlideDy)
             {
                 // Flying downward
 
-                if (_random.NextDouble() < Flight.GlideChance)
+                if (_random.NextDouble() < Glide.GlideChance)
                 {
                     SetAction(CreatureAction.Gliding, "Glide");
                     _isGliding = true;
                     
-                    // Glide for 2-5 seconds
+                    // Glide for 2-5 seconds0
                     _flightModeTicksRemaining =
-                        _random.Next(Flight.MinGlideTicks, Flight.MaxGlideTicks);
+                        _random.Next(Glide.MinGlideTicks, Glide.MaxGlideTicks);
                 }
                 else
                 {
@@ -226,7 +230,7 @@ namespace Desktop_Creatures.Creatures
 
                     // Flap for 1-3 seconds
                     _flightModeTicksRemaining =
-                        _random.Next(Flight.MinFlapTicks, Flight.MaxFlapTicks);
+                        _random.Next(Flight.MinFlyTicks, Flight.MaxFlyTicks);
                 }
             }
             else
@@ -238,7 +242,7 @@ namespace Desktop_Creatures.Creatures
                 
                 // Must flap
                 _flightModeTicksRemaining =
-                    _random.Next(Flight.MinUpwardFlapTicks, Flight.MaxUpwardFlapTicks);
+                    _random.Next(Flight.MinFlyTicks, Flight.MaxFlyTicks);
             }
         }
 
@@ -267,7 +271,7 @@ namespace Desktop_Creatures.Creatures
             SetAction(CreatureAction.Flying, "Fly");
 
             _isGliding = false;
-            _flightModeTicksRemaining = _random.Next(Flight.MinTakeoffFlapTicks, Flight.MaxTakeoffFlapTicks);
+            _flightModeTicksRemaining = _random.Next(Flight.MinFlyTicks, Flight.MaxFlyTicks);
 
             CurrentFrameIndex = 0;
 

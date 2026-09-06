@@ -1,295 +1,306 @@
 {
-    "eagle": {
-      "spriteFacesRight": true,
-      "spriteWidth": 32,
-      "spriteHeight": 32,
-      "scale": 2,
-
-      "flight": {
-        "flySpeed": 8.0,
-        "glideSpeed": 8.0,
-        "minDownwardGlideDy": 5,
-        "glideChance": 0.5,
-
-        "minGlideTicks": 200,
-        "maxGlideTicks": 500,
-
-        "minFlapTicks": 60,
-        "maxFlapTicks": 180,
-        "minUpwardFlapTicks": 90,
-        "maxUpwardFlapTicks": 240,
-        "minDownwardFlapTicks": 60,
-        "maxDownwardFlapTicks": 180,
-        "minTakeoffFlapTicks": 120,
-        "maxTakeoffFlapTicks": 300,
-
-        "flyFrameCount": 4,
-        "flyingFrameTicks": 7,
-        "glideFrameCount": 1,
-        "ruffleChance": 0.25
-      },
-
-      "perch": {
-        "perchChance": 0.35,
-        "minPerchTicks": 300,
-        "maxPerchTicks": 720,
-        "perchFrameCount": 2
-      },
-
-      "sleep": {
-        "sleepFrameCount": 1
-      }
+  "eagle": {
+    "spriteFacesRight": true,
+    "spriteWidth": 32,
+    "spriteHeight": 32,
+    "scale": 2,
+    "flight": {
+      "flySpeed": 8.0,
+      "minFlyTicks": 60,
+      "maxFlyTicks": 180,
+      "arrivalDistance": 10
     },
-
-    "squirrel": {
-  "spriteFacesRight": true,
-  "spriteWidth": 50,
-  "spriteHeight": 32,
-  "scale": 1,
-  "footOffsetY": 0,
-
-  "run": {
-    "runSpeed": 2.0,
-    "minRunTicks": 80,
-    "maxRunTicks": 240,
-    "runFrameCount": 5,
-    "runFrameTicks": 4,
-    "frameMovement": {
-      "run_00": 1.0,
-      "run_01": 1.0,
-      "run_02": 1.0,
-      "run_03": 1.0,
-      "run_04": 0.0
+    "glide": {
+      "glideSpeed": 8.0,
+      "minDownwardGlideDy": 5,
+      "glideChance": 0.5,
+      "minGlideTicks": 200,
+      "maxGlideTicks": 500
+    },
+    "perch": {
+      "perchChance": 0.35,
+      "minPerchTicks": 300,
+      "maxPerchTicks": 720
     }
   },
 
-  "idle": {
-    "idleChance": 0.8,
-    "minIdleTicks": 100,
-    "maxIdleTicks": 180,
-    "idleFrameTicks": 20,
-    "animations": [
-      {
-        "name": "idle",
-        "frameCount": 5
-      }
-    ]
+  "hummingbird": {
+    "spriteFacesRight": true,
+    "spriteWidth": 32,
+    "spriteHeight": 32,
+    "scale": 1,
+    "flight": {
+      "flySpeed": 10.0,
+      "minFlyTicks": 30,
+      "maxFlyTicks": 90,
+      "arrivalDistance": 6
+    },
+    "hover": {
+      "hoverChance": 0.75,
+      "minHoverTicks": 30,
+      "maxHoverTicks": 90
+    },
+    "perch": {
+      "perchChance": 0.08,
+      "minPerchTicks": 120,
+      "maxPerchTicks": 300
+    },
+    "nesting": {
+      "minNestingTicks": 300,
+      "maxNestingTicks": 900
+    }
   },
 
-  "eat": {
-  "eatFrameCount": 2,
-  "eatFrameTicks": 5,
-  "eatingTicksRemaining": 50,
-  "foodSearchCooldownTicks": 120,
-  "leaveFoodDistance": 50,
-  "interactionReach": 20
-},
-
+  "squirrel": {
+    "spriteFacesRight": true,
+    "spriteWidth": 50,
+    "spriteHeight": 32,
+    "scale": 1,
+    "footOffsetY": 0,
+    "run": {
+      "runSpeed": 2.5,
+      "minRunTicks": 80,
+      "maxRunTicks": 240,
+      "runFrameCount": 5,
+      "runFrameTicks": 4,
+      "frameMovement": {
+        "run_00": 1.0,
+        "run_01": 1.0,
+        "run_02": 1.0,
+        "run_03": 1.0,
+        "run_04": 0.0
+      }
+    },
+    "idle": {
+      "idleChance": 0.8,
+      "minIdleTicks": 100,
+      "maxIdleTicks": 180,
+      "idleFrameTicks": 20,
+      "animations": [
+        {
+          "name": "idle",
+          "frameCount": 5
+        }
+      ]
+    },
+    "eat": {
+      "eatFrameCount": 2,
+      "eatFrameTicks": 5,
+      "eatingTicksRemaining": 50,
+      "foodSearchCooldownTicks": 120,
+      "leaveFoodDistance": 50,
+      "interactionReach": 20
+    },
     "fall": {
-    "fallFrameCount": 1,
-    "fallFrameTicks": 5,
-    "landingTolerance": 12
-  }
-},
-
-"skunk": {
-  "spriteFacesRight": true,
-  "spriteWidth": 32,
-  "spriteHeight": 32,
-  "scale": 1,
-  "footOffsetY": 0,
-
-  "run": {
-    "runSpeed": 2.0,
-    "minRunTicks": 100,
-    "maxRunTicks": 240
-  },
-
-  "idle": {
-    "idleChance": 0.8,
-    "minIdleTicks": 100,
-    "maxIdleTicks": 180,
-    "idleFrameTicks": 20,
-    "animations": [
-      {
-        "name": "idle",
-        "frameCount": 2
-      }
-    ]
-  },
-
-  "eat": {
-  "eatFrameCount": 2,
-  "eatFrameTicks": 5,
-  "eatingTicksRemaining": 50,
-  "foodSearchCooldownTicks": 120,
-  "leaveFoodDistance": 50,
-  "interactionReach": 20
-},
-
-  "fall": {
-    "fallFrameCount": 1,
-    "fallFrameTicks": 5,
-    "landingTolerance": 12
-  }
-},
-
-    "rat":{
-      "spriteFacesRight": false,
-      "spriteWidth": 32,
-      "spriteHeight": 32,
-      "scale": 2,
-      "footOffsetY": 5,
-
-      "walk": {
-        "walkSpeed": 1.5,
-        "minWalkTicks": 100,
-        "maxWalkTicks": 300,
-        "walkFrameCount": 6,
-        "walkFrameTicks": 10
-      },
-      "run": {
-        "runSpeed": 1.5,
-        "minRunTicks": 100,
-        "maxRunTicks": 300,
-        "runFrameCount": 6,
-        "runFrameTicks": 2
-      },
-      "idle": {
-        "idleChance": 0.8,
-        "minIdleTicks": 150,
-        "maxIdleTicks": 200,
-        "idleFrameTicks": 40,
-        "animations": [
-        {
-            "name": "idle_look_left",
-            "frameCount": 5
-        },
-        {
-            "name": "idle_look_right",
-            "frameCount": 12
-        },
-        {
-            "name": "idle_look_front",
-            "frameCount": 4
-        },
-        {
-            "name": "idle_look_up",
-            "frameCount": 6
-        },
-        {
-            "name": "idle_sit_front",
-            "frameCount": 8
-        },
-        {
-            "name": "idle_sit_back",
-            "frameCount": 6
-        }
-        ]
-      },
-      "sleep": {
-        "sleepFrameCount": 2,
-        "sleepFrameTicks": 40
-      },
-      "eat": {
-        "eatFrameCount": 14,
-        "eatFrameTicks": 4,
-        "eatingTicksRemaining": 100,
-        "foodSearchCooldownTicks": 120,
-        "leaveFoodDistance": 120,
-        "interactionReach": 20
-      },
-      "fall": {
-        "fallFrameCount": 1,
-        "fallFrameTicks": 5,
-        "landingTolerance": 12
-      },
-      "footOffsets": {
-        "run": [
-            { "x": 16, "y": 29 },
-            { "x": 16, "y": 27 },
-            { "x": 16, "y": 30 }
-            ],
-        "idle_look_left": [
-            { "x": 16, "y": 28 }
-            ]
-      },
-      "needs": {
-        "hunger": {
-            "threshold": 0.75,
-            "rate": 0.002
-        },
-        "energy": {
-            "threshold": 0.30,
-            "drainRate": 0.001
-        },
-        "curiosity": {
-            "threshold": 0.60,
-            "rate": 0.003
-        }
+      "fallFrameCount": 1,
+      "fallFrameTicks": 5,
+      "landingTolerance": 12
     }
+  },
+
+  "skunk": {
+    "spriteFacesRight": true,
+    "spriteWidth": 32,
+    "spriteHeight": 32,
+    "scale": 1,
+    "footOffsetY": 0,
+    "run": {
+      "runSpeed": 2.0,
+      "minRunTicks": 100,
+      "maxRunTicks": 240
     },
-
-      "ocelot":{
-      "spriteFacesRight": true,
-      "spriteWidth": 48,
-      "spriteHeight": 32,
-      "scale": 2,
-      "footOffsetY": 0,
-
-      "run": {
-        "runSpeed": 1.0,
-        "minRunTicks": 100,
-        "maxRunTicks": 300,
-        "runFrameCount": 12,
-        "runFrameTicks": 2
-      },
-      "idle": {
-        "idleChance": 0.8,
-        "minIdleTicks": 150,
-        "maxIdleTicks": 200,
-        "idleFrameTicks": 40,
-        "animations": [
+    "idle": {
+      "idleChance": 0.8,
+      "minIdleTicks": 100,
+      "maxIdleTicks": 180,
+      "idleFrameTicks": 20,
+      "animations": [
         {
-            "name": "idle_sit",
-            "frameCount": 3
+          "name": "idle",
+          "frameCount": 2
         }
-        ]
-      },
-      "sleep": {
-        "sleepFrameCount": 7,
-        "sleepFrameTicks": 40
-      },
-      "eat": {
-        "eatFrameCount": 14,
-        "eatFrameTicks": 4,
-        "eatingTicksRemaining": 100,
-        "foodSearchCooldownTicks": 120,
-        "leaveFoodDistance": 120,
-        "interactionReach": 20
-      },
-      "fall": {
-        "fallFrameCount": 1,
-        "fallFrameTicks": 5,
-        "landingTolerance": 12
-      },
-      "footOffsets": {
-        "run": [
-            ]
-      },
-      "needs": {
-        "hunger": {
-            "threshold": 0.75,
-            "rate": 0.002
+      ]
+    },
+    "eat": {
+      "eatFrameCount": 2,
+      "eatFrameTicks": 5,
+      "eatingTicksRemaining": 50,
+      "foodSearchCooldownTicks": 120,
+      "leaveFoodDistance": 50,
+      "interactionReach": 20
+    },
+    "fall": {
+      "fallFrameCount": 1,
+      "fallFrameTicks": 5,
+      "landingTolerance": 12
+    }
+  },
+
+  "rat": {
+    "spriteFacesRight": false,
+    "spriteWidth": 32,
+    "spriteHeight": 32,
+    "scale": 2,
+    "footOffsetY": 5,
+    "walk": {
+      "walkSpeed": 1.5,
+      "minWalkTicks": 100,
+      "maxWalkTicks": 300,
+      "walkFrameCount": 6,
+      "walkFrameTicks": 10
+    },
+    "run": {
+      "runSpeed": 1.5,
+      "minRunTicks": 100,
+      "maxRunTicks": 300,
+      "runFrameCount": 6,
+      "runFrameTicks": 2
+    },
+    "idle": {
+      "idleChance": 0.8,
+      "minIdleTicks": 150,
+      "maxIdleTicks": 200,
+      "idleFrameTicks": 40,
+      "animations": [
+        {
+          "name": "idle_look_left",
+          "frameCount": 5
         },
-        "energy": {
-            "threshold": 0.30,
-            "drainRate": 0.001
+        {
+          "name": "idle_look_right",
+          "frameCount": 12
         },
-        "curiosity": {
-            "threshold": 0.60,
-            "rate": 0.003
+        {
+          "name": "idle_look_front",
+          "frameCount": 4
+        },
+        {
+          "name": "idle_look_up",
+          "frameCount": 6
+        },
+        {
+          "name": "idle_sit_front",
+          "frameCount": 8
+        },
+        {
+          "name": "idle_sit_back",
+          "frameCount": 6
         }
+      ]
+    },
+    "sleep": {
+      "sleepFrameCount": 2,
+      "sleepFrameTicks": 40
+    },
+    "eat": {
+      "eatFrameCount": 14,
+      "eatFrameTicks": 4,
+      "eatingTicksRemaining": 100,
+      "foodSearchCooldownTicks": 120,
+      "leaveFoodDistance": 120,
+      "interactionReach": 20
+    },
+    "fall": {
+      "fallFrameCount": 1,
+      "fallFrameTicks": 5,
+      "landingTolerance": 12
+    },
+    "footOffsets": {
+      "run": [
+        {
+          "x": 16,
+          "y": 29
+        },
+        {
+          "x": 16,
+          "y": 27
+        },
+        {
+          "x": 16,
+          "y": 30
+        }
+      ],
+      "idle_look_left": [
+        {
+          "x": 16,
+          "y": 28
+        }
+      ]
+    },
+    "needs": {
+      "hunger": {
+        "threshold": 0.75,
+        "rate": 0.002
+      },
+      "energy": {
+        "threshold": 0.3,
+        "drainRate": 0.001
+      },
+      "curiosity": {
+        "threshold": 0.6,
+        "rate": 0.003
+      }
     }
+  },
+
+  "ocelot": {
+    "spriteFacesRight": true,
+    "spriteWidth": 48,
+    "spriteHeight": 32,
+    "scale": 2,
+    "footOffsetY": 0,
+    "run": {
+      "runSpeed": 1.0,
+      "minRunTicks": 100,
+      "maxRunTicks": 300,
+      "runFrameCount": 12,
+      "runFrameTicks": 2
+    },
+    "idle": {
+      "idleChance": 0.8,
+      "minIdleTicks": 150,
+      "maxIdleTicks": 200,
+      "idleFrameTicks": 40,
+      "animations": [
+        {
+          "name": "idle_sit",
+          "frameCount": 3
+        }
+      ]
+    },
+    "sleep": {
+      "sleepFrameCount": 7,
+      "sleepFrameTicks": 40
+    },
+    "eat": {
+      "eatFrameCount": 14,
+      "eatFrameTicks": 4,
+      "eatingTicksRemaining": 100,
+      "foodSearchCooldownTicks": 120,
+      "leaveFoodDistance": 120,
+      "interactionReach": 20
+    },
+    "fall": {
+      "fallFrameCount": 1,
+      "fallFrameTicks": 5,
+      "landingTolerance": 12
+    },
+    "footOffsets": {
+      "run": []
+    },
+    "needs": {
+      "hunger": {
+        "threshold": 0.75,
+        "rate": 0.002
+      },
+      "energy": {
+        "threshold": 0.3,
+        "drainRate": 0.001
+      },
+      "curiosity": {
+        "threshold": 0.6,
+        "rate": 0.003
+      }
     }
+  }
 }

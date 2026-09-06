@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace Desktop_Creatures.Config;
+﻿namespace Desktop_Creatures.Config;
 
 public class CreatureSettings
 {
@@ -15,43 +13,56 @@ public class CreatureSettings
         new(StringComparer.OrdinalIgnoreCase);
 
     public FlightSettings? Flight { get; set; }
+    public HoverSettings? Hover { get; set; }
+    public GlideSettings? Glide { get; set; }
+
     public WalkSettings? Walk { get; set; }
     public RunSettings? Run { get; set; }
     public IdleSettings? Idle { get; set; }
     public SwimSettings? Swim { get; set; }
+
     public PerchSettings? Perch { get; set; }
+    public NestingSettings? Nesting { get; set; }
+
     public SleepSettings? Sleep { get; set; }
     public FallSettings? Fall { get; set; }
     public EatSettings? Eat { get; set; }
 }
+
 public class FlightSettings
 {
     public double FlySpeed { get; set; } = 2.5;
+
+    public int MinFlyTicks { get; set; } = 60;
+    public int MaxFlyTicks { get; set; } = 180;
+
+    public double ArrivalDistance { get; set; } = 10.0;
+}
+
+public class HoverSettings
+{
+    public double HoverChance { get; set; } = 0.5;
+
+    public int MinHoverTicks { get; set; } = 30;
+    public int MaxHoverTicks { get; set; } = 120;
+}
+
+public class GlideSettings
+{
     public double GlideSpeed { get; set; } = 3.5;
-    public double MinDownwardGlideDy { get; set; } = 5;
     public double GlideChance { get; set; } = 0.5;
+    public double MinDownwardGlideDy { get; set; } = 5;
 
     public int MinGlideTicks { get; set; } = 200;
     public int MaxGlideTicks { get; set; } = 500;
-    public int GlideFrameCount { get; set; } = 1;
-
-    public int MinFlapTicks { get; set; } = 60;
-    public int MaxFlapTicks { get; set; } = 180;
-
-    public int MinUpwardFlapTicks { get; set; } = 90;
-    public int MaxUpwardFlapTicks { get; set; } = 240;
-
-    public int MinDownwardFlapTicks { get; set; } = 60;
-    public int MaxDownwardFlapTicks { get; set; } = 180;
-
-    public int MinTakeoffFlapTicks { get; set; } = 120;
-    public int MaxTakeoffFlapTicks { get; set; } = 300;
-
-    public int FlyFrameCount { get; set; } = 4;  
-    public int FlyingFrameTicks { get; set; } = 8;
-  
-    public double ArrivalDistance { get; set; } = 10.0;
 }
+
+public class NestingSettings
+{
+    public int MinNestingTicks { get; set; } = 300;
+    public int MaxNestingTicks { get; set; } = 900;
+}
+
 public class WalkSettings
 {
     public double WalkSpeed { get; set; } = 1.0;

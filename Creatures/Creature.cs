@@ -21,6 +21,7 @@ public enum CreatureAction
     Idle,
     Flying,
     Gliding,
+    Hovering,
     Walking,
     Swimming,
     Perching,
