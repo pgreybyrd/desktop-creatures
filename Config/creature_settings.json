@@ -30,15 +30,32 @@
     "spriteHeight": 32,
     "scale": 1,
     "flight": {
-      "flySpeed": 10.0,
-      "minFlyTicks": 30,
-      "maxFlyTicks": 90,
-      "arrivalDistance": 6
+      "flySpeed": 20.0,
+      "minFlyTicks": 20,
+      "maxFlyTicks": 70,
+      "arrivalDistance": 5,
+      "minTravelDistance": 50,
+      "maxTravelDistance": 250,
+      "frameMovement": {
+        "fly_00": 1.0,
+        "fly_01": 1.0,
+        "fly_02": 1.0,
+        "fly_03": 1.0
+      }
     },
     "hover": {
-      "hoverChance": 0.75,
-      "minHoverTicks": 30,
-      "maxHoverTicks": 90
+      "hoverChance": 0.80,
+      "minHoverTicks": 50,
+      "maxHoverTicks": 200,
+      "flipChance": 0.25,
+      "minFlipTicks": 35,
+      "maxFlipTicks": 90,
+      "frameMovement": {
+        "hover_00": 0.0,
+        "hover_01": 0.0,
+        "hover_02": 0.0,
+        "hover_03": 0.0
+      }
     },
     "perch": {
       "perchChance": 0.08,

@@ -12,6 +12,8 @@ public sealed class CreatureMovementContext
     public required Func<double> GetSpeedX { get; init; }
     public required Action<double> SetSpeedX { get; init; }
 
+    public required Action FlipFacing { get; init; }
+
     public required Func<int> GetSpriteWidth { get; init; }
     public required Func<int> GetSpriteHeight { get; init; }
 

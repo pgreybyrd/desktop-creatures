@@ -37,6 +37,9 @@ public class FlightSettings
     public int MaxFlyTicks { get; set; } = 180;
 
     public double ArrivalDistance { get; set; } = 10.0;
+
+    public int? MinTravelDistance { get; set; }
+    public int? MaxTravelDistance { get; set; }
 }
 
 public class HoverSettings
@@ -45,6 +48,10 @@ public class HoverSettings
 
     public int MinHoverTicks { get; set; } = 30;
     public int MaxHoverTicks { get; set; } = 120;
+
+    public double FlipChance { get; set; } = 0.25;
+    public int MinFlipTicks { get; set; } = 20;
+    public int MaxFlipTicks { get; set; } = 60;
 }
 
 public class GlideSettings

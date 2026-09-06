@@ -72,6 +72,7 @@ public abstract class Creature
     public int Scale => Settings.Scale;
     public int DisplayScale { get; private set; } = 1;
     public int SizeTier { get; init; }
+    public bool IsFacingRight { get; private set; } = true;
 
     public double DisplayWidth =>
         SpriteWidth * DisplayScale;
@@ -336,7 +337,17 @@ public abstract class Creature
                 () => SpeedX,
 
             SetSpeedX =
-                value => SpeedX = value,
+                value =>
+                {
+                    SpeedX =
+                        value;
+
+                    UpdateFacing(
+                        value);
+                },
+
+            FlipFacing =
+                () => FlipFacing(),
 
             GetSpriteWidth =
                 () => SpriteWidth,
@@ -356,6 +367,27 @@ public abstract class Creature
                         action,
                         animationName)
         };
+    }
+
+    private void FlipFacing()
+    {
+        IsFacingRight =
+            !IsFacingRight;
+    }
+
+    private void UpdateFacing(
+        double speedX)
+    {
+        if (speedX > 0.001)
+        {
+            IsFacingRight =
+                true;
+        }
+        else if (speedX < -0.001)
+        {
+            IsFacingRight =
+                false;
+        }
     }
 
     protected void InitializeGeneratedAppearance(

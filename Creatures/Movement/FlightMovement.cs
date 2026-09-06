@@ -15,6 +15,8 @@ public sealed class FlightMovement : ICreatureMovement
 
     private bool _isGliding;
 
+    private int _hoverFlipTicksRemaining;
+
     public MovementCapability Capability =>
         MovementCapability.Flight;
 
@@ -77,17 +79,127 @@ public sealed class FlightMovement : ICreatureMovement
         if (monitorBounds.Count == 0)
             return;
 
-        Rectangle area =
-            monitorBounds[
-                _context.NextRandom(
-                    0,
-                    monitorBounds.Count)];
-
         int spriteWidth =
             _context.GetSpriteWidth();
 
         int spriteHeight =
             _context.GetSpriteHeight();
+
+        double targetX;
+        double targetY;
+
+        bool useLocalRange =
+            _flight.MinTravelDistance is not null &&
+            _flight.MaxTravelDistance is not null;
+
+        if (useLocalRange)
+        {
+            bool foundTarget = false;
+
+            targetX = _context.GetX();
+            targetY = _context.GetY();
+
+            const int maxAttempts = 20;
+
+            for (int attempt = 0;
+                 attempt < maxAttempts;
+                 attempt++)
+            {
+                double angle =
+                    _context.NextRandom(
+                        0,
+                        360) *
+                    Math.PI /
+                    180.0;
+
+                int distance =
+                    _context.NextRandom(
+                        _flight.MinTravelDistance!.Value,
+                        _flight.MaxTravelDistance!.Value);
+
+                double candidateX =
+                    _context.GetX() +
+                    Math.Cos(angle) *
+                    distance;
+
+                double candidateY =
+                    _context.GetY() +
+                    Math.Sin(angle) *
+                    distance;
+
+                Point topLeft =
+                    new(
+                        candidateX,
+                        candidateY);
+
+                Point bottomRight =
+                    new(
+                        candidateX +
+                        spriteWidth,
+                        candidateY +
+                        spriteHeight);
+
+                if (!_surfaceManager.IsPointOnDesktop(
+                        topLeft) ||
+                    !_surfaceManager.IsPointOnDesktop(
+                        bottomRight))
+                {
+                    continue;
+                }
+
+                targetX =
+                    candidateX;
+
+                targetY =
+                    candidateY;
+
+                foundTarget =
+                    true;
+
+                break;
+            }
+
+            if (!foundTarget)
+            {
+                PickRandomDesktopTarget(
+                    monitorBounds,
+                    spriteWidth,
+                    spriteHeight,
+                    out targetX,
+                    out targetY);
+            }
+        }
+        else
+        {
+            PickRandomDesktopTarget(
+                monitorBounds,
+                spriteWidth,
+                spriteHeight,
+                out targetX,
+                out targetY);
+        }
+
+        _context.SetTargetX(
+            targetX);
+
+        _context.SetTargetY(
+            targetY);
+
+        SetFlightModeForTarget();
+    }
+
+    private void PickRandomDesktopTarget(
+        IReadOnlyList<Rectangle> monitorBounds,
+        int spriteWidth,
+        int spriteHeight,
+        out double targetX,
+        out double targetY)
+    {
+        Rectangle area =
+            monitorBounds[
+                _context.NextRandom(
+                    0,
+                    monitorBounds.Count)];
 
         int minX =
             area.Left;
@@ -103,34 +215,15 @@ public sealed class FlightMovement : ICreatureMovement
             area.Bottom -
             spriteHeight;
 
-        if (maxX <= minX ||
-            maxY <= minY)
-        {
-            return;
-        }
-
-        double targetX =
+        targetX =
             _context.NextRandom(
                 minX,
                 maxX);
 
-        double targetY =
+        targetY =
             _context.NextRandom(
                 minY,
                 maxY);
-
-        _context.SetTargetX(
-            targetX);
-
-        _context.SetTargetY(
-            targetY);
-
-        _context.SetStateTicksRemaining(
-            _context.NextRandom(
-                _flight.MinFlyTicks,
-                _flight.MaxFlyTicks));
-
-        SetFlightModeForTarget();
     }
 
     public bool CanReach(
@@ -291,6 +384,34 @@ public sealed class FlightMovement : ICreatureMovement
         _context.SetSpeedX(
             0);
 
+        if (_hover is not null)
+        {
+            _hoverFlipTicksRemaining--;
+
+            if (_hoverFlipTicksRemaining <= 0)
+            {
+                int roll =
+                    _context.NextRandom(
+                        0,
+                        10_000);
+
+                double normalizedRoll =
+                    roll /
+                    10_000.0;
+
+                if (normalizedRoll <
+                    _hover.FlipChance)
+                {
+                    _context.FlipFacing();
+                }
+
+                _hoverFlipTicksRemaining =
+                    _context.NextRandom(
+                        _hover.MinFlipTicks,
+                        _hover.MaxFlipTicks);
+            }
+        }
+
         if (ticksRemaining > 0)
             return;
 
@@ -342,6 +463,11 @@ public sealed class FlightMovement : ICreatureMovement
             _context.NextRandom(
                 _hover.MinHoverTicks,
                 _hover.MaxHoverTicks));
+
+        _hoverFlipTicksRemaining =
+            _context.NextRandom(
+                _hover.MinFlipTicks,
+                _hover.MaxFlipTicks);
 
         _context.SetAction(
             CreatureAction.Hovering,

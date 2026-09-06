@@ -107,17 +107,11 @@ public partial class CreatureWindow : Window
 
     private void RefreshCreaturePresentation()
     {
-        if (Math.Abs(_creature.SpeedX) > 0.01)
-        {
-            bool movingRight =
-                _creature.SpeedX > 0;
-
-            FlipTransform.ScaleX =
-                _creature.SpriteFacesRight ==
-                movingRight
-                    ? 1
-                    : -1;
-        }
+        FlipTransform.ScaleX =
+            _creature.SpriteFacesRight ==
+            _creature.IsFacingRight
+                ? 1
+                : -1;
 
         if (CreatureImage.Source !=
             _creature.CurrentFrame)
