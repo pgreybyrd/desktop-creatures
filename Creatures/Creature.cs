@@ -1064,32 +1064,16 @@ public abstract class Creature
         if (!TargetInteraction.IsValid)
             return false;
 
-        var position =
+        Point position =
             TargetInteraction.Position;
 
-        var snappedPosition =
-            SurfaceManager.SnapToSurface(
-                position,
-                SpriteWidth,
-                GetCurrentFootY(),
-                10);
+        var destination =
+            new MovementDestination(
+                position.X,
+                position.Y);
 
-        if (snappedPosition is null)
-            return false;
-
-        if (!CanReachInteractionTarget(
-                snappedPosition.Value))
-        {
-            return false;
-        }
-
-        TargetX =
-            snappedPosition.Value.X;
-
-        TargetY =
-            snappedPosition.Value.Y;
-
-        return true;
+        return TrySetMovementDestination(
+            destination);
     }
 
     private bool CanInteractWithTarget()
@@ -1100,21 +1084,13 @@ public abstract class Creature
         if (!TargetInteraction.IsValid)
             return false;
 
-        Point? snappedPosition =
-            SurfaceManager.SnapToSurface(
-                TargetInteraction.Position,
-                SpriteWidth,
-                GetCurrentFootY(),
-                10);
-
-        if (snappedPosition is null)
-            return false;
-
         double dx =
-            snappedPosition.Value.X - X;
+            TargetX -
+            X;
 
         double dy =
-            snappedPosition.Value.Y - Y;
+            TargetY -
+            Y;
 
         double distance =
             Math.Sqrt(
@@ -1125,7 +1101,7 @@ public abstract class Creature
             DebugCategory.Behavior,
             $"Interaction check: " +
             $"creature=({X:F1}, {Y:F1}) " +
-            $"snappedTarget=({snappedPosition.Value.X:F1}, {snappedPosition.Value.Y:F1}) " +
+            $"resolvedTarget=({TargetX:F1}, {TargetY:F1}) " +
             $"distance={distance:F1}, " +
             $"allowed={Eat.InteractionReach:F1}");
 
@@ -1340,18 +1316,6 @@ public abstract class Creature
 
     protected virtual void MoveTowardsTarget()
     {
-        if (TargetInteraction is not null)
-        {
-            if (!RefreshInteractionTargetPosition())
-            {
-                ReleaseTargetInteraction();
-                TargetPoi = null;
-
-                StartIdle();
-                return;
-            }
-        }
-
         double dx = TargetX - X;
         double dy = TargetY - Y;
 

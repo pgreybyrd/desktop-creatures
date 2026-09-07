@@ -8,6 +8,7 @@ namespace Desktop_Creatures.Creatures;
 public sealed class DataDrivenCreature : Creature
 {
     private readonly List<ICreatureMovement> _movements = [];
+    private ICreatureMovement? _activeMovement;
 
     public DataDrivenCreature(
         CreatureDefinition definition,
@@ -151,7 +152,12 @@ public sealed class DataDrivenCreature : Creature
                 $"accepted={accepted}");
 
             if (accepted)
+            {
+                _activeMovement =
+                    movement;
+
                 return true;
+            }
         }
 
         Logger.LogDebug(
@@ -161,6 +167,21 @@ public sealed class DataDrivenCreature : Creature
             $"destination=({destination.X:F1},{destination.Y:F1})");
 
         return false;
+    }
+
+    protected override void PickPostInteractionTarget()
+    {
+        ICreatureMovement? movement =
+            _activeMovement ??
+            _movements.FirstOrDefault();
+
+        if (movement is null)
+        {
+            base.PickPostInteractionTarget();
+            return;
+        }
+
+        movement.PickNewTarget();
     }
 
     public override void OnPickedUp()

@@ -423,6 +423,12 @@ public sealed class FlightMovement : ICreatureMovement
         _context.SetSpeedX(
             0);
 
+        if (_context.HasInteractionTarget())
+        {
+            _context.OnInteractionTargetReached();
+            return;
+        }
+
         if (ShouldHover())
         {
             StartHovering();

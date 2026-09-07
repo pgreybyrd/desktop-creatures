@@ -526,8 +526,8 @@ public partial class MainWindow : Window
                 "Nectar",
                 WorldInteractionPointType.Nectar,
                 new Point(
-                    -12,
-                    flowerSettings.Height * 0.25),
+                    30,
+                    90),
                 InteractionFacing.Right));
 
         _pointOfInterestManager.Add(
