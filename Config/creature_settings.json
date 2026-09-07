@@ -65,6 +65,14 @@
     "nesting": {
       "minNestingTicks": 300,
       "maxNestingTicks": 900
+    },
+    "eat": {
+      "eatFrameCount": 1,
+      "eatFrameTicks": 5,
+      "eatingTicksRemaining": 50,
+      "foodSearchCooldownTicks": 120,
+      "leaveFoodDistance": 50,
+      "interactionReach": 20
     }
   },
 

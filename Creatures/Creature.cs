@@ -248,6 +248,11 @@ public abstract class Creature
                             StartDrinking(TargetPoi!);
                             break;
 
+                        //TEMPORARY
+                        case WorldInteractionPointType.Nectar:
+                            StartEating(TargetPoi!);
+                            break;
+
                         default:
                             ReleaseTargetInteraction();
                             TargetPoi = null;

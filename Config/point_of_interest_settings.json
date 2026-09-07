@@ -12,5 +12,12 @@
       "emptyMaskPath": "Assets/World/Water/water_dish_empty_mask.png",
       "width": 9,
       "height": 9
+    },
+    "flower": {
+      "assetPath": "Assets/World/Flora/Flowers/flowers.png",
+      "metadataPath": "Assets/World/Flora/Flowers/flowers.json",
+      "frameName": "flower_00",
+      "width": 128,
+      "height": 128
     }
 }

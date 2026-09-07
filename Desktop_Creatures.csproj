@@ -34,6 +34,7 @@
 
   <ItemGroup>
     <Folder Include="Assets\Creatures\Birds\Hummingbird\Appearance\" />
+    <Folder Include="Assets\World\Flora\Flowers\" />
   </ItemGroup>
 
 </Project>

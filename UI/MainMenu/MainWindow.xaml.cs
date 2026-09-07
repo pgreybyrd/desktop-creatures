@@ -128,6 +128,7 @@ public partial class MainWindow : Window
 
         _surfaceManager.Refresh();
 
+
         MainCanvasImage.Source =
             AssetImageLoader.Load(
                 "Assets/UI/MainMenu/main_menu.png");
@@ -306,6 +307,8 @@ public partial class MainWindow : Window
             UpdateMenuSurface();
 
             _surfaceManager.Refresh();
+
+            CreateInitialFlowers();
 
             // TODO: Re-enable when POIs are ready for release.
             CreateFoodBowl(); 
@@ -493,6 +496,95 @@ public partial class MainWindow : Window
 
         _poiWindows.Add(
             dishWindow);
+    }
+
+    private void CreateFlower(
+        PointOfInterestSettings flowerSettings,
+        double x,
+        double groundY)
+    {
+        double flowerHeight =
+            flowerSettings.Height *
+            _settings.Scale;
+
+        double flowerY =
+            groundY -
+            flowerHeight;
+
+        var flower =
+            new PointOfInterest(
+                "Flower",
+                new Point(
+                    x,
+                    flowerY),
+                PointOfInterestType.Food,
+                flowerSettings,
+                _settings);
+
+        flower.AddWorldInteractionPoint(
+            new WorldInteractionPoint(
+                "Nectar",
+                WorldInteractionPointType.Nectar,
+                new Point(
+                    flowerSettings.Width / 2.0,
+                    flowerSettings.Height * 0.25)));
+
+        _pointOfInterestManager.Add(
+            flower);
+
+        var flowerWindow =
+            new POIWindow(
+                flower,
+                _surfaceManager);
+
+        flowerWindow.Show();
+
+        _zOrderManager.Register(
+            flowerWindow,
+            ZOrderManager.WindowLayer.Ecosystem);
+
+        _poiWindows.Add(
+            flowerWindow);
+    }
+
+    private void CreateInitialFlowers()
+    {
+        Surface? ground =
+            _surfaceManager.Surfaces
+                .FirstOrDefault(
+                    surface =>
+                        surface.Kind ==
+                        "MonitorGround" &&
+                        surface.Left <= 0 &&
+                        surface.Right > 0);
+
+        if (ground is null)
+            return;
+
+        if (!_pointOfInterestSettings.TryGetValue(
+                "flower",
+                out var flowerSettings))
+        {
+            return;
+        }
+
+        int flowerCount =
+            3;
+
+        for (int i = 0;
+             i < flowerCount;
+             i++)
+        {
+            double x =
+                Random.Shared.Next(
+                    ground.Left + 100,
+                    ground.Right - 100);
+
+            CreateFlower(
+                flowerSettings,
+                x,
+                ground.Top);
+        }
     }
 
     private static UiButtonImages LoadButtonImages(string buttonName)

@@ -14,18 +14,18 @@ public sealed class ZOrderManager
         ToolWindow = 2
     }
 
-    private static readonly IntPtr HwndTopmost =
+    private static readonly nint HwndTopmost =
         new(-1);
 
-    private static readonly IntPtr HwndNotTopmost =
+    private static readonly nint HwndNotTopmost =
         new(-2);
 
     private const uint SwpNoMove = 0x0002;
     private const uint SwpNoSize = 0x0001;
     private const uint SwpNoActivate = 0x0010;
 
-    private static readonly IntPtr HwndTop =
-        IntPtr.Zero;
+    private static readonly nint HwndTop =
+        nint.Zero;
 
     private bool _menusAlwaysOnTop;
     private bool _ecosystemAlwaysOnTop;
@@ -140,19 +140,19 @@ public sealed class ZOrderManager
 
     private void EnforceTopmostHierarchy()
     {
-        List<IntPtr> tools =
+        List<nint> tools =
             GetHandles(
                 WindowLayer.ToolWindow);
 
-        List<IntPtr> ecosystem =
+        List<nint> ecosystem =
             GetHandles(
                 WindowLayer.Ecosystem);
 
-        List<IntPtr> mainMenu =
+        List<nint> mainMenu =
             GetHandles(
                 WindowLayer.MainMenu);
 
-        IntPtr insertAfter =
+        nint insertAfter =
             HwndTopmost;
 
         insertAfter =
@@ -170,7 +170,7 @@ public sealed class ZOrderManager
             insertAfter);
     }
 
-    private List<IntPtr> GetHandles(
+    private List<nint> GetHandles(
         WindowLayer layer)
     {
         return _windows[layer]
@@ -180,15 +180,15 @@ public sealed class ZOrderManager
                 new WindowInteropHelper(window)
                     .Handle)
             .Where(handle =>
-                handle != IntPtr.Zero)
+                handle != nint.Zero)
             .ToList();
     }
 
-    private static IntPtr ChainWindows(
-        IEnumerable<IntPtr> handles,
-        IntPtr insertAfter)
+    private static nint ChainWindows(
+        IEnumerable<nint> handles,
+        nint insertAfter)
     {
-        foreach (IntPtr handle in handles)
+        foreach (nint handle in handles)
         {
             SetWindowPos(
                 handle,
@@ -212,7 +212,7 @@ public sealed class ZOrderManager
         WindowLayer layer,
         bool topmost)
     {
-        IntPtr insertAfter =
+        nint insertAfter =
             topmost
                 ? HwndTopmost
                 : HwndNotTopmost;
@@ -223,11 +223,11 @@ public sealed class ZOrderManager
             if (!window.IsVisible)
                 continue;
 
-            IntPtr handle =
+            nint handle =
                 new WindowInteropHelper(window)
                     .Handle;
 
-            if (handle == IntPtr.Zero)
+            if (handle == nint.Zero)
                 continue;
 
             SetWindowPos(
@@ -243,22 +243,22 @@ public sealed class ZOrderManager
         }
     }
 
-    private static List<IntPtr> GetVisibleHandles(
+    private static List<nint> GetVisibleHandles(
         IEnumerable<Window> windows)
     {
         var handles =
-            new List<IntPtr>();
+            new List<nint>();
 
         foreach (Window window in windows)
         {
             if (!window.IsVisible)
                 continue;
 
-            IntPtr handle =
+            nint handle =
                 new WindowInteropHelper(window)
                     .Handle;
 
-            if (handle != IntPtr.Zero)
+            if (handle != nint.Zero)
             {
                 handles.Add(handle);
             }
@@ -268,15 +268,15 @@ public sealed class ZOrderManager
     }
 
     private static void SetBand(
-        IEnumerable<IntPtr> handles,
+        IEnumerable<nint> handles,
         bool topmost)
     {
-        IntPtr band =
+        nint band =
             topmost
                 ? HwndTopmost
                 : HwndNotTopmost;
 
-        foreach (IntPtr handle in handles)
+        foreach (nint handle in handles)
         {
             SetWindowPos(
                 handle,
@@ -292,8 +292,8 @@ public sealed class ZOrderManager
     }
 
     private static void EnforceHierarchy(
-        IReadOnlyList<IntPtr> ecosystem,
-        IReadOnlyList<IntPtr> menus,
+        IReadOnlyList<nint> ecosystem,
+        IReadOnlyList<nint> menus,
         bool topmost)
     {
         if (ecosystem.Count == 0)
@@ -303,13 +303,13 @@ public sealed class ZOrderManager
         // Build one explicit top -> bottom chain.
         //
 
-        IntPtr insertAfter =
+        nint insertAfter =
             topmost
                 ? HwndTopmost
                 : HwndTop;
 
         // Ecosystem goes first = highest.
-        foreach (IntPtr handle in ecosystem)
+        foreach (nint handle in ecosystem)
         {
             SetWindowPos(
                 handle,
@@ -328,7 +328,7 @@ public sealed class ZOrderManager
 
         // Menus are explicitly inserted below
         // the entire ecosystem chain.
-        foreach (IntPtr handle in menus)
+        foreach (nint handle in menus)
         {
             SetWindowPos(
                 handle,
@@ -350,8 +350,8 @@ public sealed class ZOrderManager
         "user32.dll",
         SetLastError = true)]
     private static extern bool SetWindowPos(
-        IntPtr hWnd,
-        IntPtr hWndInsertAfter,
+        nint hWnd,
+        nint hWndInsertAfter,
         int x,
         int y,
         int cx,

@@ -7,6 +7,7 @@ public enum WorldInteractionPointType
     Stand,
     Eat,
     Drink,
+    Nectar,
     Perch,
     Sleep,
     Rest,

@@ -1,4 +1,5 @@
-﻿using Desktop_Creatures.Tools.Images;
+﻿using Desktop_Creatures.Graphics.Animation;
+using Desktop_Creatures.Tools.Images;
 using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
 using PixelRecolor.Wpf;
@@ -82,6 +83,20 @@ public partial class POIWindow : Window
             useEmpty
                 ? _poi.Settings.EmptyMaskPath
                 : _poi.Settings.MaskPath;
+
+        if (!string.IsNullOrWhiteSpace(
+                _poi.Settings.FrameName))
+        {
+            var sheet =
+                SpriteSheetLoader.Load(
+                    assetPath,
+                    _poi.Settings.MetadataPath);
+
+            return sheet
+                .GetFrame(
+                    _poi.Settings.FrameName)
+                .Image;
+        }
 
         BitmapSource source =
             AssetImageLoader.Load(assetPath);
