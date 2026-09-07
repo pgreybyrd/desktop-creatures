@@ -238,6 +238,8 @@ public abstract class Creature
                         return;
                     }
 
+                    ApplyInteractionFacing();
+
                     switch (TargetInteraction.InteractionPoint.Type)
                     {
                         case WorldInteractionPointType.Eat:
@@ -1439,6 +1441,27 @@ public abstract class Creature
         return targetSurfaceTop >=
             CurrentSurface.Top -
             LandingTolerance;
+    }
+
+    private void ApplyInteractionFacing()
+    {
+        if (TargetInteraction is null)
+            return;
+
+        switch (TargetInteraction.InteractionPoint.Facing)
+        {
+            case InteractionFacing.Left:
+                IsFacingRight = false;
+                break;
+
+            case InteractionFacing.Right:
+                IsFacingRight = true;
+                break;
+
+            case InteractionFacing.Any:
+            default:
+                break;
+        }
     }
 
     public virtual void DragTo(double x, double y)
