@@ -67,12 +67,19 @@
       "maxNestingTicks": 900
     },
     "eat": {
+      "interactionType": "Nectar",
       "eatFrameCount": 1,
       "eatFrameTicks": 5,
       "eatingTicksRemaining": 50,
       "foodSearchCooldownTicks": 120,
       "leaveFoodDistance": 50,
       "interactionReach": 20
+    },
+    "needs": {
+      "hunger": {
+        "threshold": 0.05,
+        "rate": 0.01
+      }
     }
   },
 

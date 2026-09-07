@@ -107,9 +107,14 @@ public partial class CreatureWindow : Window
 
     private void RefreshCreaturePresentation()
     {
+        bool facingRight =
+            Math.Abs(_creature.SpeedX) > 0.01
+                ? _creature.SpeedX > 0
+                : _creature.IsFacingRight;
+
         FlipTransform.ScaleX =
             _creature.SpriteFacesRight ==
-            _creature.IsFacingRight
+            facingRight
                 ? 1
                 : -1;
 

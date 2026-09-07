@@ -1,6 +1,7 @@
 ﻿using Desktop_Creatures.Persistence;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Desktop_Creatures.Config;
 
@@ -93,7 +94,11 @@ public static class CreatureSettingsLoader
             json,
             new JsonSerializerOptions
             {
-                PropertyNameCaseInsensitive = true
+                PropertyNameCaseInsensitive = true,
+                Converters =
+                {
+                    new JsonStringEnumConverter()
+                }
             }
         ) ?? new();
     }

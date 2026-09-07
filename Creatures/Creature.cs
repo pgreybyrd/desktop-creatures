@@ -523,7 +523,7 @@ public abstract class Creature
 
                 poiManager: PointOfInterestManager,
                 poiType: PointOfInterestType.Food,
-                interactionType: WorldInteractionPointType.Eat,
+                interactionType: Eat.InteractionType,
 
                 getPosition:
                     () => new Point(X, Y),
@@ -960,10 +960,15 @@ public abstract class Creature
 
     protected virtual bool CanSearchForInteraction()
     {
-        return Settings.Run is not null &&
-               CurrentSurface is not null &&
-               TargetInteraction is null &&
-               CurrentAction is CreatureAction.Running or CreatureAction.Idle;
+        if (TargetInteraction is not null)
+            return false;
+
+        return CurrentAction is
+            CreatureAction.Running or
+            CreatureAction.Idle or
+            CreatureAction.Flying or
+            CreatureAction.Gliding or
+            CreatureAction.Hovering;
     }
 
     protected virtual bool TrySetInteractionTarget(

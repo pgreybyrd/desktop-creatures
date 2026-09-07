@@ -1,4 +1,6 @@
-﻿namespace Desktop_Creatures.Config;
+﻿using Desktop_Creatures.World;
+
+namespace Desktop_Creatures.Config;
 
 public class CreatureSettings
 {
@@ -146,4 +148,6 @@ public class EatSettings
     public int FoodSearchCooldownTicks { get; set; } = 120; // about 2 seconds at 60fps
     public int LeaveFoodDistance { get; set; } = 50;
     public double InteractionReach { get; set; } = 20;
+    public WorldInteractionPointType InteractionType { get; set; } =
+        WorldInteractionPointType.Eat;
 }

@@ -17,6 +17,13 @@ public enum WorldInteractionPointType
     Play
 }
 
+public enum InteractionFacing
+{
+    Any,
+    Left,
+    Right
+}
+
 public class WorldInteractionPoint
 {
     public string Name { get; }
@@ -25,14 +32,18 @@ public class WorldInteractionPoint
 
     public bool IsAvailable { get; set; } = true;
 
+    public InteractionFacing Facing { get; }
+
     public WorldInteractionPoint(
         string name,
         WorldInteractionPointType type,
-        Point offset)
+        Point offset,
+        InteractionFacing facing = InteractionFacing.Any)
     {
         Name = name;
         Type = type;
         Offset = offset;
+        Facing = facing;
     }
 
     public bool TryReserve()
