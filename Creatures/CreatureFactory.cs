@@ -50,17 +50,11 @@ public static class CreatureFactory
                     services),
 
             "eagle" =>
-                new Eagle(
+                new DataDrivenCreature(
                     definition,
-                    context.X,
-                    context.Y,
-                    services.PointsOfInterest,
+                    context,
                     settings,
-                    services.PointOfInterestManager,
-                    services.MonitorWorkingAreas,
-                    services.SurfaceManager,
-                    id: context.Id,
-                    name: context.Name),
+                    services),
 
             "ocelot" =>
                 new Ocelot(

@@ -1126,16 +1126,30 @@ public abstract class Creature
                 dx * dx +
                 dy * dy);
 
+        double interactionReach =
+            TargetInteraction.InteractionPoint.Type switch
+            {
+                WorldInteractionPointType.Eat or
+                WorldInteractionPointType.Drink or
+                WorldInteractionPointType.Nectar =>
+                    Settings.Eat?.InteractionReach ?? 20,
+
+                WorldInteractionPointType.Perch =>
+                    Settings.Flight?.ArrivalDistance ?? 10,
+
+                _ => 20
+            };
+
         Logger.LogDebug(
             DebugCategory.Behavior,
             $"Interaction check: " +
             $"creature=({X:F1}, {Y:F1}) " +
             $"resolvedTarget=({TargetX:F1}, {TargetY:F1}) " +
             $"distance={distance:F1}, " +
-            $"allowed={Eat.InteractionReach:F1}");
+            $"allowed={interactionReach:F1}");
 
         return distance <=
-            Eat.InteractionReach;
+            interactionReach;
     }
 
     private void ReleaseTargetInteraction()
