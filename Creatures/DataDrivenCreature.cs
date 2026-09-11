@@ -192,7 +192,7 @@ public sealed class DataDrivenCreature : Creature
 
         SetAction(
             CreatureAction.Held,
-            "dangle");
+            "held");
     }
 
     public override void Release()

@@ -906,6 +906,12 @@ public abstract class Creature
         UpdateTimers();
         UpdateNeeds();
         UpdateBehavior();
+
+        if (TargetInteraction is not null)
+        {
+            RefreshInteractionTargetPosition();
+        }
+
         UpdateState();
         UpdateAnimation();
     }

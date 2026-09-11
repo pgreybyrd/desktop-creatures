@@ -90,7 +90,7 @@
     "duration": 30
    },
    {
-    "filename": "dangle_00",
+    "filename": "held_00",
     "frame": { "x": 320, "y": 0, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -183,7 +183,7 @@
    { "name": "hover", "from": 4, "to": 7, "direction": "forward", "color": "#000000ff" },
    { "name": "perch", "from": 8, "to": 8, "direction": "forward", "color": "#000000ff" },
    { "name": "nesting", "from": 9, "to": 9, "direction": "forward", "color": "#000000ff" },
-   { "name": "dangle", "from": 10, "to": 10, "direction": "forward", "color": "#000000ff" },
+   { "name": "held", "from": 10, "to": 10, "direction": "forward", "color": "#000000ff" },
    { "name": "eat", "from": 11, "to": 14, "direction": "forward", "color": "#000000ff" },
    { "name": "drink", "from": 15, "to": 18, "direction": "forward", "color": "#000000ff" }
   ],

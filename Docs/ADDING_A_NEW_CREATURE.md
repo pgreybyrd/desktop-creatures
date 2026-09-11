@@ -53,7 +53,7 @@ For creature animation sheets, expected tags currently include:
 ```text
 run
 idle
-dangle
+held
 fall
 ```
 
@@ -71,7 +71,7 @@ Ground creatures currently expect:
 
 - `run` for normal movement
 - either `idle` or one or more `idle_*` animations
-- `dangle` for being held
+- `held` for being held
 - `fall` for release/falling
 
 The animation dictionary is case-insensitive, so `run` works with code requesting `Run`.
@@ -178,7 +178,7 @@ public override void OnPickedUp()
 
     SetAction(
         CreatureAction.Held,
-        "dangle");
+        "held");
 }
 ```
 
@@ -367,7 +367,7 @@ Before calling the creature complete, test all of these:
 - creature runs/moves
 - creature idles
 - creature can be picked up
-- held/dangle animation works
+- held animation works
 - creature can be dropped
 - fall animation works
 - creature lands

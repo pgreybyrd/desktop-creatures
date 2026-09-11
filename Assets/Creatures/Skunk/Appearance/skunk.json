@@ -54,7 +54,7 @@
     "duration": 550
    },
    {
-    "filename": "dangle_00",
+    "filename": "held_00",
     "frame": { "x": 192, "y": 0, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -100,7 +100,7 @@
   "frameTags": [
    { "name": "run", "from": 0, "to": 3, "direction": "forward", "color": "#000000ff" },
    { "name": "idle", "from": 4, "to": 5, "direction": "forward", "color": "#000000ff" },
-   { "name": "dangle", "from": 6, "to": 6, "direction": "forward", "color": "#000000ff" },
+   { "name": "held", "from": 6, "to": 6, "direction": "forward", "color": "#000000ff" },
    { "name": "fall", "from": 7, "to": 7, "direction": "forward", "color": "#000000ff" },
    { "name": "eat", "from": 8, "to": 9, "direction": "forward", "color": "#000000ff" }
   ],

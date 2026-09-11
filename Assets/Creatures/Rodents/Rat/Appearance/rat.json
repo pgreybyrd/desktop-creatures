@@ -837,7 +837,7 @@
     "duration": 100
    },
    {
-    "filename": "dangle_00",
+    "filename": "held_00",
     "frame": { "x": 224, "y": 160, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -846,7 +846,7 @@
     "duration": 200
    },
    {
-    "filename": "dangle_01",
+    "filename": "held_01",
     "frame": { "x": 0, "y": 192, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -855,7 +855,7 @@
     "duration": 200
    },
    {
-    "filename": "dangle_02",
+    "filename": "held_02",
     "frame": { "x": 32, "y": 192, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -864,7 +864,7 @@
     "duration": 200
    },
    {
-    "filename": "dangle_03",
+    "filename": "held_03",
     "frame": { "x": 64, "y": 192, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -896,7 +896,7 @@
    { "name": "sniff_around", "from": 79, "to": 82, "direction": "forward", "color": "#000000ff" },
    { "name": "sniff_walk", "from": 83, "to": 86, "direction": "forward", "color": "#000000ff" },
    { "name": "walk", "from": 87, "to": 92, "direction": "forward", "color": "#000000ff" },
-   { "name": "dangle", "from": 93, "to": 96, "direction": "pingpong", "color": "#000000ff" }
+   { "name": "held", "from": 93, "to": 96, "direction": "pingpong", "color": "#000000ff" }
   ]
  }
 }
