@@ -97,7 +97,8 @@ public sealed class DataDrivenCreature : Creature
                         ?? throw new InvalidOperationException(
                             $"Flying creature '{definition.Id}' requires FlightSettings."),
                     Settings.Hover,
-                    Settings.Glide);
+                    Settings.Glide,
+                    Settings.Perch);
 
             _movements.Add(
                 flightMovement);

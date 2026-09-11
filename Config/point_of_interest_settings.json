@@ -19,5 +19,10 @@
       "frameName": "flower_00",
       "width": 128,
       "height": 128
+    },
+    "tree": {
+      "assetPath": "Assets/World/Trees/tree_0.png",
+      "width": 81,
+      "height": 152
     }
 }

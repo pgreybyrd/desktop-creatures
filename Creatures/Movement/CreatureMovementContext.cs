@@ -54,6 +54,8 @@ public sealed class CreatureMovementContext
 
     public required Func<bool> HasInteractionTarget { get; init; }
 
+    public required Func<bool> TrySetPerchTarget { get; init; }
+
     public required Action OnOrdinaryTargetReached { get; init; }
 
     public required Action OnInteractionTargetReached { get; init; }

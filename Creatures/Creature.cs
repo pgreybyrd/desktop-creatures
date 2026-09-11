@@ -217,6 +217,9 @@ public abstract class Creature
             HasInteractionTarget =
                 () => TargetInteraction is not null,
 
+            TrySetPerchTarget =
+                () => TrySetAvailablePerchTarget(),
+
             OnOrdinaryTargetReached =
                 () => StartIdle(),
 
@@ -253,6 +256,10 @@ public abstract class Creature
                         //TEMPORARY
                         case WorldInteractionPointType.Nectar:
                             StartEating(TargetPoi!);
+                            break;
+
+                        case WorldInteractionPointType.Perch:
+                            StartPerching();
                             break;
 
                         default:
@@ -774,6 +781,23 @@ public abstract class Creature
         return true;
     }
 
+    private bool TrySetAvailablePerchTarget()
+    {
+        WorldInteractionTarget? target =
+            PointOfInterestManager
+                .FindNearestWorldInteractionPoint(
+                    new Point(
+                        X,
+                        Y),
+                    WorldInteractionPointType.Perch);
+
+        if (target is null)
+            return false;
+
+        return TrySetInteractionTarget(
+            target);
+    }
+
     protected virtual bool TrySetMovementDestination(
         MovementDestination destination)
     {
@@ -914,6 +938,9 @@ public abstract class Creature
                 break;
             case CreatureAction.Drinking:
                 UpdateDrinking();
+                break;
+            case CreatureAction.Perching:
+                UpdatePerching();
                 break;
         }
     }
@@ -1147,6 +1174,41 @@ public abstract class Creature
             poi,
             CreatureAction.Drinking,
             "Drink");
+    }
+
+    protected virtual void StartPerching()
+    {
+        if (Settings.Perch is null)
+        {
+            ReleaseTargetInteraction();
+            TargetPoi = null;
+            PickNewTarget();
+            return;
+        }
+
+        SpeedX = 0;
+
+        StateTicksRemaining =
+            Random.Next(
+                Settings.Perch.MinPerchTicks,
+                Settings.Perch.MaxPerchTicks);
+
+        SetAction(
+            CreatureAction.Perching,
+            "Perch");
+    }
+
+    protected virtual void UpdatePerching()
+    {
+        StateTicksRemaining--;
+
+        if (StateTicksRemaining > 0)
+            return;
+
+        ReleaseTargetInteraction();
+        TargetPoi = null;
+
+        PickPostInteractionTarget();
     }
 
     private void StartInteraction(

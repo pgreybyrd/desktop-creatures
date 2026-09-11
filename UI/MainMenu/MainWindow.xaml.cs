@@ -310,6 +310,8 @@ public partial class MainWindow : Window
 
             CreateInitialFlowers();
 
+            CreateInitialTree();
+
             // TODO: Re-enable when POIs are ready for release.
             CreateFoodBowl(); 
             //CreateWaterDish();
@@ -586,6 +588,91 @@ public partial class MainWindow : Window
                 x,
                 ground.Top);
         }
+    }
+
+    private void CreateTree(
+        PointOfInterestSettings treeSettings,
+        double x,
+        double groundY)
+    {
+        double treeHeight =
+            treeSettings.Height *
+            _settings.Scale;
+
+        double treeY =
+            groundY -
+            treeHeight;
+
+        var tree =
+            new PointOfInterest(
+                "Tree",
+                new Point(
+                    x,
+                    treeY),
+                PointOfInterestType.Rest,
+                treeSettings,
+                _settings);
+
+        tree.AddWorldInteractionPoint(
+            new WorldInteractionPoint(
+                "Upper Branch",
+                WorldInteractionPointType.Perch,
+                new Point(
+                    40,
+                    38)));
+
+        tree.AddWorldInteractionPoint(
+            new WorldInteractionPoint(
+                "Middle Branch",
+                WorldInteractionPointType.Perch,
+                new Point(
+                    25,
+                    70)));
+
+        _pointOfInterestManager.Add(tree);
+
+        var treeWindow =
+            new POIWindow(
+                tree,
+                _surfaceManager);
+
+        treeWindow.Show();
+
+        _zOrderManager.Register(
+            treeWindow,
+            ZOrderManager.WindowLayer.Ecosystem);
+
+        _poiWindows.Add(treeWindow);
+    }
+
+    private void CreateInitialTree()
+    {
+        Surface? ground =
+            _surfaceManager.Surfaces
+                .FirstOrDefault(
+                    surface =>
+                        surface.Kind == "MonitorGround" &&
+                        surface.Left <= 0 &&
+                        surface.Right > 0);
+
+        if (ground is null)
+            return;
+
+        if (!_pointOfInterestSettings.TryGetValue(
+                "tree",
+                out var treeSettings))
+        {
+            return;
+        }
+
+        double x =
+            ground.Left +
+            ((ground.Right - ground.Left) * 0.75);
+
+        CreateTree(
+            treeSettings,
+            x,
+            ground.Top);
     }
 
     private static UiButtonImages LoadButtonImages(string buttonName)

@@ -12,6 +12,7 @@ public sealed class FlightMovement : ICreatureMovement
     private readonly FlightSettings _flight;
     private readonly HoverSettings? _hover;
     private readonly GlideSettings? _glide;
+    private readonly PerchSettings? _perch;
 
     private bool _isGliding;
 
@@ -25,7 +26,8 @@ public sealed class FlightMovement : ICreatureMovement
         SurfaceManager surfaceManager,
         FlightSettings flight,
         HoverSettings? hover,
-        GlideSettings? glide)
+        GlideSettings? glide,
+        PerchSettings? perch)
     {
         _context = context;
         _surfaceManager = surfaceManager;
@@ -33,6 +35,7 @@ public sealed class FlightMovement : ICreatureMovement
         _flight = flight;
         _hover = hover;
         _glide = glide;
+        _perch = perch;
     }
 
     public void Initialize()
@@ -73,6 +76,25 @@ public sealed class FlightMovement : ICreatureMovement
 
     public void PickNewTarget()
     {
+        if (_perch is not null)
+        {
+            int roll =
+                _context.NextRandom(
+                    0,
+                    10_000);
+
+            double normalizedRoll =
+                roll /
+                10_000.0;
+
+            if (normalizedRoll <
+                _perch.PerchChance &&
+                _context.TrySetPerchTarget())
+            {
+                return;
+            }
+        }
+
         IReadOnlyList<Rectangle> monitorBounds =
             _surfaceManager.GetMonitorBounds();
 
