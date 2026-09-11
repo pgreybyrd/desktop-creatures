@@ -80,7 +80,7 @@ namespace Desktop_Creatures.Needs
                         NeedType.Hunger,
                         value: 0f,
                         threshold: 0.75f,
-                        rate: 0.0003f),
+                        rate: 0.005f),
 
                 [NeedType.Thirst] =
                     new Need(

@@ -16,17 +16,11 @@ public static class CreatureFactory
         return definition.Id.ToLowerInvariant() switch
         {
             "rat" =>
-                new Rat(
+                new DataDrivenCreature(
                     definition,
-                    context.X,
-                    context.Y,
+                    context,
                     settings,
-                    services.PointOfInterestManager,
-                    services.SurfaceManager,
-                    id: context.Id,
-                    name: context.Name,
-                    appearanceTraits: context.AppearanceTraits,
-                    appearanceId: context.AppearanceId),
+                    services),
 
             "squirrel" =>
                 new DataDrivenCreature(

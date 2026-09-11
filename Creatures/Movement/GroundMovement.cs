@@ -46,9 +46,12 @@ public sealed class GroundMovement : ICreatureMovement
                 _context.GetFootY());
         }
 
-        _context.SetAction(
-            CreatureAction.Running,
-            "Run");
+        if (_context.GetAction() != CreatureAction.Running)
+        {
+            _context.SetAction(
+                CreatureAction.Running,
+                "Run");
+        }
     }
 
     public bool HandlesAction(
@@ -398,9 +401,12 @@ public sealed class GroundMovement : ICreatureMovement
             $"to=({resolved.X:F1},{resolved.Y:F1}) " +
             $"surfaceTop={currentSurface.Top:F1}");
 
-        _context.SetAction(
-            CreatureAction.Running,
-            "Run");
+        if (_context.GetAction() != CreatureAction.Running)
+        {
+            _context.SetAction(
+                CreatureAction.Running,
+                "Run");
+        }
 
         return true;
     }

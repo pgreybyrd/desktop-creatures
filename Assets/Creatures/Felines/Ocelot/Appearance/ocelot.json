@@ -297,7 +297,7 @@
     "duration": 100
    },
    {
-    "filename": "sit_04",
+    "filename": "eat_00",
     "frame": { "x": 1584, "y": 0, "w": 48, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -306,7 +306,7 @@
     "duration": 100
    },
    {
-    "filename": "sit_05",
+    "filename": "eat_01",
     "frame": { "x": 1632, "y": 0, "w": 48, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -315,7 +315,7 @@
     "duration": 100
    },
    {
-    "filename": "sit_06",
+    "filename": "eat_02",
     "frame": { "x": 1680, "y": 0, "w": 48, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -365,6 +365,7 @@
    { "name": "wake_up", "from": 27, "to": 28, "direction": "forward", "color": "#000000ff" },
    { "name": "sit", "from": 29, "to": 36, "direction": "forward", "color": "#000000ff" },
    { "name": "idle_sit", "from": 29, "to": 31, "direction": "pingpong", "color": "#000000ff" },
+   { "name": "eat", "from": 33, "to": 35, "direction": "forward", "color": "#000000ff" },
    { "name": "fall", "from": 37, "to": 37, "direction": "forward", "color": "#000000ff" },
    { "name": "held", "from": 38, "to": 38, "direction": "forward", "color": "#000000ff" }
   ],

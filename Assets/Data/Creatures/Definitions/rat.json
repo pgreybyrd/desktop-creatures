@@ -11,8 +11,8 @@
   },
 
   "sounds": {
-    "spawn": "squeaks",
-    "pickup": "squeaks"
+    "spawn": "squeak",
+    "pickup": "squeak"
   },
 
   "pickupAnchor": {

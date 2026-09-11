@@ -187,6 +187,8 @@ public sealed class DataDrivenCreature : Creature
 
     public override void OnPickedUp()
     {
+        AbandonCurrentInteraction();
+
         PlaySound(
             CreatureSoundEvent.Pickup);
 

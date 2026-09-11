@@ -907,7 +907,12 @@ public abstract class Creature
         UpdateNeeds();
         UpdateBehavior();
 
-        if (TargetInteraction is not null)
+        if (TargetInteraction is not null &&
+            CurrentAction is
+                CreatureAction.Running or
+                CreatureAction.Flying or
+                CreatureAction.Gliding or
+                CreatureAction.Hovering)
         {
             RefreshInteractionTargetPosition();
         }
@@ -1250,20 +1255,30 @@ public abstract class Creature
             animationName);
     }
 
-    private void CancelInteraction()
+    protected void AbandonCurrentInteraction()
     {
-        Logger.LogDebug(
-            DebugCategory.Behavior,
-            "Interaction cancelled because target is no longer valid.");
-
         InteractionPoi = null;
         TargetPoi = null;
 
         ReleaseTargetInteraction();
 
         InteractionTicksRemaining = 0;
+    }
+
+    private void CancelInteraction()
+    {
+        Logger.LogDebug(
+            DebugCategory.Behavior,
+            "Interaction cancelled because target is no longer valid.");
+
+        AbandonCurrentInteraction();
 
         StartIdle();
+    }
+
+    public virtual void PrepareForRemoval()
+    {
+        AbandonCurrentInteraction();
     }
 
     protected virtual void UpdateRunning()

@@ -19,7 +19,17 @@ public sealed class CreatureManager
 
     public bool Remove(Guid creatureId)
     {
-        return _activeCreatures.Remove(creatureId);
+        if (!_activeCreatures.TryGetValue(
+                creatureId,
+                out Creature? creature))
+        {
+            return false;
+        }
+
+        creature.PrepareForRemoval();
+
+        return _activeCreatures.Remove(
+            creatureId);
     }
 
     public void Update(

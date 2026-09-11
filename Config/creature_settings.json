@@ -262,7 +262,7 @@
     "needs": {
       "hunger": {
         "threshold": 0.75,
-        "rate": 0.002
+        "rate": 0.5
       },
       "energy": {
         "threshold": 0.3,
