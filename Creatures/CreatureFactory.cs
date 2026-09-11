@@ -57,17 +57,11 @@ public static class CreatureFactory
                     services),
 
             "ocelot" =>
-                new Ocelot(
+                new DataDrivenCreature(
                     definition,
-                    context.X,
-                    context.Y,
+                    context,
                     settings,
-                    services.PointOfInterestManager,
-                    services.SurfaceManager,
-                    id: context.Id,
-                    name: context.Name,
-                    appearanceTraits: context.AppearanceTraits,
-                    appearanceId: context.AppearanceId),
+                    services),
 
             _ =>
                 throw new NotSupportedException(

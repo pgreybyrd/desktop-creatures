@@ -83,7 +83,7 @@ namespace Desktop_Creatures.Creatures
 
             SetAction(
                 CreatureAction.Held,
-                "dangle");
+                "held");
         }
     }
 }
