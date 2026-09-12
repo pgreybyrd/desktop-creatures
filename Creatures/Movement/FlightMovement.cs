@@ -317,10 +317,9 @@ public sealed class FlightMovement : ICreatureMovement
             destination.Y);
 
         _context.SetStateTimeRemaining(
-            LegacyTime.ToSeconds(
-                _context.NextRandom(
-                    _flight.MinFlyTicks,
-                    _flight.MaxFlyTicks)));
+            _context.NextRandom(
+                _flight.MinFlySeconds,
+                _flight.MaxFlySeconds + 1));
 
         SetFlightModeForTarget();
 
@@ -481,10 +480,9 @@ public sealed class FlightMovement : ICreatureMovement
                 }
 
                 _hoverFlipTimeRemaining =
-                    LegacyTime.ToSeconds(
-                        _context.NextRandom(
-                            _hover.MinFlipTicks,
-                            _hover.MaxFlipTicks));
+                    _context.NextRandom(
+                        _hover.MinFlipSeconds,
+                        _hover.MaxFlipSeconds + 1);
             }
         }
 
@@ -542,16 +540,14 @@ public sealed class FlightMovement : ICreatureMovement
         _isGliding = false;
 
         _context.SetStateTimeRemaining(
-            LegacyTime.ToSeconds(
-                _context.NextRandom(
-                    _hover.MinHoverTicks,
-                    _hover.MaxHoverTicks)));
+            _context.NextRandom(
+                _hover.MinHoverSeconds,
+                _hover.MaxHoverSeconds + 1));
 
         _hoverFlipTimeRemaining =
-            LegacyTime.ToSeconds(
-                _context.NextRandom(
-                    _hover.MinFlipTicks,
-                    _hover.MaxFlipTicks));
+            _context.NextRandom(
+                _hover.MinFlipSeconds,
+                _hover.MaxFlipSeconds + 1);
 
         _context.SetAction(
             CreatureAction.Hovering,
@@ -572,10 +568,9 @@ public sealed class FlightMovement : ICreatureMovement
                 _glide!.GlideSpeed);
 
             _context.SetStateTimeRemaining(
-                LegacyTime.ToSeconds(
-                    _context.NextRandom(
-                        _glide.MinGlideTicks,
-                        _glide.MaxGlideTicks)));
+                _context.NextRandom(
+                    _glide.MinGlideSeconds,
+                    _glide.MaxGlideSeconds + 1));
 
             if (_context.GetAction() !=
                 CreatureAction.Gliding)
@@ -594,10 +589,9 @@ public sealed class FlightMovement : ICreatureMovement
             _flight.FlySpeed);
 
         _context.SetStateTimeRemaining(
-            LegacyTime.ToSeconds(
-                _context.NextRandom(
-                    _flight.MinFlyTicks,
-                    _flight.MaxFlyTicks)));
+            _context.NextRandom(
+                _flight.MinFlySeconds,
+                _flight.MaxFlySeconds + 1));
 
         if (_context.GetAction() !=
             CreatureAction.Flying)

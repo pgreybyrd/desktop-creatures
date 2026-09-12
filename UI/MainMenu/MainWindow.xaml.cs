@@ -1,6 +1,7 @@
 ﻿using Desktop_Creatures.Audio;
 using Desktop_Creatures.Config;
 using Desktop_Creatures.Creatures;
+using Desktop_Creatures.Creatures.Definitions;
 using Desktop_Creatures.Graphics;
 using Desktop_Creatures.Graphics.Animation;
 using Desktop_Creatures.Persistence;

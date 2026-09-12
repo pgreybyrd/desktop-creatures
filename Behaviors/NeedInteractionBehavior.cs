@@ -18,9 +18,9 @@ internal class NeedInteractionBehavior : IBehavior
     private readonly Func<bool> _canSearch;
     private readonly Func<WorldInteractionTarget, bool> _trySetTarget;
 
-    private readonly int _searchCooldownTicks;
+    private readonly int _searchCooldownSeconds;
 
-    private int _cooldownTicks;
+    private double _cooldownSeconds;
 
     public NeedInteractionBehavior(
         NeedManager needs,
@@ -31,7 +31,7 @@ internal class NeedInteractionBehavior : IBehavior
         Func<Point> getPosition,
         Func<bool> canSearch,
         Func<WorldInteractionTarget, bool> trySetTarget,
-        int searchCooldownTicks)
+        int searchCooldownSeconds)
     {
         _needs = needs;
         _needType = needType;
@@ -44,20 +44,27 @@ internal class NeedInteractionBehavior : IBehavior
         _canSearch = canSearch;
         _trySetTarget = trySetTarget;
 
-        _searchCooldownTicks =
-            searchCooldownTicks;
+        _searchCooldownSeconds =
+            searchCooldownSeconds;
     }
 
-    public void Update()
+    public void Update(
+        double deltaSeconds)
     {
-        if (_cooldownTicks > 0)
-            _cooldownTicks--;
+        if (_cooldownSeconds > 0)
+        {
+            _cooldownSeconds =
+                Math.Max(
+                    0,
+                    _cooldownSeconds -
+                    deltaSeconds);
+        }
 
         if (!_needs.IsActive(_needType))
             return;
 
         if (!_canSearch() ||
-            _cooldownTicks > 0)
+            _cooldownSeconds > 0)
         {
             return;
         }
@@ -96,7 +103,7 @@ internal class NeedInteractionBehavior : IBehavior
 
     private void StartCooldown()
     {
-        _cooldownTicks =
-            _searchCooldownTicks;
+        _cooldownSeconds =
+            _searchCooldownSeconds;
     }
 }

@@ -26,9 +26,13 @@ public class BehaviorController
             _behaviors.Add(behavior);
     }
 
-    public void Update()
+    public void Update(
+        double deltaSeconds)
     {
         foreach (var behavior in _behaviors)
-            behavior.Update();
+        {
+            behavior.Update(
+                deltaSeconds);
+        }
     }
 }

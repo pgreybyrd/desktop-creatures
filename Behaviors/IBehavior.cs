@@ -1,7 +1,7 @@
-﻿
-namespace Desktop_Creatures.Behaviors;
+﻿namespace Desktop_Creatures.Behaviors;
 
 public interface IBehavior
 {
-    void Update();
+    void Update(
+        double deltaSeconds);
 }

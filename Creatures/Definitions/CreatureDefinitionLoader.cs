@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Desktop_Creatures.Creatures;
+namespace Desktop_Creatures.Creatures.Definitions;
 
 public static class CreatureDefinitionLoader
 {

@@ -347,10 +347,9 @@ public sealed class GroundMovement : ICreatureMovement
             _run.RunSpeed);
 
         _context.SetStateTimeRemaining(
-            LegacyTime.ToSeconds(
-                _context.NextRandom(
-                    _run.MinRunTicks,
-                    _run.MaxRunTicks)));
+            _context.NextRandom(
+                _run.MinRunSeconds,
+                _run.MaxRunSeconds + 1));
 
         _context.SetAction(
             CreatureAction.Running,
@@ -661,5 +660,29 @@ public sealed class GroundMovement : ICreatureMovement
             _context.SetCurrentSurface(
                 supportingSurface);
         }
+    }
+
+    private double NextDurationSeconds(
+        double minSeconds,
+        double maxSeconds)
+    {
+        int minTenths =
+            (int)Math.Round(
+                minSeconds * 10.0,
+                MidpointRounding.AwayFromZero);
+
+        int maxTenths =
+            (int)Math.Round(
+                maxSeconds * 10.0,
+                MidpointRounding.AwayFromZero);
+
+        if (maxTenths <= minTenths)
+            return minTenths / 10.0;
+
+        return
+            _context.NextRandom(
+                minTenths,
+                maxTenths + 1)
+            / 10.0;
     }
 }

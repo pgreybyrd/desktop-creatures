@@ -37,12 +37,11 @@
                    Canvas.Top="83"/>
 
             <Border x:Name="DragArea"
-                    Canvas.Left="42"
-                    Canvas.Top="11"
-                    Width="268"
-                    Height="82"
+                    Canvas.Left="31"
+                    Width="291"
+                    Height="93"
                     Background="#01000000"
-                    MouseLeftButtonDown="DragArea_MouseLeftButtonDown" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    MouseLeftButtonDown="DragArea_MouseLeftButtonDown" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
             <!--<Button x:Name="SpawnEagleButton1"
                     Canvas.Left="10"
@@ -99,7 +98,7 @@
                    Width="139"
                    Height="27" 
                    Stretch="None"/>
-            
+
             <Image x:Name="RosterLabelImage"
                    IsHitTestVisible="False"
                    Stretch="None"
@@ -150,7 +149,7 @@
                     MouseLeave="Shop_MouseLeave"
                     PreviewMouseDown="Shop_MouseLeftButtonDown"
                     PreviewMouseUp="Shop_MouseUp"/>
-            
+
             <Image x:Name="ClearDesktopImage"
                    Canvas.Left="114"
                    Canvas.Top="190"
@@ -179,7 +178,7 @@
                     MouseLeave="ClearDesktop_MouseLeave"
                     PreviewMouseDown="ClearDesktop_MouseDown"
                     PreviewMouseUp="ClearDesktop_MouseUp"/>
-            
+
             <Image x:Name="SettingsImage"
                    Canvas.Left="114"
                    Canvas.Top="221"

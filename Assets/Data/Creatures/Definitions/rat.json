@@ -1,29 +1,105 @@
 {
-  "id": "rat",
-  "category": "rodents",
+"schemaVersion": 1,
+"id": "rat",
+"category": "rodents",
 
-  "movementCapabilities": [
-    "Ground"
-  ],
-
-  "appearance": {
-    "generated": true
-  },
-
-  "sounds": {
-    "spawn": "squeak",
-    "pickup": "squeak"
-  },
-
-  "pickupAnchor": {
-    "x": 33,
-    "y": 11
-  },
+"visuals": {
+  "spriteFacesRight": false,
+  "spriteWidth": 32,
+  "spriteHeight": 32,
 
   "scale": {
     "default": 2,
     "min": 2,
     "max": 3
-  }
+  },
 
+  "footOffsetY": 5,
+
+  "pickupAnchor": {
+    "x": 33,
+    "y": 11
+  }
+},
+"movement": {
+  "ground": {
+    "walk": {
+      "speed": 90.0,
+      "minDurationSeconds": 1.666666667,
+      "maxDurationSeconds": 5.0,
+      "arrivalDistance": 5
+    },
+    "run": {
+      "speed": 90.0,
+      "minDurationSeconds": 1.666666667,
+      "maxDurationSeconds": 5.0,
+      "arrivalDistance": 5
+    },
+    "fall": {
+      "gravity": 1800,
+      "maxFallSpeed": 3000,
+      "landingTolerance": 12
+    }
+  }
+},
+"appearance": {
+  "generated": true,
+  "palettes": [
+    { "id": "silver", "availability": "base" },
+    { "id": "grey", "availability": "base" },
+    { "id": "black", "availability": "base" },
+    { "id": "albino", "availability": "base" },
+    { "id": "chocolate", "availability": "base" },
+    { "id": "cinnamon", "availability": "base" }
+  ]
+},
+
+"sounds": {
+  "spawn": "squeak",
+  "pickup": "squeak"
+},
+
+"behaviors": {
+  "idle": {
+    "chance": 0.8,
+    "minDurationSeconds": 2.5,
+    "maxDurationSeconds": 3.333333333
+  },
+
+  "sleep": {
+    "enabled": false,
+    "minDurationSeconds": 10,
+    "maxDurationSeconds": 20
+  }
+},
+
+"needs": {
+  "hunger": {
+    "threshold": 0.75,
+    "ratePerSecond": 30.0
+  },
+
+  "energy": {
+    "threshold": 0.3,
+    "ratePerSecond": 0.06,
+    "initial": 1,
+    "direction": "decrease"
+  },
+
+  "curiosity": {
+    "threshold": 0.6,
+    "ratePerSecond": 0.18
+  }
+},
+
+"interactions": {
+  "eat": {
+    "pointType": "Eat",
+    "durationSeconds": 1.666666667,
+    "searchCooldownSeconds": 2.0,
+    "leaveDistance": 120,
+    "reach": 20,
+    "satisfiesNeed": "hunger"
+  }
+}
 }

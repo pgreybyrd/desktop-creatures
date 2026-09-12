@@ -1,5 +1,6 @@
 ﻿using Desktop_Creatures.Audio;
 using Desktop_Creatures.Creatures;
+using Desktop_Creatures.Creatures.Definitions;
 using Desktop_Creatures.Graphics.Animation;
 using Desktop_Creatures.Tools.Images;
 using Desktop_Creatures.UI.FieldGuide;

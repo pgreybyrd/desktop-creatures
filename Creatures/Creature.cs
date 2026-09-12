@@ -66,14 +66,6 @@ public abstract class Creature
 
     protected double StateTimeRemaining;
     protected double InteractionTimeRemaining;
-    //private const double LegacyTickSeconds = 0.016;
-
-    //protected static double LegacyTicksToSeconds(
-    //    int ticks)
-    //{
-    //    return ticks * LegacyTickSeconds;
-    //}
-
     protected CreatureSettings Settings { get; }
 
     public int Scale => Settings.Scale;
@@ -550,8 +542,8 @@ public abstract class Creature
                 trySetTarget:
                     TrySetInteractionTarget,
 
-                searchCooldownTicks:
-                    Eat.FoodSearchCooldownTicks));
+                searchCooldownSeconds:
+                    Eat.FoodSearchCooldownSeconds));
 
         BehaviorController.AddBehavior(
             new NeedInteractionBehavior(
@@ -571,8 +563,8 @@ public abstract class Creature
                 trySetTarget:
                     TrySetInteractionTarget,
 
-                searchCooldownTicks:
-                    Eat.FoodSearchCooldownTicks));
+                searchCooldownSeconds:
+                    Eat.FoodSearchCooldownSeconds));
     }
 
     protected void OverrideAnimation(
@@ -731,7 +723,7 @@ public abstract class Creature
             CreatureAction.Eating or
             CreatureAction.Drinking)
         {
-            TickDown(
+            CountDown(
                 ref InteractionTimeRemaining,
                 deltaSeconds);
         }
@@ -740,13 +732,13 @@ public abstract class Creature
             CreatureAction.Running or
             CreatureAction.Idle)
         {
-            TickDown(
+            CountDown(
                 ref StateTimeRemaining,
                 deltaSeconds);
         }
     }
 
-    protected static void TickDown(
+    protected static void CountDown(
         ref double timer,
         double deltaSeconds)
     {
@@ -922,7 +914,7 @@ public abstract class Creature
     {
         UpdateTimers(deltaSeconds);
         UpdateNeeds();
-        UpdateBehavior();
+        UpdateBehavior(deltaSeconds);
 
         if (TargetInteraction is not null &&
             CurrentAction is
@@ -943,9 +935,11 @@ public abstract class Creature
         Needs.Update();
     }
 
-    protected virtual void UpdateBehavior()
+    protected virtual void UpdateBehavior(
+        double deltaSeconds)
     {
-        BehaviorController.Update();
+        BehaviorController.Update(
+            deltaSeconds);
     }
 
     protected virtual void UpdateState(
@@ -1253,10 +1247,9 @@ public abstract class Creature
         SpeedX = 0;
 
         StateTimeRemaining =
-            LegacyTime.ToSeconds(
-                Random.Next(
-                    Settings.Perch.MinPerchTicks,
-                    Settings.Perch.MaxPerchTicks));
+            Random.Next(
+                Settings.Perch.MinPerchSeconds,
+                Settings.Perch.MaxPerchSeconds + 1);
 
         SetAction(
             CreatureAction.Perching,
@@ -1287,8 +1280,7 @@ public abstract class Creature
     {
         InteractionPoi = poi;
         InteractionTimeRemaining =
-            LegacyTime.ToSeconds(
-                Eat.EatingTicksRemaining);
+            Eat.EatDurationSeconds;
 
         SpeedX = 0;
         StateTimeRemaining = 0;
@@ -1382,10 +1374,9 @@ public abstract class Creature
         SpeedX = 0;
 
         StateTimeRemaining =
-            LegacyTime.ToSeconds(
-                Random.Next(
-                    Idle.MinIdleTicks,
-                    Idle.MaxIdleTicks));
+            Random.Next(
+                Idle.MinIdleSeconds,
+                Idle.MaxIdleSeconds + 1);
     }
 
     protected virtual void UpdateIdle()
@@ -1629,9 +1620,10 @@ public abstract class Creature
 
         MovementSpeed = Run.RunSpeed * DisplayScale;
 
-        StateTimeRemaining = Random.Next(
-            Run.MinRunTicks,
-            Run.MaxRunTicks);
+        StateTimeRemaining =
+            Random.Next(
+                Run.MinRunSeconds,
+                Run.MaxRunSeconds + 1);
 
         SetAction(CreatureAction.Running, "Run");
     }
@@ -1678,9 +1670,10 @@ public abstract class Creature
         TargetY = CurrentSurface.Top - GetCurrentFootY();
         MovementSpeed = Run.RunSpeed * DisplayScale;
 
-        StateTimeRemaining = Random.Next(
-            Run.MinRunTicks,
-            Run.MaxRunTicks);
+        StateTimeRemaining =
+            Random.Next(
+                Run.MinRunSeconds,
+                Run.MaxRunSeconds + 1);
 
         Logger.LogDebug(
             DebugCategory.Behavior,
