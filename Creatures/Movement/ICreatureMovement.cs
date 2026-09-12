@@ -2,8 +2,6 @@
 
 public interface ICreatureMovement
 {
-    MovementCapability Capability { get; }
-
     void Initialize();
 
     bool HandlesAction(

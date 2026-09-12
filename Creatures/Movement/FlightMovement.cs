@@ -19,9 +19,6 @@ public sealed class FlightMovement : ICreatureMovement
 
     private double _hoverFlipTimeRemaining;
 
-    public MovementCapability Capability =>
-        MovementCapability.Flight;
-
     public FlightMovement(
         CreatureMovementContext context,
         SurfaceManager surfaceManager,

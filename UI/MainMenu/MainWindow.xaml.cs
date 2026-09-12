@@ -1171,8 +1171,7 @@ public partial class MainWindow : Window
             };
         }
 
-        return definition.MovementCapabilities.Contains(
-            MovementCapability.Flight)
+        return definition.Movement.Flight is not null
             ? CreateFlyingSpawnContext(
                 definition,
                 settings)

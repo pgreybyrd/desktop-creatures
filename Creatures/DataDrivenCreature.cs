@@ -68,8 +68,7 @@ public sealed class DataDrivenCreature : Creature
         CreatureDefinition definition,
         CreatureServices services)
     {
-        if (definition.MovementCapabilities.Contains(
-                MovementCapability.Ground))
+        if (definition.Movement.Ground is not null)
         {
             var groundMovement =
                 new GroundMovement(
@@ -85,13 +84,11 @@ public sealed class DataDrivenCreature : Creature
             _movements.Add(
                 groundMovement);
 
-
             groundMovement.Initialize();
             groundMovement.PickNewTarget();
         }
 
-        if (definition.MovementCapabilities.Contains(
-                MovementCapability.Flight))
+        if (definition.Movement.Flight is not null)
         {
             var flightMovement =
                 new FlightMovement(
@@ -126,7 +123,7 @@ public sealed class DataDrivenCreature : Creature
             $"MOVEMENT REQUEST: " +
             $"creature={CreatureType} " +
             $"destination=({destination.X:F1},{destination.Y:F1}) " +
-            $"capabilities={string.Join(",", _movements.Select(m => m.Capability))}");
+            $"movements={string.Join(",", _movements.Select(m => m.GetType().Name))}");
 
         foreach (ICreatureMovement movement in
                  _movements)
@@ -139,7 +136,7 @@ public sealed class DataDrivenCreature : Creature
                 DebugCategory.Movement,
                 $"CAPABILITY CHECK: " +
                 $"creature={CreatureType} " +
-                $"capability={movement.Capability} " +
+                $"movement={movement.GetType().Name} " +
                 $"canReach={canReach}");
 
             if (!canReach)
@@ -153,7 +150,7 @@ public sealed class DataDrivenCreature : Creature
                 DebugCategory.Movement,
                 $"CAPABILITY DESTINATION: " +
                 $"creature={CreatureType} " +
-                $"capability={movement.Capability} " +
+                $"movement={movement.GetType().Name} " +
                 $"accepted={accepted}");
 
             if (accepted)

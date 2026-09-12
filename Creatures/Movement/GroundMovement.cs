@@ -12,9 +12,6 @@ public sealed class GroundMovement : ICreatureMovement
     private readonly RunSettings _run;
     private readonly FallSettings _fall;
 
-    public MovementCapability Capability =>
-        MovementCapability.Ground;
-
     public GroundMovement(
         CreatureMovementContext context,
         SurfaceManager surfaceManager,
