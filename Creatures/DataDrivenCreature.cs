@@ -68,18 +68,15 @@ public sealed class DataDrivenCreature : Creature
         CreatureDefinition definition,
         CreatureServices services)
     {
-        if (definition.Movement.Ground is not null)
+        if (Settings.Run is not null &&
+            Settings.Fall is not null)
         {
             var groundMovement =
                 new GroundMovement(
                     CreateMovementContext(),
                     services.SurfaceManager,
-                    Settings.Run
-                        ?? throw new InvalidOperationException(
-                            $"Ground creature '{definition.Id}' requires RunSettings."),
-                    Settings.Fall
-                        ?? throw new InvalidOperationException(
-                            $"Ground creature '{definition.Id}' requires FallSettings."));
+                    Settings.Run,
+                    Settings.Fall);
 
             _movements.Add(
                 groundMovement);
@@ -88,15 +85,13 @@ public sealed class DataDrivenCreature : Creature
             groundMovement.PickNewTarget();
         }
 
-        if (definition.Movement.Flight is not null)
+        if (Settings.Flight is not null)
         {
             var flightMovement =
                 new FlightMovement(
                     CreateMovementContext(),
                     services.SurfaceManager,
-                    Settings.Flight
-                        ?? throw new InvalidOperationException(
-                            $"Flying creature '{definition.Id}' requires FlightSettings."),
+                    Settings.Flight,
                     Settings.Hover,
                     Settings.Glide,
                     Settings.Perch);

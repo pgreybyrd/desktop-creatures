@@ -173,11 +173,15 @@ public abstract class Creature
 
         Settings = settings;
 
+        CreaturePointDefinition? pickupAnchor =
+            definition.Visuals?.PickupAnchor ??
+            definition.PickupAnchor;
+
         _pickupAnchor =
-            definition.Visuals.PickupAnchor is not null
+            pickupAnchor is not null
                 ? new Point(
-                    definition.Visuals.PickupAnchor.X,
-                    definition.Visuals.PickupAnchor.Y)
+                    pickupAnchor.X,
+                    pickupAnchor.Y)
                 : new Point(
                     SpriteWidth / 2.0,
                     SpriteHeight / 4.0);

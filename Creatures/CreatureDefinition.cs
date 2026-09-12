@@ -6,16 +6,16 @@ public sealed record CreatureDefinition
 
     public required string Id { get; init; }
 
-    public required string Category { get; init; }
+    public string? Category { get; init; }
 
-    public required CreatureVisualsDefinition Visuals { get; init; }
+    public CreatureVisualsDefinition? Visuals { get; init; }
 
     public CreatureAppearanceSettingsDefinition? Appearance { get; init; }
 
     public Dictionary<string, string> Sounds { get; init; } =
         new(StringComparer.OrdinalIgnoreCase);
 
-    public required CreatureMovementDefinition Movement { get; init; }
+    public CreatureMovementDefinition? Movement { get; init; }
 
     public CreatureNeedsDefinition? Needs { get; init; }
 
@@ -24,7 +24,9 @@ public sealed record CreatureDefinition
     public CreatureBehaviorsDefinition? Behaviors { get; init; }
 
     public string AssetFolder =>
-        $"Assets/Creatures/{ToFolderName(Category)}/{ToFolderName(Id)}";
+        Category is not null
+            ? $"Assets/Creatures/{ToFolderName(Category)}/{ToFolderName(Id)}"
+            : $"Assets/Creatures/{ToFolderName(Id)}";
 
     private static string ToFolderName(
         string value)
@@ -36,6 +38,9 @@ public sealed record CreatureDefinition
             char.ToUpperInvariant(value[0]) +
             value[1..];
     }
+
+    [Obsolete("Legacy definition compatibility only.")]
+    public CreaturePointDefinition? PickupAnchor { get; init; }
 }
 
 public sealed record CreatureVisualsDefinition

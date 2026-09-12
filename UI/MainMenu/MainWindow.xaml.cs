@@ -79,8 +79,6 @@ public partial class MainWindow : Window
     private readonly BitmapSource _quitPressed;
     private readonly BitmapSource _quitLabel;
 
-    private readonly UiButtonImages _quitImages = null!;
-
     private readonly List<POIWindow> _poiWindows = new();
     private readonly List<CreatureWindow> _creatureWindows = new();
 
@@ -104,6 +102,10 @@ public partial class MainWindow : Window
     private const int MaxRats = 20;
     private const int MaxEagles = 20;
     private const int MaxOcelots = 20;
+
+    private const int MenuTitleBarTop = 57;
+    private const int MenuTitleBarLeft = 108;
+    private const int MenuTitleBarWidth = 151;
 
     private int _uiScale = 1;
 
@@ -1171,7 +1173,7 @@ public partial class MainWindow : Window
             };
         }
 
-        return definition.Movement.Flight is not null
+        return settings.Flight is not null
             ? CreateFlyingSpawnContext(
                 definition,
                 settings)
@@ -1317,9 +1319,9 @@ public partial class MainWindow : Window
 
     private void UpdateMenuSurface()
     {
-        int surfaceX = (int)(Left + 111 * _uiScale);
-        int surfaceY = (int)(Top + 42 * _uiScale);
-        int surfaceWidth = 151 * _uiScale;
+        int surfaceX = (int)(Left + MenuTitleBarLeft * _uiScale);
+        int surfaceY = (int)(Top + MenuTitleBarTop * _uiScale);
+        int surfaceWidth = MenuTitleBarWidth * _uiScale;
 
         _surfaceManager.SetMenuSurface(
             new Rectangle(
