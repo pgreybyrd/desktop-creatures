@@ -163,10 +163,9 @@ public sealed class FlightMovement : ICreatureMovement
                         candidateY +
                         spriteHeight);
 
-                if (!_surfaceManager.IsPointOnDesktop(
-                        topLeft) ||
-                    !_surfaceManager.IsPointOnDesktop(
-                        bottomRight))
+                if (!CanTraverseTo(
+                        candidateX,
+                        candidateY))
                 {
                     continue;
                 }
@@ -183,24 +182,28 @@ public sealed class FlightMovement : ICreatureMovement
                 break;
             }
 
-            if (!foundTarget)
-            {
-                PickRandomDesktopTarget(
+            if (!foundTarget &&
+                !TryPickReachableDesktopTarget(
                     monitorBounds,
                     spriteWidth,
                     spriteHeight,
                     out targetX,
-                    out targetY);
+                    out targetY))
+            {
+                return;
             }
         }
         else
         {
-            PickRandomDesktopTarget(
-                monitorBounds,
-                spriteWidth,
-                spriteHeight,
-                out targetX,
-                out targetY);
+            if (!TryPickReachableDesktopTarget(
+                    monitorBounds,
+                    spriteWidth,
+                    spriteHeight,
+                    out targetX,
+                    out targetY))
+            {
+                return;
+            }
         }
 
         _context.SetTargetX(
@@ -250,17 +253,58 @@ public sealed class FlightMovement : ICreatureMovement
                 maxY);
     }
 
+    private bool TryPickReachableDesktopTarget(
+        IReadOnlyList<Rectangle> monitorBounds,
+        int spriteWidth,
+        int spriteHeight,
+        out double targetX,
+        out double targetY)
+    {
+        const int maxAttempts =
+            30;
+
+        for (int attempt = 0;
+             attempt < maxAttempts;
+             attempt++)
+        {
+            PickRandomDesktopTarget(
+                monitorBounds,
+                spriteWidth,
+                spriteHeight,
+                out double candidateX,
+                out double candidateY);
+
+            if (!CanTraverseTo(
+                    candidateX,
+                    candidateY))
+            {
+                continue;
+            }
+
+            targetX =
+                candidateX;
+
+            targetY =
+                candidateY;
+
+            return true;
+        }
+
+        targetX =
+            _context.GetX();
+
+        targetY =
+            _context.GetY();
+
+        return false;
+    }
+
     public bool CanReach(
         MovementDestination destination)
     {
-        Point destinationPoint =
-            new(
-                destination.X,
-                destination.Y);
-
-        return _surfaceManager
-            .IsPointOnDesktop(
-                destinationPoint);
+        return CanTraverseTo(
+            destination.X,
+            destination.Y);
     }
 
     public bool TrySetDestination(
@@ -589,5 +633,88 @@ public sealed class FlightMovement : ICreatureMovement
 
         return normalizedRoll <
             _glide.GlideChance;
+    }
+
+    private bool PositionFitsOnDesktop(
+        double x,
+        double y)
+    {
+        double right =
+            x +
+            _context.GetSpriteWidth();
+
+        double bottom =
+            y +
+            _context.GetSpriteHeight();
+
+        return
+            _surfaceManager.IsPointOnDesktop(
+                new Point(x, y)) &&
+            _surfaceManager.IsPointOnDesktop(
+                new Point(right, y)) &&
+            _surfaceManager.IsPointOnDesktop(
+                new Point(x, bottom)) &&
+            _surfaceManager.IsPointOnDesktop(
+                new Point(right, bottom));
+    }
+
+    private bool CanTraverseTo(
+        double targetX,
+        double targetY)
+    {
+        double startX =
+            _context.GetX();
+
+        double startY =
+            _context.GetY();
+
+        double dx =
+            targetX -
+            startX;
+
+        double dy =
+            targetY -
+            startY;
+
+        double distance =
+            Math.Sqrt(
+                dx * dx +
+                dy * dy);
+
+        const double sampleSpacing =
+            12.0;
+
+        int sampleCount =
+            Math.Max(
+                1,
+                (int)Math.Ceiling(
+                    distance /
+                    sampleSpacing));
+
+        for (int i = 1;
+             i <= sampleCount;
+             i++)
+        {
+            double progress =
+                (double)i /
+                sampleCount;
+
+            double x =
+                startX +
+                (dx * progress);
+
+            double y =
+                startY +
+                (dy * progress);
+
+            if (!PositionFitsOnDesktop(
+                    x,
+                    y))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
