@@ -59,7 +59,8 @@ public sealed class FlightMovement : ICreatureMovement
             CreatureAction.Hovering;
     }
 
-    public void Update()
+    public void Update(
+        double deltaSeconds)
     {
         switch (_context.GetAction())
         {

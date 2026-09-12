@@ -63,7 +63,8 @@ public sealed class GroundMovement : ICreatureMovement
             CreatureAction.Falling;
     }
 
-    public void Update()
+    public void Update(
+        double deltaSeconds)
     {
         switch (_context.GetAction())
         {

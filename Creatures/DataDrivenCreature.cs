@@ -43,7 +43,8 @@ public sealed class DataDrivenCreature : Creature
             CreatureSoundEvent.Spawn);
     }
 
-    protected override void UpdateState()
+    protected override void UpdateState(
+        double deltaSeconds)
     {
         ICreatureMovement? movement =
             _movements.FirstOrDefault(
@@ -53,11 +54,14 @@ public sealed class DataDrivenCreature : Creature
 
         if (movement is null)
         {
-            base.UpdateState();
+            base.UpdateState(
+                deltaSeconds);
+
             return;
         }
 
-        movement.Update();
+        movement.Update(
+            deltaSeconds);
     }
 
     private void InitializeMovementCapabilities(

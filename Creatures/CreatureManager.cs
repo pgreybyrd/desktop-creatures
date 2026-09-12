@@ -33,6 +33,7 @@ public sealed class CreatureManager
     }
 
     public void Update(
+        double deltaSeconds,
         Func<Creature, bool>? shouldUpdate = null)
     {
         foreach (Creature creature in
@@ -44,7 +45,8 @@ public sealed class CreatureManager
                 continue;
             }
 
-            creature.Update();
+            creature.Update(
+                deltaSeconds);
         }
     }
 }

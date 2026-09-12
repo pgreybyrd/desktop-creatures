@@ -11,6 +11,7 @@ using Desktop_Creatures.Utilities;
 using Desktop_Creatures.Windowing;
 using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -26,6 +27,9 @@ namespace Desktop_Creatures;
 public partial class MainWindow : Window
 {
     private readonly DispatcherTimer _timer;
+
+    private readonly Stopwatch _simulationClock = Stopwatch.StartNew();
+    private double _lastSimulationSeconds;
 
     private bool _isDragging = false;
 
@@ -718,12 +722,27 @@ public partial class MainWindow : Window
 
     private void Update(object? sender, EventArgs e)
     {
+        double nowSeconds =
+            _simulationClock.Elapsed.TotalSeconds;
+
+        double deltaSeconds =
+            nowSeconds - _lastSimulationSeconds;
+
+        _lastSimulationSeconds =
+            nowSeconds;
+
         if (_isDragging)
             return;
+
+        deltaSeconds =
+            Math.Min(
+                deltaSeconds,
+                0.1);
 
         _surfaceManager.Update();
 
         _creatureManager.Update(
+            deltaSeconds,
             creature =>
             {
                 CreatureWindow? window =

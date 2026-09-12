@@ -901,7 +901,8 @@ public abstract class Creature
         };
     }
 
-    public void Update()
+    public void Update(
+        double deltaSeconds)
     {
         UpdateTimers();
         UpdateNeeds();
@@ -917,7 +918,7 @@ public abstract class Creature
             RefreshInteractionTargetPosition();
         }
 
-        UpdateState();
+        UpdateState(deltaSeconds);
         UpdateAnimation();
     }
 
@@ -931,25 +932,31 @@ public abstract class Creature
         BehaviorController.Update();
     }
 
-    protected virtual void UpdateState()
+    protected virtual void UpdateState(
+        double deltaSeconds)
     {
         switch (CurrentAction)
         {
             case CreatureAction.Running:
                 UpdateRunning();
                 break;
+
             case CreatureAction.Idle:
                 UpdateIdle();
                 break;
+
             case CreatureAction.Falling:
                 UpdateFalling();
                 break;
+
             case CreatureAction.Eating:
                 UpdateEating();
                 break;
+
             case CreatureAction.Drinking:
                 UpdateDrinking();
                 break;
+
             case CreatureAction.Perching:
                 UpdatePerching();
                 break;

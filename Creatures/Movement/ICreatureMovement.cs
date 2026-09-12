@@ -9,7 +9,8 @@ public interface ICreatureMovement
     bool HandlesAction(
         CreatureAction action);
 
-    void Update();
+    void Update(
+        double deltaSeconds);
 
     void Release();
 
