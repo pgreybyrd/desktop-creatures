@@ -286,9 +286,6 @@ public abstract class Creature
             GetMovementSpeed =
                 () => MovementSpeed,
 
-            GetScale =
-                () => Settings.Scale,
-
             GetFrameMovement =
                 () =>
                 {
@@ -338,6 +335,9 @@ public abstract class Creature
 
             GetDisplayScale =
                 () => DisplayScale,
+
+            GetSettingsScale =
+                () => Settings.Scale,
 
             NextRandom =
                 (min, max) => Random.Next(min, max),
@@ -587,12 +587,6 @@ public abstract class Creature
     {
         DisplayScale =
             Math.Clamp(scale, 1, 4);
-
-        if (Settings.Run is not null)
-        {
-            MovementSpeed =
-                Run.RunSpeed * DisplayScale;
-        }
     }
 
     protected void InitializePosition(
@@ -1136,6 +1130,22 @@ public abstract class Creature
         Point position =
             TargetInteraction.Position;
 
+        const double positionTolerance =
+            0.5;
+
+        bool targetHasMoved =
+            Math.Abs(
+                TargetX -
+                position.X) >
+            positionTolerance ||
+            Math.Abs(
+                TargetY -
+                position.Y) >
+            positionTolerance;
+
+        if (!targetHasMoved)
+            return true;
+
         var destination =
             new MovementDestination(
                 position.X,
@@ -1372,9 +1382,10 @@ public abstract class Creature
         SpeedX = 0;
 
         StateTimeRemaining =
-            Random.Next(
-                Idle.MinIdleTicks,
-                Idle.MaxIdleTicks);
+            LegacyTime.ToSeconds(
+                Random.Next(
+                    Idle.MinIdleTicks,
+                    Idle.MaxIdleTicks));
     }
 
     protected virtual void UpdateIdle()

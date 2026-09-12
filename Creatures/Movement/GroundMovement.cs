@@ -69,7 +69,7 @@ public sealed class GroundMovement : ICreatureMovement
         switch (_context.GetAction())
         {
             case CreatureAction.Running:
-                UpdateRunning();
+                UpdateRunning(deltaSeconds);
                 break;
 
             case CreatureAction.Idle:
@@ -77,12 +77,13 @@ public sealed class GroundMovement : ICreatureMovement
                 break;
 
             case CreatureAction.Falling:
-                UpdateFalling();
+                UpdateFalling(deltaSeconds);
                 break;
         }
     }
 
-    private void UpdateRunning()
+    private void UpdateRunning(
+        double deltaSeconds)
     {
         if (!_context.IsStillOnSurface())
         {
@@ -107,7 +108,7 @@ public sealed class GroundMovement : ICreatureMovement
             return;
         }
 
-        MoveTowardsTarget();
+        MoveTowardsTarget(deltaSeconds);
 
         if (_context.GetAction() !=
             CreatureAction.Running)
@@ -136,7 +137,8 @@ public sealed class GroundMovement : ICreatureMovement
         }
     }
 
-    private void UpdateFalling()
+    private void UpdateFalling(
+        double deltaSeconds)
     {
         double previousFeetY =
             _context.GetY() +
@@ -145,7 +147,7 @@ public sealed class GroundMovement : ICreatureMovement
         double fallSpeed =
             Math.Min(
                 _context.GetFallSpeed() +
-                _fall.Gravity,
+                (_fall.Gravity * deltaSeconds),
                 _fall.MaxFallSpeed);
 
         _context.SetFallSpeed(
@@ -153,7 +155,7 @@ public sealed class GroundMovement : ICreatureMovement
 
         _context.SetY(
             _context.GetY() +
-            fallSpeed);
+            (fallSpeed * deltaSeconds));
 
         double currentFeetY =
             _context.GetY() +
@@ -345,13 +347,13 @@ public sealed class GroundMovement : ICreatureMovement
             targetY);
 
         _context.SetMovementSpeed(
-            _run.RunSpeed *
-            _context.GetDisplayScale());
+            _run.RunSpeed);
 
         _context.SetStateTimeRemaining(
-            _context.NextRandom(
-                _run.MinRunTicks,
-                _run.MaxRunTicks));
+            LegacyTime.ToSeconds(
+                _context.NextRandom(
+                    _run.MinRunTicks,
+                    _run.MaxRunTicks)));
 
         _context.SetAction(
             CreatureAction.Running,
@@ -392,8 +394,7 @@ public sealed class GroundMovement : ICreatureMovement
             resolved.Y);
 
         _context.SetMovementSpeed(
-            _run.RunSpeed *
-            _context.GetDisplayScale());
+            _run.RunSpeed);
 
         Logger.LogDebug(
             DebugCategory.Movement,
@@ -519,7 +520,8 @@ public sealed class GroundMovement : ICreatureMovement
                 _context.GetSpriteWidth();
     }
 
-    private void MoveTowardsTarget()
+    private void MoveTowardsTarget(
+        double deltaSeconds)
     {
         Surface? surface =
             _context.GetCurrentSurface();
@@ -542,7 +544,9 @@ public sealed class GroundMovement : ICreatureMovement
 
         double currentStep =
             _context.GetMovementSpeed() *
-            _context.GetScale() *
+            _context.GetSettingsScale() *
+            _context.GetDisplayScale() *
+            deltaSeconds *
             _context.GetFrameMovement();
 
         double arrivalDistance =
@@ -573,14 +577,13 @@ public sealed class GroundMovement : ICreatureMovement
             return;
         }
 
-        double moveSpeed =
-            _context.GetMovementSpeed() *
-            _context.GetScale() *
-            _context.GetFrameMovement();
-
         double step =
             Math.Min(
-                moveSpeed,
+                _context.GetMovementSpeed() *
+                _context.GetSettingsScale() *
+                _context.GetDisplayScale() *
+                deltaSeconds *
+                _context.GetFrameMovement(),
                 distance);
 
         double speedX =

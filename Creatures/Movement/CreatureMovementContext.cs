@@ -30,6 +30,7 @@ public sealed class CreatureMovementContext
     public required Func<double> GetStateTimeRemaining { get; init; }
 
     public required Func<int> GetDisplayScale { get; init; }
+    public required Func<int> GetSettingsScale { get; init; }
 
     public required Func<int, int, int> NextRandom { get; init; }
 
@@ -42,8 +43,6 @@ public sealed class CreatureMovementContext
     public required Action<double> SetFallSpeed { get; init; }
 
     public required Func<double> GetDisplayCenterX { get; init; }
-
-    public required Func<int> GetScale { get; init; }
 
     public required Func<double> GetFrameMovement { get; init; }
 

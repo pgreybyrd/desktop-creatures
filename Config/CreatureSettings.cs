@@ -135,11 +135,12 @@ public class SleepSettings
 }
 public class FallSettings
 {
-    public double Gravity { get; set; } = 0.5; //0.981;
-    public double MaxFallSpeed { get; set; } = 50;
+    public double Gravity { get; set; } = 1800.0;
+    public double MaxFallSpeed { get; set; } = 3000.0;
     public int FallFrameCount { get; set; } = 1;
     public int FallFrameTicks { get; set; } = 5;
 }
+
 public class EatSettings
 {
     public int EatFrameCount { get; set; } = 5;

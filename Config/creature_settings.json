@@ -5,13 +5,13 @@
     "spriteHeight": 32,
     "scale": 2,
     "flight": {
-      "flySpeed": 8.0,
+      "flySpeed": 120,
       "minFlyTicks": 60,
       "maxFlyTicks": 180,
       "arrivalDistance": 10
     },
     "glide": {
-      "glideSpeed": 8.0,
+      "glideSpeed": 120,
       "minDownwardGlideDy": 5,
       "glideChance": 0.5,
       "minGlideTicks": 200,
@@ -30,7 +30,7 @@
     "spriteHeight": 32,
     "scale": 1,
     "flight": {
-      "flySpeed": 20.0,
+      "flySpeed": 250,
       "minFlyTicks": 20,
       "maxFlyTicks": 70,
       "arrivalDistance": 5,
@@ -90,7 +90,7 @@
     "scale": 1,
     "footOffsetY": 0,
     "run": {
-      "runSpeed": 2.5,
+      "runSpeed": 80,
       "minRunTicks": 80,
       "maxRunTicks": 240,
       "runFrameCount": 5,
@@ -137,7 +137,7 @@
     "scale": 1,
     "footOffsetY": 0,
     "run": {
-      "runSpeed": 2.0,
+      "runSpeed": 60,
       "minRunTicks": 100,
       "maxRunTicks": 240
     },
@@ -182,7 +182,7 @@
       "walkFrameTicks": 10
     },
     "run": {
-      "runSpeed": 1.5,
+      "runSpeed": 70,
       "minRunTicks": 100,
       "maxRunTicks": 300,
       "runFrameCount": 6,
@@ -282,7 +282,7 @@
     "scale": 2,
     "footOffsetY": 0,
     "run": {
-      "runSpeed": 1.0,
+      "runSpeed": 60,
       "minRunTicks": 100,
       "maxRunTicks": 300,
       "runFrameCount": 12,
