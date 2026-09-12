@@ -1,4 +1,5 @@
 ﻿using Desktop_Creatures.Config;
+using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World.Surfaces;
 using Point = System.Windows.Point;
 
@@ -16,7 +17,7 @@ public sealed class FlightMovement : ICreatureMovement
 
     private bool _isGliding;
 
-    private int _hoverFlipTicksRemaining;
+    private double _hoverFlipTimeRemaining;
 
     public MovementCapability Capability =>
         MovementCapability.Flight;
@@ -66,11 +67,11 @@ public sealed class FlightMovement : ICreatureMovement
         {
             case CreatureAction.Flying:
             case CreatureAction.Gliding:
-                UpdateFlight();
+                UpdateFlight(deltaSeconds);
                 break;
 
             case CreatureAction.Hovering:
-                UpdateHover();
+                UpdateHover(deltaSeconds);
                 break;
         }
     }
@@ -274,7 +275,7 @@ public sealed class FlightMovement : ICreatureMovement
         _context.SetTargetY(
             destination.Y);
 
-        _context.SetStateTicksRemaining(
+        _context.SetStateTimeRemaining(
             _context.NextRandom(
                 _flight.MinFlyTicks,
                 _flight.MaxFlyTicks));
@@ -298,7 +299,8 @@ public sealed class FlightMovement : ICreatureMovement
         PickNewTarget();
     }
 
-    private void UpdateFlight()
+    private void UpdateFlight(
+        double deltaSeconds)
     {
         double dx =
             _context.GetTargetX() -
@@ -382,36 +384,42 @@ public sealed class FlightMovement : ICreatureMovement
         _context.SetY(
             nextY);
 
-        int ticksRemaining =
-            _context.GetStateTicksRemaining() -
-            1;
+        double timeRemaining =
+            _context.GetStateTimeRemaining() -
+            deltaSeconds;
 
-        _context.SetStateTicksRemaining(
-            ticksRemaining);
+        _context.SetStateTimeRemaining(
+            Math.Max(
+                0,
+                timeRemaining));
 
-        if (ticksRemaining <= 0)
+        if (timeRemaining <= 0)
         {
             SetFlightModeForTarget();
         }
     }
 
-    private void UpdateHover()
+    private void UpdateHover(
+        double deltaSeconds)
     {
-        int ticksRemaining =
-            _context.GetStateTicksRemaining() -
-            1;
+        double timeRemaining =
+            Math.Max(
+                0,
+                _context.GetStateTimeRemaining() -
+                deltaSeconds);
 
-        _context.SetStateTicksRemaining(
-            ticksRemaining);
+        _context.SetStateTimeRemaining(
+            timeRemaining);
 
         _context.SetSpeedX(
             0);
 
         if (_hover is not null)
         {
-            _hoverFlipTicksRemaining--;
+            _hoverFlipTimeRemaining -=
+                deltaSeconds;
 
-            if (_hoverFlipTicksRemaining <= 0)
+            if (_hoverFlipTimeRemaining <= 0)
             {
                 int roll =
                     _context.NextRandom(
@@ -428,14 +436,15 @@ public sealed class FlightMovement : ICreatureMovement
                     _context.FlipFacing();
                 }
 
-                _hoverFlipTicksRemaining =
-                    _context.NextRandom(
-                        _hover.MinFlipTicks,
-                        _hover.MaxFlipTicks);
+                _hoverFlipTimeRemaining =
+                    LegacyTime.ToSeconds(
+                        _context.NextRandom(
+                            _hover.MinFlipTicks,
+                            _hover.MaxFlipTicks));
             }
         }
 
-        if (ticksRemaining > 0)
+        if (timeRemaining > 0)
             return;
 
         PickNewTarget();
@@ -488,15 +497,17 @@ public sealed class FlightMovement : ICreatureMovement
 
         _isGliding = false;
 
-        _context.SetStateTicksRemaining(
-            _context.NextRandom(
-                _hover.MinHoverTicks,
-                _hover.MaxHoverTicks));
+        _context.SetStateTimeRemaining(
+            LegacyTime.ToSeconds(
+                _context.NextRandom(
+                    _hover.MinHoverTicks,
+                    _hover.MaxHoverTicks)));
 
-        _hoverFlipTicksRemaining =
-            _context.NextRandom(
-                _hover.MinFlipTicks,
-                _hover.MaxFlipTicks);
+        _hoverFlipTimeRemaining =
+            LegacyTime.ToSeconds(
+                _context.NextRandom(
+                    _hover.MinFlipTicks,
+                    _hover.MaxFlipTicks));
 
         _context.SetAction(
             CreatureAction.Hovering,
@@ -517,7 +528,7 @@ public sealed class FlightMovement : ICreatureMovement
             _context.SetMovementSpeed(
                 _glide!.GlideSpeed);
 
-            _context.SetStateTicksRemaining(
+            _context.SetStateTimeRemaining(
                 _context.NextRandom(
                     _glide.MinGlideTicks,
                     _glide.MaxGlideTicks));
@@ -534,7 +545,7 @@ public sealed class FlightMovement : ICreatureMovement
         _context.SetMovementSpeed(
             _flight.FlySpeed);
 
-        _context.SetStateTicksRemaining(
+        _context.SetStateTimeRemaining(
             _context.NextRandom(
                 _flight.MinFlyTicks,
                 _flight.MaxFlyTicks));

@@ -116,7 +116,7 @@ public sealed class GroundMovement : ICreatureMovement
         }
 
         if (!_context.HasInteractionTarget() &&
-            _context.GetStateTicksRemaining() <= 0)
+            _context.GetStateTimeRemaining() <= 0)
         {
             _context.OnOrdinaryTargetReached();
         }
@@ -130,7 +130,7 @@ public sealed class GroundMovement : ICreatureMovement
             return;
         }
 
-        if (_context.GetStateTicksRemaining() <= 0)
+        if (_context.GetStateTimeRemaining() <= 0)
         {
             PickNewTarget();
         }
@@ -348,7 +348,7 @@ public sealed class GroundMovement : ICreatureMovement
             _run.RunSpeed *
             _context.GetDisplayScale());
 
-        _context.SetStateTicksRemaining(
+        _context.SetStateTimeRemaining(
             _context.NextRandom(
                 _run.MinRunTicks,
                 _run.MaxRunTicks));

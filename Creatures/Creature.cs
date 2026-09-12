@@ -64,8 +64,15 @@ public abstract class Creature
     protected double TargetY;
     protected double MovementSpeed;
 
-    protected int StateTicksRemaining;
-    protected int InteractionTicksRemaining;
+    protected double StateTimeRemaining;
+    protected double InteractionTimeRemaining;
+    //private const double LegacyTickSeconds = 0.016;
+
+    //protected static double LegacyTicksToSeconds(
+    //    int ticks)
+    //{
+    //    return ticks * LegacyTickSeconds;
+    //}
 
     protected CreatureSettings Settings { get; }
 
@@ -323,11 +330,11 @@ public abstract class Creature
             SetMovementSpeed =
                 value => MovementSpeed = value,
 
-            SetStateTicksRemaining =
-                value => StateTicksRemaining = value,
+            SetStateTimeRemaining =
+                value => StateTimeRemaining = value,
 
-            GetStateTicksRemaining =
-                () => StateTicksRemaining,
+            GetStateTimeRemaining =
+                () => StateTimeRemaining,
 
             GetDisplayScale =
                 () => DisplayScale,
@@ -723,24 +730,39 @@ public abstract class Creature
             Stopwatch.GetTimestamp();
     }
 
-    protected virtual void UpdateTimers()
+    protected virtual void UpdateTimers(
+        double deltaSeconds)
     {
         if (CurrentAction is
             CreatureAction.Eating or
             CreatureAction.Drinking)
         {
             TickDown(
-                ref InteractionTicksRemaining);
+                ref InteractionTimeRemaining,
+                deltaSeconds);
         }
 
-        if (CurrentAction is CreatureAction.Running or CreatureAction.Idle)
-            TickDown(ref StateTicksRemaining);
+        if (CurrentAction is
+            CreatureAction.Running or
+            CreatureAction.Idle)
+        {
+            TickDown(
+                ref StateTimeRemaining,
+                deltaSeconds);
+        }
     }
 
-    protected static void TickDown(ref int timer)
+    protected static void TickDown(
+        ref double timer,
+        double deltaSeconds)
     {
-        if (timer > 0)
-            timer--;
+        if (timer <= 0)
+            return;
+
+        timer =
+            Math.Max(
+                0,
+                timer - deltaSeconds);
     }
 
     public bool IsStandingOn(Surface surface)
@@ -904,7 +926,7 @@ public abstract class Creature
     public void Update(
         double deltaSeconds)
     {
-        UpdateTimers();
+        UpdateTimers(deltaSeconds);
         UpdateNeeds();
         UpdateBehavior();
 
@@ -958,7 +980,7 @@ public abstract class Creature
                 break;
 
             case CreatureAction.Perching:
-                UpdatePerching();
+                UpdatePerching(deltaSeconds);
                 break;
         }
     }
@@ -996,7 +1018,7 @@ public abstract class Creature
             return;
         }
 
-        if (InteractionTicksRemaining <= 0)
+        if (InteractionTimeRemaining <= 0)
             finishAction();
     }
 
@@ -1220,21 +1242,26 @@ public abstract class Creature
 
         SpeedX = 0;
 
-        StateTicksRemaining =
-            Random.Next(
-                Settings.Perch.MinPerchTicks,
-                Settings.Perch.MaxPerchTicks);
+        StateTimeRemaining =
+            LegacyTime.ToSeconds(
+                Random.Next(
+                    Settings.Perch.MinPerchTicks,
+                    Settings.Perch.MaxPerchTicks));
 
         SetAction(
             CreatureAction.Perching,
             "Perch");
     }
 
-    protected virtual void UpdatePerching()
+    protected virtual void UpdatePerching(
+        double deltaSeconds)
     {
-        StateTicksRemaining--;
+        StateTimeRemaining =
+            Math.Max(
+                0,
+                StateTimeRemaining - deltaSeconds);
 
-        if (StateTicksRemaining > 0)
+        if (StateTimeRemaining > 0)
             return;
 
         ReleaseTargetInteraction();
@@ -1249,11 +1276,12 @@ public abstract class Creature
         string animationName)
     {
         InteractionPoi = poi;
-        InteractionTicksRemaining =
-            Eat.EatingTicksRemaining; // temporary shared timing
+        InteractionTimeRemaining =
+            LegacyTime.ToSeconds(
+                Eat.EatingTicksRemaining);
 
         SpeedX = 0;
-        StateTicksRemaining = 0;
+        StateTimeRemaining = 0;
 
         InteractionStarted?.Invoke();
 
@@ -1269,7 +1297,7 @@ public abstract class Creature
 
         ReleaseTargetInteraction();
 
-        InteractionTicksRemaining = 0;
+        InteractionTimeRemaining = 0;
     }
 
     private void CancelInteraction()
@@ -1302,7 +1330,7 @@ public abstract class Creature
         // succeeds, fails, or is cancelled. The normal wander timer
         // should only control ordinary wandering.
         if (TargetInteraction is null &&
-            StateTicksRemaining <= 0)
+            StateTimeRemaining <= 0)
         {
             StartIdle();
         }
@@ -1343,7 +1371,7 @@ public abstract class Creature
 
         SpeedX = 0;
 
-        StateTicksRemaining =
+        StateTimeRemaining =
             Random.Next(
                 Idle.MinIdleTicks,
                 Idle.MaxIdleTicks);
@@ -1357,7 +1385,7 @@ public abstract class Creature
             return;
         }
 
-        if (StateTicksRemaining <= 0)
+        if (StateTimeRemaining <= 0)
             PickNewTarget();
     }
 
@@ -1590,7 +1618,7 @@ public abstract class Creature
 
         MovementSpeed = Run.RunSpeed * DisplayScale;
 
-        StateTicksRemaining = Random.Next(
+        StateTimeRemaining = Random.Next(
             Run.MinRunTicks,
             Run.MaxRunTicks);
 
@@ -1639,7 +1667,7 @@ public abstract class Creature
         TargetY = CurrentSurface.Top - GetCurrentFootY();
         MovementSpeed = Run.RunSpeed * DisplayScale;
 
-        StateTicksRemaining = Random.Next(
+        StateTimeRemaining = Random.Next(
             Run.MinRunTicks,
             Run.MaxRunTicks);
 

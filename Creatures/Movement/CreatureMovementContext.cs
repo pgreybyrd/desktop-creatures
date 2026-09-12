@@ -26,8 +26,8 @@ public sealed class CreatureMovementContext
 
     public required Action<double> SetMovementSpeed { get; init; }
 
-    public required Action<int> SetStateTicksRemaining { get; init; }
-    public required Func<int> GetStateTicksRemaining { get; init; }
+    public required Action<double> SetStateTimeRemaining { get; init; }
+    public required Func<double> GetStateTimeRemaining { get; init; }
 
     public required Func<int> GetDisplayScale { get; init; }
 
