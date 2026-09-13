@@ -10,7 +10,8 @@ public sealed class FlightMovement : ICreatureMovement
     private readonly CreatureMovementContext _context;
     private readonly CreatureMovementController
         _movementController;
-
+    private readonly AirMovementSpace
+        _movementSpace;
     private readonly SurfaceManager _surfaceManager;
 
     private readonly FlightSettings _flight;
@@ -42,6 +43,11 @@ public sealed class FlightMovement : ICreatureMovement
         _hover = hover;
         _glide = glide;
         _perch = perch;
+
+        _movementSpace =
+            new AirMovementSpace(
+                surfaceManager,
+                flight);
     }
 
     public void Initialize()
@@ -102,221 +108,40 @@ public sealed class FlightMovement : ICreatureMovement
             }
         }
 
-        IReadOnlyList<Rectangle> monitorBounds =
-            _surfaceManager.GetMonitorBounds();
-
-        if (monitorBounds.Count == 0)
+        if (!_movementSpace.TryPickTarget(
+                _context,
+                out MovementDestination destination))
+        {
             return;
-
-        int spriteWidth =
-            _context.GetSpriteWidth();
-
-        int spriteHeight =
-            _context.GetSpriteHeight();
-
-        double targetX;
-        double targetY;
-
-        bool useLocalRange =
-            _flight.MinTravelDistance is not null &&
-            _flight.MaxTravelDistance is not null;
-
-        if (useLocalRange)
-        {
-            bool foundTarget = false;
-
-            targetX = _context.GetX();
-            targetY = _context.GetY();
-
-            const int maxAttempts = 20;
-
-            for (int attempt = 0;
-                 attempt < maxAttempts;
-                 attempt++)
-            {
-                double angle =
-                    _context.NextRandom(
-                        0,
-                        360) *
-                    Math.PI /
-                    180.0;
-
-                int distance =
-                    _context.NextRandom(
-                        _flight.MinTravelDistance!.Value,
-                        _flight.MaxTravelDistance!.Value);
-
-                double candidateX =
-                    _context.GetX() +
-                    Math.Cos(angle) *
-                    distance;
-
-                double candidateY =
-                    _context.GetY() +
-                    Math.Sin(angle) *
-                    distance;
-
-                Point topLeft =
-                    new(
-                        candidateX,
-                        candidateY);
-
-                Point bottomRight =
-                    new(
-                        candidateX +
-                        spriteWidth,
-                        candidateY +
-                        spriteHeight);
-
-                if (!CanTraverseTo(
-                        candidateX,
-                        candidateY))
-                {
-                    continue;
-                }
-
-                targetX =
-                    candidateX;
-
-                targetY =
-                    candidateY;
-
-                foundTarget =
-                    true;
-
-                break;
-            }
-
-            if (!foundTarget &&
-                !TryPickReachableDesktopTarget(
-                    monitorBounds,
-                    spriteWidth,
-                    spriteHeight,
-                    out targetX,
-                    out targetY))
-            {
-                return;
-            }
-        }
-        else
-        {
-            if (!TryPickReachableDesktopTarget(
-                    monitorBounds,
-                    spriteWidth,
-                    spriteHeight,
-                    out targetX,
-                    out targetY))
-            {
-                return;
-            }
         }
 
         _context.SetTargetX(
-            targetX);
+            destination.X);
 
         _context.SetTargetY(
-            targetY);
+            destination.Y);
 
         SetFlightModeForTarget();
-    }
-
-    private void PickRandomDesktopTarget(
-        IReadOnlyList<Rectangle> monitorBounds,
-        int spriteWidth,
-        int spriteHeight,
-        out double targetX,
-        out double targetY)
-    {
-        Rectangle area =
-            monitorBounds[
-                _context.NextRandom(
-                    0,
-                    monitorBounds.Count)];
-
-        int minX =
-            area.Left;
-
-        int maxX =
-            area.Right -
-            spriteWidth;
-
-        int minY =
-            area.Top;
-
-        int maxY =
-            area.Bottom -
-            spriteHeight;
-
-        targetX =
-            _context.NextRandom(
-                minX,
-                maxX);
-
-        targetY =
-            _context.NextRandom(
-                minY,
-                maxY);
-    }
-
-    private bool TryPickReachableDesktopTarget(
-        IReadOnlyList<Rectangle> monitorBounds,
-        int spriteWidth,
-        int spriteHeight,
-        out double targetX,
-        out double targetY)
-    {
-        const int maxAttempts =
-            30;
-
-        for (int attempt = 0;
-             attempt < maxAttempts;
-             attempt++)
-        {
-            PickRandomDesktopTarget(
-                monitorBounds,
-                spriteWidth,
-                spriteHeight,
-                out double candidateX,
-                out double candidateY);
-
-            if (!CanTraverseTo(
-                    candidateX,
-                    candidateY))
-            {
-                continue;
-            }
-
-            targetX =
-                candidateX;
-
-            targetY =
-                candidateY;
-
-            return true;
-        }
-
-        targetX =
-            _context.GetX();
-
-        targetY =
-            _context.GetY();
-
-        return false;
     }
 
     public bool CanReach(
         MovementDestination destination)
     {
-        return CanTraverseTo(
-            destination.X,
-            destination.Y);
+        return
+            _movementSpace.CanReach(
+                _context,
+                destination);
     }
 
     public bool TrySetDestination(
         MovementDestination destination)
     {
-        if (!CanReach(destination))
+        if (!_movementSpace.CanReach(
+                _context,
+                destination))
+        {
             return false;
+        }
 
         _context.SetTargetX(
             destination.X);
@@ -602,88 +427,5 @@ public sealed class FlightMovement : ICreatureMovement
 
         return normalizedRoll <
             _glide.GlideChance;
-    }
-
-    private bool PositionFitsOnDesktop(
-        double x,
-        double y)
-    {
-        double right =
-            x +
-            _context.GetSpriteWidth();
-
-        double bottom =
-            y +
-            _context.GetSpriteHeight();
-
-        return
-            _surfaceManager.IsPointOnDesktop(
-                new Point(x, y)) &&
-            _surfaceManager.IsPointOnDesktop(
-                new Point(right, y)) &&
-            _surfaceManager.IsPointOnDesktop(
-                new Point(x, bottom)) &&
-            _surfaceManager.IsPointOnDesktop(
-                new Point(right, bottom));
-    }
-
-    private bool CanTraverseTo(
-        double targetX,
-        double targetY)
-    {
-        double startX =
-            _context.GetX();
-
-        double startY =
-            _context.GetY();
-
-        double dx =
-            targetX -
-            startX;
-
-        double dy =
-            targetY -
-            startY;
-
-        double distance =
-            Math.Sqrt(
-                dx * dx +
-                dy * dy);
-
-        const double sampleSpacing =
-            12.0;
-
-        int sampleCount =
-            Math.Max(
-                1,
-                (int)Math.Ceiling(
-                    distance /
-                    sampleSpacing));
-
-        for (int i = 1;
-             i <= sampleCount;
-             i++)
-        {
-            double progress =
-                (double)i /
-                sampleCount;
-
-            double x =
-                startX +
-                (dx * progress);
-
-            double y =
-                startY +
-                (dy * progress);
-
-            if (!PositionFitsOnDesktop(
-                    x,
-                    y))
-            {
-                return false;
-            }
-        }
-
-        return true;
     }
 }
