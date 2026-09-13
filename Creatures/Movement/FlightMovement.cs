@@ -8,6 +8,9 @@ namespace Desktop_Creatures.Creatures.Movement;
 public sealed class FlightMovement : ICreatureMovement
 {
     private readonly CreatureMovementContext _context;
+    private readonly CreatureMovementController
+        _movementController;
+
     private readonly SurfaceManager _surfaceManager;
 
     private readonly FlightSettings _flight;
@@ -28,6 +31,11 @@ public sealed class FlightMovement : ICreatureMovement
         PerchSettings? perch)
     {
         _context = context;
+
+        _movementController =
+            new CreatureMovementController(
+                context);
+
         _surfaceManager = surfaceManager;
 
         _flight = flight;
@@ -343,59 +351,29 @@ public sealed class FlightMovement : ICreatureMovement
     private void UpdateFlight(
         double deltaSeconds)
     {
-        double dx =
-            _context.GetTargetX() -
-            _context.GetX();
-
-        double dy =
-            _context.GetTargetY() -
-            _context.GetY();
-
-        double distance =
-            Math.Sqrt(
-                dx * dx +
-                dy * dy);
-
-        if (distance <=
-            _flight.ArrivalDistance)
-        {
-            OnFlightTargetReached();
-            return;
-        }
-
         double speed =
             _isGliding &&
             _glide is not null
                 ? _glide.GlideSpeed
                 : _flight.FlySpeed;
 
-        double step =
-            speed *
-            _context.GetSettingsScale() *
-            _context.GetDisplayScale() *
-            deltaSeconds *
-            _context.GetFrameMovement();
+        MovementStep movementStep =
+            _movementController.CalculateStep(
+                speed,
+                deltaSeconds);
 
-        step =
-            Math.Min(
-                step,
-                distance);
-
-        double speedX =
-            dx / distance *
-            step;
-
-        double speedY =
-            dy / distance *
-            step;
+        if (movementStep.Distance <=
+            _flight.ArrivalDistance)
+        {
+            OnFlightTargetReached();
+            return;
+        }
 
         double nextX =
-            _context.GetX() +
-            speedX;
+            movementStep.NextX;
 
         double nextY =
-            _context.GetY() +
-            speedY;
+            movementStep.NextY;
 
         Point nextPosition =
             new(
@@ -419,7 +397,7 @@ public sealed class FlightMovement : ICreatureMovement
         }
 
         _context.SetSpeedX(
-            speedX);
+            movementStep.SpeedX);
 
         _context.SetX(
             nextX);

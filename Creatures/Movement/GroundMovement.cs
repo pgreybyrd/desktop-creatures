@@ -12,6 +12,9 @@ public sealed class GroundMovement : ICreatureMovement
     private readonly RunSettings _run;
     private readonly FallSettings _fall;
 
+    private readonly CreatureMovementController
+        _movementController;
+
     public GroundMovement(
         CreatureMovementContext context,
         SurfaceManager surfaceManager,
@@ -19,6 +22,9 @@ public sealed class GroundMovement : ICreatureMovement
         FallSettings fall)
     {
         _context = context;
+        _movementController =
+            new CreatureMovementController(
+                context);
         _surfaceManager = surfaceManager;
         _run = run;
         _fall = fall;
@@ -525,32 +531,18 @@ public sealed class GroundMovement : ICreatureMovement
         if (surface is null)
             return;
 
-        double dx =
-            _context.GetTargetX() -
-            _context.GetX();
-
-        double dy =
-            _context.GetTargetY() -
-            _context.GetY();
-
-        double distance =
-            Math.Sqrt(
-                dx * dx +
-                dy * dy);
-
-        double currentStep =
-            _context.GetMovementSpeed() *
-            _context.GetSettingsScale() *
-            _context.GetDisplayScale() *
-            deltaSeconds *
-            _context.GetFrameMovement();
+        MovementStep movementStep =
+     _movementController.CalculateStep(
+         _context.GetMovementSpeed(),
+         deltaSeconds);
 
         double arrivalDistance =
             Math.Max(
                 _run.ArrivalDistance,
-                currentStep);
+                movementStep.RequestedStepDistance);
 
-        if (distance <= arrivalDistance)
+        if (movementStep.Distance <=
+            arrivalDistance)
         {
             _context.SetX(
                 _context.GetTargetX());
@@ -573,33 +565,14 @@ public sealed class GroundMovement : ICreatureMovement
             return;
         }
 
-        double step =
-            Math.Min(
-                _context.GetMovementSpeed() *
-                _context.GetSettingsScale() *
-                _context.GetDisplayScale() *
-                deltaSeconds *
-                _context.GetFrameMovement(),
-                distance);
-
-        double speedX =
-            dx / distance *
-            step;
-
-        double speedY =
-            dy / distance *
-            step;
-
         _context.SetSpeedX(
-            speedX);
+            movementStep.SpeedX);
 
         double nextX =
-            _context.GetX() +
-            speedX;
+            movementStep.NextX;
 
         double nextY =
-            _context.GetY() +
-            speedY;
+            movementStep.NextY;
 
         Rectangle walkableBounds =
             _surfaceManager
@@ -660,29 +633,5 @@ public sealed class GroundMovement : ICreatureMovement
             _context.SetCurrentSurface(
                 supportingSurface);
         }
-    }
-
-    private double NextDurationSeconds(
-        double minSeconds,
-        double maxSeconds)
-    {
-        int minTenths =
-            (int)Math.Round(
-                minSeconds * 10.0,
-                MidpointRounding.AwayFromZero);
-
-        int maxTenths =
-            (int)Math.Round(
-                maxSeconds * 10.0,
-                MidpointRounding.AwayFromZero);
-
-        if (maxTenths <= minTenths)
-            return minTenths / 10.0;
-
-        return
-            _context.NextRandom(
-                minTenths,
-                maxTenths + 1)
-            / 10.0;
     }
 }
