@@ -15,7 +15,7 @@ public class SurfaceManager
         Func<Rectangle?>> _appSurfaces =
             new();
 
-    private int _ticksUntilRefresh = 180;
+    private double _refreshTimeRemaining = 3.0;
 
     public IReadOnlyList<Surface> Surfaces => _surfaces;
 
@@ -40,15 +40,19 @@ public class SurfaceManager
         AddAppSurfaces();
     }
 
-    public void Update()
+    public void Update(
+        double deltaSeconds)
     {
-        _ticksUntilRefresh--;
+        _refreshTimeRemaining -=
+            deltaSeconds;
 
-        if (_ticksUntilRefresh > 0)
+        if (_refreshTimeRemaining > 0)
             return;
 
         Refresh();
-        _ticksUntilRefresh = 30; // every ~0.5 sec at 60 FPS
+
+        _refreshTimeRemaining =
+            0.5;
     }
 
     public void RegisterAppSurface(

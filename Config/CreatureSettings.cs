@@ -79,12 +79,6 @@ public class WalkSettings
     public int MinWalkSeconds { get; set; } = 1;
     public int MaxWalkSeconds { get; set; } = 5;
 
-    // Temporary animation metadata.
-    // Aseprite will eventually own this entirely.
-    public int WalkFrameCount { get; set; } = 2;
-    public int WalkingFrameTicks { get; set; } = 8;
-    public int WalkFrameTicks { get; set; } = 8;
-
     public int ArrivalDistance { get; set; } = 5;
 }
 
@@ -94,12 +88,6 @@ public class RunSettings
 
     public int MinRunSeconds { get; set; } = 1;
     public int MaxRunSeconds { get; set; } = 3;
-
-    // Temporary animation metadata.
-    // Aseprite will eventually own this entirely.
-    public int RunFrameCount { get; set; } = 4;
-    public int RunningFrameTicks { get; set; } = 6;
-    public int RunFrameTicks { get; set; } = 6;
 
     public int ArrivalDistance { get; set; } = 5;
 
@@ -113,10 +101,6 @@ public class IdleSettings
 
     public int MinIdleSeconds { get; set; } = 1;
     public int MaxIdleSeconds { get; set; } = 3;
-
-    // Temporary animation metadata.
-    public int IdleFrameCount { get; set; } = 1;
-    public int IdleFrameTicks { get; set; } = 60;
 
     public List<AnimationDefinition> Animations { get; set; } = new();
 }
@@ -133,9 +117,6 @@ public class SwimSettings
 
     public int MinSwimSeconds { get; set; } = 1;
     public int MaxSwimSeconds { get; set; } = 5;
-
-    // Temporary animation metadata.
-    public int SwimFrameCount { get; set; } = 4;
 }
 
 public class PerchSettings
@@ -145,10 +126,6 @@ public class PerchSettings
     public int MinPerchSeconds { get; set; } = 3;
     public int MaxPerchSeconds { get; set; } = 8;
 
-    // Temporary animation metadata.
-    public int PerchFrameCount { get; set; } = 2;
-    public int PerchFrameTicks { get; set; } = 60;
-
     public double RuffleChance { get; set; } = 0.25;
 }
 
@@ -156,20 +133,12 @@ public class SleepSettings
 {
     public int MinSleepSeconds { get; set; } = 10;
     public int MaxSleepSeconds { get; set; } = 20;
-
-    // Temporary animation metadata.
-    public int SleepFrameCount { get; set; } = 1;
-    public int SleepFrameTicks { get; set; }
 }
 
 public class FallSettings
 {
     public double Gravity { get; set; } = 1800.0;
     public double MaxFallSpeed { get; set; } = 3000.0;
-
-    // Temporary animation metadata.
-    public int FallFrameCount { get; set; } = 1;
-    public int FallFrameTicks { get; set; } = 5;
 }
 
 public class EatSettings
@@ -181,8 +150,4 @@ public class EatSettings
     public double InteractionReach { get; set; } = 20.0;
     public WorldInteractionPointType InteractionType { get; set; } =
         WorldInteractionPointType.Eat;
-
-    // Temporary animation metadata.
-    public int EatFrameCount { get; set; } = 5;
-    public int EatFrameTicks { get; set; } = 5;
 }

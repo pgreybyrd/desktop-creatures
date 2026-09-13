@@ -742,7 +742,7 @@ public partial class MainWindow : Window
                 deltaSeconds,
                 0.1);
 
-        _surfaceManager.Update();
+        _surfaceManager.Update(deltaSeconds);
 
         _creatureManager.Update(
             deltaSeconds,
