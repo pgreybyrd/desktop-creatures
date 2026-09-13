@@ -1,5 +1,4 @@
 ﻿using Desktop_Creatures.Config;
-using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World.Surfaces;
 using Point = System.Windows.Point;
 

@@ -1251,6 +1251,8 @@ public abstract class Creature
                 Settings.Perch.MinPerchSeconds,
                 Settings.Perch.MaxPerchSeconds + 1);
 
+        InteractionStarted?.Invoke();
+
         SetAction(
             CreatureAction.Perching,
             "Perch");
