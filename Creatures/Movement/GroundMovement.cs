@@ -15,6 +15,9 @@ public sealed class GroundMovement : ICreatureMovement
     private readonly CreatureMovementController
         _movementController;
 
+    private readonly SurfaceMovementSpace
+        _movementSpace;
+
     public GroundMovement(
         CreatureMovementContext context,
         SurfaceManager surfaceManager,
@@ -26,6 +29,9 @@ public sealed class GroundMovement : ICreatureMovement
             new CreatureMovementController(
                 context);
         _surfaceManager = surfaceManager;
+        _movementSpace =
+            new SurfaceMovementSpace(
+                surfaceManager);
         _run = run;
         _fall = fall;
     }
@@ -312,42 +318,18 @@ public sealed class GroundMovement : ICreatureMovement
 
     public void PickNewTarget()
     {
-        Surface? surface =
-            _context.GetCurrentSurface();
-
-        if (surface is null)
+        if (!_movementSpace.TryPickTarget(
+                _context,
+                out MovementDestination destination))
+        {
             return;
-
-        Rectangle walkableBounds =
-            _surfaceManager
-                .GetWalkableSpan(
-                    surface,
-                    _context.GetLandingTolerance());
-
-        int minX =
-            walkableBounds.Left;
-
-        int maxX =
-            walkableBounds.Right -
-            _context.GetSpriteWidth();
-
-        if (maxX <= minX)
-            return;
-
-        double targetX =
-            _context.NextRandom(
-                minX,
-                maxX);
-
-        double targetY =
-            surface.Top -
-            _context.GetFootY();
+        }
 
         _context.SetTargetX(
-            targetX);
+            destination.X);
 
         _context.SetTargetY(
-            targetY);
+            destination.Y);
 
         _context.SetMovementSpeed(
             _run.RunSpeed);
@@ -365,26 +347,10 @@ public sealed class GroundMovement : ICreatureMovement
     public bool TrySetDestination(
         MovementDestination destination)
     {
-        Surface? currentSurface =
-            _context.GetCurrentSurface();
-
-        if (currentSurface is null)
-            return false;
-
-        MovementDestination? resolved =
-            ResolveDestination(
-                destination);
-
-        if (resolved is null)
-            return false;
-
-        double destinationFeetY =
-            resolved.Y +
-            _context.GetFootY();
-
-        if (destinationFeetY <
-            currentSurface.Top -
-            _context.GetLandingTolerance())
+        if (!_movementSpace.TryResolveReachableDestination(
+                _context,
+                destination,
+                out MovementDestination resolved))
         {
             return false;
         }
@@ -403,9 +369,10 @@ public sealed class GroundMovement : ICreatureMovement
             $"GROUND DESTINATION SET: " +
             $"from=({_context.GetX():F1},{_context.GetY():F1}) " +
             $"to=({resolved.X:F1},{resolved.Y:F1}) " +
-            $"surfaceTop={currentSurface.Top:F1}");
+            $"surfaceTop={_context.GetCurrentSurface()?.Top.ToString("F1") ?? "none"}");
 
-        if (_context.GetAction() != CreatureAction.Running)
+        if (_context.GetAction() !=
+            CreatureAction.Running)
         {
             _context.SetAction(
                 CreatureAction.Running,
@@ -415,111 +382,22 @@ public sealed class GroundMovement : ICreatureMovement
         return true;
     }
 
-    private MovementDestination? ResolveDestination(
-        MovementDestination destination)
-    {
-        Point? snappedPosition =
-            _surfaceManager.SnapToSurface(
-                new Point(
-                    destination.X,
-                    destination.Y),
-                _context.GetSpriteWidth(),
-                _context.GetFootY(),
-                10);
-
-        if (snappedPosition is null)
-        {
-            Logger.LogDebug(
-                DebugCategory.Movement,
-                $"GROUND RESOLVE FAILED: " +
-                $"raw=({destination.X:F1},{destination.Y:F1})");
-
-            return null;
-        }
-
-        Logger.LogDebug(
-            DebugCategory.Movement,
-            $"GROUND RESOLVED: " +
-            $"raw=({destination.X:F1},{destination.Y:F1}) " +
-            $"snapped=({snappedPosition.Value.X:F1},{snappedPosition.Value.Y:F1})");
-
-        return new MovementDestination(
-            snappedPosition.Value.X,
-            snappedPosition.Value.Y);
-    }
-
     public bool CanReach(
         MovementDestination destination)
     {
-        Surface? currentSurface =
-            _context.GetCurrentSurface();
-
-        if (currentSurface is null)
-        {
-            Logger.LogDebug(
-                DebugCategory.Movement,
-                "GROUND CANREACH: false - no current surface");
-
-            return false;
-        }
-
-        MovementDestination? resolved =
-            ResolveDestination(
+        return
+            _movementSpace.CanReach(
+                _context,
                 destination);
-
-        if (resolved is null)
-        {
-            Logger.LogDebug(
-                DebugCategory.Movement,
-                "GROUND CANREACH: false - destination could not resolve");
-
-            return false;
-        }
-
-        double destinationFeetY =
-            resolved.Y +
-            _context.GetFootY();
-
-        double minimumReachableY =
-            currentSurface.Top -
-            _context.GetLandingTolerance();
-
-        bool reachable =
-            destinationFeetY >=
-            minimumReachableY;
-
-        Logger.LogDebug(
-            DebugCategory.Movement,
-            $"GROUND CANREACH: {reachable} " +
-            $"surfaceTop={currentSurface.Top:F1} " +
-            $"destinationFeetY={destinationFeetY:F1} " +
-            $"minimum={minimumReachableY:F1}");
-
-        return reachable;
     }
 
     private bool TargetStillOnWalkableSpan()
     {
-        Surface? surface =
-            _context.GetCurrentSurface();
-
-        if (surface is null)
-            return false;
-
-        Rectangle walkableBounds =
-            _surfaceManager
-                .GetWalkableSpan(
-                    surface,
-                    _context.GetLandingTolerance());
-
-        double targetX =
-            _context.GetTargetX();
-
         return
-            targetX >= walkableBounds.Left &&
-            targetX <=
-                walkableBounds.Right -
-                _context.GetSpriteWidth();
+            _movementSpace.IsPositionValid(
+                _context,
+                _context.GetTargetX(),
+                _context.GetTargetY());
     }
 
     private void MoveTowardsTarget(
