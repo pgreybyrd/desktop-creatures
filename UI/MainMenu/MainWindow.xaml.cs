@@ -826,6 +826,7 @@ public partial class MainWindow : Window
             {
                 SpawnCreature(
                     record.CreatureType,
+                    record.AppearanceId,
                     record);
             }
         }
@@ -867,8 +868,8 @@ public partial class MainWindow : Window
 
         _fieldGuideMenu =
             new FieldGuideMenu(
-                creatureId =>
-                    SpawnCreature(creatureId),
+                (creatureId, appearanceId) =>
+                    SpawnCreature(creatureId, appearanceId),
                 _uiScale);
 
         _fieldGuideMenu.Left =
@@ -905,6 +906,7 @@ public partial class MainWindow : Window
 
     private void SpawnCreature(
         string creatureId,
+        string? appearanceId = null,
         CreatureRecord? record = null)
     {
         var services =
@@ -935,6 +937,7 @@ public partial class MainWindow : Window
             CreateSpawnContext(
                 definition,
                 settings,
+                appearanceId,
                 record);
 
         Creature creature =
@@ -1031,6 +1034,7 @@ public partial class MainWindow : Window
 
         SpawnCreature(
             record.CreatureType,
+            record.AppearanceId,
             record);
 
         record.IsSpawned = true;
@@ -1152,6 +1156,7 @@ public partial class MainWindow : Window
     private CreatureSpawnContext CreateSpawnContext(
         CreatureDefinition definition,
         CreatureSettings settings,
+        string? appearanceId,
         CreatureRecord? record)
     {
         if (record is not null)
@@ -1174,13 +1179,19 @@ public partial class MainWindow : Window
             };
         }
 
-        return settings.Flight is not null
-            ? CreateFlyingSpawnContext(
-                definition,
-                settings)
-            : CreateGroundSpawnContext(
-                definition,
-                settings);
+        CreatureSpawnContext context =
+            settings.Flight is not null
+                ? CreateFlyingSpawnContext(
+                    definition,
+                    settings)
+                : CreateGroundSpawnContext(
+                    definition,
+                    settings);
+
+        return context with
+        {
+            AppearanceId = appearanceId
+        };
     }
 
     private CreatureSpawnContext CreateGroundSpawnContext(

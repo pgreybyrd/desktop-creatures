@@ -57,11 +57,7 @@ public partial class CreatureWindow : Window
                 BringCreatureToFront;
         };
 
-        CreatureImage.Width = _creature.SpriteWidth;
-        CreatureImage.Height = _creature.SpriteHeight;
-
-        Width = _creature.SpriteWidth;// * scale;
-        Height = _creature.SpriteHeight;// * scale;
+        UpdateVisualSize();
 
         CreatureImage.Source = _creature.CurrentFrame;
 
@@ -128,28 +124,45 @@ public partial class CreatureWindow : Window
         UpdateWindowPosition();
     }
 
-    public void SetDisplayScale(int displayScale)
+    private void UpdateVisualSize()
+    {
+        double displayScale =
+            _creature.DisplayScale;
+
+        double width =
+            _creature.VisualWidth *
+            displayScale;
+
+        double height =
+            _creature.VisualHeight *
+            displayScale;
+
+        Width =
+            width;
+
+        Height =
+            height;
+
+        CreatureImage.Width =
+            width;
+
+        CreatureImage.Height =
+            height;
+    }
+
+    public void SetDisplayScale(
+        int displayScale)
     {
         displayScale =
-            Math.Clamp(displayScale, 1, 4);
+            Math.Clamp(
+                displayScale,
+                1,
+                4);
 
         _creature.SetDisplayScale(
             displayScale);
 
-        double width =
-            _creature.SpriteWidth *
-            displayScale;
-
-        double height =
-            _creature.SpriteHeight *
-            displayScale;
-
-        Width = width;
-        Height = height;
-
-        CreatureImage.Width = width;
-        CreatureImage.Height = height;
-
+        UpdateVisualSize();
         UpdateWindowPosition();
     }
 
@@ -158,6 +171,31 @@ public partial class CreatureWindow : Window
         double displayScale =
             _creature.DisplayScale;
 
+        if (_creature.HasBodyBounds)
+        {
+            double logicalCenterX =
+                _creature.X +
+                (_creature.SpriteWidth / 2.0);
+
+            double logicalCenterY =
+                _creature.Y +
+                (_creature.SpriteHeight / 2.0);
+
+            Left =
+                logicalCenterX -
+                (_creature.VisualBodyCenterX *
+                 displayScale);
+
+            Top =
+                logicalCenterY -
+                (_creature.VisualBodyCenterY *
+                 displayScale);
+
+            return;
+        }
+
+        // Legacy positioning for creatures that have
+        // not migrated to authored body bounds yet.
         double extraWidth =
             _creature.SpriteWidth *
             (displayScale - 1);

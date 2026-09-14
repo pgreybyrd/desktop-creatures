@@ -4,14 +4,23 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 namespace Desktop_Creatures.Graphics.Animation;
+
+public enum SpriteFrameCanvasMode
+{
+    Cropped,
+    LogicalCanvas
+}
 
 public static class SpriteSheetLoader
 {
     public static SpriteSheet Load(
         string imagePath,
-        string jsonPath)
+        string jsonPath,
+        SpriteFrameCanvasMode canvasMode =
+            SpriteFrameCanvasMode.Cropped)
     {
         BitmapImage sheetImage =
             AssetImageLoader.Load(imagePath);
@@ -48,22 +57,30 @@ public static class SpriteSheetLoader
         var logicalFrames =
             BuildFrames(
                 sheetImage,
-                metadata);
+                metadata,
+                canvasMode);
 
         var animations =
             BuildAnimations(
                 logicalFrames,
                 metadata.Meta.FrameTags);
 
+        var slices =
+            BuildSlices(
+                metadata.Meta.Slices);
+
         return new SpriteSheet(
             sheetImage,
             logicalFrames,
-            animations);
+            animations,
+            slices);
     }
 
     public static SpriteSheet Load(
         BitmapSource spriteSheet,
-        string jsonPath)
+        string jsonPath,
+        SpriteFrameCanvasMode canvasMode =
+            SpriteFrameCanvasMode.Cropped)
     {
         string fullJsonPath =
             ResolveAssetPath(jsonPath);
@@ -97,22 +114,130 @@ public static class SpriteSheetLoader
         var logicalFrames =
             BuildFrames(
                 spriteSheet,
-                metadata);
+                metadata,
+                canvasMode);
 
         var animations =
             BuildAnimations(
                 logicalFrames,
                 metadata.Meta.FrameTags);
 
+        var slices =
+            BuildSlices(
+                metadata.Meta.Slices);
+
         return new SpriteSheet(
             spriteSheet,
             logicalFrames,
-            animations);
+            animations,
+            slices);
+    }
+
+
+
+    private static BitmapSource ReconstructLogicalFrame(
+        BitmapSource croppedFrame,
+        SpriteSheetFrameData frameData)
+    {
+        int sourceWidth =
+            frameData.SourceSize.Width;
+
+        int sourceHeight =
+            frameData.SourceSize.Height;
+
+        FrameRectangle placement =
+            frameData.SpriteSourceSize;
+
+        // Backward compatibility for metadata that does not
+        // contain Aseprite's logical-frame information.
+        if (sourceWidth <= 0 ||
+            sourceHeight <= 0 ||
+            placement.Width <= 0 ||
+            placement.Height <= 0)
+        {
+            return croppedFrame;
+        }
+
+        if (placement.Width != croppedFrame.PixelWidth ||
+            placement.Height != croppedFrame.PixelHeight)
+        {
+            throw new InvalidOperationException(
+                $"Sprite source size for '{frameData.Filename}' " +
+                $"does not match its cropped frame size.");
+        }
+
+        bool outsideCanvas =
+            placement.X < 0 ||
+            placement.Y < 0 ||
+            placement.X + placement.Width > sourceWidth ||
+            placement.Y + placement.Height > sourceHeight;
+
+        if (outsideCanvas)
+        {
+            throw new InvalidOperationException(
+                $"Sprite source placement for '{frameData.Filename}' " +
+                $"is outside its logical {sourceWidth}x{sourceHeight} canvas.");
+        }
+
+        // Already represents the entire logical frame.
+        if (placement.X == 0 &&
+            placement.Y == 0 &&
+            placement.Width == sourceWidth &&
+            placement.Height == sourceHeight)
+        {
+            return croppedFrame;
+        }
+
+        BitmapSource pixels =
+            croppedFrame.Format == PixelFormats.Pbgra32
+                ? croppedFrame
+                : new FormatConvertedBitmap(
+                    croppedFrame,
+                    PixelFormats.Pbgra32,
+                    null,
+                    0);
+
+        var logicalFrame =
+            new WriteableBitmap(
+                sourceWidth,
+                sourceHeight,
+                96,
+                96,
+                PixelFormats.Pbgra32,
+                null);
+
+        int stride =
+            pixels.PixelWidth * 4;
+
+        byte[] buffer =
+            new byte[
+                stride *
+                pixels.PixelHeight];
+
+        pixels.CopyPixels(
+            buffer,
+            stride,
+            0);
+
+        logicalFrame.WritePixels(
+            new Int32Rect(
+                placement.X,
+                placement.Y,
+                placement.Width,
+                placement.Height),
+            buffer,
+            stride,
+            0);
+
+        logicalFrame.Freeze();
+
+        return logicalFrame;
     }
 
     private static List<SpriteFrame> BuildFrames(
         BitmapSource sheetImage,
-        SpriteSheetMetadata metadata)
+        SpriteSheetMetadata metadata,
+        SpriteFrameCanvasMode canvasMode)
     {
         var frames =
             new List<SpriteFrame>(
@@ -150,10 +275,18 @@ public static class SpriteSheetLoader
                     frameImage;
             }
 
+            BitmapSource outputFrame =
+                canvasMode ==
+                    SpriteFrameCanvasMode.LogicalCanvas
+                    ? ReconstructLogicalFrame(
+                        frameImage,
+                        frameData)
+                    : frameImage;
+
             frames.Add(
                 new SpriteFrame(
                     frameData.Filename,
-                    frameImage,
+                    outputFrame,
                     frameData.Duration));
         }
 
@@ -322,6 +455,41 @@ public static class SpriteSheetLoader
                 '/',
                 Path.DirectorySeparatorChar));
     }
+
+    private static Dictionary<string, SpriteSlice>
+        BuildSlices(
+            IReadOnlyList<SpriteSheetSliceData> sliceData)
+    {
+        var slices =
+            new Dictionary<string, SpriteSlice>(
+                StringComparer.OrdinalIgnoreCase);
+
+        foreach (SpriteSheetSliceData data in sliceData)
+        {
+            if (string.IsNullOrWhiteSpace(data.Name))
+                continue;
+
+            List<SpriteSliceKey> keys =
+                data.Keys
+                    .OrderBy(key => key.Frame)
+                    .Select(
+                        key =>
+                            new SpriteSliceKey(
+                                key.Frame,
+                                key.Bounds.X,
+                                key.Bounds.Y,
+                                key.Bounds.Width,
+                                key.Bounds.Height))
+                    .ToList();
+
+            slices[data.Name] =
+                new SpriteSlice(
+                    data.Name,
+                    keys);
+        }
+
+        return slices;
+    }
 }
 
 // ============================================================
@@ -330,6 +498,10 @@ public static class SpriteSheetLoader
 
 public sealed class SpriteSheet
 {
+    private readonly IReadOnlyDictionary<
+        string,
+        SpriteFrame> _framesByName;
+
     public BitmapSource Image { get; }
 
     public IReadOnlyList<SpriteFrame> Frames { get; }
@@ -338,18 +510,20 @@ public sealed class SpriteSheet
         Animations
     { get; }
 
-    private readonly IReadOnlyDictionary<
-        string,
-        SpriteFrame> _framesByName;
+    public IReadOnlyDictionary<string, SpriteSlice>
+        Slices
+    { get; }
 
     internal SpriteSheet(
         BitmapSource image,
         IReadOnlyList<SpriteFrame> frames,
-        IReadOnlyDictionary<string, SpriteAnimation> animations)
+        IReadOnlyDictionary<string, SpriteAnimation> animations,
+        IReadOnlyDictionary<string, SpriteSlice> slices)
     {
         Image = image;
         Frames = frames;
         Animations = animations;
+        Slices = slices;
 
         _framesByName =
             frames.ToDictionary(
@@ -405,6 +579,31 @@ public sealed class SpriteSheet
         return Animations.TryGetValue(
             name,
             out animation);
+    }
+
+    public SpriteSlice GetSlice(
+        string name)
+    {
+        if (!Slices.TryGetValue(
+                name,
+                out SpriteSlice? slice))
+        {
+            throw new KeyNotFoundException(
+                $"Sprite slice '{name}' was not found. " +
+                $"Available slices: " +
+                $"{string.Join(", ", Slices.Keys)}");
+        }
+
+        return slice;
+    }
+
+    public bool TryGetSlice(
+        string name,
+        out SpriteSlice? slice)
+    {
+        return Slices.TryGetValue(
+            name,
+            out slice);
     }
 }
 
@@ -463,6 +662,24 @@ internal sealed class SpriteSheetMetadata
     public SpriteSheetMetaData Meta { get; set; } = new();
 }
 
+internal sealed class SpriteSheetSliceData
+{
+    [JsonPropertyName("name")]
+    public string Name { get; set; } = "";
+
+    [JsonPropertyName("keys")]
+    public List<SpriteSheetSliceKeyData> Keys { get; set; } = [];
+}
+
+internal sealed class SpriteSheetSliceKeyData
+{
+    [JsonPropertyName("frame")]
+    public int Frame { get; set; }
+
+    [JsonPropertyName("bounds")]
+    public FrameRectangle Bounds { get; set; }
+}
+
 internal sealed class SpriteSheetFrameData
 {
     [JsonPropertyName("filename")]
@@ -477,8 +694,59 @@ internal sealed class SpriteSheetFrameData
     [JsonPropertyName("trimmed")]
     public bool Trimmed { get; set; }
 
+    [JsonPropertyName("spriteSourceSize")]
+    public FrameRectangle SpriteSourceSize { get; set; }
+
+    [JsonPropertyName("sourceSize")]
+    public SpriteSheetSize SourceSize { get; set; }
+
     [JsonPropertyName("duration")]
     public int Duration { get; set; }
+}
+
+public sealed class SpriteSlice
+{
+    public string Name { get; }
+
+    public IReadOnlyList<SpriteSliceKey> Keys { get; }
+
+    internal SpriteSlice(
+        string name,
+        IReadOnlyList<SpriteSliceKey> keys)
+    {
+        Name = name;
+        Keys = keys;
+    }
+
+    public SpriteSliceKey? GetKeyForFrame(
+        int frameIndex)
+    {
+        SpriteSliceKey? result = null;
+
+        foreach (SpriteSliceKey key in Keys)
+        {
+            if (key.Frame > frameIndex)
+                break;
+
+            result = key;
+        }
+
+        return result;
+    }
+}
+
+public readonly record struct SpriteSliceKey(
+    int Frame,
+    int X,
+    int Y,
+    int Width,
+    int Height)
+{
+    public double CenterX =>
+        X + Width / 2.0;
+
+    public double CenterY =>
+        Y + Height / 2.0;
 }
 
 internal readonly record struct FrameRectangle
@@ -506,6 +774,9 @@ internal sealed class SpriteSheetMetaData
 
     [JsonPropertyName("frameTags")]
     public List<SpriteSheetTagData> FrameTags { get; set; } = [];
+
+    [JsonPropertyName("slices")]
+    public List<SpriteSheetSliceData> Slices { get; set; } = [];
 }
 
 internal readonly record struct SpriteSheetSize

@@ -49,7 +49,7 @@ public partial class FieldGuideMenu : Window
 
     private readonly FieldGuideSounds _sounds = new();
 
-    private readonly Action<string> _spawnCreature;
+    private readonly Action<string, string?> _spawnCreature;
 
     private readonly int _uiScale;
     private readonly int _titleScale;
@@ -107,6 +107,7 @@ public partial class FieldGuideMenu : Window
         _categoriesByTab;
 
     private string? _currentCreatureId;
+    private string? _currentAppearanceId;
 
     private bool _isOpening;
 
@@ -201,7 +202,7 @@ public partial class FieldGuideMenu : Window
     }
 
     public FieldGuideMenu(
-        Action<string> spawnCreature,
+        Action<string, string?> spawnCreature,
         int uiScale)
     {
         InitializeComponent();
@@ -1364,7 +1365,7 @@ public partial class FieldGuideMenu : Window
         if (_currentCreatureId is null)
             return;
 
-        _spawnCreature(_currentCreatureId);
+        _spawnCreature(_currentCreatureId, _currentAppearanceId);
     }
 
     private void SpawnCreatureButton_MouseEnter(
@@ -1660,6 +1661,14 @@ public partial class FieldGuideMenu : Window
     private void ShowCreatureEntry(
         string creatureId)
     {
+        _currentAppearanceId =
+            string.Equals(
+                creatureId,
+                "hummingbird",
+                StringComparison.OrdinalIgnoreCase)
+                ? "MarvelousSpatuletail"
+                : null;
+
         FieldGuideEntry entry =
             _creatureEntries[creatureId];
 

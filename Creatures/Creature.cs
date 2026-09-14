@@ -85,6 +85,21 @@ public abstract class Creature
     public bool SpriteFacesRight => Settings.SpriteFacesRight;
     public int SpriteWidth => Settings.SpriteWidth * Settings.Scale;
     public int SpriteHeight => Settings.SpriteHeight * Settings.Scale;
+
+    public double VisualWidth =>
+        (CurrentFrame?.PixelWidth ??
+         Settings.SpriteWidth) *
+        Settings.Scale;
+
+    public double VisualHeight =>
+        (CurrentFrame?.PixelHeight ??
+         Settings.SpriteHeight) *
+        Settings.Scale;
+
+    public bool HasBodyBounds =>
+        TryGetBodyBounds(
+            out _);
+
     public int CurrentFootY => GetCurrentFootY();
     public double LandingTolerance => Settings.LandingTolerance;
 
@@ -150,6 +165,8 @@ public abstract class Creature
         Stopwatch.GetTimestamp();
 
     private double _animationElapsedMilliseconds;
+
+    private SpriteSheet? _spriteSheet;
 
     protected Creature(
         CreatureDefinition definition,
@@ -382,6 +399,66 @@ public abstract class Creature
         };
     }
 
+    public double VisualBodyCenterX
+    {
+        get
+        {
+            if (TryGetBodyBounds(
+                    out SpriteSliceKey body))
+            {
+                return
+                    body.CenterX *
+                    Settings.Scale;
+            }
+
+            return
+                VisualWidth / 2.0;
+        }
+    }
+
+    public double VisualBodyCenterY
+    {
+        get
+        {
+            if (TryGetBodyBounds(
+                    out SpriteSliceKey body))
+            {
+                return
+                    body.CenterY *
+                    Settings.Scale;
+            }
+
+            return
+                VisualHeight / 2.0;
+        }
+    }
+
+    private bool TryGetBodyBounds(
+        out SpriteSliceKey body)
+    {
+        body = default;
+
+        if (_spriteSheet is null ||
+            !_spriteSheet.TryGetSlice(
+                "body",
+                out SpriteSlice? bodySlice) ||
+            bodySlice is null)
+        {
+            return false;
+        }
+
+        SpriteSliceKey? key =
+            bodySlice.GetKeyForFrame(0);
+
+        if (key is null)
+            return false;
+
+        body =
+            key.Value;
+
+        return true;
+    }
+
     private void FlipFacing()
     {
         IsFacingRight =
@@ -497,8 +574,12 @@ public abstract class Creature
             return;
         }
 
+        AppearanceId =
+            appearanceId;
+
         LoadSpriteSheetAnimations(
-            definition);
+            definition,
+            appearanceId);
     }
 
     private void LoadAppearanceAnimations(
@@ -508,7 +589,11 @@ public abstract class Creature
         var sheet =
             SpriteSheetLoader.Load(
                 appearance.SpriteSheet,
-                $"{definition.AssetFolder}/Appearance/{definition.Id}.json");
+                $"{definition.AssetFolder}/Appearance/{definition.Id}.json",
+                SpriteFrameCanvasMode.LogicalCanvas);
+
+        _spriteSheet =
+            sheet;
 
         foreach (var animation in
                  sheet.Animations)
@@ -1703,15 +1788,25 @@ public abstract class Creature
     }
 
     private void LoadSpriteSheetAnimations(
-        CreatureDefinition definition)
+        CreatureDefinition definition,
+        string? appearanceId = null)
     {
         string appearanceFolder =
             $"{definition.AssetFolder}/Appearance";
 
+        string assetName =
+            string.IsNullOrWhiteSpace(appearanceId)
+                ? definition.Id
+                : appearanceId;
+
         var sheet =
             SpriteSheetLoader.Load(
-                $"{appearanceFolder}/{definition.Id}.png",
-                $"{appearanceFolder}/{definition.Id}.json");
+                $"{appearanceFolder}/{assetName}.png",
+                $"{appearanceFolder}/{assetName}.json",
+                SpriteFrameCanvasMode.LogicalCanvas);
+
+        _spriteSheet =
+            sheet;
 
         foreach (var animation in sheet.Animations)
         {
