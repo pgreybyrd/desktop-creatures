@@ -54,6 +54,27 @@ public sealed class CreatureDragController(
         double displayScale =
             creature.DisplayScale;
 
+        if (creature.HasBodyBounds)
+        {
+            double x =
+                windowPosition.X +
+                (creature.VisualBodyCenterX *
+                 displayScale) -
+                (creature.SpriteWidth / 2.0);
+
+            double y =
+                windowPosition.Y +
+                (creature.VisualBodyCenterY *
+                 displayScale) -
+                (creature.SpriteHeight / 2.0);
+
+            return new Point(
+                x,
+                y);
+        }
+
+        // Legacy positioning for creatures that have
+        // not migrated to authored body bounds yet.
         double extraWidth =
             creature.SpriteWidth *
             (displayScale - 1);

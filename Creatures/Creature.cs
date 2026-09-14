@@ -107,9 +107,37 @@ public abstract class Creature
 
     protected virtual int FootOffsetY => SpriteHeight;
 
-    public virtual Point PickupAnchor =>
-        _pickupAnchor;
+    public virtual Point PickupAnchor
+    {
+        get
+        {
+            if (TryGetSpriteSlice(
+                    "pickup",
+                    out SpriteSliceKey slice))
+            {
+                double x =
+                    slice.CenterX *
+                    Settings.Scale;
 
+                double y =
+                    slice.CenterY *
+                    Settings.Scale;
+
+                if (IsVisualMirrored)
+                {
+                    x =
+                        VisualWidth -
+                        x;
+                }
+
+                return new Point(
+                    x,
+                    y);
+            }
+
+            return _pickupAnchor;
+        }
+    }
 
     protected PointOfInterest? TargetPoi;
 
@@ -436,25 +464,34 @@ public abstract class Creature
     private bool TryGetBodyBounds(
         out SpriteSliceKey body)
     {
-        body = default;
+        return TryGetSpriteSlice(
+            "body",
+            out body);
+    }
+
+    private bool TryGetSpriteSlice(
+        string sliceName,
+        out SpriteSliceKey key)
+    {
+        key = default;
 
         if (_spriteSheet is null ||
             !_spriteSheet.TryGetSlice(
-                "body",
-                out SpriteSlice? bodySlice) ||
-            bodySlice is null)
+                sliceName,
+                out SpriteSlice? slice) ||
+            slice is null)
         {
             return false;
         }
 
-        SpriteSliceKey? key =
-            bodySlice.GetKeyForFrame(0);
+        SpriteSliceKey? sliceKey =
+            slice.GetKeyForFrame(0);
 
-        if (key is null)
+        if (sliceKey is null)
             return false;
 
-        body =
-            key.Value;
+        key =
+            sliceKey.Value;
 
         return true;
     }
@@ -477,6 +514,21 @@ public abstract class Creature
         {
             IsFacingRight =
                 false;
+        }
+    }
+
+    public bool IsVisualMirrored
+    {
+        get
+        {
+            bool facingRight =
+                Math.Abs(SpeedX) > 0.01
+                    ? SpeedX > 0
+                    : IsFacingRight;
+
+            return
+                SpriteFacesRight !=
+                facingRight;
         }
     }
 
