@@ -127,7 +127,8 @@ public partial class MainWindow : Window
         _ecosystemRenderer =
             new EcosystemRenderer(
                 _surfaceManager,
-                _creatureManager);
+                _creatureManager,
+                _zOrderManager);
 
         UiSounds.Initialize();
 

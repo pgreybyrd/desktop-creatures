@@ -1,4 +1,5 @@
 ﻿using Desktop_Creatures.Creatures;
+using Desktop_Creatures.Windowing;
 using Desktop_Creatures.World.Surfaces;
 using System.Windows;
 
@@ -12,6 +13,9 @@ public sealed class EcosystemRenderer
     private readonly CreatureManager
         _creatureManager;
 
+    private readonly ZOrderManager
+        _zOrderManager;
+
     private readonly List<EcosystemSurface>
         _surfaces = [];
 
@@ -21,13 +25,17 @@ public sealed class EcosystemRenderer
 
     public EcosystemRenderer(
         SurfaceManager surfaceManager,
-        CreatureManager creatureManager)
+        CreatureManager creatureManager,
+        ZOrderManager zOrderManager)
     {
         _surfaceManager =
             surfaceManager;
 
         _creatureManager =
             creatureManager;
+
+        _zOrderManager =
+            zOrderManager;
     }
 
     public void CreateSurfaces()
@@ -47,6 +55,10 @@ public sealed class EcosystemRenderer
 
             _surfaces.Add(
                 surface);
+
+            _zOrderManager.Register(
+                surface,
+                ZOrderManager.WindowLayer.Ecosystem);
 
             surface.Show();
         }
