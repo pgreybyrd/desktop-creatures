@@ -2,6 +2,7 @@
 using Desktop_Creatures.Config;
 using Desktop_Creatures.Creatures;
 using Desktop_Creatures.Creatures.Definitions;
+using Desktop_Creatures.Ecosystem;
 using Desktop_Creatures.Graphics;
 using Desktop_Creatures.Graphics.Animation;
 using Desktop_Creatures.Persistence;
@@ -100,6 +101,8 @@ public partial class MainWindow : Window
     private readonly SurfaceManager _surfaceManager = new();
     private readonly ZOrderManager _zOrderManager = new();
 
+    private readonly EcosystemHost _ecosystemHost;
+
     private const int MaxRats = 20;
     private const int MaxEagles = 20;
     private const int MaxOcelots = 20;
@@ -113,6 +116,11 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+
+        _ecosystemHost =
+            new EcosystemHost(
+                _creatureManager,
+                _surfaceManager);
 
         UiSounds.Initialize();
 
@@ -742,9 +750,7 @@ public partial class MainWindow : Window
                 deltaSeconds,
                 0.1);
 
-        _surfaceManager.Update(deltaSeconds);
-
-        _creatureManager.Update(
+        _ecosystemHost.Update(
             deltaSeconds,
             creature =>
             {
