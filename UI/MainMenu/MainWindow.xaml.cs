@@ -126,7 +126,8 @@ public partial class MainWindow : Window
 
         _ecosystemRenderer =
             new EcosystemRenderer(
-                _surfaceManager);
+                _surfaceManager,
+                _creatureManager);
 
         UiSounds.Initialize();
 
@@ -776,6 +777,8 @@ public partial class MainWindow : Window
         {
             creatureWindow.UpdateCreature();
         }
+
+        _ecosystemRenderer.Render();
     }
 
     private void TitleBar_MouseLeftButtonDown(

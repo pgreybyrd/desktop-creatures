@@ -13,17 +13,6 @@
     <Canvas x:Name="EcosystemCanvas"
             Background="Transparent">
 
-        <!-- TEMPORARY:
-             proves that the ecosystem surface is aligned
-             with the monitor correctly. -->
-        <Border Width="100"
-                Height="100"
-                Canvas.Left="50"
-                Canvas.Top="50"
-                BorderThickness="4"
-                BorderBrush="Magenta"
-                Background="#4000FFFF"
-                IsHitTestVisible="False" />
 
     </Canvas>
 
