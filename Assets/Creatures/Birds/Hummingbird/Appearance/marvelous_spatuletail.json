@@ -78,38 +78,11 @@
     "trimmed": true,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 71, "h": 59 },
     "sourceSize": { "w": 96, "h": 64 },
-    "duration": 2500
-   },
-   {
-    "filename": "perch_01",
-    "frame": { "x": 639, "y": 0, "w": 71, "h": 59 },
-    "rotated": false,
-    "trimmed": true,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 71, "h": 59 },
-    "sourceSize": { "w": 96, "h": 64 },
-    "duration": 150
-   },
-   {
-    "filename": "perch_02",
-    "frame": { "x": 710, "y": 0, "w": 71, "h": 59 },
-    "rotated": false,
-    "trimmed": true,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 71, "h": 59 },
-    "sourceSize": { "w": 96, "h": 64 },
-    "duration": 2000
-   },
-   {
-    "filename": "perch_03",
-    "frame": { "x": 781, "y": 0, "w": 71, "h": 59 },
-    "rotated": false,
-    "trimmed": true,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 71, "h": 59 },
-    "sourceSize": { "w": 96, "h": 64 },
-    "duration": 175
+    "duration": 55
    },
    {
     "filename": "nesting_00",
-    "frame": { "x": 852, "y": 0, "w": 71, "h": 59 },
+    "frame": { "x": 639, "y": 0, "w": 71, "h": 59 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 71, "h": 59 },
@@ -118,7 +91,7 @@
    },
    {
     "filename": "held_00",
-    "frame": { "x": 923, "y": 0, "w": 71, "h": 59 },
+    "frame": { "x": 710, "y": 0, "w": 71, "h": 59 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 71, "h": 59 },
@@ -127,7 +100,7 @@
    },
    {
     "filename": "eat_00",
-    "frame": { "x": 994, "y": 0, "w": 71, "h": 59 },
+    "frame": { "x": 781, "y": 0, "w": 71, "h": 59 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 71, "h": 59 },
@@ -136,7 +109,7 @@
    },
    {
     "filename": "eat_01",
-    "frame": { "x": 1065, "y": 0, "w": 71, "h": 59 },
+    "frame": { "x": 852, "y": 0, "w": 71, "h": 59 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 71, "h": 59 },
@@ -145,7 +118,7 @@
    },
    {
     "filename": "eat_02",
-    "frame": { "x": 1136, "y": 0, "w": 71, "h": 59 },
+    "frame": { "x": 923, "y": 0, "w": 71, "h": 59 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 71, "h": 59 },
@@ -154,7 +127,7 @@
    },
    {
     "filename": "eat_03",
-    "frame": { "x": 1207, "y": 0, "w": 71, "h": 59 },
+    "frame": { "x": 994, "y": 0, "w": 71, "h": 59 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 71, "h": 59 },
@@ -163,7 +136,7 @@
    },
    {
     "filename": "drink_00",
-    "frame": { "x": 1278, "y": 0, "w": 71, "h": 59 },
+    "frame": { "x": 1065, "y": 0, "w": 71, "h": 59 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 71, "h": 59 },
@@ -172,7 +145,7 @@
    },
    {
     "filename": "drink_01",
-    "frame": { "x": 1349, "y": 0, "w": 71, "h": 59 },
+    "frame": { "x": 1136, "y": 0, "w": 71, "h": 59 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 71, "h": 59 },
@@ -181,7 +154,7 @@
    },
    {
     "filename": "drink_02",
-    "frame": { "x": 1420, "y": 0, "w": 71, "h": 59 },
+    "frame": { "x": 1207, "y": 0, "w": 71, "h": 59 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 71, "h": 59 },
@@ -190,7 +163,7 @@
    },
    {
     "filename": "drink_03",
-    "frame": { "x": 1491, "y": 0, "w": 71, "h": 59 },
+    "frame": { "x": 1278, "y": 0, "w": 71, "h": 59 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 71, "h": 59 },
@@ -201,18 +174,18 @@
  "meta": {
   "app": "https://www.aseprite.org/",
   "version": "1.3.18.1-x64",
-  "image": "MarvelousSpatuletail.png",
+  "image": "marvelous_spatuletail.png",
   "format": "RGBA8888",
-  "size": { "w": 1562, "h": 59 },
+  "size": { "w": 1349, "h": 59 },
   "scale": "1",
   "frameTags": [
    { "name": "fly", "from": 0, "to": 3, "direction": "forward", "color": "#000000ff" },
    { "name": "hover", "from": 4, "to": 7, "direction": "forward", "color": "#000000ff" },
-   { "name": "perch", "from": 8, "to": 11, "direction": "forward", "color": "#000000ff" },
-   { "name": "nesting", "from": 12, "to": 12, "direction": "forward", "color": "#000000ff" },
-   { "name": "held", "from": 13, "to": 13, "direction": "forward", "color": "#000000ff" },
-   { "name": "eat", "from": 14, "to": 17, "direction": "forward", "color": "#000000ff" },
-   { "name": "drink", "from": 18, "to": 21, "direction": "forward", "color": "#000000ff" }
+   { "name": "perch", "from": 8, "to": 8, "direction": "forward", "color": "#000000ff" },
+   { "name": "nesting", "from": 9, "to": 9, "direction": "forward", "color": "#000000ff" },
+   { "name": "held", "from": 10, "to": 10, "direction": "forward", "color": "#000000ff" },
+   { "name": "eat", "from": 11, "to": 14, "direction": "forward", "color": "#000000ff" },
+   { "name": "drink", "from": 15, "to": 18, "direction": "forward", "color": "#000000ff" }
   ],
   "layers": [
    { "name": "MS tail - back string", "opacity": 255, "blendMode": "normal" },
@@ -222,7 +195,6 @@
    { "name": "MS underwing", "opacity": 255, "blendMode": "normal" },
    { "name": "MS body", "opacity": 255, "blendMode": "normal" },
    { "name": "MS frontwing", "opacity": 255, "blendMode": "normal" },
-   { "name": "Layer 2", "opacity": 255, "blendMode": "normal" },
    { "name": "head", "opacity": 255, "blendMode": "normal" }
   ],
   "slices": [

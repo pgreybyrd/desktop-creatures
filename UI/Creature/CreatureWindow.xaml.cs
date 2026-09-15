@@ -9,6 +9,9 @@ using Point = System.Windows.Point;
 
 namespace Desktop_Creatures;
 
+// TODO: Overlord input routing should perform
+// alpha-aware hit testing so transparent visual
+// canvas regions do not intercept interaction.
 public partial class CreatureWindow : Window
 {
     private readonly Creature _creature;
