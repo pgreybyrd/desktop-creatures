@@ -19,6 +19,13 @@ public sealed class EcosystemRenderer
     private readonly List<EcosystemSurface>
         _surfaces = [];
 
+    private readonly List<EcosystemRenderItem>
+        _renderItems = [];
+
+    public IReadOnlyList<EcosystemRenderItem>
+        RenderItems =>
+            _renderItems;
+
     public IReadOnlyList<EcosystemSurface>
         Surfaces =>
             _surfaces;
@@ -42,7 +49,7 @@ public sealed class EcosystemRenderer
     {
         CloseSurfaces();
 
-        foreach (System.Drawing.Rectangle bounds in
+        foreach (Rectangle bounds in
                  _surfaceManager.GetMonitorBounds())
         {
             var surface =
@@ -80,39 +87,40 @@ public sealed class EcosystemRenderer
         foreach (Creature creature in
                  _creatureManager.ActiveCreatures)
         {
-            GetCreatureVisualPosition(
-                creature,
-                out double worldLeft,
-                out double worldTop);
+            EcosystemRenderItem? renderItem =
+                CreatureRenderStateBuilder.Build(
+                    creature);
 
-            Rect visualBounds =
-                GetCreatureVisualBounds(
-                    creature,
-                    worldLeft,
-                    worldTop);
+            _renderItems.Clear();
+
+            if (renderItem is null)
+            {
+                continue;
+            }
+
+            _renderItems.Add(
+                renderItem);
 
             foreach (EcosystemSurface surface in
                      _surfaces)
             {
                 bool intersectsSurface =
                     surface.WorldBounds.IntersectsWith(
-                        visualBounds);
+                        renderItem.WorldBounds);
 
                 if (intersectsSurface)
                 {
-                    surface.DrawCreature(
-                        creature,
-                        worldLeft,
-                        worldTop);
+                    surface.Draw(
+                        renderItem);
 
                     continue;
                 }
 
-                if (surface.ContainsCreature(
-                        creature.Id))
+                if (surface.ContainsEntity(
+                        renderItem.EntityId))
                 {
-                    surface.RemoveCreature(
-                        creature.Id);
+                    surface.RemoveEntity(
+                        renderItem.EntityId);
                 }
             }
         }
@@ -132,7 +140,7 @@ public sealed class EcosystemRenderer
                  _surfaces)
         {
             Guid[] inactiveCreatureIds =
-                surface.CreatureIds
+                surface.EntityIds
                     .Where(
                         id =>
                             !activeCreatureIds.Contains(
@@ -142,74 +150,9 @@ public sealed class EcosystemRenderer
             foreach (Guid creatureId in
                      inactiveCreatureIds)
             {
-                surface.RemoveCreature(
+                surface.RemoveEntity(
                     creatureId);
             }
         }
-    }
-
-    private static void GetCreatureVisualPosition(
-        Creature creature,
-        out double worldLeft,
-        out double worldTop)
-    {
-        double displayScale =
-            creature.DisplayScale;
-
-        if (creature.HasBodyBounds)
-        {
-            double logicalCenterX =
-                creature.X +
-                (creature.SpriteWidth / 2.0);
-
-            double logicalCenterY =
-                creature.Y +
-                (creature.SpriteHeight / 2.0);
-
-            worldLeft =
-                logicalCenterX -
-                (creature.VisualBodyCenterX *
-                 displayScale);
-
-            worldTop =
-                logicalCenterY -
-                (creature.VisualBodyCenterY *
-                 displayScale);
-
-            return;
-        }
-
-        double extraWidth =
-            creature.SpriteWidth *
-            (displayScale - 1);
-
-        double extraHeight =
-            creature.CurrentFootY *
-            (displayScale - 1);
-
-        worldLeft =
-            creature.X -
-            (extraWidth / 2.0);
-
-        worldTop =
-            creature.Y -
-            extraHeight;
-    }
-
-    private static Rect GetCreatureVisualBounds(
-        Creature creature,
-        double worldLeft,
-        double worldTop)
-    {
-        double displayScale =
-            creature.DisplayScale;
-
-        return new Rect(
-            worldLeft,
-            worldTop,
-            creature.VisualWidth *
-                displayScale,
-            creature.VisualHeight *
-                displayScale);
     }
 }

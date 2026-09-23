@@ -39,13 +39,8 @@ public partial class CreatureWindow : Window
     {
         InitializeComponent();
 
-        //CreatureImage.Visibility =
-        //    Visibility.Hidden;
-
         _creature = creature;
         _uiScale = uiScale;
-
-        Opacity = 0.5;
 
         _dragController =
             new CreatureDragController(

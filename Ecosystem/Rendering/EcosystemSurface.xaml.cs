@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Image = System.Windows.Controls.Image;
+using Panel = System.Windows.Controls.Panel;
 using Point = System.Windows.Point;
 
 namespace Desktop_Creatures.Ecosystem.Rendering;
@@ -11,7 +12,7 @@ namespace Desktop_Creatures.Ecosystem.Rendering;
 public partial class EcosystemSurface : Window
 {
     private readonly Dictionary<Guid, Image>
-        _creatureImages = [];
+        _entityImages = [];
 
     public Rect WorldBounds { get; }
 
@@ -36,13 +37,11 @@ public partial class EcosystemSurface : Window
             worldBounds.Height;
     }
 
-    public void DrawCreature(
-        Creature creature,
-        double worldLeft,
-        double worldTop)
+    public void Draw(
+        EcosystemRenderItem renderItem)
     {
-        if (!_creatureImages.TryGetValue(
-                creature.Id,
+        if (!_entityImages.TryGetValue(
+                renderItem.EntityId,
                 out Image? image))
         {
             image =
@@ -52,40 +51,35 @@ public partial class EcosystemSurface : Window
                         Stretch.Fill,
 
                     SnapsToDevicePixels =
-                        true
+                        true,
+
+                    IsHitTestVisible =
+                        false
                 };
 
             RenderOptions.SetBitmapScalingMode(
                 image,
                 BitmapScalingMode.NearestNeighbor);
 
-            _creatureImages[
-                creature.Id] =
+            _entityImages[
+                renderItem.EntityId] =
                     image;
 
             EcosystemCanvas.Children.Add(
                 image);
         }
 
-        BitmapSource? frame =
-            creature.CurrentFrame;
-
-        if (image.Source != frame)
+        if (image.Source != renderItem.Image)
         {
             image.Source =
-                frame;
+                renderItem.Image;
         }
 
-        double displayScale =
-            creature.DisplayScale;
-
         image.Width =
-            creature.VisualWidth *
-            displayScale;
+            renderItem.WorldBounds.Width;
 
         image.Height =
-            creature.VisualHeight *
-            displayScale;
+            renderItem.WorldBounds.Height;
 
         image.RenderTransformOrigin =
             new Point(
@@ -94,27 +88,30 @@ public partial class EcosystemSurface : Window
 
         image.RenderTransform =
             new ScaleTransform(
-                creature.IsVisualMirrored
+                renderItem.IsMirrored
                     ? -1
                     : 1,
                 1);
 
         Canvas.SetLeft(
             image,
-            worldLeft -
+            renderItem.WorldBounds.Left -
                 WorldBounds.Left);
 
         Canvas.SetTop(
             image,
-            worldTop -
+            renderItem.WorldBounds.Top -
                 WorldBounds.Top);
-    }
 
-    public void RemoveCreature(
-        Guid creatureId)
+        Panel.SetZIndex(
+            image,
+            renderItem.ZIndex);
+    }
+    public void RemoveEntity(
+        Guid entityId)
     {
-        if (!_creatureImages.Remove(
-                creatureId,
+        if (!_entityImages.Remove(
+                entityId,
                 out Image? image))
         {
             return;
@@ -124,14 +121,14 @@ public partial class EcosystemSurface : Window
             image);
     }
 
-    public bool ContainsCreature(
-        Guid creatureId)
+    public bool ContainsEntity(
+        Guid entityId)
     {
-        return _creatureImages.ContainsKey(
-            creatureId);
+        return _entityImages.ContainsKey(
+            entityId);
     }
 
     public IReadOnlyCollection<Guid>
-        CreatureIds =>
-            _creatureImages.Keys;
+        EntityIds =>
+            _entityImages.Keys;
 }
