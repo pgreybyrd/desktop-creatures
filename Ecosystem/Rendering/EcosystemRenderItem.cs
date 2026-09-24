@@ -52,4 +52,22 @@ public sealed record EcosystemRenderItem
         get;
         init;
     }
+
+    //public byte[]? AlphaMask
+    //{
+    //    get;
+    //    init;
+    //}
+
+    //public int PixelWidth
+    //{
+    //    get;
+    //    init;
+    //}
+
+    //public int PixelHeight
+    //{
+    //    get;
+    //    init;
+    //}
 }

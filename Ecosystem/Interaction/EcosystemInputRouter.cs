@@ -9,18 +9,23 @@ public sealed class EcosystemInputRouter
     private readonly EcosystemRenderer
         _renderer;
 
+    private readonly Func<
+        IReadOnlyList<EcosystemRenderItem>>
+            _getRenderItems;
+
     public EcosystemInputRouter(
-        EcosystemRenderer renderer)
+        Func<IReadOnlyList<EcosystemRenderItem>>
+            getRenderItems)
     {
-        _renderer =
-            renderer;
+        _getRenderItems =
+            getRenderItems;
     }
 
     public EcosystemRenderItem? HitTest(
         Point worldPoint)
     {
         foreach (EcosystemRenderItem item in
-                 _renderer.RenderItems
+                 _getRenderItems()
                      .OrderByDescending(
                          item => item.ZIndex))
         {
@@ -52,9 +57,7 @@ public sealed class EcosystemInputRouter
         EcosystemRenderItem item,
         Point worldPoint)
     {
-        // Stage 2:
-        // convert the world point into the source
-        // bitmap's pixel coordinates and inspect alpha.
+        //got rid of alpha stuff for now! 
 
         return true;
     }

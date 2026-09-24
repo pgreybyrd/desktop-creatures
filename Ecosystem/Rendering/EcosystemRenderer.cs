@@ -1,4 +1,5 @@
 ﻿using Desktop_Creatures.Creatures;
+using Desktop_Creatures.Ecosystem.Interaction;
 using Desktop_Creatures.Windowing;
 using Desktop_Creatures.World.Surfaces;
 using System.Windows;
@@ -45,7 +46,8 @@ public sealed class EcosystemRenderer
             zOrderManager;
     }
 
-    public void CreateSurfaces()
+    public void CreateSurfaces(
+        EcosystemInputRouter inputRouter)
     {
         CloseSurfaces();
 
@@ -58,7 +60,9 @@ public sealed class EcosystemRenderer
                         bounds.Left,
                         bounds.Top,
                         bounds.Width,
-                        bounds.Height));
+                        bounds.Height),
+                    inputRouter
+                    );
 
             _surfaces.Add(
                 surface);

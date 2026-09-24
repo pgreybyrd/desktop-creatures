@@ -1,4 +1,5 @@
 ﻿using Desktop_Creatures.Creatures;
+using Desktop_Creatures.Ecosystem.Interaction;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -14,12 +15,19 @@ public partial class EcosystemSurface : Window
     private readonly Dictionary<Guid, Image>
         _entityImages = [];
 
+    private readonly EcosystemInputRouter
+        _inputRouter;
+
     public Rect WorldBounds { get; }
 
     public EcosystemSurface(
-        Rect worldBounds)
+        Rect worldBounds,
+        EcosystemInputRouter inputRouter)
     {
         InitializeComponent();
+
+        _inputRouter =
+            inputRouter;
 
         WorldBounds =
             worldBounds;
