@@ -1,4 +1,5 @@
-﻿using Desktop_Creatures.Ecosystem.Rendering;
+﻿using Desktop_Creatures.Creatures;
+using Desktop_Creatures.Ecosystem.Rendering;
 
 using Point = System.Windows.Point;
 
@@ -6,19 +7,28 @@ namespace Desktop_Creatures.Ecosystem.Interaction;
 
 public sealed class EcosystemInputRouter
 {
-    private readonly EcosystemRenderer
-        _renderer;
-
     private readonly Func<
         IReadOnlyList<EcosystemRenderItem>>
             _getRenderItems;
 
+    private readonly Func<Guid, Creature?>
+        _findCreature;
+
+    public IReadOnlyList<EcosystemRenderItem>
+        RenderItems =>
+            _getRenderItems();
+
     public EcosystemInputRouter(
         Func<IReadOnlyList<EcosystemRenderItem>>
-            getRenderItems)
+            getRenderItems,
+        Func<Guid, Creature?>
+            findCreature)
     {
         _getRenderItems =
             getRenderItems;
+
+        _findCreature =
+            findCreature;
     }
 
     public EcosystemRenderItem? HitTest(
@@ -51,6 +61,13 @@ public sealed class EcosystemInputRouter
         }
 
         return null;
+    }
+
+    public Creature? FindCreature(
+        Guid entityId)
+    {
+        return _findCreature(
+            entityId);
     }
 
     private static bool IsOpaqueAt(

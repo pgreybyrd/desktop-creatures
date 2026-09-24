@@ -1,5 +1,7 @@
 ﻿using Desktop_Creatures.Creatures;
+using Desktop_Creatures.Creatures.Interaction;
 using Desktop_Creatures.Ecosystem.Interaction;
+using Desktop_Creatures.UI.RightClick;
 using Desktop_Creatures.Windowing;
 using Desktop_Creatures.World.Surfaces;
 using System.Windows;
@@ -47,7 +49,13 @@ public sealed class EcosystemRenderer
     }
 
     public void CreateSurfaces(
-        EcosystemInputRouter inputRouter)
+        EcosystemInputRouter inputRouter,
+        CreatureDragController dragController,
+        CreatureContextMenuController contextMenuController,
+        int uiScale,
+        Action<Creature, CreatureContextMenuAction>
+            contextActionRequested,
+        Action<Guid> putAwayRequested)
     {
         CloseSurfaces();
 
@@ -61,8 +69,12 @@ public sealed class EcosystemRenderer
                         bounds.Top,
                         bounds.Width,
                         bounds.Height),
-                    inputRouter
-                    );
+                    inputRouter,
+                    dragController,
+                    contextMenuController,
+                    uiScale,
+                    contextActionRequested,
+                    putAwayRequested);
 
             _surfaces.Add(
                 surface);

@@ -104,6 +104,7 @@ public sealed class GroundMovement : ICreatureMovement
         {
             Logger.LogDebug(
                 DebugCategory.Movement,
+                $"[{_context.GetCreatureId()}] " +
                 $"INTERACTION TRAVEL: " +
                 $"position=({_context.GetX():F1},{_context.GetY():F1}) " +
                 $"target=({_context.GetTargetX():F1},{_context.GetTargetY():F1}) " +
@@ -193,6 +194,7 @@ public sealed class GroundMovement : ICreatureMovement
         {
             Logger.LogDebug(
                 DebugCategory.Surface,
+                $"[{_context.GetCreatureId()}] " +
                 $"GROUND FALL: ordinary surface crossed " +
                 $"feet={previousFeetY:F1}->{currentFeetY:F1} " +
                 $"centerX={centerX:F1} " +
@@ -215,6 +217,7 @@ public sealed class GroundMovement : ICreatureMovement
             {
                 Logger.LogDebug(
                     DebugCategory.Surface,
+                    $"[{_context.GetCreatureId()}] " +
                     $"GROUND FALL: monitor candidate " +
                     $"feet={previousFeetY:F1}->{currentFeetY:F1} " +
                     $"centerX={centerX:F1} " +
@@ -232,6 +235,7 @@ public sealed class GroundMovement : ICreatureMovement
 
                     Logger.LogDebug(
                         DebugCategory.Surface,
+                        $"[{_context.GetCreatureId()}] " +
                         $"GROUND FALL: monitor floor crossed " +
                         $"feet={previousFeetY:F1}->{currentFeetY:F1} " +
                         $"centerX={centerX:F1} " +
@@ -242,6 +246,7 @@ public sealed class GroundMovement : ICreatureMovement
             {
                 Logger.LogDebug(
                     DebugCategory.Surface,
+                    $"[{_context.GetCreatureId()}] " +
                     $"GROUND FALL: no monitor candidate " +
                     $"feet={previousFeetY:F1}->{currentFeetY:F1} " +
                     $"centerX={centerX:F1}");
@@ -272,6 +277,7 @@ public sealed class GroundMovement : ICreatureMovement
 
                 Logger.LogDebug(
                     DebugCategory.Surface,
+                    $"[{_context.GetCreatureId()}] " +
                     $"FALLING BELOW KNOWN SURFACES: " +
                     $"position=({_context.GetX():F1},{_context.GetY():F1}) " +
                     $"feetY={currentFeetY:F1} " +
@@ -285,6 +291,7 @@ public sealed class GroundMovement : ICreatureMovement
 
         Logger.LogDebug(
             DebugCategory.Surface,
+            $"[{_context.GetCreatureId()}] " +
             $"GROUND LANDING: " +
             $"position=({_context.GetX():F1},{_context.GetY():F1}) " +
             $"feet={previousFeetY:F1}->{currentFeetY:F1} " +
@@ -366,6 +373,7 @@ public sealed class GroundMovement : ICreatureMovement
 
         Logger.LogDebug(
             DebugCategory.Movement,
+            $"[{_context.GetCreatureId()}] " +
             $"GROUND DESTINATION SET: " +
             $"from=({_context.GetX():F1},{_context.GetY():F1}) " +
             $"to=({resolved.X:F1},{resolved.Y:F1}) " +
@@ -410,9 +418,9 @@ public sealed class GroundMovement : ICreatureMovement
             return;
 
         MovementStep movementStep =
-     _movementController.CalculateStep(
-         _context.GetMovementSpeed(),
-         deltaSeconds);
+            _movementController.CalculateStep(
+                _context.GetMovementSpeed(),
+                deltaSeconds);
 
         double arrivalDistance =
             Math.Max(
@@ -474,6 +482,7 @@ public sealed class GroundMovement : ICreatureMovement
         {
             Logger.LogDebug(
                 DebugCategory.Surface,
+                $"[{_context.GetCreatureId()}] " +
                 $"X CLAMPED TO WALKABLE SPAN: " +
                 $"{unclampedX:F1} -> {nextX:F1} " +
                 $"span=[{walkableBounds.Left},{walkableBounds.Right}]");
@@ -500,6 +509,7 @@ public sealed class GroundMovement : ICreatureMovement
         {
             Logger.LogDebug(
                 DebugCategory.Surface,
+                $"[{_context.GetCreatureId()}] " +
                 $"GROUND SURFACE HANDOFF: " +
                 $"from={surface.Kind} " +
                 $"[{surface.Left},{surface.Right}] " +

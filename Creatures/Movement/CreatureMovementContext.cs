@@ -3,6 +3,8 @@ using Desktop_Creatures.World.Surfaces;
 
 public sealed class CreatureMovementContext
 {
+    public required Func<Guid> GetCreatureId { get; init; }
+
     public required Func<double> GetX { get; init; }
     public required Action<double> SetX { get; init; }
 

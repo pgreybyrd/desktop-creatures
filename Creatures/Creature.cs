@@ -234,6 +234,9 @@ public abstract class Creature
     {
         return new CreatureMovementContext
         {
+            GetCreatureId =
+                () => Id,
+
             IsStillOnSurface =
                 () => IsStillOnSurface(),
 

@@ -32,6 +32,13 @@ public sealed class CreatureManager
             creatureId);
     }
 
+    public Creature? FindCreature(
+        Guid creatureId)
+    {
+        return _activeCreatures.GetValueOrDefault(
+            creatureId);
+    }
+
     public void Update(
         double deltaSeconds,
         Func<Creature, bool>? shouldUpdate = null)

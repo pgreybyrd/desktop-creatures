@@ -2,6 +2,7 @@
 using Desktop_Creatures.Config;
 using Desktop_Creatures.Creatures;
 using Desktop_Creatures.Creatures.Definitions;
+using Desktop_Creatures.Creatures.Interaction;
 using Desktop_Creatures.Ecosystem;
 using Desktop_Creatures.Ecosystem.Interaction;
 using Desktop_Creatures.Ecosystem.Rendering;
@@ -28,6 +29,11 @@ using WpfMouseEventArgs = System.Windows.Input.MouseEventArgs;
 
 namespace Desktop_Creatures;
 
+
+// TODO: Ecosystem layering:
+// Creatures standing on app/menu surfaces must render above the
+// supporting surface. Resolve as part of unified ecosystem/UI
+// z-order architecture rather than special-casing MainWindow.
 public partial class MainWindow : Window
 {
     private readonly DispatcherTimer _timer;
@@ -103,14 +109,14 @@ public partial class MainWindow : Window
     private readonly SurfaceManager _surfaceManager = new();
     private readonly ZOrderManager _zOrderManager = new();
 
+    private readonly CreatureDragController _dragController;
+
     private readonly EcosystemHost _ecosystemHost;
     private readonly EcosystemRenderer _ecosystemRenderer;
 
     private readonly EcosystemInputRouter _ecosystemInputRouter;
 
-    private const int MaxRats = 20;
-    private const int MaxEagles = 20;
-    private const int MaxOcelots = 20;
+    private readonly CreatureContextMenuController _creatureContextMenuController = new();
 
     private const int MenuTitleBarTop = 57;
     private const int MenuTitleBarLeft = 108;
@@ -121,6 +127,10 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+
+        _dragController =
+            new CreatureDragController(
+                _surfaceManager);
 
         _ecosystemHost =
             new EcosystemHost(
@@ -135,7 +145,8 @@ public partial class MainWindow : Window
 
         _ecosystemInputRouter =
             new EcosystemInputRouter(
-                () => _ecosystemRenderer.RenderItems);
+                () => _ecosystemRenderer.RenderItems,
+                id => _creatureManager.FindCreature(id));
 
         UiSounds.Initialize();
 
@@ -339,7 +350,12 @@ public partial class MainWindow : Window
             _surfaceManager.Refresh();
 
             _ecosystemRenderer.CreateSurfaces(
-                _ecosystemInputRouter);
+                _ecosystemInputRouter,
+                _dragController,
+                _creatureContextMenuController,
+                _uiScale,
+                HandleCreatureContextAction,
+                PutAwayCreature);
 
             CreateInitialFlowers();
 
@@ -1023,12 +1039,9 @@ public partial class MainWindow : Window
     }
 
     private void HandleCreatureContextAction(
-        CreatureWindow creatureWindow,
+        Creature creature,
         CreatureContextMenuAction action)
     {
-        Creature creature =
-            creatureWindow.GetCreature();
-
         switch (action)
         {
             case CreatureContextMenuAction.FieldGuide:
@@ -1036,6 +1049,14 @@ public partial class MainWindow : Window
                     creature.CreatureType);
                 break;
         }
+    }
+    private void HandleCreatureContextAction(
+        CreatureWindow creatureWindow,
+        CreatureContextMenuAction action)
+    {
+        HandleCreatureContextAction(
+            creatureWindow.GetCreature(),
+            action);
     }
 
     private bool IsCreatureSpawned(
