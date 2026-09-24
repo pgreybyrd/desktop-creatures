@@ -100,14 +100,14 @@ public sealed class EcosystemRenderer
 
     public void Render()
     {
+        _renderItems.Clear();
+
         foreach (Creature creature in
                  _creatureManager.ActiveCreatures)
         {
             EcosystemRenderItem? renderItem =
                 CreatureRenderStateBuilder.Build(
                     creature);
-
-            _renderItems.Clear();
 
             if (renderItem is null)
             {

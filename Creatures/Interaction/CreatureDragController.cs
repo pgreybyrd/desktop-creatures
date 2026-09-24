@@ -10,6 +10,8 @@ public sealed class CreatureDragController(
 
     public Point DragOffset { get; private set; }
 
+    public Guid? DraggedCreatureId { get; private set; }
+
     public bool IsOnDesktop(
         Point point)
     {
@@ -20,6 +22,8 @@ public sealed class CreatureDragController(
     public void Begin(
         Creature creature)
     {
+        DraggedCreatureId = creature.Id;
+
         IsDragging = true;
 
         DragOffset =
@@ -42,6 +46,8 @@ public sealed class CreatureDragController(
 
     public void End(Creature creature)
     {
+        DraggedCreatureId = null;
+
         IsDragging = false;
 
         creature.Release();
