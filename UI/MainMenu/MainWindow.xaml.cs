@@ -90,7 +90,7 @@ public partial class MainWindow : Window
     private readonly BitmapSource _quitLabel;
 
     private readonly List<POIWindow> _poiWindows = new();
-    private readonly List<CreatureWindow> _creatureWindows = new();
+    //private readonly List<CreatureWindow> _creatureWindows = new();
 
     private readonly CreatureManager _creatureManager = new();
 
@@ -1047,14 +1047,14 @@ public partial class MainWindow : Window
                 break;
         }
     }
-    private void HandleCreatureContextAction(
-        CreatureWindow creatureWindow,
-        CreatureContextMenuAction action)
-    {
-        HandleCreatureContextAction(
-            creatureWindow.GetCreature(),
-            action);
-    }
+    //private void HandleCreatureContextAction(
+    //    CreatureWindow creatureWindow,
+    //    CreatureContextMenuAction action)
+    //{
+    //    HandleCreatureContextAction(
+    //        creatureWindow.GetCreature(),
+    //        action);
+    //}
 
     private bool IsCreatureSpawned(
         Guid creatureId)
@@ -1114,26 +1114,26 @@ public partial class MainWindow : Window
         _creatureRosterWindow?.Refresh();
     }
 
-    private void PutAwayCreature(
-        CreatureWindow creatureWindow)
-    {
-        Creature creature =
-            creatureWindow.GetCreature();
+    //private void PutAwayCreature(
+    //    CreatureWindow creatureWindow)
+    //{
+    //    Creature creature =
+    //        creatureWindow.GetCreature();
 
-        PutAwayCreature(
-            creature.Id);
+    //    PutAwayCreature(
+    //        creature.Id);
 
-        creatureWindow.PutAwayRequested -=
-            PutAwayCreature;
+    //    creatureWindow.PutAwayRequested -=
+    //        PutAwayCreature;
 
-        creatureWindow.ContextActionRequested -=
-            HandleCreatureContextAction;
+    //    creatureWindow.ContextActionRequested -=
+    //        HandleCreatureContextAction;
 
-        _creatureWindows.Remove(
-            creatureWindow);
+    //    _creatureWindows.Remove(
+    //        creatureWindow);
 
-        creatureWindow.Close();
-    }
+    //    creatureWindow.Close();
+    //}
 
     private void SetCreatureFavorite(
         Guid creatureId,
@@ -1466,9 +1466,10 @@ public partial class MainWindow : Window
     private void OnCreatureDisplayScaleChanged(
         int scale)
     {
-        foreach (var window in _creatureWindows)
+        foreach (Creature creature in
+                 _creatureManager.ActiveCreatures)
         {
-            window.SetDisplayScale(
+            creature.SetDisplayScale(
                 scale);
         }
     }
