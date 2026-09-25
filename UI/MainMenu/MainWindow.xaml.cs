@@ -22,6 +22,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Forms = System.Windows.Forms;
+using MessageBox = System.Windows.MessageBox;
 using Point = System.Windows.Point;
 using WpfMouseButtonEventArgs = System.Windows.Input.MouseButtonEventArgs;
 using WpfMouseButtonState = System.Windows.Input.MouseButtonState;
@@ -90,7 +91,6 @@ public partial class MainWindow : Window
     private readonly BitmapSource _quitLabel;
 
     private readonly List<POIWindow> _poiWindows = new();
-    //private readonly List<CreatureWindow> _creatureWindows = new();
 
     private readonly CreatureManager _creatureManager = new();
 
@@ -104,7 +104,7 @@ public partial class MainWindow : Window
 
     private List<PointOfInterest> _pointsOfInterest = new();
 
-    private PointOfInterestManager _pointOfInterestManager;
+    private PointOfInterestManager _pointOfInterestManager = new();
 
     private readonly SurfaceManager _surfaceManager = new();
     private readonly ZOrderManager _zOrderManager = new();
@@ -141,6 +141,7 @@ public partial class MainWindow : Window
             new EcosystemRenderer(
                 _surfaceManager,
                 _creatureManager,
+                _pointOfInterestManager,
                 _zOrderManager);
 
         _ecosystemInputRouter =
@@ -329,9 +330,7 @@ public partial class MainWindow : Window
         QuitImage.Source = _quitNormal;
         QuitLabelImage.Source = _quitLabel;
 
-        //End of Images
-
-        _pointOfInterestManager = new PointOfInterestManager();
+        //===== End of Images =====
 
         var screen = Forms.Screen.PrimaryScreen!;
 
@@ -1009,30 +1008,6 @@ public partial class MainWindow : Window
 
             _creatureRosterWindow?.Refresh();
         }
-
-        //var creatureWindow =
-        //    new CreatureWindow(
-        //        creature,
-        //        _surfaceManager,
-        //        _uiScale);
-
-        //creatureWindow.PutAwayRequested +=
-        //    PutAwayCreature;
-
-        //creatureWindow.ContextActionRequested +=
-        //    HandleCreatureContextAction;
-
-        //creatureWindow.SetDisplayScale(
-        //    _settings.CreatureDisplayScale);
-
-        //creatureWindow.Show();
-
-        //_zOrderManager.Register(
-        //    creatureWindow,
-        //    ZOrderManager.WindowLayer.Ecosystem);
-
-        //_creatureWindows.Add(
-        //    creatureWindow);
     }
 
     private void HandleCreatureContextAction(
@@ -1047,14 +1022,6 @@ public partial class MainWindow : Window
                 break;
         }
     }
-    //private void HandleCreatureContextAction(
-    //    CreatureWindow creatureWindow,
-    //    CreatureContextMenuAction action)
-    //{
-    //    HandleCreatureContextAction(
-    //        creatureWindow.GetCreature(),
-    //        action);
-    //}
 
     private bool IsCreatureSpawned(
         Guid creatureId)
@@ -1113,27 +1080,6 @@ public partial class MainWindow : Window
 
         _creatureRosterWindow?.Refresh();
     }
-
-    //private void PutAwayCreature(
-    //    CreatureWindow creatureWindow)
-    //{
-    //    Creature creature =
-    //        creatureWindow.GetCreature();
-
-    //    PutAwayCreature(
-    //        creature.Id);
-
-    //    creatureWindow.PutAwayRequested -=
-    //        PutAwayCreature;
-
-    //    creatureWindow.ContextActionRequested -=
-    //        HandleCreatureContextAction;
-
-    //    _creatureWindows.Remove(
-    //        creatureWindow);
-
-    //    creatureWindow.Close();
-    //}
 
     private void SetCreatureFavorite(
         Guid creatureId,
@@ -1305,6 +1251,28 @@ public partial class MainWindow : Window
         }
     }
 
+    private void ResetAllCreatures()
+    {
+        foreach (Creature creature in
+                 _creatureManager.ActiveCreatures.ToList())
+        {
+            _creatureManager.Remove(
+                creature.Id);
+        }
+
+        _creatureRecords.Clear();
+
+        SaveCreatureRecords();
+
+        _creatureRosterWindow?.Refresh();
+
+        MessageBox.Show(
+            "All saved creatures have been reset.",
+            "Reset Complete",
+            MessageBoxButton.OK,
+            MessageBoxImage.Information);
+    }
+
     private void ClearActivePois()
     {
         foreach (POIWindow window in
@@ -1424,6 +1392,9 @@ public partial class MainWindow : Window
 
         _settingsWindow.ScaleChanged +=
             OnCreatureDisplayScaleChanged;
+
+        _settingsWindow.ResetCreaturesRequested +=
+            ResetAllCreatures;
 
         _settingsWindow.EcosystemAlwaysOnTopChanged +=
             OnEcosystemAlwaysOnTopChanged;

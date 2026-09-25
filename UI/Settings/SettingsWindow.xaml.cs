@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using MessageBox = System.Windows.MessageBox;
 using WpfMouseButtonEventArgs = System.Windows.Input.MouseButtonEventArgs;
 using WpfMouseButtonState = System.Windows.Input.MouseButtonState;
 using WpfMouseEventArgs = System.Windows.Input.MouseEventArgs;
@@ -17,6 +18,8 @@ namespace Desktop_Creatures
         public event Action<int>? ScaleChanged;
         public event Action<bool>? EcosystemAlwaysOnTopChanged;
         public event Action<bool>? MenusAlwaysOnTopChanged;
+
+        public event Action? ResetCreaturesRequested;
 
         private readonly AppSettings _settings;
         private readonly int _uiScale;
@@ -231,6 +234,30 @@ namespace Desktop_Creatures
                 _settings.MenusAlwaysOnTop
                     ? _toggleOnNormal
                     : _toggleOffNormal;
+        }
+
+        private void ResetCreatures_Click(
+            object sender,
+            RoutedEventArgs e)
+        {
+            UiSounds.PlayButtonClick();
+
+            MessageBoxResult result =
+                MessageBox.Show(
+                    "Delete all saved creatures?\n\n" +
+                    "This permanently removes every creature " +
+                    "from the roster, including names, favorites, " +
+                    "appearances, and saved progress.\n\n" +
+                    "This cannot be undone.",
+                    "Reset Creatures",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning,
+                    MessageBoxResult.No);
+
+            if (result != MessageBoxResult.Yes)
+                return;
+
+            ResetCreaturesRequested?.Invoke();
         }
 
         private void Scale1_Click(

@@ -3,6 +3,7 @@ using Desktop_Creatures.Creatures.Interaction;
 using Desktop_Creatures.Ecosystem.Interaction;
 using Desktop_Creatures.UI.RightClick;
 using Desktop_Creatures.Windowing;
+using Desktop_Creatures.World;
 using Desktop_Creatures.World.Surfaces;
 using System.Windows;
 
@@ -18,6 +19,13 @@ public sealed class EcosystemRenderer
 
     private readonly ZOrderManager
         _zOrderManager;
+
+    private readonly PointOfInterestManager
+        _pointOfInterestManager;
+
+    private readonly PointOfInterestRenderStateBuilder
+        _pointOfInterestRenderStateBuilder =
+            new();
 
     private readonly List<EcosystemSurface>
         _surfaces = [];
@@ -36,6 +44,7 @@ public sealed class EcosystemRenderer
     public EcosystemRenderer(
         SurfaceManager surfaceManager,
         CreatureManager creatureManager,
+        PointOfInterestManager pointOfInterestManager,
         ZOrderManager zOrderManager)
     {
         _surfaceManager =
@@ -43,6 +52,9 @@ public sealed class EcosystemRenderer
 
         _creatureManager =
             creatureManager;
+
+        _pointOfInterestManager =
+            pointOfInterestManager;
 
         _zOrderManager =
             zOrderManager;
@@ -109,65 +121,79 @@ public sealed class EcosystemRenderer
                 CreatureRenderStateBuilder.Build(
                     creature);
 
-            if (renderItem is null)
+            if (renderItem is not null)
             {
-                continue;
-            }
-
-            _renderItems.Add(
-                renderItem);
-
-            foreach (EcosystemSurface surface in
-                     _surfaces)
-            {
-                bool intersectsSurface =
-                    surface.WorldBounds.IntersectsWith(
-                        renderItem.WorldBounds);
-
-                if (intersectsSurface)
-                {
-                    surface.Draw(
-                        renderItem);
-
-                    continue;
-                }
-
-                if (surface.ContainsEntity(
-                        renderItem.EntityId))
-                {
-                    surface.RemoveEntity(
-                        renderItem.EntityId);
-                }
+                RenderItem(
+                    renderItem);
             }
         }
 
-        RemoveInactiveCreatures();
+        foreach (PointOfInterest poi in
+                 _pointOfInterestManager.Points)
+        {
+            EcosystemRenderItem renderItem =
+                _pointOfInterestRenderStateBuilder.Build(
+                    poi);
+
+            RenderItem(
+                renderItem);
+        }
+
+        RemoveInactiveEntities();
     }
 
-    private void RemoveInactiveCreatures()
+    private void RenderItem(
+        EcosystemRenderItem renderItem)
     {
-        HashSet<Guid> activeCreatureIds =
-            _creatureManager
-                .ActiveCreatures
-                .Select(creature => creature.Id)
+        _renderItems.Add(
+            renderItem);
+
+        foreach (EcosystemSurface surface in
+                 _surfaces)
+        {
+            bool intersectsSurface =
+                surface.WorldBounds.IntersectsWith(
+                    renderItem.WorldBounds);
+
+            if (intersectsSurface)
+            {
+                surface.Draw(
+                    renderItem);
+
+                continue;
+            }
+
+            if (surface.ContainsEntity(
+                    renderItem.EntityId))
+            {
+                surface.RemoveEntity(
+                    renderItem.EntityId);
+            }
+        }
+    }
+
+    private void RemoveInactiveEntities()
+    {
+        HashSet<Guid> activeEntityIds =
+            _renderItems
+                .Select(item => item.EntityId)
                 .ToHashSet();
 
         foreach (EcosystemSurface surface in
                  _surfaces)
         {
-            Guid[] inactiveCreatureIds =
+            Guid[] inactiveEntityIds =
                 surface.EntityIds
                     .Where(
                         id =>
-                            !activeCreatureIds.Contains(
-                                id))
+                            !activeEntityIds.Contains(id))
                     .ToArray();
 
-            foreach (Guid creatureId in
-                     inactiveCreatureIds)
+            foreach (Guid entityId in
+                     inactiveEntityIds)
             {
                 surface.RemoveEntity(
-                    creatureId);
+                    entityId);
             }
         }
     }

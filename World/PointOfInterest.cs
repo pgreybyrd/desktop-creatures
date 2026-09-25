@@ -17,6 +17,7 @@ public enum PointOfInterestType
 
 public class PointOfInterest
 {
+    public Guid Id { get; }
     public string Name { get; set; }
     public Point Position { get; set; }
     public PointOfInterestType Type { get; set; }
@@ -28,12 +29,16 @@ public class PointOfInterest
     public List<WorldInteractionPoint> AnchorPoints { get; set; } = new();
 
     public PointOfInterest(
-        string name, 
-        Point position, 
-        PointOfInterestType type, 
+        string name,
+        Point position,
+        PointOfInterestType type,
         PointOfInterestSettings settings,
-        AppSettings appSettings)
+        AppSettings appSettings,
+        Guid? id = null)
     {
+        Id =
+            id ?? Guid.NewGuid();
+
         Name = name;
         Position = position;
         Type = type;

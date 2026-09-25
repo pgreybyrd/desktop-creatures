@@ -80,6 +80,13 @@
 
         <!-- Buttons now get +8 Y because panel starts at Y=8 -->
 
+        <Button Canvas.Left="0"
+                Canvas.Top="0"
+                Width="100"
+                Height="25"
+                Content="RESET CREATURES"
+                Click="ResetCreatures_Click"/>
+
         <Button Canvas.Left="19"
                 Canvas.Top="99"
                 Width="25"
@@ -189,7 +196,7 @@
                        Height="25"
                        Stretch="None"
                        IsHitTestVisible="False"/>
-                        </Grid>
+            </Grid>
         </Button>
 
         <Button Canvas.Left="89"
