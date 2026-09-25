@@ -80,5 +80,10 @@ namespace Desktop_Creatures.World
             double dy = a.Y - b.Y;
             return Math.Sqrt(dx * dx + dy * dy);
         }
+
+        public void Clear()
+        {
+            Points.Clear();
+        }
     }
 }

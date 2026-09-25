@@ -12,7 +12,8 @@ public enum PointOfInterestType
     Rest,
     Decoration,
     Magic,
-    Breed
+    Breed,
+    Tree
 }
 
 public class PointOfInterest

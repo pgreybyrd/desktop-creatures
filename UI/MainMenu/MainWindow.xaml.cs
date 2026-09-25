@@ -89,19 +89,19 @@ public partial class MainWindow : Window
     private readonly BitmapSource _quitPressed;
     private readonly BitmapSource _quitLabel;
 
-    private readonly List<POIWindow> _poiWindows = new();
+    //private readonly List<POIWindow> _poiWindows = new();
 
     private readonly CreatureManager _creatureManager = new();
 
     private CreatureRosterWindow? _creatureRosterWindow;
 
-    private readonly Dictionary<Guid, CreatureRecord> _creatureRecords = new();
-    private Dictionary<string, CreatureDefinition> _creatureDefinitions = new();
+    private readonly Dictionary<Guid, CreatureRecord> _creatureRecords = [];
+    private Dictionary<string, CreatureDefinition> _creatureDefinitions = [];
 
-    private Dictionary<string, CreatureSettings> _creatureSettings = new();
-    private Dictionary<string, PointOfInterestSettings> _pointOfInterestSettings = new();
+    private Dictionary<string, CreatureSettings> _creatureSettings = [];
+    private Dictionary<string, PointOfInterestSettings> _pointOfInterestSettings = [];
 
-    private List<PointOfInterest> _pointsOfInterest = new();
+    private List<PointOfInterest> _pointsOfInterest = [];
 
     private PointOfInterestManager _pointOfInterestManager = new();
 
@@ -362,18 +362,34 @@ public partial class MainWindow : Window
                 HandleCreatureContextAction,
                 PutAwayCreature);
 
-            CreateInitialFlowers();
+            //CreateInitialFlowers();
 
-            CreateInitialTree();
+            //CreateInitialTree();
 
             // TODO: Re-enable when POIs are ready for release.
-            CreateFoodBowl(); 
+            //CreateFoodBowl(); 
             //CreateWaterDish();
+            CreateTestPoi();
 
             LoadSavedCreatures();
 
             ApplyTopmostSettings();
         };
+    }
+
+    private void CreateTestPoi()
+    {
+        PointOfInterest poi =
+            new(
+                "TEST TREE",
+                new Point(500, 300),
+                PointOfInterestType.Tree,
+                _pointOfInterestSettings["tree"],
+                _settings
+                );
+
+        _pointOfInterestManager.Add(
+            poi);
     }
 
     private void MainWindow_LocationChanged(
@@ -413,329 +429,7 @@ public partial class MainWindow : Window
         }
     }
 
-    private void CreateFoodBowl()
-    {
-        if (!_pointOfInterestSettings.TryGetValue(
-            "food_bowl",
-            out var bowlSettings))
-        {
-            System.Windows.MessageBox.Show("food_bowl settings not found!");
-            return;
-        }
 
-        var menuSurface = _surfaceManager.MenuSurface
-            ?? throw new InvalidOperationException(
-                "Menu surface must exist before creating the bowl.");
-
-        double bowlWidth = bowlSettings.Width * _uiScale;
-        double bowlHeight = bowlSettings.Height * _uiScale;
-
-        double bowlX =
-            menuSurface.Left +
-            (menuSurface.Right - menuSurface.Left - bowlWidth) / 2.0;
-
-        double bowlY =
-            menuSurface.Top - bowlHeight;
-
-        var bowl = new PointOfInterest(
-            "Food Bowl",
-            new Point(bowlX, bowlY),
-            PointOfInterestType.Food,
-            bowlSettings,
-            _settings);
-
-        bowl.AddWorldInteractionPoint(
-            new WorldInteractionPoint(
-                "Eat Center",
-                WorldInteractionPointType.Eat,
-                new Point(
-                    bowlSettings.Width / 2.0,
-                    bowlSettings.Height)));
-
-        _pointOfInterestManager.Add(bowl);
-
-        foreach (var point in bowl.AnchorPoints)
-        {
-            var worldPosition =
-                bowl.GetWorldInteractionPointPosition(point);
-
-            Logger.LogDebug(
-                DebugCategory.Behavior,
-                $"Bowl interaction: {point.Type} " +
-                $"world=({worldPosition.X:F1}, {worldPosition.Y:F1})");
-        }
-
-        Logger.LogDebug(
-            DebugCategory.Behavior,
-            $"Added bowl at ({bowl.Position.X:F1}, {bowl.Position.Y:F1}) " +
-            $"with {bowl.AnchorPoints.Count} interaction point(s).");
-
-        var bowlWindow =
-            new POIWindow(
-                bowl,
-                _surfaceManager);
-
-        bowlWindow.Show();
-
-        _zOrderManager.Register(
-            bowlWindow,
-            ZOrderManager.WindowLayer.Ecosystem);
-
-        _poiWindows.Add(
-            bowlWindow);
-    }
-
-    private void CreateWaterDish()
-    {
-        if (!_pointOfInterestSettings.TryGetValue(
-            "water_dish",
-            out var dishSettings))
-        {
-            System.Windows.MessageBox.Show(
-                "water_dish settings not found!");
-
-            return;
-        }
-
-        var menuSurface =
-            _surfaceManager.MenuSurface
-            ?? throw new InvalidOperationException(
-                "Menu surface must exist before creating the water dish.");
-
-        double dishWidth =
-            dishSettings.Width * _uiScale;
-
-        double dishHeight =
-            dishSettings.Height * _uiScale;
-
-        // Put it slightly left of the food bowl for now.
-        double dishX =
-            menuSurface.Left +
-            (menuSurface.Width * 0.25) -
-            (dishWidth / 2.0);
-
-        double dishY =
-            menuSurface.Top -
-            dishHeight;
-
-        var dish =
-            new PointOfInterest(
-                "Water Dish",
-                new Point(
-                    dishX,
-                    dishY),
-                PointOfInterestType.Water,
-                dishSettings,
-                _settings);
-
-        dish.AddWorldInteractionPoint(
-            new WorldInteractionPoint(
-                "Drink Center",
-                WorldInteractionPointType.Drink,
-                new Point(
-                    dishSettings.Width / 2.0,
-                    dishSettings.Height)));
-
-        _pointOfInterestManager.Add(
-            dish);
-
-        var dishWindow =
-            new POIWindow(
-                dish,
-                _surfaceManager);
-
-        dishWindow.Show();
-
-        _zOrderManager.Register(
-            dishWindow,
-            ZOrderManager.WindowLayer.Ecosystem);
-
-        _poiWindows.Add(
-            dishWindow);
-    }
-
-    private void CreateFlower(
-        PointOfInterestSettings flowerSettings,
-        double x,
-        double groundY)
-    {
-        double flowerHeight =
-            flowerSettings.Height *
-            _settings.Scale;
-
-        double flowerY =
-            groundY -
-            flowerHeight;
-
-        var flower =
-            new PointOfInterest(
-                "Flower",
-                new Point(
-                    x,
-                    flowerY),
-                PointOfInterestType.Food,
-                flowerSettings,
-                _settings);
-
-        flower.AddWorldInteractionPoint(
-            new WorldInteractionPoint(
-                "Nectar",
-                WorldInteractionPointType.Nectar,
-                new Point(
-                    30,
-                    90),
-                InteractionFacing.Right));
-
-        _pointOfInterestManager.Add(
-            flower);
-
-        var flowerWindow =
-            new POIWindow(
-                flower,
-                _surfaceManager);
-
-        flowerWindow.Show();
-
-        _zOrderManager.Register(
-            flowerWindow,
-            ZOrderManager.WindowLayer.Ecosystem);
-
-        _poiWindows.Add(
-            flowerWindow);
-    }
-
-    private void CreateInitialFlowers()
-    {
-        Surface? ground =
-            _surfaceManager.Surfaces
-                .FirstOrDefault(
-                    surface =>
-                        surface.Kind ==
-                        "MonitorGround" &&
-                        surface.Left <= 0 &&
-                        surface.Right > 0);
-
-        if (ground is null)
-            return;
-
-        if (!_pointOfInterestSettings.TryGetValue(
-                "flower",
-                out var flowerSettings))
-        {
-            return;
-        }
-
-        int flowerCount =
-            3;
-
-        for (int i = 0;
-             i < flowerCount;
-             i++)
-        {
-            double x =
-                Random.Shared.Next(
-                    ground.Left + 100,
-                    ground.Right - 100);
-
-            CreateFlower(
-                flowerSettings,
-                x,
-                ground.Top);
-        }
-    }
-
-    private void CreateTree(
-        PointOfInterestSettings treeSettings,
-        double x,
-        double groundY)
-    {
-        double treeHeight =
-            treeSettings.Height *
-            _settings.Scale;
-
-        double treeY =
-            groundY -
-            treeHeight;
-
-        var tree =
-            new PointOfInterest(
-                "Tree",
-                new Point(
-                    x,
-                    treeY),
-                PointOfInterestType.Rest,
-                treeSettings,
-                _settings);
-
-        tree.AddWorldInteractionPoint(
-            new WorldInteractionPoint(
-                "Upper Branch",
-                WorldInteractionPointType.Perch,
-                new Point(
-                    40,
-                    38)));
-
-        tree.AddWorldInteractionPoint(
-            new WorldInteractionPoint(
-                "Middle Branch",
-                WorldInteractionPointType.Perch,
-                new Point(
-                    25,
-                    70)));
-
-        _pointOfInterestManager.Add(tree);
-
-        var treeWindow =
-            new POIWindow(
-                tree,
-                _surfaceManager);
-
-        treeWindow.Show();
-
-        _zOrderManager.Register(
-            treeWindow,
-            ZOrderManager.WindowLayer.Ecosystem);
-
-        _poiWindows.Add(treeWindow);
-    }
-
-    private void CreateInitialTree()
-    {
-        Surface? ground =
-            _surfaceManager.Surfaces
-                .FirstOrDefault(
-                    surface =>
-                        surface.Kind == "MonitorGround" &&
-                        surface.Left <= 0 &&
-                        surface.Right > 0);
-
-        if (ground is null)
-            return;
-
-        if (!_pointOfInterestSettings.TryGetValue(
-                "tree",
-                out var treeSettings))
-        {
-            return;
-        }
-
-        double x =
-            ground.Left +
-            ((ground.Right - ground.Left) * 0.75);
-
-        CreateTree(
-            treeSettings,
-            x,
-            ground.Top);
-    }
-
-    private static UiButtonImages LoadButtonImages(string buttonName)
-    {
-        return new UiButtonImages(
-            AssetImageLoader.Load($"Assets/UI/MainMenu/Buttons/button_{buttonName}.png"),
-            AssetImageLoader.Load($"Assets/UI/MainMenu/Buttons/button_hover_{buttonName}.png"),
-            AssetImageLoader.Load($"Assets/UI/MainMenu/Buttons/button_pressed_{buttonName}.png"));
-    }
 
     private Rectangle LoadSettings()
     {
@@ -977,7 +671,6 @@ public partial class MainWindow : Window
 
         CreatureSpawnContext context =
             CreateSpawnContext(
-                definition,
                 settings,
                 appearanceId,
                 record);
@@ -1119,16 +812,17 @@ public partial class MainWindow : Window
                 IsCreatureSpawned,
                 SpawnCreatureRecord,
                 PutAwayCreature,
-                SetCreatureFavorite);
+                SetCreatureFavorite)
+            {
+                Left =
+                Left +
+                Width +
+                (-3 * _uiScale),
 
-        _creatureRosterWindow.Left =
-            Left +
-            Width +
-            (-3 * _uiScale);
-
-        _creatureRosterWindow.Top =
-            Top +
-            (18 * _uiScale);
+                Top =
+                Top +
+                (18 * _uiScale)
+            };
 
         _creatureRosterWindow.Closed +=
             (_, _) =>
@@ -1150,7 +844,6 @@ public partial class MainWindow : Window
     }
 
     private CreatureSpawnContext CreateSpawnContext(
-        CreatureDefinition definition,
         CreatureSettings settings,
         string? appearanceId,
         CreatureRecord? record)
@@ -1177,11 +870,8 @@ public partial class MainWindow : Window
 
         CreatureSpawnContext context =
             settings.Flight is not null
-                ? CreateFlyingSpawnContext(
-                    definition,
-                    settings)
+                ? CreateFlyingSpawnContext()
                 : CreateGroundSpawnContext(
-                    definition,
                     settings);
 
         return context with
@@ -1191,7 +881,6 @@ public partial class MainWindow : Window
     }
 
     private CreatureSpawnContext CreateGroundSpawnContext(
-        CreatureDefinition definition,
         CreatureSettings settings)
     {
         var menuSurface =
@@ -1219,9 +908,7 @@ public partial class MainWindow : Window
         };
     }
 
-    private CreatureSpawnContext CreateFlyingSpawnContext(
-        CreatureDefinition definition,
-        CreatureSettings settings)
+    private CreatureSpawnContext CreateFlyingSpawnContext()
     {
         var areas =
             _surfaceManager.GetMonitorWorkingAreas();
@@ -1281,14 +968,7 @@ public partial class MainWindow : Window
 
     private void ClearActivePois()
     {
-        foreach (POIWindow window in
-                 _poiWindows.ToList())
-        {
-            window.Close();
-
-            _poiWindows.Remove(
-                window);
-        }
+        _pointOfInterestManager.Clear();
     }
 
     private static Rectangle?
