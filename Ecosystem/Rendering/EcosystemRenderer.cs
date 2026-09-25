@@ -1,5 +1,4 @@
 ﻿using Desktop_Creatures.Creatures;
-using Desktop_Creatures.Creatures.Interaction;
 using Desktop_Creatures.Ecosystem.Interaction;
 using Desktop_Creatures.UI.RightClick;
 using Desktop_Creatures.Windowing;
@@ -63,6 +62,7 @@ public sealed class EcosystemRenderer
     public void CreateSurfaces(
         EcosystemInputRouter inputRouter,
         CreatureDragController dragController,
+        PointOfInterestDragController pointOfInterestDragController,
         CreatureContextMenuController contextMenuController,
         int uiScale,
         Action<Creature, CreatureContextMenuAction>
@@ -83,6 +83,7 @@ public sealed class EcosystemRenderer
                         bounds.Height),
                     inputRouter,
                     dragController,
+                    pointOfInterestDragController,
                     contextMenuController,
                     uiScale,
                     contextActionRequested,

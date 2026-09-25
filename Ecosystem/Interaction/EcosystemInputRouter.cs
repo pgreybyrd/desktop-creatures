@@ -1,5 +1,6 @@
 ﻿using Desktop_Creatures.Creatures;
 using Desktop_Creatures.Ecosystem.Rendering;
+using Desktop_Creatures.World;
 
 using Point = System.Windows.Point;
 
@@ -14,6 +15,9 @@ public sealed class EcosystemInputRouter
     private readonly Func<Guid, Creature?>
         _findCreature;
 
+    private readonly Func<Guid, PointOfInterest?>
+        _findPointOfInterest;
+
     public IReadOnlyList<EcosystemRenderItem>
         RenderItems =>
             _getRenderItems();
@@ -22,13 +26,18 @@ public sealed class EcosystemInputRouter
         Func<IReadOnlyList<EcosystemRenderItem>>
             getRenderItems,
         Func<Guid, Creature?>
-            findCreature)
+            findCreature,
+        Func<Guid, PointOfInterest?>
+            findPointOfInterest)
     {
         _getRenderItems =
             getRenderItems;
 
         _findCreature =
             findCreature;
+
+        _findPointOfInterest =
+            findPointOfInterest;
     }
 
     public EcosystemRenderItem? HitTest(
@@ -67,6 +76,13 @@ public sealed class EcosystemInputRouter
         Guid entityId)
     {
         return _findCreature(
+            entityId);
+    }
+
+    public PointOfInterest? FindPointOfInterest(
+        Guid entityId)
+    {
+        return _findPointOfInterest(
             entityId);
     }
 

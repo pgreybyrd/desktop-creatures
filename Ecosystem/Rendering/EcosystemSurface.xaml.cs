@@ -1,8 +1,8 @@
 ﻿using Desktop_Creatures.Creatures;
-using Desktop_Creatures.Creatures.Interaction;
 using Desktop_Creatures.Ecosystem.Interaction;
 using Desktop_Creatures.UI.RightClick;
 using Desktop_Creatures.Utilities;
+using Desktop_Creatures.World;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -40,14 +40,21 @@ public partial class EcosystemSurface : Window
     private readonly Action<Guid>
         _putAwayRequested;
 
+    private readonly PointOfInterestDragController
+        _pointOfInterestDragController;
+
+    private PointOfInterest?
+        _draggedPointOfInterest;
+
     public Rect WorldBounds { get; }
 
     public EcosystemSurface(
         Rect worldBounds,
         EcosystemInputRouter inputRouter,
         CreatureDragController dragController,
+        PointOfInterestDragController pointOfInterestDragController,
         CreatureContextMenuController contextMenuController,
-        int uiScale,
+            int uiScale,
         Action<Creature, CreatureContextMenuAction>
             contextActionRequested,
         Action<Guid> putAwayRequested)
@@ -59,6 +66,9 @@ public partial class EcosystemSurface : Window
 
         _dragController =
             dragController;
+
+        _pointOfInterestDragController =
+            pointOfInterestDragController;
 
         _contextMenuController =
             contextMenuController;
@@ -220,6 +230,31 @@ public partial class EcosystemSurface : Window
             return;
         }
 
+        if (hit.EntityKind ==
+            EcosystemEntityKind.PointOfInterest)
+        {
+            PointOfInterest? poi =
+                _inputRouter.FindPointOfInterest(
+                    hit.EntityId);
+
+            if (poi is null)
+                return;
+
+            _draggedPointOfInterest =
+                poi;
+
+            _pointOfInterestDragController.Begin(
+                poi,
+                worldPoint);
+
+            EcosystemCanvas.CaptureMouse();
+
+            e.Handled =
+                true;
+
+            return;
+        }
+
         Creature? creature =
             _inputRouter.FindCreature(
                 hit.EntityId);
@@ -264,12 +299,6 @@ public partial class EcosystemSurface : Window
         object sender,
         WpfMouseEventArgs e)
     {
-        if (_draggedCreature is null ||
-            !_dragController.IsDragging)
-        {
-            return;
-        }
-
         Point localPoint =
             e.GetPosition(EcosystemCanvas);
 
@@ -279,6 +308,22 @@ public partial class EcosystemSurface : Window
                     localPoint.X,
                 WorldBounds.Top +
                     localPoint.Y);
+
+        if (_draggedPointOfInterest is not null &&
+            _pointOfInterestDragController.IsDragging)
+        {
+            _pointOfInterestDragController.Update(
+                _draggedPointOfInterest,
+                worldPoint);
+
+            return;
+        }
+
+        if (_draggedCreature is null ||
+            !_dragController.IsDragging)
+        {
+            return;
+        }
 
         double width =
             _draggedCreature.SpriteWidth *
@@ -299,6 +344,25 @@ public partial class EcosystemSurface : Window
         object sender,
         MouseButtonEventArgs e)
     {
+        if (_draggedPointOfInterest is not null)
+        {
+            PointOfInterest poi =
+                _draggedPointOfInterest;
+
+            _draggedPointOfInterest =
+                null;
+
+            EcosystemCanvas.ReleaseMouseCapture();
+
+            _pointOfInterestDragController.End(
+                poi);
+
+            e.Handled =
+                true;
+
+            return;
+        }
+
         if (_draggedCreature is null)
         {
             return;

@@ -2,7 +2,6 @@
 using Desktop_Creatures.Config;
 using Desktop_Creatures.Creatures;
 using Desktop_Creatures.Creatures.Definitions;
-using Desktop_Creatures.Creatures.Interaction;
 using Desktop_Creatures.Ecosystem;
 using Desktop_Creatures.Ecosystem.Interaction;
 using Desktop_Creatures.Ecosystem.Rendering;
@@ -109,7 +108,8 @@ public partial class MainWindow : Window
     private readonly SurfaceManager _surfaceManager = new();
     private readonly ZOrderManager _zOrderManager = new();
 
-    private readonly CreatureDragController _dragController;
+    private readonly CreatureDragController _creatureDragController;
+    private readonly PointOfInterestDragController _pointOfInterestDragController;
 
     private readonly EcosystemHost _ecosystemHost;
     private readonly EcosystemRenderer _ecosystemRenderer;
@@ -128,8 +128,12 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
 
-        _dragController =
+        _creatureDragController =
             new CreatureDragController(
+                _surfaceManager);
+
+        _pointOfInterestDragController =
+            new PointOfInterestDragController(
                 _surfaceManager);
 
         _ecosystemHost =
@@ -147,7 +151,8 @@ public partial class MainWindow : Window
         _ecosystemInputRouter =
             new EcosystemInputRouter(
                 () => _ecosystemRenderer.RenderItems,
-                id => _creatureManager.FindCreature(id));
+                _creatureManager.FindCreature,
+                _pointOfInterestManager.FindPointOfInterest);
 
         UiSounds.Initialize();
 
@@ -350,7 +355,8 @@ public partial class MainWindow : Window
 
             _ecosystemRenderer.CreateSurfaces(
                 _ecosystemInputRouter,
-                _dragController,
+                _creatureDragController,
+                _pointOfInterestDragController,
                 _creatureContextMenuController,
                 _uiScale,
                 HandleCreatureContextAction,
@@ -787,7 +793,7 @@ public partial class MainWindow : Window
             deltaSeconds,
             creature =>
             {
-                if (_dragController.DraggedCreatureId ==
+                if (_creatureDragController.DraggedCreatureId ==
                     creature.Id)
                 {
                     creature.UpdateHeldAnimation();

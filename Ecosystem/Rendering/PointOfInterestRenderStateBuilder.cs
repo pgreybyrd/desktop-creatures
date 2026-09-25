@@ -44,10 +44,8 @@ public sealed class PointOfInterestRenderStateBuilder
             IsMirrored =
                 false,
 
-            // First migration test:
-            // old POIWindow still owns interaction.
             IsInteractive =
-                false,
+                true,
 
             // Temporary world ordering.
             ZIndex =

@@ -43,6 +43,14 @@ namespace Desktop_Creatures.World
             return result;
         }
 
+        public PointOfInterest? FindPointOfInterest(
+            Guid id)
+        {
+            return Points.FirstOrDefault(
+                poi =>
+                    poi.Id == id);
+        }
+
         public WorldInteractionTarget? FindNearestWorldInteractionPoint(
             Point creaturePosition,
             WorldInteractionPointType interactionType,

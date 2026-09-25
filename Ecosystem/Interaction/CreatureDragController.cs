@@ -1,7 +1,8 @@
-﻿using Desktop_Creatures.World.Surfaces;
+﻿using Desktop_Creatures.Creatures;
+using Desktop_Creatures.World.Surfaces;
 using Point = System.Windows.Point;
 
-namespace Desktop_Creatures.Creatures.Interaction;
+namespace Desktop_Creatures.Ecosystem.Interaction;
 
 public sealed class CreatureDragController(
     SurfaceManager surfaceManager)
@@ -64,15 +65,15 @@ public sealed class CreatureDragController(
         {
             double x =
                 windowPosition.X +
-                (creature.VisualBodyCenterX *
-                 displayScale) -
-                (creature.SpriteWidth / 2.0);
+                creature.VisualBodyCenterX *
+                 displayScale -
+                creature.SpriteWidth / 2.0;
 
             double y =
                 windowPosition.Y +
-                (creature.VisualBodyCenterY *
-                 displayScale) -
-                (creature.SpriteHeight / 2.0);
+                creature.VisualBodyCenterY *
+                 displayScale -
+                creature.SpriteHeight / 2.0;
 
             return new Point(
                 x,
@@ -91,7 +92,7 @@ public sealed class CreatureDragController(
 
         return new Point(
             windowPosition.X +
-                (extraWidth / 2.0),
+                extraWidth / 2.0,
             windowPosition.Y +
                 extraHeight);
     }
