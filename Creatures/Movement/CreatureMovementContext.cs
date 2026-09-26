@@ -70,4 +70,8 @@ public sealed class CreatureMovementContext
     public required Action StartFalling { get; init; }
 
     public required Func<double> GetLandingTolerance { get; init; }
+
+    public required Func<double, double, double> NextRandomDouble { get; init; }
+
+
 }

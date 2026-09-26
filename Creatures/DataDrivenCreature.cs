@@ -68,15 +68,15 @@ public sealed class DataDrivenCreature : Creature
         CreatureDefinition definition,
         CreatureServices services)
     {
-        if (Settings.Run is not null &&
-            Settings.Fall is not null)
+        if (definition.Movement.Ground?.Run is not null &&
+            definition.Movement.Ground.Fall is not null)
         {
             var groundMovement =
                 new GroundMovement(
                     CreateMovementContext(),
                     services.SurfaceManager,
-                    Settings.Run,
-                    Settings.Fall);
+                    definition.Movement.Ground.Run,
+                    definition.Movement.Ground.Fall);
 
             _movements.Add(
                 groundMovement);
@@ -85,7 +85,7 @@ public sealed class DataDrivenCreature : Creature
             groundMovement.PickNewTarget();
         }
 
-        if (Settings.Flight is not null)
+        if (definition.Movement.Flight is not null)
         {
             var flightMovement =
                 new FlightMovement(

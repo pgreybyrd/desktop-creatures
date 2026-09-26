@@ -1,12 +1,88 @@
 {
+  "schemaVersion": 1,
   "id": "hummingbird",
   "category": "birds",
 
-  "movementCapabilities": [
-    "Flight"
-  ],
+  "visuals": {
+    "spriteFacesRight": false,
+    "spriteWidth": 32,
+    "spriteHeight": 32,
+
+    "scale": {
+      "default": 1,
+      "min": 1,
+      "max": 1
+    }
+  },
+
+  "movement": {
+    "flight": {
+      "speed": 250,
+      "minDurationSeconds": 0.3,
+      "maxDurationSeconds": 1.2,
+      "arrivalDistance": 5,
+      "minTravelDistance": 50,
+      "maxTravelDistance": 250,
+
+      "frameMovement": {
+        "fly_00": 1.0,
+        "fly_01": 1.0,
+        "fly_02": 1.0,
+        "fly_03": 1.0
+      },
+
+      "hover": {
+        "chance": 0.8,
+        "minDurationSeconds": 0.8,
+        "maxDurationSeconds": 3.3,
+        "flipChance": 0.3,
+        "minFlipSeconds": 0.6,
+        "maxFlipSeconds": 1.5,
+
+        "frameMovement": {
+          "hover_00": 0.0,
+          "hover_01": 0.0,
+          "hover_02": 0.0,
+          "hover_03": 0.0
+        }
+      }
+    }
+  },
 
   "appearance": {
     "generated": false
+  },
+
+  "behaviors": {
+    "perch": {
+      "chance": 0.1,
+      "minDurationSeconds": 2,
+      "maxDurationSeconds": 5,
+      "pointType": "Perch"
+    },
+
+    "nesting": {
+      "enabled": false,
+      "minDurationSeconds": 5,
+      "maxDurationSeconds": 15
+    }
+  },
+
+  "needs": {
+    "hunger": {
+      "threshold": 0.1,
+      "ratePerSecond": 0.6
+    }
+  },
+
+  "interactions": {
+    "eat": {
+      "pointType": "Nectar",
+      "durationSeconds": 0.8,
+      "searchCooldownSeconds": 2,
+      "leaveDistance": 50,
+      "reach": 20,
+      "satisfiesNeed": "hunger"
+    }
   }
 }

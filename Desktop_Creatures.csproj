@@ -35,7 +35,6 @@
   <ItemGroup>
     <Folder Include="Assets\Creatures\Birds\Hummingbird\Appearance\" />
     <Folder Include="Assets\World\Flora\Flowers\" />
-    <Folder Include="UI\POI\" />
   </ItemGroup>
 
 </Project>

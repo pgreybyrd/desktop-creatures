@@ -1,4 +1,4 @@
-﻿using Desktop_Creatures.Config;
+﻿using Desktop_Creatures.Creatures;
 using Desktop_Creatures.Utilities;
 using Desktop_Creatures.World.Surfaces;
 using Point = System.Windows.Point;
@@ -9,8 +9,8 @@ public sealed class GroundMovement : ICreatureMovement
 {
     private readonly CreatureMovementContext _context;
     private readonly SurfaceManager _surfaceManager;
-    private readonly RunSettings _run;
-    private readonly FallSettings _fall;
+    private readonly LocomotionDefinition _run;
+    private readonly FallDefinition _fall;
 
     private readonly CreatureMovementController
         _movementController;
@@ -21,8 +21,8 @@ public sealed class GroundMovement : ICreatureMovement
     public GroundMovement(
         CreatureMovementContext context,
         SurfaceManager surfaceManager,
-        RunSettings run,
-        FallSettings fall)
+        LocomotionDefinition run,
+        FallDefinition fall)
     {
         _context = context;
         _movementController =
@@ -339,12 +339,12 @@ public sealed class GroundMovement : ICreatureMovement
             destination.Y);
 
         _context.SetMovementSpeed(
-            _run.RunSpeed);
+            _run.Speed);
 
         _context.SetStateTimeRemaining(
-            _context.NextRandom(
-                _run.MinRunSeconds,
-                _run.MaxRunSeconds + 1));
+            _context.NextRandomDouble(
+                _run.MinDurationSeconds,
+                _run.MaxDurationSeconds));
 
         _context.SetAction(
             CreatureAction.Running,
@@ -369,7 +369,7 @@ public sealed class GroundMovement : ICreatureMovement
             resolved.Y);
 
         _context.SetMovementSpeed(
-            _run.RunSpeed);
+            _run.Speed);
 
         Logger.LogDebug(
             DebugCategory.Movement,

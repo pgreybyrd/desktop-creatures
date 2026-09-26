@@ -671,7 +671,7 @@ public partial class MainWindow : Window
 
         CreatureSpawnContext context =
             CreateSpawnContext(
-                settings,
+                definition,
                 appearanceId,
                 record);
 
@@ -844,7 +844,7 @@ public partial class MainWindow : Window
     }
 
     private CreatureSpawnContext CreateSpawnContext(
-        CreatureSettings settings,
+        CreatureDefinition definition,
         string? appearanceId,
         CreatureRecord? record)
     {
@@ -869,10 +869,10 @@ public partial class MainWindow : Window
         }
 
         CreatureSpawnContext context =
-            settings.Flight is not null
+            definition.Movement.Flight is not null
                 ? CreateFlyingSpawnContext()
                 : CreateGroundSpawnContext(
-                    settings);
+                    definition);
 
         return context with
         {
@@ -881,7 +881,7 @@ public partial class MainWindow : Window
     }
 
     private CreatureSpawnContext CreateGroundSpawnContext(
-        CreatureSettings settings)
+        CreatureDefinition definition)
     {
         var menuSurface =
             _surfaceManager.MenuSurface
@@ -889,12 +889,12 @@ public partial class MainWindow : Window
                 "Menu surface was not set.");
 
         double width =
-            settings.SpriteWidth *
-            settings.Scale;
+            definition.Visuals.SpriteWidth *
+            definition.Visuals.Scale.Default;
 
         double height =
-            settings.SpriteHeight *
-            settings.Scale;
+            definition.Visuals.SpriteHeight *
+            definition.Visuals.Scale.Default;
 
         return new CreatureSpawnContext
         {

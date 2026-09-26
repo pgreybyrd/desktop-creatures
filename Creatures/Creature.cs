@@ -382,6 +382,12 @@ public abstract class Creature
             NextRandom =
                 (min, max) => Random.Next(min, max),
 
+            NextRandomDouble =
+                (min, max) =>
+                    min +
+                    (Random.NextDouble() *
+                     (max - min)),
+
             GetX =
                 () => X,
 
