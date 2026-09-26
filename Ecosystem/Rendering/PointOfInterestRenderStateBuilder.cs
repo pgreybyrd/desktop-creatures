@@ -96,6 +96,14 @@ public sealed class PointOfInterestRenderStateBuilder
         if (!string.IsNullOrWhiteSpace(
                 poi.Settings.FrameName))
         {
+            if (string.IsNullOrWhiteSpace(
+                    poi.Settings.MetadataPath))
+            {
+                throw new InvalidOperationException(
+                    $"POI '{poi.Id}' specifies frame " +
+                    $"'{poi.Settings.FrameName}' but has no metadata path.");
+            }
+
             SpriteSheet sheet =
                 SpriteSheetLoader.Load(
                     assetPath,

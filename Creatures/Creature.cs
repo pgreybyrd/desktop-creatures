@@ -49,8 +49,6 @@ public abstract class Creature
 
     private CreatureSoundPlayer? _soundPlayer;
 
-    private int _animationDirection = 1;
-
     private readonly PersonalityManager PersonalityManager = new();
     protected PointOfInterestManager PointOfInterestManager;
     protected SurfaceManager SurfaceManager;
@@ -211,8 +209,7 @@ public abstract class Creature
         Settings = settings;
 
         CreaturePointDefinition? pickupAnchor =
-            definition.Visuals?.PickupAnchor ??
-            definition.PickupAnchor;
+            definition.Visuals?.PickupAnchor;
 
         _pickupAnchor =
             pickupAnchor is not null
@@ -855,7 +852,6 @@ public abstract class Creature
 
         CurrentFrameIndex = 0;
 
-        _animationDirection = 1;
         _animationElapsedMilliseconds = 0;
 
         _lastAnimationTimestamp =

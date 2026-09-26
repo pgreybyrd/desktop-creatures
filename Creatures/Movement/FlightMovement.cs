@@ -1,5 +1,4 @@
-﻿using Desktop_Creatures.Config;
-using Desktop_Creatures.World.Surfaces;
+﻿using Desktop_Creatures.World.Surfaces;
 using Point = System.Windows.Point;
 
 namespace Desktop_Creatures.Creatures.Movement;
@@ -13,10 +12,10 @@ public sealed class FlightMovement : ICreatureMovement
         _movementSpace;
     private readonly SurfaceManager _surfaceManager;
 
-    private readonly FlightSettings _flight;
-    private readonly HoverSettings? _hover;
-    private readonly GlideSettings? _glide;
-    private readonly PerchSettings? _perch;
+    private readonly FlightDefinition _flight;
+    private readonly HoverDefinition? _hover;
+    private readonly GlideDefinition? _glide;
+    private readonly PerchDefinition? _perch;
 
     private bool _isGliding;
 
@@ -25,10 +24,8 @@ public sealed class FlightMovement : ICreatureMovement
     public FlightMovement(
         CreatureMovementContext context,
         SurfaceManager surfaceManager,
-        FlightSettings flight,
-        HoverSettings? hover,
-        GlideSettings? glide,
-        PerchSettings? perch)
+        FlightDefinition flight,
+        PerchDefinition? perch)
     {
         _context = context;
 
@@ -36,12 +33,20 @@ public sealed class FlightMovement : ICreatureMovement
             new CreatureMovementController(
                 context);
 
-        _surfaceManager = surfaceManager;
+        _surfaceManager =
+            surfaceManager;
 
-        _flight = flight;
-        _hover = hover;
-        _glide = glide;
-        _perch = perch;
+        _flight =
+            flight;
+
+        _hover =
+            flight.Hover;
+
+        _glide =
+            flight.Glide;
+
+        _perch =
+            perch;
 
         _movementSpace =
             new AirMovementSpace(
@@ -54,7 +59,7 @@ public sealed class FlightMovement : ICreatureMovement
         _isGliding = false;
 
         _context.SetMovementSpeed(
-            _flight.FlySpeed);
+            _flight.Speed);
 
         _context.SetAction(
             CreatureAction.Flying,
@@ -100,7 +105,7 @@ public sealed class FlightMovement : ICreatureMovement
                 10_000.0;
 
             if (normalizedRoll <
-                _perch.PerchChance &&
+                _perch.Chance &&
                 _context.TrySetPerchTarget())
             {
                 return;
@@ -149,9 +154,9 @@ public sealed class FlightMovement : ICreatureMovement
             destination.Y);
 
         _context.SetStateTimeRemaining(
-            _context.NextRandom(
-                _flight.MinFlySeconds,
-                _flight.MaxFlySeconds + 1));
+            _context.NextRandomDouble(
+                _flight.MinDurationSeconds,
+                _flight.MaxDurationSeconds));
 
         SetFlightModeForTarget();
 
@@ -163,7 +168,7 @@ public sealed class FlightMovement : ICreatureMovement
         _isGliding = false;
 
         _context.SetMovementSpeed(
-            _flight.FlySpeed);
+            _flight.Speed);
 
         _context.SetAction(
             CreatureAction.Flying,
@@ -178,8 +183,8 @@ public sealed class FlightMovement : ICreatureMovement
         double speed =
             _isGliding &&
             _glide is not null
-                ? _glide.GlideSpeed
-                : _flight.FlySpeed;
+                ? _glide.Speed
+                : _flight.Speed;
 
         MovementStep movementStep =
             _movementController.CalculateStep(
@@ -282,9 +287,7 @@ public sealed class FlightMovement : ICreatureMovement
                 }
 
                 _hoverFlipTimeRemaining =
-                    _context.NextRandom(
-                        _hover.MinFlipSeconds,
-                        _hover.MaxFlipSeconds + 1);
+                    GetNextHoverFlipSeconds();
             }
         }
 
@@ -328,7 +331,7 @@ public sealed class FlightMovement : ICreatureMovement
             roll / 10_000.0;
 
         return normalizedRoll <
-            _hover.HoverChance;
+            _hover.Chance;
     }
 
     private void StartHovering()
@@ -342,14 +345,12 @@ public sealed class FlightMovement : ICreatureMovement
         _isGliding = false;
 
         _context.SetStateTimeRemaining(
-            _context.NextRandom(
-                _hover.MinHoverSeconds,
-                _hover.MaxHoverSeconds + 1));
+            _context.NextRandomDouble(
+                _hover.MinDurationSeconds,
+                _hover.MaxDurationSeconds));
 
         _hoverFlipTimeRemaining =
-            _context.NextRandom(
-                _hover.MinFlipSeconds,
-                _hover.MaxFlipSeconds + 1);
+            GetNextHoverFlipSeconds();
 
         _context.SetAction(
             CreatureAction.Hovering,
@@ -367,12 +368,12 @@ public sealed class FlightMovement : ICreatureMovement
             _isGliding = true;
 
             _context.SetMovementSpeed(
-                _glide!.GlideSpeed);
+                _glide!.Speed);
 
             _context.SetStateTimeRemaining(
-                _context.NextRandom(
-                    _glide.MinGlideSeconds,
-                    _glide.MaxGlideSeconds + 1));
+                _context.NextRandomDouble(
+                    _glide.MinDurationSeconds,
+                    _glide.MaxDurationSeconds));
 
             if (_context.GetAction() !=
                 CreatureAction.Gliding)
@@ -388,12 +389,12 @@ public sealed class FlightMovement : ICreatureMovement
         _isGliding = false;
 
         _context.SetMovementSpeed(
-            _flight.FlySpeed);
+            _flight.Speed);
 
         _context.SetStateTimeRemaining(
-            _context.NextRandom(
-                _flight.MinFlySeconds,
-                _flight.MaxFlySeconds + 1));
+            _context.NextRandomDouble(
+                _flight.MinDurationSeconds,
+                _flight.MaxDurationSeconds));
 
         if (_context.GetAction() !=
             CreatureAction.Flying)
@@ -425,6 +426,20 @@ public sealed class FlightMovement : ICreatureMovement
             roll / 10_000.0;
 
         return normalizedRoll <
-            _glide.GlideChance;
+            _glide.Chance;
+    }
+
+    private double GetNextHoverFlipSeconds()
+    {
+        if (_hover?.MinFlipSeconds is not double min ||
+            _hover.MaxFlipSeconds is not double max)
+        {
+            return double.PositiveInfinity;
+        }
+
+        return
+            _context.NextRandomDouble(
+                min,
+                max);
     }
 }

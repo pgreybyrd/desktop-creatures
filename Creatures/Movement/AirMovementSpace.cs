@@ -7,11 +7,11 @@ namespace Desktop_Creatures.Creatures.Movement;
 public sealed class AirMovementSpace : IMovementSpace
 {
     private readonly SurfaceManager _surfaceManager;
-    private readonly FlightSettings _flight;
+    private readonly FlightDefinition _flight;
 
     public AirMovementSpace(
         SurfaceManager surfaceManager,
-        FlightSettings flight)
+        FlightDefinition flight)
     {
         _surfaceManager =
             surfaceManager;
@@ -75,8 +75,8 @@ public sealed class AirMovementSpace : IMovementSpace
                     Math.PI /
                     180.0;
 
-                int distance =
-                    context.NextRandom(
+                double distance =
+                    context.NextRandomDouble(
                         _flight.MinTravelDistance!.Value,
                         _flight.MaxTravelDistance!.Value);
 

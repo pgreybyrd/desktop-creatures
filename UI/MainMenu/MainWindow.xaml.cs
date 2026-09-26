@@ -868,8 +868,13 @@ public partial class MainWindow : Window
             };
         }
 
+        CreatureMovementDefinition movement =
+            definition.Movement
+            ?? throw new InvalidOperationException(
+                $"Creature '{definition.Id}' has no movement definition.");
+
         CreatureSpawnContext context =
-            definition.Movement.Flight is not null
+            movement.Flight is not null
                 ? CreateFlyingSpawnContext()
                 : CreateGroundSpawnContext(
                     definition);
@@ -883,18 +888,23 @@ public partial class MainWindow : Window
     private CreatureSpawnContext CreateGroundSpawnContext(
         CreatureDefinition definition)
     {
+        var visuals =
+            definition.Visuals
+            ?? throw new InvalidOperationException(
+                $"Creature '{definition.Id}' has no visuals definition.");
+
         var menuSurface =
             _surfaceManager.MenuSurface
             ?? throw new InvalidOperationException(
                 "Menu surface was not set.");
 
         double width =
-            definition.Visuals.SpriteWidth *
-            definition.Visuals.Scale.Default;
+            visuals.SpriteWidth *
+            visuals.Scale.Default;
 
         double height =
-            definition.Visuals.SpriteHeight *
-            definition.Visuals.Scale.Default;
+            visuals.SpriteHeight *
+            visuals.Scale.Default;
 
         return new CreatureSpawnContext
         {
